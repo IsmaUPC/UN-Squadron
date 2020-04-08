@@ -28,6 +28,7 @@ public:
 	// Called at the end of the application loop
 	// Performs the render call of the player sprite
 	update_status PostUpdate() override;
+	void godModeUpdate();
 
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
@@ -59,6 +60,7 @@ public:
 
 	// A flag to detect when the player has been destroyed
 	bool destroyed = false;
+	bool godMode = false;
 
 	// A countdown to when the player gets destroyed. After a while, the game exits
 	uint destroyedCountdown = 120;

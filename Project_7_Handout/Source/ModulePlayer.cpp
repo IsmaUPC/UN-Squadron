@@ -62,6 +62,11 @@ update_status ModulePlayer::Update()
 	// Moving the player with the camera scroll
 	App->player->position.x += SCREEN_SPEED;
 
+	//Activate god mode
+	if (App->input->keys[SDL_SCANCODE_G] == KEY_STATE::KEY_DOWN)
+		godModeUpdate();
+	
+
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
 	{
 		//Check that the position does not exceed the screen limit :D
@@ -156,7 +161,7 @@ update_status ModulePlayer::PostUpdate()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1 == collider && destroyed == false)
+	if (c1 == collider && destroyed == false && godMode==false)
 	{
 		App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE, 9);
 		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE, 14);
@@ -168,4 +173,9 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 		destroyed = true;
 	}
+
 }
+void ModulePlayer::godModeUpdate(){
+	godMode = !godMode;
+
+	}
