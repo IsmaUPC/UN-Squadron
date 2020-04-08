@@ -49,43 +49,72 @@ bool ModulePlayer::Start()
 	position.x = 150;
 	position.y = 120;
 
-	collider = App->collisions->AddCollider({ position.x, position.y, 32, 16 }, Collider::Type::PLAYER, this);
+	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT}, Collider::Type::PLAYER, this);
 
 	return ret;
 }
 
 update_status ModulePlayer::Update()
 {
+	//Save the position camera X
+	currentCameraX = App->render->camera.x;
+
 	// Moving the player with the camera scroll
 	App->player->position.x += SCREEN_SPEED;
 
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
 	{
-		position.x -= speed;
+		//Check that the position does not exceed the screen limit :D
+		if ( position.x > currentCameraX) {
+			position.x -= speed;
+		}
+		else {
+			position.x = currentCameraX;
+		}
 	}
 
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
 	{
-		position.x += speed;
+		/*check that the player is not in a position larger than the screen size 
+		  in reference to the current camera position*/
+		if (position.x < (currentCameraX + (SCREEN_WIDTH  - PLAYER_WIDTH))){
+			position.x += speed;
+		}
+		else {
+			position.x = currentCameraX + (SCREEN_WIDTH - PLAYER_WIDTH);
+		}
 	}
 
 	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 	{
-		position.y += speed;
-		if (currentAnimation != &downAnim)
-		{
-			downAnim.Reset();
-			currentAnimation = &downAnim;
+		/*controls the limit of the position "y" in which the player is,
+		taking into account the height of the player*/
+		if (position.y < (SCREEN_HEIGHT - PLAYER_HEIGHT)) {
+			position.y += speed;
+			if (currentAnimation != &downAnim) {
+				downAnim.Reset();
+				currentAnimation = &downAnim;
+			}
+		}
+		else {
+			position.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 		}
 	}
 
 	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 	{
-		position.y -= speed;
-		if (currentAnimation != &upAnim)
-		{
-			upAnim.Reset();
-			currentAnimation = &upAnim;
+		/*Does not allow movements less than 0, in case it exceeds it 
+		places the player to position 0*/
+		if (position.y > 0) {
+			position.y -= speed;
+			if (currentAnimation != &upAnim)
+			{
+				upAnim.Reset();
+				currentAnimation = &upAnim;
+			}
+		}
+		else {
+			position.y = 0;
 		}
 	}
 

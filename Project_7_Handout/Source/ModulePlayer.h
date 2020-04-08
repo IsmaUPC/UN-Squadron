@@ -31,13 +31,16 @@ public:
 
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
+private:
+	int currentCameraX;
 
 public:
 	// Position of the player in the map
 	iPoint position;
 
 	// The speed in which we move the player (pixels per frame)
-	int speed = 2;
+	int speed = 5;
+	
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;
