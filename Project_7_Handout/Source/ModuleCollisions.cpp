@@ -95,17 +95,20 @@ update_status ModuleCollisions::PreUpdate()
 }
 
 update_status ModuleCollisions::Update()
-{
-	if (App->input->keys[SDL_SCANCODE_F1] == KEY_DOWN)
+	
+{	//Press F1 to switch debug mode
+	if (App->input->keys[SDL_SCANCODE_F1] == KEY_DOWN) {
 		debug = !debug;
+	}
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 update_status ModuleCollisions::PostUpdate()
 {
-	if (debug)
+	if (debug) {
 		DebugDraw();
+	}
 
 	return update_status::UPDATE_CONTINUE;
 }
