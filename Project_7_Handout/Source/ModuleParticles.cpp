@@ -36,7 +36,7 @@ bool ModuleParticles::Start()
 
 	laser.anim.PushBack({ 232, 103, 16, 12 });
 	laser.anim.PushBack({ 249, 103, 16, 12 });
-	laser.speed.x = 5+ SCREEN_SPEED;
+	laser.speed.x = 10+ SCREEN_SPEED;
 	laser.lifetime = 180;
 	laser.anim.speed = 0.2f;
 
