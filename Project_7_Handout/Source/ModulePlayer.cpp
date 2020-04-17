@@ -43,7 +43,7 @@ bool ModulePlayer::Start()
 	texture = App->textures->Load("Assets/ship.png");
 	currentAnimation = &idleAnim;
 
-	laserFx = App->audio->LoadFx("Assets/laser.wav");
+	laserFx = App->audio->LoadFx("Assets/PlayerShoot.wav");
 	explosionFx = App->audio->LoadFx("Assets/explosion.wav");
 
 	position.x = 80;

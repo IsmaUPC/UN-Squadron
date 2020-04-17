@@ -29,7 +29,7 @@ bool ModuleScene::Start()
 	bgTextures[2] = App->textures->Load("Assets/centro_3_2.png");
 	bgTextures[3] = App->textures->Load("Assets/centro_4_2.png");
 
-	App->audio->PlayMusic("Assets/stage1.ogg", 1.0f);
+	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 1.0f);
 
 	//Bottomside collider
 	//App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
