@@ -17,13 +17,13 @@ ModulePlayer::ModulePlayer()
 	idleAnim.PushBack({ 80, 4, 68, 20 });
 
 	// move upwards
-	upAnim.PushBack({ 155, 4, 68, 24 });
+	downAnim.PushBack({ 155, 4, 68, 24 });
 	//upAnim.PushBack({ 132, 0, 32, 14 });
 	upAnim.loop = false;
 	upAnim.speed = 0.1f;
 
 	// Move down
-	downAnim.PushBack({ 5, 4, 68, 22 });
+	upAnim.PushBack({ 5, 4, 68, 22 });
 	//downAnim.PushBack({ 0, 1, 32, 14 });
 	downAnim.loop = false;
 	downAnim.speed = 0.1f;
