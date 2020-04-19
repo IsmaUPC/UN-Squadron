@@ -34,26 +34,38 @@ bool ModuleScene::Start()
 	//Bottomside collider
 	//App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
 	
-	
 
 	// Enemies ---
+	
+
+	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 600, 130);
+	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 700, 130);
+	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 800, 130);
+	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 900, 130);
+	
+	App->enemies->AddEnemy(ENEMY_TYPE::REDSHIP, 600, 180);
+	App->enemies->AddEnemy(ENEMY_TYPE::REDSHIP, 700, 180);
+	App->enemies->AddEnemy(ENEMY_TYPE::REDSHIP, 800, 180);
+	App->enemies->AddEnemy(ENEMY_TYPE::REDSHIP, 900, 180);
+	
+	App->enemies->AddEnemy(ENEMY_TYPE::GREENSHIP, 1200, 300);
+	App->enemies->AddEnemy(ENEMY_TYPE::GREENSHIP, 1290, 300);
+	App->enemies->AddEnemy(ENEMY_TYPE::GREENSHIP, 1380, 300);
+	App->enemies->AddEnemy(ENEMY_TYPE::GREENSHIP, 1470, 300);
+
+	App->enemies->AddEnemy(ENEMY_TYPE::YELLOWSHIP, 1200, 150);
+	App->enemies->AddEnemy(ENEMY_TYPE::YELLOWSHIP, 1290, 150);
+	App->enemies->AddEnemy(ENEMY_TYPE::YELLOWSHIP, 1380, 150);
+	App->enemies->AddEnemy(ENEMY_TYPE::YELLOWSHIP, 1470, 150);
+
+	App->enemies->AddEnemy(ENEMY_TYPE::BLUESHIP, 1200, 350);
+	App->enemies->AddEnemy(ENEMY_TYPE::BLUESHIP, 1290, 350);
+	App->enemies->AddEnemy(ENEMY_TYPE::BLUESHIP, 1380, 200);
+	App->enemies->AddEnemy(ENEMY_TYPE::BLUESHIP, 1470, 200);
+	
+
 	/*
-	App->enemies->AddEnemy(ENEMY_TYPE::REDBIRD, 600, 80);
-	App->enemies->AddEnemy(ENEMY_TYPE::REDBIRD, 625, 80);
-	App->enemies->AddEnemy(ENEMY_TYPE::REDBIRD, 640, 80);
-	App->enemies->AddEnemy(ENEMY_TYPE::REDBIRD, 665, 80);
-
-	App->enemies->AddEnemy(ENEMY_TYPE::REDBIRD, 800, 100);
-	App->enemies->AddEnemy(ENEMY_TYPE::REDBIRD, 825, 100);
-	App->enemies->AddEnemy(ENEMY_TYPE::REDBIRD, 840, 100);
-	App->enemies->AddEnemy(ENEMY_TYPE::REDBIRD, 865, 100);
-
-	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 800, 100);
-	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 825, 100);
-	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 850, 100);
-	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 875, 100);
-
-	App->enemies->AddEnemy(ENEMY_TYPE::MECH, 375, SCREEN_HEIGHT-46);
+	App->enemies->AddEnemy(ENEMY_TYPE::Enemy_RedShip, 375, SCREEN_HEIGHT-46);
 	*/
 
 	return ret;

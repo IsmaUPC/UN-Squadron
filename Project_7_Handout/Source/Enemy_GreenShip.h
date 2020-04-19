@@ -1,15 +1,15 @@
-#ifndef __ENEMY_REDBIRD_H__
-#define __ENEMY_REDBIRD_H__
+#ifndef __Enemy_GreenShip_H__
+#define __Enemy_GreenShip_H__
 
 #include "Enemy.h"
 
-class Enemy_RedBird : public Enemy
+class Enemy_GreenShip : public Enemy
 {
 public:
 
 	// Constructor (x y coordinates in the world)
 	// Creates animation data and the collider
-	Enemy_RedBird(int x, int y);
+	Enemy_GreenShip(int x, int y);
 
 	// The enemy is going to perform a sinusoidal movement
 	void Update() override;
@@ -28,7 +28,12 @@ private:
 	int waveHeight = 15;
 
 	// The enemy animation
-	Animation flyAnim;
+	Animation fly;				//Vuela hacia la derecha
+	Animation flyInvers;		//Vuela hacia la izquierda (hacia nosotros)
+	Animation twistToRight;		//Efectua un giro hacaia la derecha
+	Animation twistToLeft;		//Efectua una giro hacia la izquierda
+	Animation loopToRight;		//Gira sobre si mismo moviendose hacia la derecha
+	Animation loopToLeft;		//Gira sobre si mismo moviendose hacia la izquierda
 };
 
-#endif // __ENEMY_REDBIRD_H__
+#endif // __Enemy_GreenShip_H__

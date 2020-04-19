@@ -7,9 +7,11 @@
 #include "ModuleAudio.h"
 
 #include "Enemy.h"
-#include "Mech.h"
-#include "Enemy_RedBird.h"
+#include "Enemy_RedShip.h"
+#include "Enemy_GreenShip.h"
 #include "Enemy_BrownShip.h"
+#include "Enemy_YellowShip.h"
+#include"Enemy_BlueShip.h"
 
 #define SPAWN_MARGIN 50
 
@@ -27,7 +29,7 @@ ModuleEnemies::~ModuleEnemies()
 
 bool ModuleEnemies::Start()
 {
-	texture = App->textures->Load("Assets/enemies.png");
+	texture = App->textures->Load("Assets/UNSquadronSpritesEnemies.png");
 	enemyDestroyedFx = App->audio->LoadFx("Assets/explosion.wav");
 
 	return true;
@@ -142,14 +144,20 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 		{
 			switch (info.type)
 			{
-				case ENEMY_TYPE::REDBIRD:
-					enemies[i] = new Enemy_RedBird(info.x, info.y);
+				case ENEMY_TYPE::GREENSHIP:
+					enemies[i] = new Enemy_GreenShip(info.x, info.y);
 					break;
 				case ENEMY_TYPE::BROWNSHIP:
 					enemies[i] = new Enemy_BrownShip(info.x, info.y);
 					break;
-				case ENEMY_TYPE::MECH:
-					enemies[i] = new Mech(info.x, info.y);
+				case ENEMY_TYPE::REDSHIP:
+					enemies[i] = new Enemy_RedShip(info.x, info.y);
+					break;
+				case ENEMY_TYPE::YELLOWSHIP:
+					enemies[i] = new Enemy_YellowShip(info.x, info.y);
+					break;
+				case ENEMY_TYPE::BLUESHIP:
+					enemies[i] = new Enemy_BlueShip(info.x, info.y);
 					break;
 			}
 			enemies[i]->texture = texture;
