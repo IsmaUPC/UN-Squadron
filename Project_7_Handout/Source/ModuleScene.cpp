@@ -29,45 +29,19 @@ bool ModuleScene::Start()
 	bgTextures[2] = App->textures->Load("Assets/centro_3_2.png");
 	bgTextures[3] = App->textures->Load("Assets/centro_4_2.png");
 
-	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 1.0f);
+	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 0.5f);
 
 	//Bottomside collider
 	//App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
 	
-
-	// Enemies ---
+	// Enemies ---	
+	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 130, 100);
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 600, 180, 100);
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::GREENSHIP, 1200, 300, 90);
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 1200, 150, 90);
+	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 350, 90);
+	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 200, 90);
 	
-
-	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 600, 130);
-	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 700, 130);
-	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 800, 130);
-	App->enemies->AddEnemy(ENEMY_TYPE::BROWNSHIP, 900, 130);
-	
-	App->enemies->AddEnemy(ENEMY_TYPE::REDSHIP, 600, 180);
-	App->enemies->AddEnemy(ENEMY_TYPE::REDSHIP, 700, 180);
-	App->enemies->AddEnemy(ENEMY_TYPE::REDSHIP, 800, 180);
-	App->enemies->AddEnemy(ENEMY_TYPE::REDSHIP, 900, 180);
-	
-	App->enemies->AddEnemy(ENEMY_TYPE::GREENSHIP, 1200, 300);
-	App->enemies->AddEnemy(ENEMY_TYPE::GREENSHIP, 1290, 300);
-	App->enemies->AddEnemy(ENEMY_TYPE::GREENSHIP, 1380, 300);
-	App->enemies->AddEnemy(ENEMY_TYPE::GREENSHIP, 1470, 300);
-
-	App->enemies->AddEnemy(ENEMY_TYPE::YELLOWSHIP, 1200, 150);
-	App->enemies->AddEnemy(ENEMY_TYPE::YELLOWSHIP, 1290, 150);
-	App->enemies->AddEnemy(ENEMY_TYPE::YELLOWSHIP, 1380, 150);
-	App->enemies->AddEnemy(ENEMY_TYPE::YELLOWSHIP, 1470, 150);
-
-	App->enemies->AddEnemy(ENEMY_TYPE::BLUESHIP, 1200, 350);
-	App->enemies->AddEnemy(ENEMY_TYPE::BLUESHIP, 1290, 350);
-	App->enemies->AddEnemy(ENEMY_TYPE::BLUESHIP, 1380, 200);
-	App->enemies->AddEnemy(ENEMY_TYPE::BLUESHIP, 1470, 200);
-	
-
-	/*
-	App->enemies->AddEnemy(ENEMY_TYPE::Enemy_RedShip, 375, SCREEN_HEIGHT-46);
-	*/
-
 	return ret;
 }
 
@@ -107,3 +81,5 @@ void ModuleScene::updateBackground() {
 		}
 	}
 }
+
+

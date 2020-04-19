@@ -57,6 +57,8 @@ public:
 
 	// Add an enemy into the queue to be spawned later
 	bool AddEnemy(ENEMY_TYPE type, int x, int y);
+	void spawningEnemies(int numEnemies, ENEMY_TYPE type, int x, int y, int enemiesDistance);
+
 
 	// Iterates the queue and checks for camera position
 	void HandleEnemiesSpawn();

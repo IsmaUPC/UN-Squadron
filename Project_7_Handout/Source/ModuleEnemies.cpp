@@ -181,3 +181,10 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 		}
 	}
 }
+
+void ModuleEnemies::spawningEnemies(int numEnemies, ENEMY_TYPE type, int x, int y, int enemiesDistance) {
+	//It is responsible for making "number of enemies" appear, according to their type, 
+	//in the xand y coordinates with an "enemy distance" between enemy and enemy
+	for (int i = 0; i < numEnemies; i++)
+		AddEnemy(type, x + (i * enemiesDistance), y);
+}
