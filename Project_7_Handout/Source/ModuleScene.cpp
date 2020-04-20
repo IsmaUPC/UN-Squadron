@@ -35,12 +35,12 @@ bool ModuleScene::Start()
 	//App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
 	
 	// Enemies ---	
-	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 130, 100);
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 600, 180, 100);
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::GREENSHIP, 1200, 300, 90);
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 1200, 150, 90);
-	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 350, 90);
-	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 200, 90);
+	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 130, 100,0);
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 600, 180, 100,0);
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::GREENSHIP, 1200, 300, 90, 0);
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 1200, 150, 90, 0);
+	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 350, 90, 0);
+	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 200, 90, 0);
 	
 	return ret;
 }

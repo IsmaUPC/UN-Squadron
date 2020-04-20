@@ -12,7 +12,7 @@ class Enemy
 public:
 	// Constructor
 	// Saves the spawn position for later movement calculations
-	Enemy(int x, int y);
+	Enemy(int x, int y, int pattern);
 
 	// Destructor
 	virtual ~Enemy();
@@ -50,6 +50,8 @@ protected:
 
 	// Original spawn position. Stored for movement calculations
 	iPoint spawnPos;
+
+	int pattern = 0;
 };
 
 #endif // __ENEMY_H__

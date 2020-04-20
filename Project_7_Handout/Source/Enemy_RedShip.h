@@ -7,13 +7,14 @@
 class Enemy_RedShip :public Enemy {
 
 public:
-
 	// Constructor (x y coordinates in the world)
 	// Creates animation data and the collider
-	Enemy_RedShip(int x, int y);
+	Enemy_RedShip(int x, int y,int _pattern);
 
 	// The enemy is going to perform a sinusoidal movement
 	void Update() override;
+
+	void move();
 
 private:
 	// The position (as ratio) in the wave at a specific moment

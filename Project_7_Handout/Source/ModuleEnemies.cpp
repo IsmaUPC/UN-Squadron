@@ -78,7 +78,7 @@ bool ModuleEnemies::CleanUp()
 	return true;
 }
 
-bool ModuleEnemies::AddEnemy(ENEMY_TYPE type, int x, int y)
+bool ModuleEnemies::AddEnemy(ENEMY_TYPE type, int x, int y, int pattern)
 {
 	bool ret = false;
 
@@ -89,6 +89,7 @@ bool ModuleEnemies::AddEnemy(ENEMY_TYPE type, int x, int y)
 			spawnQueue[i].type = type;
 			spawnQueue[i].x = x;
 			spawnQueue[i].y = y;
+			spawnQueue[i].pattern = pattern;
 			ret = true;
 			break;
 		}
@@ -145,19 +146,19 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			switch (info.type)
 			{
 				case ENEMY_TYPE::GREENSHIP:
-					enemies[i] = new Enemy_GreenShip(info.x, info.y);
+					enemies[i] = new Enemy_GreenShip(info.x, info.y, info.pattern);
 					break;
 				case ENEMY_TYPE::BROWNSHIP:
-					enemies[i] = new Enemy_BrownShip(info.x, info.y);
+					enemies[i] = new Enemy_BrownShip(info.x, info.y, info.pattern);
 					break;
 				case ENEMY_TYPE::REDSHIP:
-					enemies[i] = new Enemy_RedShip(info.x, info.y);
+					enemies[i] = new Enemy_RedShip(info.x, info.y, info.pattern);
 					break;
 				case ENEMY_TYPE::YELLOWSHIP:
-					enemies[i] = new Enemy_YellowShip(info.x, info.y);
+					enemies[i] = new Enemy_YellowShip(info.x, info.y, info.pattern);
 					break;
 				case ENEMY_TYPE::BLUESHIP:
-					enemies[i] = new Enemy_BlueShip(info.x, info.y);
+					enemies[i] = new Enemy_BlueShip(info.x, info.y, info.pattern);
 					break;
 			}
 			enemies[i]->texture = texture;
@@ -182,9 +183,9 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
-void ModuleEnemies::spawningEnemies(int numEnemies, ENEMY_TYPE type, int x, int y, int enemiesDistance) {
+void ModuleEnemies::spawningEnemies(int numEnemies, ENEMY_TYPE type, int x, int y, int enemiesDistance,int pattern) {
 	//It is responsible for making "number of enemies" appear, according to their type, 
 	//in the xand y coordinates with an "enemy distance" between enemy and enemy
 	for (int i = 0; i < numEnemies; i++)
-		AddEnemy(type, x + (i * enemiesDistance), y);
+		AddEnemy(type, x + (i * enemiesDistance), y,pattern);
 }

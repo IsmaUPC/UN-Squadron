@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "ModuleCollisions.h"
 
-Enemy_GreenShip::Enemy_GreenShip(int x, int y) : Enemy(x, y)
+Enemy_GreenShip::Enemy_GreenShip(int x, int y, int _pattern) : Enemy(x, y,_pattern)
 {
 	flyInvers.PushBack({ 497,213,54,16 });
 	currentAnim = &flyInvers;
@@ -67,3 +67,22 @@ void Enemy_GreenShip::Update()
 	// It will update the collider depending on the position
 	Enemy::Update();
 }
+
+void Enemy_GreenShip::move(){
+	switch (pattern) {
+	case 0:
+		waveRatio += waveRatioSpeed;
+
+		position.y = spawnPos.y + (waveHeight * sinf(waveRatio));
+		position.x -= 1;
+
+		break;
+
+	case 1:
+
+		break;
+	}
+
+}
+
+
