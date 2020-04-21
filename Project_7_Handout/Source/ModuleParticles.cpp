@@ -24,7 +24,7 @@ bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
 	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
-	enemyShotTexture= App->textures->Load("Assets/PlayerShoot.png");
+	enemyShotTexture= App->textures->Load("Assets/EnemyShoot.png");
 	/*
 	// Explosion particle
 	explosion.anim.PushBack({274, 296, 33, 30});
@@ -37,15 +37,20 @@ bool ModuleParticles::Start()
 	explosion.anim.speed = 0.3f;
 	*/
 	playerLaser.anim.PushBack({ 0, 0, 40, 7 });
-	enemyLaser.anim.PushBack({ 0, 0, 40, 7 });
+
+
+	for (int i = 0; i < 4; i++)
+	enemyLaser.anim.PushBack({ 10*i, 0, 10, 10 });
+	enemyLaser.speed.x = - SCREEN_SPEED;
+	enemyLaser.lifetime = 150;
+	enemyLaser.anim.speed = 0.1f;
+	
+
 	//laser.anim.PushBack({ 249, 103, 16, 12 });
 	playerLaser.speed.x = 25 + SCREEN_SPEED;
 	playerLaser.lifetime = 50;
 	playerLaser.anim.speed = 0.2f;
 
-	enemyLaser.speed.x = - SCREEN_SPEED;
-	enemyLaser.lifetime = 150;
-	enemyLaser.anim.speed = 0.2f;
 
 	return true;
 }
