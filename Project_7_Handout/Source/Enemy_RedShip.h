@@ -37,6 +37,20 @@ private:
 	Animation flyInvers;		//Vuela hacia la izquierda (hacia nosotros)
 	Animation twistToRight;		//Efectua un giro hacaia la derecha
 	Animation twistToLeft;		//Efectua una giro hacia la izquierda
+
+
+	//NEW VARS
+	bool startmove = false;
+	float countmove = 1;
+
+	int xRecorrido = 0;
+	int yRecorrido = 0;
+
+	int FASE = 1;
+
+	int n = 0;
+	float alpha = 0;
+
 };
 
 #endif // __ENEMY_REDSHIP_H__
