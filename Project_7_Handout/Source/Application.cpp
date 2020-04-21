@@ -10,6 +10,7 @@
 #include "ModuleParticles.h"
 #include "ModuleEnemies.h"
 #include "ModuleCollisions.h"
+#include "ModuleFonts.h"
 #include "ModuleRender.h"
 
 Application::Application()
@@ -17,19 +18,19 @@ Application::Application()
 	// The order in which the modules are added is very important.
 	// It will define the order in which Pre/Update/Post will be called
 	// Render should always be last, as our last action should be updating the screen
-	modules[0] = window = new ModuleWindow();
-	modules[1] = input = new ModuleInput();
-	modules[2] = textures = new ModuleTextures();
-	modules[3] = audio = new ModuleAudio();
+	modules[0] =	window =		new ModuleWindow(true);
+	modules[1] =	input =			new ModuleInput(true);
+	modules[2] =	textures =		new ModuleTextures(true);
+	modules[3] =	audio =			new ModuleAudio(true);
+	modules[4] =	scene =			new ModuleScene(true);
 
-	modules[4] = scene = new ModuleScene();
-	modules[5] = player = new ModulePlayer();
-	modules[6] = particles = new ModuleParticles();
-	modules[7] = enemies = new ModuleEnemies();
+	modules[5] =	player =		new ModulePlayer(true);
+	modules[6] =	particles =		new ModuleParticles(true);
+	modules[7] =	enemies =		new ModuleEnemies(true);
+	modules[8] =	collisions =	new ModuleCollisions(true);
 
-	modules[8] = collisions = new ModuleCollisions();
-
-	modules[9] = render = new ModuleRender();
+	modules[9] =	fonts =			new ModuleFonts(true);
+	modules[10] =	render =		new ModuleRender(true);
 }
 
 Application::~Application()
@@ -50,9 +51,9 @@ bool Application::Init()
 	for (int i = 0; i < NUM_MODULES && ret; ++i)
 		ret = modules[i]->Init();
 
-	//By now we will consider that all modules are always active
+	// Only active modules will be 'started'
 	for (int i = 0; i < NUM_MODULES && ret; ++i)
-		ret = modules[i]->Start();
+		ret = modules[i]->IsEnabled() ? modules[i]->Start() : true;
 
 	return ret;
 }
@@ -60,15 +61,15 @@ bool Application::Init()
 update_status Application::Update()
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
+	
+	for (int i = 0; i < NUM_MODULES && ret == update_status::UPDATE_CONTINUE; ++i)
+		ret = modules[i]->IsEnabled() ? modules[i]->PreUpdate() : update_status::UPDATE_CONTINUE;
 
 	for (int i = 0; i < NUM_MODULES && ret == update_status::UPDATE_CONTINUE; ++i)
-		ret = modules[i]->PreUpdate();
+		ret = modules[i]->IsEnabled() ? modules[i]->Update() : update_status::UPDATE_CONTINUE;
 
 	for (int i = 0; i < NUM_MODULES && ret == update_status::UPDATE_CONTINUE; ++i)
-		ret = modules[i]->Update();
-
-	for (int i = 0; i < NUM_MODULES && ret == update_status::UPDATE_CONTINUE; ++i)
-		ret = modules[i]->PostUpdate();
+		ret = modules[i]->IsEnabled() ? modules[i]->PostUpdate() : update_status::UPDATE_CONTINUE;
 
 	return ret;
 }
@@ -78,7 +79,8 @@ bool Application::CleanUp()
 	bool ret = true;
 
 	for (int i = NUM_MODULES - 1; i >= 0 && ret; --i)
-		ret = modules[i]->CleanUp();
+		ret = modules[i]->IsEnabled() ? modules[i]->CleanUp() : true;
+
 
 	return ret;
 }
