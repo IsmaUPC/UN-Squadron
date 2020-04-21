@@ -112,6 +112,9 @@
     <ClInclude Include="ModuleFadeToBlack.h">
       <Filter>Source Files\Modules\Core</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleFonts.h">
+      <Filter>Source Files\Modules\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Module.cpp">
@@ -187,6 +190,9 @@
       <Filter>Source Files\Entities\Template</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFadeToBlack.cpp">
+      <Filter>Source Files\Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFonts.cpp">
       <Filter>Source Files\Modules\Core</Filter>
     </ClCompile>
   </ItemGroup>
