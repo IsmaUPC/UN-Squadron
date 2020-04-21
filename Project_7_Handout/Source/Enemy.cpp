@@ -37,8 +37,9 @@ void Enemy::Update()
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
 
-	if (App->input->keys[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN) {
+	if (rand() % 10000<20 && !isShotDone ) {
 		shotEnemy();
+		isShotDone = true;
 	}
 }
 

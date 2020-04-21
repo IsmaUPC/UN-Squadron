@@ -52,6 +52,7 @@ protected:
 
 	// Original spawn position. Stored for movement calculations
 	iPoint spawnPos;
+	bool isShotDone =false;
 	void shotEnemy();
 	int pattern = 0;
 };
