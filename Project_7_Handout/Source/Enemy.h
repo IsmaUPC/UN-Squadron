@@ -12,6 +12,8 @@ class Enemy
 public:
 	// Constructor
 	// Saves the spawn position for later movement calculations
+	Enemy::Enemy(int x, int y);
+	
 	Enemy(int x, int y, int pattern);
 
 	// Destructor
