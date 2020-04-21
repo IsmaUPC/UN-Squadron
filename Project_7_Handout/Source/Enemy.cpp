@@ -13,6 +13,10 @@ Enemy::Enemy(int x, int y) : position(x, y)
 {
 	spawnPos = position;
 }
+Enemy::Enemy(int x, int y, int _pattern) : position(x, y) , pattern(_pattern)
+{
+	spawnPos = position;
+}
 
 Enemy::~Enemy()
 {

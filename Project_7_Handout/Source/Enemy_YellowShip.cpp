@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "ModuleCollisions.h"
 
-Enemy_YellowShip::Enemy_YellowShip(int x, int y):Enemy(x,y)
+Enemy_YellowShip::Enemy_YellowShip(int x, int y,int _pattern):Enemy(x,y,_pattern)
 {
 	flyInvers.PushBack({ 790,105,66,39 });
 	currentAnim = &flyInvers;
@@ -49,14 +49,29 @@ Enemy_YellowShip::Enemy_YellowShip(int x, int y):Enemy(x,y)
 
 void Enemy_YellowShip::Update()
 {
-	currentAnim = path.GetCurrentAnimation();
-	waveRatio += waveRatioSpeed;
-	path.Update();
-	position = spawnPos + path.GetRelativePosition();
-
-	position.x -= 1;
-
+	move();
 	// Call to the base class. It must be called at the end
 	// It will update the collider depending on the position
 	Enemy::Update();
 }
+
+void Enemy_YellowShip::move(){
+
+	switch (pattern) {
+	case 0:
+		currentAnim = path.GetCurrentAnimation();
+		waveRatio += waveRatioSpeed;
+		path.Update();
+		position = spawnPos + path.GetRelativePosition();
+
+		position.x -= 1;
+		break;
+
+	case 1:
+
+		break;
+	}
+
+
+}
+
