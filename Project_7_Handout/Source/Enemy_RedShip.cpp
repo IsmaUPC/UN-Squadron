@@ -2,12 +2,15 @@
 #include "Application.h"
 #include "ModuleCollisions.h"
 
+#include "ModuleRender.h"
+
 
 Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 {
 	flyInvers.PushBack({ 790,29,66,39 });
 	currentAnim = &flyInvers;
 	flyInvers.speed = 0.01f;
+
 
 	fly.PushBack({ 252,29,66,39 });
 	//currentAnim = &fly;
@@ -67,6 +70,7 @@ void Enemy_RedShip::Update()
 }
 
 void Enemy_RedShip::move(){
+	spawnPos.x +=SCREEN_SPEED;
 
 	switch (pattern) {
 	case 0:
@@ -130,7 +134,7 @@ void Enemy_RedShip::move(){
 				FASE = 2;
 			break;
 		case 2:
-			if (position.y > 200) {
+			if (position.y > 250) {
 				xRecorrido = (spawnPos.x - position.x);
 
 				position.y -= sqrt(xRecorrido / 50);
@@ -140,31 +144,31 @@ void Enemy_RedShip::move(){
 			
 			break;
 		case 3:
-			if (position.y > 150) {
+			if (position.y > 180) {
 				xRecorrido = (spawnPos.x - position.x);
-				position.y -= sqrt(xRecorrido / 100);
-				position.x += 0.5f;
+				position.y -= sqrt(xRecorrido / 50);
+				position.x += SCREEN_SPEED;
 			}
 			else
 				FASE = 4;
 			break;
 
 		case 4:
-			if (position.y > 100) {
+			if (position.y > 180) {
 				xRecorrido = (spawnPos.x - position.x);
 
 				position.y -= sqrt(xRecorrido / 50);
-				position.x += 2;
+				position.x += 1;
 			}
 			else
 				FASE = 5;
 			break;
 		case 5:
 
-			xRecorrido = (spawnPos.x - position.x);
+			xRecorrido = (spawnPos.x - position.x) ;
 
-			position.y -= sqrt(xRecorrido / 50);
-			position.x += 3;
+			position.y -= sqrt(xRecorrido / 80);
+			position.x += 3+SCREEN_SPEED ;
 			
 			break;
 		}
