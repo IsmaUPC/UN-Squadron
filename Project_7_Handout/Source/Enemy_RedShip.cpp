@@ -8,7 +8,7 @@
 Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 {
 	flyInvers.PushBack({ 790,29,66,39 });
-	currentAnim = &flyInvers;
+	//currentAnim = &flyInvers;
 	flyInvers.speed = 0.01f;
 
 
@@ -29,8 +29,8 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 	twistToRight.PushBack({ 324,31,52, 37 });
 	twistToRight.PushBack({ 252,29,66,39 });
 	twistToRight.loop = false;
-	twistToRight.speed = 0.02f;
-
+	twistToRight.speed = 0.08f;
+	currentAnim = &twistToRight;
 
 	twistToLeft.PushBack({ 324,31,52, 37 });
 	twistToLeft.PushBack({ 390,16,47, 52 });
@@ -46,6 +46,36 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 	twistToLeft.PushBack({ 790,29,66,39 });
 	twistToLeft.loop = false;
 	twistToLeft.speed = 0.02f;
+
+	twistToRightToDown.PushBack({ 722,469,62, 37 });
+	twistToRightToDown.PushBack({ 670,469,48, 52 });
+	twistToRightToDown.PushBack({ 633,469,31, 62 });
+	twistToRightToDown.PushBack({ 610,469,19, 68 });
+	twistToRightToDown.PushBack({ 579,469,25, 68 });
+	twistToRightToDown.PushBack({ 534,469,39, 68 });
+	twistToRightToDown.PushBack({ 503,469,25, 68 });
+	twistToRightToDown.PushBack({ 478,469,19, 68 });
+	twistToRightToDown.PushBack({ 443,469,31, 62 });
+	twistToRightToDown.PushBack({ 390,469,47, 52 });
+	twistToRightToDown.PushBack({ 324,469,52, 37 });
+	twistToRightToDown.PushBack({ 252,469,66,39 });
+	twistToRightToDown.loop = false;
+	twistToRightToDown.speed = 0.08f;
+
+	twistToLeftToDown.PushBack({ 324,469,52, 37 });
+	twistToLeftToDown.PushBack({ 390,469,47, 52 });
+	twistToLeftToDown.PushBack({ 443,469,31, 62 });
+	twistToLeftToDown.PushBack({ 478,469,19, 68 });
+	twistToLeftToDown.PushBack({ 503,469,25, 68 });
+	twistToLeftToDown.PushBack({ 534,469,39, 68 });
+	twistToLeftToDown.PushBack({ 579,469,25, 68 });
+	twistToLeftToDown.PushBack({ 610,469,19, 68 });
+	twistToLeftToDown.PushBack({ 633,469,31, 62 });
+	twistToLeftToDown.PushBack({ 670,469,48, 52 });
+	twistToLeftToDown.PushBack({ 722,469,62, 37 });
+	twistToLeftToDown.PushBack({ 790,469,66,39 });
+	twistToLeftToDown.loop = false;
+	twistToLeftToDown.speed = 0.02f;
 
 	path.PushBack({ -0.5f , 0.0f }, 125, &flyInvers);
 
@@ -169,7 +199,6 @@ void Enemy_RedShip::move(){
 
 			position.y -= sqrt(xRecorrido / 80);
 			position.x += 3+SCREEN_SPEED ;
-			
 			break;
 		}
 

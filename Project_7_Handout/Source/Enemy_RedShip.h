@@ -35,8 +35,10 @@ private:
 	// The enemy animation
 	Animation fly;				//Vuela hacia la derecha
 	Animation flyInvers;		//Vuela hacia la izquierda (hacia nosotros)
-	Animation twistToRight;		//Efectua un giro hacaia la derecha
-	Animation twistToLeft;		//Efectua una giro hacia la izquierda
+	Animation twistToRight;		//Efectua un giro hacaia la derecha ToUp
+	Animation twistToLeft;		//Efectua una giro hacia la izquierda ToUp
+	Animation twistToRightToDown;
+	Animation twistToLeftToDown;
 
 
 	//NEW VARS

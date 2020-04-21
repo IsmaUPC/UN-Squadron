@@ -43,6 +43,36 @@ Enemy_YellowShip::Enemy_YellowShip(int x, int y,int _pattern):Enemy(x,y,_pattern
 	twistToLeft.loop = false;
 	twistToLeft.speed = 0.02f;
 
+	twistToRightToDown.PushBack({ 722,393,62, 37 });
+	twistToRightToDown.PushBack({ 670,393,48, 52 });
+	twistToRightToDown.PushBack({ 633,393,31, 62 });
+	twistToRightToDown.PushBack({ 610,393,19, 68 });
+	twistToRightToDown.PushBack({ 579,393,25, 68 });
+	twistToRightToDown.PushBack({ 534,393,39, 68 });
+	twistToRightToDown.PushBack({ 503,393,25, 68 });
+	twistToRightToDown.PushBack({ 478,393,19, 68 });
+	twistToRightToDown.PushBack({ 443,393,31, 62 });
+	twistToRightToDown.PushBack({ 390,393,47, 52 });
+	twistToRightToDown.PushBack({ 324,393,52, 37 });
+	twistToRightToDown.PushBack({ 252,393,66,39 });
+	twistToRightToDown.loop = false;
+	twistToRightToDown.speed = 0.02f;
+
+	twistToLeftToDown.PushBack({ 324,393,52, 37 });
+	twistToLeftToDown.PushBack({ 390,393,47, 52 });
+	twistToLeftToDown.PushBack({ 443,393,31, 62 });
+	twistToLeftToDown.PushBack({ 478,393,19, 68 });
+	twistToLeftToDown.PushBack({ 503,393,25, 68 });
+	twistToLeftToDown.PushBack({ 534,393,39, 68 });
+	twistToLeftToDown.PushBack({ 579,393,25, 68 });
+	twistToLeftToDown.PushBack({ 610,393,19, 68 });
+	twistToLeftToDown.PushBack({ 633,393,31, 62 });
+	twistToLeftToDown.PushBack({ 670,393,48, 52 });
+	twistToLeftToDown.PushBack({ 722,393,62, 37 });
+	twistToLeftToDown.PushBack({ 790,393,66,39 });
+	twistToLeftToDown.loop = false;
+	twistToLeftToDown.speed = 0.02f;
+
 	path.PushBack({ -0.5f , 0.0f }, 125, &flyInvers);
 	collider = App->collisions->AddCollider({ 0, 0, 66, 39 }, Collider::Type::ENEMY, (Module*)App->enemies);
 }

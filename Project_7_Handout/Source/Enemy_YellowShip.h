@@ -39,6 +39,8 @@ private:
 	Animation flyInvers;		//Vuela hacia la izquierda (hacia nosotros)
 	Animation twistToRight;		//Efectua un giro hacaia la derecha
 	Animation twistToLeft;		//Efectua una giro hacia la izquierda
+	Animation twistToRightToDown;
+	Animation twistToLeftToDown;
 };
 
 #endif // __ENEMY_YELLOWSHIP_H__
