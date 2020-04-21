@@ -7,11 +7,14 @@
 #include "ModuleParticles.h"
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
+#include "ModuleFonts.h"
+
+#include <stdio.h>
 
 #include "SDL/include/SDL_scancode.h"
 
 
-ModulePlayer::ModulePlayer()
+ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
 	// idle animation - just one sprite
 	idleAnim.PushBack({ 80, 4, 68, 20 });
@@ -50,6 +53,12 @@ bool ModulePlayer::Start()
 	position.y = 230;
 
 	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT}, Collider::Type::PLAYER, this);
+
+	//FONTS
+	scoreFont = App->fonts->Load("assets/Fonts/rtype_font.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 1);
+
+	scoreFont2 = App->fonts->Load("assets/Fonts/rtype_font3.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 2);
+
 
 	return ret;
 }
@@ -157,6 +166,14 @@ update_status ModulePlayer::PostUpdate()
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		App->render->Blit(texture, position.x, position.y, &rect);
 	}
+
+	// Draw UI (score) --------------------------------------
+	sprintf_s(scoreText, 10, "%7d", score);
+
+	// TODO 3: Blit the text of the score at the bottom of the screen
+
+	App->fonts->BlitText(10, 10, scoreFont, scoreText);
+	App->fonts->BlitText(10, 20, scoreFont2, "hola putos");
 
 	return update_status::UPDATE_CONTINUE;
 }

@@ -82,7 +82,6 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 	//path.PushBack({ 1.0f , 0.0f }, 250, &walkBack);
 	collider = App->collisions->AddCollider({ 0, 0, 66, 39 }, Collider::Type::ENEMY, (Module*)App->enemies);
 	
-	pattern = 2;
 	position.y = 350;
 	
 	//

@@ -12,7 +12,7 @@ class ModulePlayer : public Module
 {
 public:
 	// Constructor
-	ModulePlayer();
+	ModulePlayer(bool startEnabled);
 
 	// Destructor
 	~ModulePlayer();
@@ -69,6 +69,12 @@ public:
 	uint laserFx = 0;
 	uint explosionFx = 0;
 
+	// Font score index
+	uint score = 000;
+	int scoreFont = -1;
+	int scoreFont2 = 2;
+	char scoreText[10] = { "\0" };
+	char* saludo;
 };
 
 #endif //!__MODULE_PLAYER_H__
