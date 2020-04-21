@@ -6,6 +6,9 @@
 #include "ModuleAudio.h"
 #include "ModuleRender.h"
 
+#include "ModuleInput.h"
+#include "SDL/include/SDL_scancode.h"
+
 Enemy::Enemy(int x, int y) : position(x, y)
 {
 	spawnPos = position;
@@ -29,6 +32,10 @@ void Enemy::Update()
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
+
+	if (App->input->keys[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN) {
+		shotEnemy();
+	}
 }
 
 void Enemy::Draw()
@@ -41,4 +48,9 @@ void Enemy::OnCollision(Collider* collider)
 {
 	//App->particles->AddParticle(App->particles->explosion, position.x, position.y);
 	App->audio->PlayFx(destroyedFx);
+}
+
+void Enemy::shotEnemy() {
+	App->particles->AddParticle(App->particles->enemyLaser, position.x + 35, position.y + 10, Collider::Type::ENEMY_SHOT);
+
 }

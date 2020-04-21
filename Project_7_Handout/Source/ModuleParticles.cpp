@@ -2,6 +2,7 @@
 
 #include "Application.h"
 
+#include "ModulePlayer.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleCollisions.h"
@@ -22,7 +23,8 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	texture = App->textures->Load("Assets/PlayerShoot.png");
+	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
+	enemyShotTexture= App->textures->Load("Assets/PlayerShoot.png");
 	/*
 	// Explosion particle
 	explosion.anim.PushBack({274, 296, 33, 30});
@@ -34,11 +36,16 @@ bool ModuleParticles::Start()
 	explosion.anim.loop = false;
 	explosion.anim.speed = 0.3f;
 	*/
-	laser.anim.PushBack({ 0, 0, 40, 7 });
+	playerLaser.anim.PushBack({ 0, 0, 40, 7 });
+	enemyLaser.anim.PushBack({ 0, 0, 40, 7 });
 	//laser.anim.PushBack({ 249, 103, 16, 12 });
-	laser.speed.x = 25 + SCREEN_SPEED;
-	laser.lifetime = 50;
-	laser.anim.speed = 0.2f;
+	playerLaser.speed.x = 25 + SCREEN_SPEED;
+	playerLaser.lifetime = 50;
+	playerLaser.anim.speed = 0.2f;
+
+	enemyLaser.speed.x = - SCREEN_SPEED;
+	enemyLaser.lifetime = 150;
+	enemyLaser.anim.speed = 0.2f;
 
 	return true;
 }
@@ -81,6 +88,7 @@ update_status ModuleParticles::Update()
 		Particle* particle = particles[i];
 
 		if(particle == nullptr)	continue;
+		
 
 		// Call particle Update. If it has reached its lifetime, destroy it
 		if(particle->Update() == false)
@@ -99,10 +107,16 @@ update_status ModuleParticles::PostUpdate()
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		Particle* particle = particles[i];
+		//Collider* colliderI= particle->collider;
 
-		if (particle != nullptr && particle->isAlive)
+		if (particle != nullptr && particle->collider != nullptr && particle->isAlive)
 		{
-			App->render->Blit(texture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
+			if (particle->collider->type == particle->collider->ENEMY_SHOT) {
+				App->render->Blit(enemyShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));		
+			}
+			else if (particle->collider->type == particle->collider->PLAYER_SHOT) {
+				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
+			}
 		}
 	}
 
@@ -111,6 +125,7 @@ update_status ModuleParticles::PostUpdate()
 
 void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType, uint delay)
 {
+	velShotEnemy = 5;
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		//Finding an empty slot for a new particle
@@ -125,7 +140,23 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collid
 			//Adding the particle's collider
 			if (colliderType != Collider::Type::NONE)
 				p->collider = App->collisions->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);
+		
+			if (p->collider->type == p->collider->ENEMY_SHOT && p->collider != nullptr) {
+				
 
+				xPlayer = App->player->position.x-x;
+				yPlayer = App->player->position.y-y ;
+				escalar = (xPlayer * x) + (yPlayer * y);
+
+				magnitudPlayer = sqrt(pow(xPlayer, 2) + pow(yPlayer, 2));
+				magnitudEnemy = sqrt(pow(x, 2) + pow(y, 2));
+
+				angulo = acos(escalar/(magnitudPlayer* magnitudEnemy));
+
+				p->speed.x = (xPlayer>0)? (velShotEnemy*cos(angulo)+SCREEN_SPEED):(velShotEnemy*cos(angulo)-SCREEN_SPEED);
+				p->speed.y = (yPlayer>0)? (velShotEnemy * sin(angulo)) :-(velShotEnemy *sin(angulo)) ;
+
+			}
 			particles[i] = p;
 			break;
 		}

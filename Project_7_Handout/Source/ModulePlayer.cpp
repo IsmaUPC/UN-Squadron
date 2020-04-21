@@ -125,7 +125,7 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && cooldown == 11)
 	{
-		App->particles->AddParticle(App->particles->laser, position.x + 35, position.y+10, Collider::Type::PLAYER_SHOT);
+		App->particles->AddParticle(App->particles->playerLaser, position.x + 35, position.y+10, Collider::Type::PLAYER_SHOT);
 		App->audio->PlayFx(laserFx);
 		cooldown--;
 	}

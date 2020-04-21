@@ -50,6 +50,7 @@ protected:
 
 	// Original spawn position. Stored for movement calculations
 	iPoint spawnPos;
+	void shotEnemy();
 };
 
 #endif // __ENEMY_H__
