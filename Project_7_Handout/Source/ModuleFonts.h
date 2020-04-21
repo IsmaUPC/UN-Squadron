@@ -18,9 +18,9 @@ struct Font
 	SDL_Texture* texture = nullptr;
 
 	// Font setup data
-	uint totalLength;
-	uint rows, columns;
-	uint char_w, char_h;
+	uint totalLength = 0;
+	uint rows, columns = 0;
+	uint char_w, char_h = 0;
 };
 
 class ModuleFonts : public Module

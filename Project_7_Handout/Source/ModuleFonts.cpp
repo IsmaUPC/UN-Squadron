@@ -99,18 +99,20 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 
 	for (uint i = 0; i < len; ++i)
 	{
-		int j;
+		uint charIndex = 0;
+
 
 		// TODO 2: Find the character in the table, its position in the texture and then Blit
 		// 1 - Find the location of the current character in the lookup table
-		for (j = 0; j < font->totalLength; j++) {
+		for (uint j = 0; j < font->totalLength; j++) {
 			if (font->table[j] == text[i]) {
+				charIndex = j;
 				break;
 			}
 		}
 		// Retrieve the position of the current character in the sprite
-		spriteRect.x = spriteRect.w * (j % font->columns);
-		spriteRect.y = spriteRect.h * (j / font->columns);
+		spriteRect.x = spriteRect.w * (charIndex % font->columns);
+		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
 		App->render->Blit(font->texture, x, y, &spriteRect, 0.0f, false);
 		// 4 - Advance the position where we blit the next character
