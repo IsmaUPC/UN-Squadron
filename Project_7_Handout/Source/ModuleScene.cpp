@@ -6,6 +6,7 @@
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
+#include "ModulePlayer.h"
 
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 {
@@ -43,7 +44,9 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 1200, 150, 90, 0);
 	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 350, 90, 0);
 
-	
+	App->player->Enable();
+	App->enemies->Enable();
+
 	return ret;
 }
 
@@ -87,7 +90,7 @@ void ModuleScene::updateBackground() {
 bool ModuleScene::CleanUp()
 {
 //Enable (and properly disable) the player module
-	//App->player->Disable(); No funciona
+	App->player->Disable();
 	App->enemies->Disable();
 
 

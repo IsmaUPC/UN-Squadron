@@ -39,8 +39,7 @@ void Module::OnCollision(Collider* c1, Collider* c2)
 }
 void Module::Enable()
 {
-	if (!isEnabled)
-	{
+	if (!isEnabled){
 		isEnabled = true;
 		Start();
 	}
@@ -49,8 +48,7 @@ void Module::Enable()
 void Module::Disable()
 {
 	// TODO 0: Call CleanUp() for disabling a module
-	if (isEnabled)
-	{
+	if (isEnabled){
 		isEnabled = false;
 		CleanUp();
 	}

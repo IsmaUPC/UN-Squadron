@@ -7,6 +7,7 @@
 #include "ModuleParticles.h"
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
+#include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
 
 #include <stdio.h>
@@ -54,12 +55,13 @@ bool ModulePlayer::Start()
 
 	destroyed = false;
 
-	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT}, Collider::Type::PLAYER, this);
 
 	//FONTS
 	scoreFont = App->fonts->Load("Assets/Fonts/rtype_font.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 1);
 
 	scoreFont2 = App->fonts->Load("Assets/Fonts/rtype_font3.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 2);
+	
+	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT }, Collider::Type::PLAYER, this);
 
 
 	return ret;
@@ -163,13 +165,9 @@ update_status ModulePlayer::Update()
 
 update_status ModulePlayer::PostUpdate()
 {
-	if (!destroyed)
-	{
+	if (!destroyed){
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		App->render->Blit(texture, position.x, position.y, &rect);
-		
-
-		destroyed = true;
 	}
 
 	// Draw UI (score) --------------------------------------
@@ -195,7 +193,8 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->particles->AddParticle(App->particles->explosion, position.x - 4, position.y - 4, Collider::Type::NONE, 21);
 		*/
 		App->audio->PlayFx(explosionFx);
-		//App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); No funciona
+
+		App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); // no funciona
 		destroyed = true;
 	}
 
