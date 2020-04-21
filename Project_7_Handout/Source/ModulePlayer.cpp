@@ -52,6 +52,8 @@ bool ModulePlayer::Start()
 	position.x = 80;
 	position.y = 230;
 
+	destroyed = false;
+
 	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT}, Collider::Type::PLAYER, this);
 
 	//FONTS
@@ -165,12 +167,15 @@ update_status ModulePlayer::PostUpdate()
 	{
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		App->render->Blit(texture, position.x, position.y, &rect);
+		
+
+		destroyed = true;
 	}
 
 	// Draw UI (score) --------------------------------------
 	sprintf_s(scoreText, 10, "%7d", score);
 
-	// TODO 3: Blit the text of the score at the bottom of the screen
+	//Blit the text of the score at the bottom of the screen
 
 	App->fonts->BlitText(10, 10, scoreFont, scoreText);
 	App->fonts->BlitText(10, 20, scoreFont2, "hola putos");
@@ -190,7 +195,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->particles->AddParticle(App->particles->explosion, position.x - 4, position.y - 4, Collider::Type::NONE, 21);
 		*/
 		App->audio->PlayFx(explosionFx);
-
+		//App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); No funciona
 		destroyed = true;
 	}
 

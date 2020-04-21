@@ -84,5 +84,15 @@ void ModuleScene::updateBackground() {
 		}
 	}
 }
+bool ModuleScene::CleanUp()
+{
+//Enable (and properly disable) the player module
+	//App->player->Disable(); No funciona
+	App->enemies->Disable();
+
+
+
+	return true;
+}
 
 
