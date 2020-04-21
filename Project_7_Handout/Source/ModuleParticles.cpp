@@ -150,18 +150,19 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collid
 			if (p->collider->type == p->collider->ENEMY_SHOT) {
 				
 
-				xPlayer = App->player->position.x-x;
-				yPlayer = App->player->position.y-y ;
+				xPlayer = App->player->position.x - x;
+				yPlayer = App->player->position.y - y;
 				escalar = (xPlayer * x) + (yPlayer * y);
 
 				magnitudPlayer = sqrt(pow(xPlayer, 2) + pow(yPlayer, 2));
 				magnitudEnemy = sqrt(pow(x, 2) + pow(y, 2));
 
-				angulo = acos(escalar/(magnitudPlayer* magnitudEnemy));
+				angulo = acos(escalar / (magnitudPlayer * magnitudEnemy));
 
-				p->speed.x = (xPlayer>0)? (velShotEnemy*cos(angulo)+SCREEN_SPEED):(velShotEnemy*cos(angulo)-SCREEN_SPEED);
-				p->speed.y = (yPlayer>0)? (velShotEnemy * sin(angulo)) :-(velShotEnemy *sin(angulo)) ;
-
+				p->speed.x = (xPlayer > 0) ? (velShotEnemy * cos(angulo) + SCREEN_SPEED) : (velShotEnemy * cos(angulo) - SCREEN_SPEED);
+				p->speed.y = (yPlayer > 0 ) ? (velShotEnemy * sin(angulo)) + (0.5f+SCREEN_SPEED*sin(angulo)) : -(velShotEnemy * sin(angulo)) - ((velShotEnemy * sin(angulo ))*SCREEN_SPEED);
+					//p->speed.x = (velShotEnemy * cos(angulo) - SCREEN_SPEED);
+					//p->speed.y = (velShotEnemy * sin(angulo));
 			}
 			particles[i] = p;
 			break;
