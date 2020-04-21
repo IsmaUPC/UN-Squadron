@@ -6,8 +6,7 @@
 #include "ModuleAudio.h"
 #include "ModuleRender.h"
 
-#include "ModuleInput.h"
-#include "SDL/include/SDL_scancode.h"
+
 
 Enemy::Enemy(int x, int y) : position(x, y)
 {
@@ -37,10 +36,8 @@ void Enemy::Update()
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
 
-	if (rand() % 10000<20 && !isShotDone ) {
-		shotEnemy();
-		isShotDone = true;
-	}
+	shotPattern();
+
 }
 
 void Enemy::Draw()
@@ -58,4 +55,12 @@ void Enemy::OnCollision(Collider* collider)
 void Enemy::shotEnemy() {
 	App->particles->AddParticle(App->particles->enemyLaser, position.x + 35, position.y + 10, Collider::Type::ENEMY_SHOT);
 
+}
+
+void Enemy::shotPattern() {
+
+	if (rand() % 10000 < 40 && !isShotDone) {
+		shotEnemy();
+		isShotDone = true;
+	}
 }

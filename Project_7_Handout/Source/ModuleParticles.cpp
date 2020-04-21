@@ -43,7 +43,7 @@ bool ModuleParticles::Start()
 	enemyLaser.anim.PushBack({ 10*i, 0, 10, 10 });
 	enemyLaser.speed.x = - SCREEN_SPEED;
 	enemyLaser.lifetime = 150;
-	enemyLaser.anim.speed = 0.1f;
+	enemyLaser.anim.speed = 0.4f;
 	
 
 	//laser.anim.PushBack({ 249, 103, 16, 12 });

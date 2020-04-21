@@ -9,12 +9,13 @@ struct Collider;
 
 class Enemy
 {
+
 public:
 	// Constructor
 	// Saves the spawn position for later movement calculations
 	Enemy::Enemy(int x, int y);
 	
-	Enemy(int x, int y, int pattern);
+	Enemy(int x, int y,  int _pattern);
 
 	// Destructor
 	virtual ~Enemy();
@@ -44,8 +45,13 @@ public:
 	int destroyedFx = 0;
 
 protected:
+	
+	int xEVel, yEVel = 0;
+	
 	// A ptr to the current animation
 	Animation* currentAnim = nullptr;
+
+	void  shotPattern();
 
 	// The enemy's collider
 	Collider* collider = nullptr;
@@ -55,6 +61,7 @@ protected:
 	bool isShotDone =false;
 	void shotEnemy();
 	int pattern = 0;
+
 };
 
 #endif // __ENEMY_H__
