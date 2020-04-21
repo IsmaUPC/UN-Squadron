@@ -176,7 +176,7 @@ update_status ModulePlayer::PostUpdate()
 	//Blit the text of the score at the bottom of the screen
 
 	App->fonts->BlitText(10, 10, scoreFont, scoreText);
-	App->fonts->BlitText(10, 20, scoreFont2, "hola putos");
+	
 
 	return update_status::UPDATE_CONTINUE;
 }
