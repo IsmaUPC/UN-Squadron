@@ -215,6 +215,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		//App->particles->Disable();
 		
 	}
+	
 
 }
 void ModulePlayer::godModeUpdate(){
