@@ -48,6 +48,8 @@ bool ModulePlayer::Start()
 	bool ret = true;
 	destroyedCountdown = 120;
 	destroyed = false;
+	godMode = false;
+	score = 0;
 
 	
 	texture = App->textures->Load("Assets/PlayerSprites.png");
@@ -60,13 +62,11 @@ bool ModulePlayer::Start()
 	position.y = 230;
 
 
-
-
 	//FONTS
 	scoreFont = App->fonts->Load("Assets/Fonts/rtype_font.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 1);
-
 	scoreFont2 = App->fonts->Load("Assets/Fonts/rtype_font3.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 2);
 	
+
 	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT }, Collider::Type::PLAYER, this);
 
 
@@ -211,7 +211,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->audio->PlayFx(explosionFx);
 
 		destroyed = true;
-	
+		collider->pendingToDelete = true;
 		//App->particles->Disable();
 		
 	}
