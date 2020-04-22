@@ -6,7 +6,7 @@
 Enemy_BlueShip::Enemy_BlueShip(int x, int y,int _pattern) : Enemy(x, y, _pattern)
 {
 	flyInvers.PushBack({ 419,258,61,18 });
-	//currentAnim = &flyInvers;
+	currentAnim = &flyInvers;
 	flyInvers.speed = 0.01f;
 
 	fly.PushBack({ 627,258,62,18 });
