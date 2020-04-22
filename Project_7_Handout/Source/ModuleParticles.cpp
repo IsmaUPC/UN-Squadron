@@ -30,7 +30,8 @@ bool ModuleParticles::Start()
 	App->textures->Enable();
 	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
 	enemyShotTexture= App->textures->Load("Assets/EnemyShoot.png");
-	/*
+	playerExplosionTexture = App->textures->Load("Assets/EnemyShoot.png");
+	
 	// Explosion particle
 	explosion.anim.PushBack({274, 296, 33, 30});
 	explosion.anim.PushBack({313, 296, 33, 30});
@@ -40,7 +41,7 @@ bool ModuleParticles::Start()
 	explosion.anim.PushBack({457, 296, 33, 30});
 	explosion.anim.loop = false;
 	explosion.anim.speed = 0.3f;
-	*/
+	
 	playerLaser.anim.PushBack({ 0, 0, 40, 7 });
 
 
@@ -85,6 +86,11 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 		{
 			delete particles[i];
 			particles[i] = nullptr;
+			if (c1->type == Collider::PLAYER_SHOT && c2->type == Collider::ENEMY || c2->type == Collider::PLAYER_SHOT && c1->type == Collider::ENEMY) {
+				App->player->score += 20;
+				
+
+			}
 			break;
 		}
 	}

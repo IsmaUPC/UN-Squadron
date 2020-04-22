@@ -23,7 +23,7 @@ bool ModuleScene::Start()
 	App->player->Enable();
 	App->enemies->Enable();
 	App->collisions->Enable();
-	App->textures-> Enable();
+	//App->textures-> Enable();
 	//App->audio->Enable();
 	//App->textures->Init();
 	

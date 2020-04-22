@@ -51,9 +51,10 @@ public:
 private:
 	// Particles spritesheet loaded into an SDL Texture
 	SDL_Texture* playerShotTexture = nullptr;
+	SDL_Texture* playerExplosionTexture = nullptr;
 	SDL_Texture* enemyShotTexture = nullptr;
-	int xPlayer = 0;
-	int yPlayer = 0;
+
+	int xPlayer , yPlayer = 0;
 	float escalar = 0;
 	float magnitudPlayer = 0;
 	float magnitudEnemy = 0;
