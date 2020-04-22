@@ -30,6 +30,7 @@ Enemy_BlueShip::Enemy_BlueShip(int x, int y,int _pattern) : Enemy(x, y, _pattern
 	downAnimToLeft.speed = 0.1f;
 
 	path.PushBack({ -0.8f , -0.5f }, 100, &flyInvers);
+
 	collider = App->collisions->AddCollider({ 0, 0, 61, 18 }, Collider::Type::ENEMY, (Module*)App->enemies);
 }
 

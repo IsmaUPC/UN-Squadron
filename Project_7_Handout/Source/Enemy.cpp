@@ -59,7 +59,7 @@ void Enemy::shotEnemy() {
 
 void Enemy::shotPattern() {
 
-	if (rand() % 10000 < 40 && !isShotDone) {
+	if (rand() % 1000 < 45 && !isShotDone) {
 		shotEnemy();
 		isShotDone = true;
 	}
