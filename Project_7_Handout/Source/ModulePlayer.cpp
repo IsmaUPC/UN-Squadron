@@ -35,15 +35,18 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 
 ModulePlayer::~ModulePlayer()
 {
-
+	if (collider != nullptr)
+		collider->pendingToDelete = true;
 }
 
 bool ModulePlayer::Start()
 {
 	LOG("Loading player textures");
 
-	bool ret = true;
 
+	bool ret = true;
+	destroyedCountdown = 120;
+	destroyed = false;
 	texture = App->textures->Load("Assets/PlayerSprites.png");
 	currentAnimation = &idleAnim;
 
@@ -53,7 +56,7 @@ bool ModulePlayer::Start()
 	position.x = 80;
 	position.y = 230;
 
-	destroyed = false;
+
 
 
 	//FONTS
@@ -142,6 +145,9 @@ update_status ModulePlayer::Update()
 		App->audio->PlayFx(laserFx);
 		cooldown--;
 	}
+	if (App->input->keys[SDL_SCANCODE_M] == KEY_STATE::KEY_DOWN ){
+		destroyed = true;
+	}
 	if(cooldown<11) cooldown--;
 	if (cooldown == 0)cooldown = 11;
 	// If no up/down movement detected, set the current animation back to idle
@@ -156,8 +162,10 @@ update_status ModulePlayer::Update()
 	if (destroyed)
 	{
 		destroyedCountdown--;
-		if (destroyedCountdown <= 0)
-			return update_status::UPDATE_STOP;
+		if (destroyedCountdown <= 0){
+			App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); // no funciona
+			//return update_status::UPDATE_STOP;
+		}
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -194,8 +202,10 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		*/
 		App->audio->PlayFx(explosionFx);
 
-		App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); // no funciona
 		destroyed = true;
+	
+		//App->particles->Disable();
+		
 	}
 	
 

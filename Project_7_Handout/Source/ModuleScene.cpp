@@ -8,19 +8,26 @@
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
 
+
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 {
 
 }
 
-ModuleScene::~ModuleScene()
-{
+ModuleScene::~ModuleScene(){
 
 }
-
 // Load assets
 bool ModuleScene::Start()
 {
+	App->player->Enable();
+	App->enemies->Enable();
+	App->collisions->Enable();
+	App->textures-> Enable();
+	//App->audio->Enable();
+	//App->textures->Init();
+	
+
 	LOG("Loading background assets");
 
 	bool ret = true;
@@ -38,6 +45,7 @@ bool ModuleScene::Start()
 	// Enemies ---	
 	//App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 600, 130, 100, 0);
 
+
 	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 30, 2);	//WAVE 1
 	App->enemies->spawningEnemies(3, ENEMY_TYPE::REDSHIP, 940, 350, 50, 3);		//WAVE 2
@@ -50,6 +58,7 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2000, 200, 90, 0);	//WAVE 5
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 320, 90, 1);	//WAVE 5
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 120, 90, 2);	//WAVE 5
+
 	
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -60,8 +69,6 @@ bool ModuleScene::Start()
 
 
 
-	App->player->Enable();
-	App->enemies->Enable();
 
 	return ret;
 }
@@ -108,6 +115,10 @@ bool ModuleScene::CleanUp()
 //Enable (and properly disable) the player module
 	App->player->Disable();
 	App->enemies->Disable();
+	App->collisions->Disable();
+	//App->textures->Disable();
+	//App->audio->Disable();
+	
 
 
 

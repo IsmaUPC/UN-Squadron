@@ -29,7 +29,7 @@ ModuleEnemies::~ModuleEnemies()
 
 bool ModuleEnemies::Start()
 {
-	texture = App->textures->Load("Assets/UNSquadronSpritesEnemies.png");
+	textureEnemies = App->textures->Load("Assets/UNSquadronSpritesEnemies.png");
 	enemyDestroyedFx = App->audio->LoadFx("Assets/explosion.wav");
 
 	return true;
@@ -161,7 +161,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 					enemies[i] = new Enemy_BlueShip(info.x, info.y, info.pattern);
 					break;
 			}
-			enemies[i]->texture = texture;
+			enemies[i]->texture = textureEnemies;
 			enemies[i]->destroyedFx = enemyDestroyedFx;
 			break;
 		}

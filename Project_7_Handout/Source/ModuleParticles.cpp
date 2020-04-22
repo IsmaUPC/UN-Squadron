@@ -17,12 +17,17 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled)
 
 ModuleParticles::~ModuleParticles()
 {
-
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
+		if(particles[i] != nullptr)
+		particles[i]->collider->pendingToDelete;
+		
+	}
 }
 
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
+	App->textures->Enable();
 	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
 	enemyShotTexture= App->textures->Load("Assets/EnemyShoot.png");
 	/*
@@ -50,7 +55,6 @@ bool ModuleParticles::Start()
 	playerLaser.speed.x = 25 + SCREEN_SPEED;
 	playerLaser.lifetime = 50;
 	playerLaser.anim.speed = 0.2f;
-
 
 	return true;
 }

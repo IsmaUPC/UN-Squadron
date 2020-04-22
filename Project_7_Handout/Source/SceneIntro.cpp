@@ -22,6 +22,8 @@ bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
 
+
+
 	bool ret = true;
 
 	bgTexture = App->textures->Load("Assets//Intro/Start_Menu.png");
@@ -50,4 +52,16 @@ update_status SceneIntro::PostUpdate()
 	App->render->Blit(bgTexture, 0, 0, NULL);
 
 	return update_status::UPDATE_CONTINUE;
+}
+
+bool SceneIntro::CleanUp()
+{
+	//Enable (and properly disable) the player module
+
+
+
+
+
+
+	return true;
 }
