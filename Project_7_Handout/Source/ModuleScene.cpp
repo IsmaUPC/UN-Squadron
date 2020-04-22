@@ -6,11 +6,14 @@
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
+#include "ModulePlayer.h"
 
-ModuleScene::~ModuleScene()
+
+ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 {
 
 }
+
 
 // Load assets
 bool ModuleScene::Start()
@@ -31,20 +34,34 @@ bool ModuleScene::Start()
 	
 	// Enemies ---	
 	//App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 600, 130, 100, 0);
-	//App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 600, 380, 50, 1);
-	//App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 180, 100, 0);
-	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 250, 240, 290, 0);
-	//App->enemies->spawningEnemies(4, ENEMY_TYPE::GREENSHIP, 1200, 400, 290, 0);
-	//App->enemies->spawningEnemies(4, ENEMY_TYPE::GREENSHIP, 2200, 350, 290, 0);
-	//App->enemies->spawningEnemies(4, ENEMY_TYPE::GREENSHIP, 1900, 150, 290, 0);
+
+
+	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 30, 2);
+	App->enemies->spawningEnemies(3, ENEMY_TYPE::REDSHIP, 940, 350, 50, 3);
+	//sApp->enemies->spawningEnemies(4, ENEMY_TYPE::GREENSHIP, 1200, 135, 90, 2);
+
 	//App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 1200, 150, 90, 0);
 	//App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 350, 90, 0);
 	
+	App->render->camera.x = 0;
+	App->render->camera.y = 0;
+	
+	for (int i = 0; i < 4; i++){
+		cont[i] = 0;
+	}
+
+
+
+	App->player->Enable();
+	App->enemies->Enable();
+
 	return ret;
 }
 
-update_status ModuleScene::Update()
-{
+update_status ModuleScene::Update(){
+
+
 	App->render->camera.x += SCREEN_SPEED;
 	updateBackground();
 
@@ -78,6 +95,16 @@ void ModuleScene::updateBackground() {
 			cont[i]++;
 		}
 	}
+}
+bool ModuleScene::CleanUp()
+{
+//Enable (and properly disable) the player module
+	App->player->Disable();
+	App->enemies->Disable();
+
+
+
+	return true;
 }
 
 

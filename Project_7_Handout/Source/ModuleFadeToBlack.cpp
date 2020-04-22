@@ -27,7 +27,7 @@ bool ModuleFadeToBlack::Start()
 update_status ModuleFadeToBlack::Update()
 {
 	// Exit this function if we are not performing a fade
-	if (currentStep == Fade_Step::NONE) return Update_Status::UPDATE_CONTINUE;
+	if (currentStep == Fade_Step::NONE) return update_status::UPDATE_CONTINUE;
 
 	if (currentStep == Fade_Step::TO_BLACK)
 	{
@@ -56,7 +56,7 @@ update_status ModuleFadeToBlack::Update()
 update_status ModuleFadeToBlack::PostUpdate()
 {
 	// Exit this function if we are not performing a fade
-	if (currentStep == Fade_Step::NONE) return Update_Status::UPDATE_CONTINUE;
+	if (currentStep == Fade_Step::NONE) return update_status::UPDATE_CONTINUE;
 
 	float fadeRatio = (float)frameCount / (float)maxFadeFrames;
 

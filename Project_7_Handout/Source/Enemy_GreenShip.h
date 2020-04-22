@@ -2,6 +2,7 @@
 #define __Enemy_GreenShip_H__
 
 #include "Enemy.h"
+#include "Path.h"
 
 class Enemy_GreenShip : public Enemy
 {
@@ -28,7 +29,7 @@ private:
 
 	// The total height of the wave
 	int waveHeight = 15;
-
+	Path path;
 	// The enemy animation
 	Animation fly;				//Vuela hacia la derecha
 	Animation flyInvers;		//Vuela hacia la izquierda (hacia nosotros)
@@ -36,6 +37,18 @@ private:
 	Animation twistToLeft;		//Efectua una giro hacia la izquierda
 	Animation loopToRight;		//Gira sobre si mismo moviendose hacia la derecha
 	Animation loopToLeft;		//Gira sobre si mismo moviendose hacia la izquierda
+
+	//NEW VARS
+	bool startmove = false;
+	float countmove = 1;
+
+	int xRecorrido = 0;
+	int yRecorrido = 0;
+
+	int FASE = 1;
+
+	int n = 0;
+	float alpha = 0;
 };
 
 #endif // __Enemy_GreenShip_H__
