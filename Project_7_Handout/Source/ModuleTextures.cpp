@@ -13,8 +13,9 @@ ModuleTextures::ModuleTextures(bool startEnabled) : Module(startEnabled)
 		textures[i] = nullptr;
 }
 
-ModuleTextures::~ModuleTextures()
-{}
+ModuleTextures::~ModuleTextures(){
+	CleanUp();
+}
 
 bool ModuleTextures::Init()
 {

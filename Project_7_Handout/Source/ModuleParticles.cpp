@@ -96,6 +96,21 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
+update_status ModuleParticles::PreUpdate()
+{
+	// Remove all particles scheduled for deletion
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	{
+		if (particles[i] != nullptr && particles[i]->pendingToDelete)
+		{
+			delete particles[i];
+			particles[i] = nullptr;
+		}
+	}
+
+	return update_status::UPDATE_CONTINUE;
+}
+
 update_status ModuleParticles::Update()
 {
 	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
@@ -138,15 +153,15 @@ update_status ModuleParticles::PostUpdate()
 	return update_status::UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType, uint delay)
+Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType, uint delay)
 {
+	Particle* p = new Particle(particle);
 	velShotEnemy = 2;
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		//Finding an empty slot for a new particle
 		if (particles[i] == nullptr)
 		{
-			Particle* p = new Particle(particle);
 			p->frameCount = -(int)delay;			// We start the frameCount as the negative delay
 			p->position.x = x;						// so when frameCount reaches 0 the particle will be activated
 			p->position.y = y;
@@ -178,4 +193,5 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collid
 			break;
 		}
 	}
+	return p;
 }

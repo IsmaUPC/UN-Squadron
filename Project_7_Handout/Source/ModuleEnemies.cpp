@@ -35,6 +35,20 @@ bool ModuleEnemies::Start()
 	return true;
 }
 
+update_status ModuleEnemies::PreUpdate(){
+	// Remove all enemies scheduled for deletion
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr && enemies[i]->pendingToDelete)
+		{
+			delete enemies[i];
+			enemies[i] = nullptr;
+		}
+	}
+
+	return update_status::UPDATE_CONTINUE;
+}
+
 update_status ModuleEnemies::Update()
 {
 	HandleEnemiesSpawn();

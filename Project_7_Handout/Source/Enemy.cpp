@@ -67,3 +67,10 @@ void Enemy::shotPattern() {
 void Enemy::CleanUp() {
 
 }
+
+void Enemy::SetToDelete()
+{
+	pendingToDelete = true;
+	if (collider != nullptr)
+		collider->pendingToDelete = true;
+}
