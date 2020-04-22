@@ -14,7 +14,9 @@ ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 
 }
 
+ModuleScene::~ModuleScene(){
 
+}
 // Load assets
 bool ModuleScene::Start()
 {
@@ -55,6 +57,7 @@ bool ModuleScene::Start()
 
 	App->player->Enable();
 	App->enemies->Enable();
+	App->collisions->Enable();
 
 	return ret;
 }
@@ -101,6 +104,8 @@ bool ModuleScene::CleanUp()
 //Enable (and properly disable) the player module
 	App->player->Disable();
 	App->enemies->Disable();
+	App->collisions->Disable();
+	
 
 
 

@@ -46,7 +46,6 @@ public:
 
 protected:
 	
-	int xEVel, yEVel = 0;
 	
 	// A ptr to the current animation
 	Animation* currentAnim = nullptr;

@@ -43,7 +43,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player textures");
 
 	bool ret = true;
-
+	destroyed = false;
 	texture = App->textures->Load("Assets/PlayerSprites.png");
 	currentAnimation = &idleAnim;
 
@@ -53,7 +53,7 @@ bool ModulePlayer::Start()
 	position.x = 80;
 	position.y = 230;
 
-	destroyed = false;
+
 
 
 	//FONTS
@@ -194,8 +194,10 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		*/
 		App->audio->PlayFx(explosionFx);
 
-		App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); // no funciona
 		destroyed = true;
+		App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); // no funciona
+		
+		
 	}
 
 }
