@@ -64,3 +64,6 @@ void Enemy::shotPattern() {
 		isShotDone = true;
 	}
 }
+void Enemy::CleanUp() {
+
+}

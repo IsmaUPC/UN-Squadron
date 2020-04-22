@@ -33,6 +33,7 @@ public:
 	// Collision response
 	// Triggers an animation and a sound fx
 	virtual void OnCollision(Collider* collider);
+	void CleanUp();
 
 public:
 	// The current position in the world

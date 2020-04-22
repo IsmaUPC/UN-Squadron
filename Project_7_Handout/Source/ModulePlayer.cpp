@@ -35,14 +35,18 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 
 ModulePlayer::~ModulePlayer()
 {
-
+	if (collider != nullptr)
+		collider->pendingToDelete = true;
 }
 
 bool ModulePlayer::Start()
 {
 	LOG("Loading player textures");
 
+	App->particles->Enable();
+	App->particles->Init();
 	bool ret = true;
+	destroyedCountdown = 120;
 	destroyed = false;
 	texture = App->textures->Load("Assets/PlayerSprites.png");
 	currentAnimation = &idleAnim;
@@ -156,8 +160,10 @@ update_status ModulePlayer::Update()
 	if (destroyed)
 	{
 		destroyedCountdown--;
-		if (destroyedCountdown <= 0)
-			return update_status::UPDATE_STOP;
+		if (destroyedCountdown <= 0){
+			App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); // no funciona
+			//return update_status::UPDATE_STOP;
+		}
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -195,8 +201,8 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->audio->PlayFx(explosionFx);
 
 		destroyed = true;
-		App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); // no funciona
-		
+	
+		App->particles->Disable();
 		
 	}
 

@@ -17,7 +17,11 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled)
 
 ModuleParticles::~ModuleParticles()
 {
-
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
+		if(particles[i] != nullptr)
+		particles[i]->collider->pendingToDelete;
+		
+	}
 }
 
 bool ModuleParticles::Start()

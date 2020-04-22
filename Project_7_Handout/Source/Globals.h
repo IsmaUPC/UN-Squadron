@@ -27,7 +27,7 @@ typedef unsigned int uint;
 #define PLAYER_WIDTH 68
 #define PLAYER_HEIGHT 22
 
-#define SCREEN_SIZE 1  
+#define SCREEN_SIZE 1
 #define SCREEN_SPEED 1
 #define WIN_FULLSCREEN 0
 #define WIN_FULLSCREEN_DESKTOP 0

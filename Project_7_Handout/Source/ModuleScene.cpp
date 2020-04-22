@@ -20,6 +20,14 @@ ModuleScene::~ModuleScene(){
 // Load assets
 bool ModuleScene::Start()
 {
+	App->player->Enable();
+	App->enemies->Enable();
+	App->collisions->Enable();
+	App->textures-> Enable();
+	//App->audio->Enable();
+	App->textures->Init();
+	
+
 	LOG("Loading background assets");
 
 	bool ret = true;
@@ -55,9 +63,6 @@ bool ModuleScene::Start()
 
 
 
-	App->player->Enable();
-	App->enemies->Enable();
-	App->collisions->Enable();
 
 	return ret;
 }
@@ -105,6 +110,8 @@ bool ModuleScene::CleanUp()
 	App->player->Disable();
 	App->enemies->Disable();
 	App->collisions->Disable();
+	App->textures->Disable();
+	//App->audio->Disable();
 	
 
 
