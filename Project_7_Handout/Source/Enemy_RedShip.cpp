@@ -13,7 +13,7 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 
 
 	fly.PushBack({ 252,29,66,39 });
-	//currentAnim = &fly;
+	currentAnim = &fly;
 	fly.speed = 0.01f;
 
 	twistToRight.PushBack({ 722,31,62, 37 });
@@ -29,8 +29,8 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 	twistToRight.PushBack({ 324,31,52, 37 });
 	twistToRight.PushBack({ 252,29,66,39 });
 	twistToRight.loop = false;
-	twistToRight.speed = 0.08f;
-	currentAnim = &twistToRight;
+	twistToRight.speed = 0.15f;
+	
 
 	twistToLeft.PushBack({ 324,31,52, 37 });
 	twistToLeft.PushBack({ 390,16,47, 52 });
@@ -45,7 +45,7 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 	twistToLeft.PushBack({ 722,31,62, 37 });
 	twistToLeft.PushBack({ 790,29,66,39 });
 	twistToLeft.loop = false;
-	twistToLeft.speed = 0.02f;
+	twistToLeft.speed = 0.15f;
 
 	twistToRightToDown.PushBack({ 722,469,62, 37 });
 	twistToRightToDown.PushBack({ 670,469,48, 52 });
@@ -60,7 +60,7 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 	twistToRightToDown.PushBack({ 324,469,52, 37 });
 	twistToRightToDown.PushBack({ 252,469,66,39 });
 	twistToRightToDown.loop = false;
-	twistToRightToDown.speed = 0.08f;
+	twistToRightToDown.speed = 0.15f;
 
 	twistToLeftToDown.PushBack({ 324,469,52, 37 });
 	twistToLeftToDown.PushBack({ 390,469,47, 52 });
@@ -75,16 +75,13 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 	twistToLeftToDown.PushBack({ 722,469,62, 37 });
 	twistToLeftToDown.PushBack({ 790,469,66,39 });
 	twistToLeftToDown.loop = false;
-	twistToLeftToDown.speed = 0.02f;
+	twistToLeftToDown.speed = 0.15f;
 
-	path.PushBack({ -0.5f , 0.0f }, 125, &flyInvers);
+	//path.PushBack({ -0.5f , 0.0f }, 125, &flyInvers);
 
 	//path.PushBack({ 1.0f , 0.0f }, 250, &walkBack);
 	collider = App->collisions->AddCollider({ 0, 0, 66, 39 }, Collider::Type::ENEMY, (Module*)App->enemies);
-	
-	position.y = 350;
-	
-	//
+	position.x -= SCREEN_WIDTH;
 }
 
 void Enemy_RedShip::Update()
@@ -98,8 +95,8 @@ void Enemy_RedShip::Update()
 
 }
 
-void Enemy_RedShip::move(){
-	spawnPos.x +=SCREEN_SPEED;
+void Enemy_RedShip::move() {
+	spawnPos.x += SCREEN_SPEED;
 
 	switch (pattern) {
 	case 0:
@@ -112,65 +109,74 @@ void Enemy_RedShip::move(){
 		break;
 
 	case 1:
-		// raiz quadrada es sqrt()
-		if (FASE == 1){
-			if (position.y >= SCREEN_HEIGHT / 2) {
-				
-				xRecorrido =  (spawnPos.x- position.x);
-				//if (xRecorrido >= 100)
-				//if (xRecorrido > 0)
-					position.y -= sqrt(xRecorrido/50);
-
-				position.x -= 2;
-			}else{
-				FASE = 2;
-			}
-		}else{
-			xRecorrido--;
-
-			//if (xRecorrido >= 100) 
-			//if (xRecorrido > 0)
-				position.y -= sqrt(xRecorrido/50);
-			
-			position.x += 3;
-		}
-		
-		break;
-	case 2:
-		/*if (FASE == 1){
-			if (xRecorrido < (SCREEN_WIDTH / 2)-66) {
-				xRecorrido = (spawnPos.x - position.x);
-
-				position.x -= 1;
-
-			}
-			else {
-				FASE = 2;
-			}
-		}else if(FASE == 2){
-			position.y -= sqrt(xRecorrido / 50);
-			position.x += 2;
-
-		}*/
-		switch (FASE){
+		switch (FASE) {
 		case 1:
-			if (xRecorrido < 150) {
+			if (xRecorrido < 200) {
 				xRecorrido = (spawnPos.x - position.x);
 
 				position.x -= 2;
 
-			}else
+			}
+			else
 				FASE = 2;
 			break;
 		case 2:
-			if (position.y > 250) {
+			currentAnim = &twistToRight;
+			if (position.y < SCREEN_HEIGHT / 2) {
 				xRecorrido = (spawnPos.x - position.x);
 
-				position.y -= sqrt(xRecorrido / 50);
-				position.x -= 1;
-			}else
+				position.y += sqrt(xRecorrido / 100);
+				position.x -= 2;
+			}
+			else
 				FASE = 3;
-			
+
+			break;
+		case 3:
+			if (position.y < 250) {
+				xRecorrido = (spawnPos.x - position.x);
+				position.y += sqrt(xRecorrido / 150);
+				position.x += 4;
+			}
+			else
+				FASE = 4;
+			break;
+
+		case 4:
+			//if (position.y < 255)currentAnim = &fly;
+			//if (position.y >= 255)currentAnim = &loopToRight;
+			currentAnim = &fly;
+			xRecorrido = (spawnPos.x - position.x);
+
+			position.y += sqrt(xRecorrido / 150);
+			position.x += 6;
+			break;
+		}
+
+		break;
+	case 2:
+		switch (FASE) {
+		case 1:
+			if (xRecorrido < 200) {
+				xRecorrido = (spawnPos.x - position.x);
+
+				position.x -= 3;
+
+			}
+			else
+				FASE = 2;
+			break;
+		case 2:
+			currentAnim = &twistToRight;
+			if (position.y > 135) {
+				xRecorrido = (spawnPos.x - position.x);
+
+				position.y -= sqrt(xRecorrido / 30);
+				position.x -= 3;
+			}
+			else
+				FASE = 5;
+
 			break;
 		case 3:
 			if (position.y > 180) {
@@ -187,57 +193,77 @@ void Enemy_RedShip::move(){
 				xRecorrido = (spawnPos.x - position.x);
 
 				position.y -= sqrt(xRecorrido / 50);
-				position.x += 1;
+				position.x += 5;
 			}
 			else
 				FASE = 5;
 			break;
 		case 5:
+			//if (position.y > 105)currentAnim = &fly;
+			//if (position.y <= 105)currentAnim = &loopToRight;
+			currentAnim = &fly;
+			xRecorrido = (spawnPos.x - position.x);
 
-			xRecorrido = (spawnPos.x - position.x) ;
-
-			position.y -= sqrt(xRecorrido / 80);
-			position.x += 3+SCREEN_SPEED ;
+			position.y -= sqrt(xRecorrido / 100);
+			position.x += 5 + SCREEN_SPEED;
 			break;
 		}
-
-			break;
-	case 3:
-
-		if (FASE == 1){
-			if (!startmove) {
-				startmove = true;
-				n = 270;
-			}
-
-			if (n <= 360){
-
-			xRecorrido = (spawnPos.x - position.x);
-			n += 5;
-			alpha = n * M_PI / 180.0f;
-
-			position.x += (position.y * cos(alpha))/40;
-			position.y -= 2;
-			}else {
-				FASE = 2;
-				startmove = false;
-			}
-		}
-		if (FASE == 2) {
-			if (!startmove) {
-				startmove = true;
-				n = 0;
-			}
-			xRecorrido = (spawnPos.x - position.x);
-			n += 3;
-			alpha = n * M_PI / 180.0f;
-			position.x += (position.y * cos(alpha))/40;
-			position.y -= 2;
-
-		}
-
 
 		break;
+	case 3:
+		switch (FASE) {
+		case 1:
+			if (xRecorrido < 600) {
+				xRecorrido = position.x;
 
+				position.x += 4;
+
+			}
+			else
+				FASE = 2;
+			break;
+		case 2:
+			currentAnim = &twistToLeft;
+			if (position.y > SCREEN_HEIGHT/2) {
+				xRecorrido = position.x;
+
+				position.y -= sqrt(xRecorrido / 30);
+				position.x += 4;
+			}
+			else
+				FASE = 3;
+
+			break;
+		case 3:
+			if (position.y > 150) {
+				xRecorrido = position.x;
+				position.y -= sqrt(xRecorrido / 50);
+				position.x -= 3;
+			}
+			else
+				FASE = 4;
+			break;
+
+		case 4:
+			if (xRecorrido > 200) {
+				xRecorrido = position.x;
+
+				position.y = position.y; // sqrt(xRecorrido / 50);
+				position.x -= 3;
+			}
+			else
+				FASE = 5;
+			break;
+		case 5:
+			//if (position.y > 105)currentAnim = &fly;
+			//if (position.y <= 105)currentAnim = &loopToRight;
+			currentAnim = &fly;
+			xRecorrido = position.x;
+
+			position.y += sqrt(xRecorrido / 100);
+			position.x -= 3;
+			break;
+		}
+		break;
 	}
 }

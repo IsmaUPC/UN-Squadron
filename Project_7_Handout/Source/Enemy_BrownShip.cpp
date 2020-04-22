@@ -66,8 +66,6 @@ Enemy_BrownShip::Enemy_BrownShip(int x, int y,int _pattern) : Enemy(x, y,_patter
 	//path.PushBack({-0.8f , -0.5f}, 100, &flyInvers);
 	//path.PushBack({ -0.8f , 0.5f }, 100, &flyInvers);
 	collider = App->collisions->AddCollider({0, 0, 61, 18}, Collider::Type::ENEMY, (Module*)App->enemies);
-	pattern = 2;
-	position.y = 350;
 }
 
 void Enemy_BrownShip::Update()
@@ -93,51 +91,9 @@ void Enemy_BrownShip::move() {
 		break;
 
 	case 1:
-		// raiz quadrada es sqrt()
-		if (FASE == 1) {
-			if (position.y >= SCREEN_HEIGHT / 2) {
-
-				xRecorrido = (spawnPos.x - position.x);
-				//if (xRecorrido >= 100)
-				//if (xRecorrido > 0)
-				position.y -= sqrt(xRecorrido / 50);
-
-				position.x -= 2;
-			}
-			else {
-				FASE = 2;
-			}
-		}
-		else {
-			xRecorrido--;
-
-			//if (xRecorrido >= 100) 
-			//if (xRecorrido > 0)
-			position.y -= sqrt(xRecorrido / 50);
-
-			position.x += 3;
-		}
-
-		break;
-	case 2:
-		/*if (FASE == 1){
-			if (xRecorrido < (SCREEN_WIDTH / 2)-66) {
-				xRecorrido = (spawnPos.x - position.x);
-
-				position.x -= 1;
-
-			}
-			else {
-				FASE = 2;
-			}
-		}else if(FASE == 2){
-			position.y -= sqrt(xRecorrido / 50);
-			position.x += 2;
-
-		}*/
 		switch (FASE) {
 		case 1:
-			if (xRecorrido < 350) {
+			if (xRecorrido < 200) {
 				xRecorrido = (spawnPos.x - position.x);
 
 				position.x -= 2;
@@ -148,14 +104,60 @@ void Enemy_BrownShip::move() {
 			break;
 		case 2:
 			currentAnim = &twistToRight;
-			if (position.y > 250) {
+			if (position.y < SCREEN_HEIGHT/2) {
 				xRecorrido = (spawnPos.x - position.x);
 
-				position.y -= sqrt(xRecorrido / 50);
-				position.x -= 1;
+				position.y += sqrt(xRecorrido / 100);
+				position.x -= 2;
 			}
 			else
 				FASE = 3;
+
+			break;
+		case 3:
+			if (position.y < 250) {
+				xRecorrido = (spawnPos.x - position.x);
+				position.y += sqrt(xRecorrido / 150);
+				position.x += 4;
+			}
+			else
+				FASE = 4;
+			break;
+
+		case 4:
+			if (position.y < 255)currentAnim = &fly;
+			if (position.y >= 255)currentAnim = &loopToRight;
+
+			xRecorrido = (spawnPos.x - position.x);
+
+			position.y += sqrt(xRecorrido / 150);
+			position.x += 6;
+			break;
+		}
+
+		break;
+	case 2:
+		switch (FASE) {
+		case 1:
+			if (xRecorrido < 200) {
+				xRecorrido = (spawnPos.x - position.x);
+
+				position.x -= 3;
+
+			}
+			else
+				FASE = 2;
+			break;
+		case 2:
+			currentAnim = &twistToRight;
+			if (position.y > 135) {
+				xRecorrido = (spawnPos.x - position.x);
+
+				position.y -= sqrt(xRecorrido / 30);
+				position.x -= 3;
+			}
+			else
+				FASE = 5;
 
 			break;
 		case 3:
@@ -179,12 +181,12 @@ void Enemy_BrownShip::move() {
 				FASE = 5;
 			break;
 		case 5:
-			if (position.y > 140)currentAnim = &fly;
-			if(position.y<=140)currentAnim = &loopToRight;
+			if (position.y > 105)currentAnim = &fly;
+			if(position.y<=105)currentAnim = &loopToRight;
 			
 			xRecorrido = (spawnPos.x - position.x);
 
-			position.y -= sqrt(xRecorrido / 80);
+			position.y -= sqrt(xRecorrido / 100);
 			position.x += 5 + SCREEN_SPEED;
 			break;
 		}

@@ -38,11 +38,12 @@ bool ModuleScene::Start()
 	// Enemies ---	
 	//App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 600, 130, 100, 0);
 
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 800, 380, 50, 1);
-	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 180, 30, 0);
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::GREENSHIP, 1200, 300, 90, 0);
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 1200, 150, 90, 0);
-	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 350, 90, 0);
+	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 30, 2);
+	App->enemies->spawningEnemies(3, ENEMY_TYPE::REDSHIP, 940, 350, 50, 3);
+	//sApp->enemies->spawningEnemies(4, ENEMY_TYPE::GREENSHIP, 1200, 135, 90, 2);
+	//App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 1200, 150, 90, 0);
+	//App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 1200, 350, 90, 0);
 	
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
