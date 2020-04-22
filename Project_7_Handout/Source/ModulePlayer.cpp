@@ -170,7 +170,7 @@ update_status ModulePlayer::Update()
 	{
 		destroyedCountdown--;
 		if (destroyedCountdown <= 0){
-			App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); // no funciona
+			App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneGameover, 60);
 			//return update_status::UPDATE_STOP;
 		}
 	}
