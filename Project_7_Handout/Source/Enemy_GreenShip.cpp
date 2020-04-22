@@ -6,7 +6,7 @@
 Enemy_GreenShip::Enemy_GreenShip(int x, int y, int _pattern) : Enemy(x, y,_pattern)
 {
 	flyInvers.PushBack({ 497,213,54,16 });
-	currentAnim = &flyInvers;
+	//currentAnim = &flyInvers;
 	flyInvers.speed = 0.01f;
 
 	fly.PushBack({ 557,213,53,16 });
@@ -62,6 +62,7 @@ Enemy_GreenShip::Enemy_GreenShip(int x, int y, int _pattern) : Enemy(x, y,_patte
 	loopToLeft.speed = 0.3f;
 
 	collider = App->collisions->AddCollider({0, 0, 54, 16}, Collider::Type::ENEMY, (Module*)App->enemies);
+	
 }
 
 void Enemy_GreenShip::Update()
@@ -74,116 +75,102 @@ void Enemy_GreenShip::Update()
 }
 
 void Enemy_GreenShip::move() {
-	spawnPos.x += SCREEN_SPEED;
+	//spawnPos.x += SCREEN_SPEED;
 
 	switch (pattern) {
 	case 0:
-		currentAnim = path.GetCurrentAnimation();
-		waveRatio += waveRatioSpeed;
-		path.Update();
-		position = spawnPos + path.GetRelativePosition();
-
-		position.x -= 1;
-		break;
-
-	case 1:
-		// raiz quadrada es sqrt()
-		if (FASE == 1) {
-			if (position.y >= SCREEN_HEIGHT / 2) {
-
-				xRecorrido = (spawnPos.x - position.x);
-				//if (xRecorrido >= 100)
-				//if (xRecorrido > 0)
-				position.y -= sqrt(xRecorrido / 50);
-
-				position.x -= 2;
-			}
-			else {
-				FASE = 2;
-			}
-		}
-		else {
-			xRecorrido--;
-
-			//if (xRecorrido >= 100) 
-			//if (xRecorrido > 0)
-			position.y -= sqrt(xRecorrido / 50);
-
-			position.x += 3;
-		}
-
-		break;
-	case 2:
-		/*if (FASE == 1){
-			if (xRecorrido < (SCREEN_WIDTH / 2)-66) {
-				xRecorrido = (spawnPos.x - position.x);
-
-				position.x -= 1;
-
-			}
-			else {
-				FASE = 2;
-			}
-		}else if(FASE == 2){
-			position.y -= sqrt(xRecorrido / 50);
-			position.x += 2;
-
-		}*/
-		switch (FASE) {
+		switch (FASE)
+		{
 		case 1:
-			if (xRecorrido < 300) {
-				xRecorrido = (spawnPos.x - position.x);
-
-				position.x -= 2;
-
+			currentAnim = &flyInvers;
+			if (xRecorrido < 350)
+			{
+				xRecorrido += 4;
+				position.y -= 1;
+				position.x -= 4;
 			}
-			else
-				FASE = 2;
+			else FASE = 2;
 			break;
 		case 2:
 			currentAnim = &twistToRight;
-			if (position.y < 220) {
-				xRecorrido = (spawnPos.x - position.x);
-
-				position.y += sqrt(xRecorrido / 50);
+			if (yRecorrido < 100)
+			{
+				yRecorrido += 2;
+				position.y += 2;
 				position.x -= 1;
 			}
-			else
-				FASE = 3;
-
+			else FASE = 3;
 			break;
 		case 3:
-			if (position.y < 290) {
-				xRecorrido = (spawnPos.x - position.x);
-				position.y += sqrt(xRecorrido / 50);
-				position.x += SCREEN_SPEED;
+			if (xRecorrido > 380) currentAnim = &loopToRight;
+			xRecorrido += 2;
+			position.y = position.y;
+			position.x += 6;
+		}
+		break;
+
+	case 1:
+		switch (FASE)
+		{
+		case 1:
+			currentAnim = &flyInvers;
+			if (xRecorrido < 290)
+			{
+				xRecorrido += 3;
+				position.y -= 0.3;
+				position.x -= 4;
 			}
-			else
-				FASE = 4;
+			else FASE = 2;
 			break;
-
-		case 4:
-			if (position.y >= 290) {
-				xRecorrido = (spawnPos.x - position.x);
-
-				position.y -= sqrt(xRecorrido / 50);
-				position.x += 5;
+		case 2:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 60)
+			{
+				yRecorrido += 1;
+				position.y -= 0.5;
+				position.x += 0.5;
 			}
-			else
-				FASE = 5;
+			else FASE = 3;
 			break;
-		case 5:
-			if (position.y < 310)currentAnim = &fly;
-			if (position.y >= 310)currentAnim = &loopToRight;
-
-			xRecorrido = (spawnPos.x - position.x);
-
-			position.y += sqrt(xRecorrido / 80);
-			position.x += 5 + SCREEN_SPEED;
+		case 3:
+			if (xRecorrido > 350) currentAnim = &loopToRight;
+			xRecorrido += 2;
+			position.y = position.y;
+			position.x += 7;
+		}
+		break;
+	case 2:
+		switch (FASE)
+		{
+		case 1:
+			currentAnim = &flyInvers;
+			if (xRecorrido < 290)
+			{
+				xRecorrido += 3;
+				position.y += 1;
+				position.x -= 4;
+			}
+			else FASE = 2;
+			break;
+		case 2:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 60)
+			{
+				yRecorrido += 1;
+				position.y += 0.5;
+				position.x += 0.5;
+			}
+			else FASE = 3;
+			break;
+		case 3:
+			if (xRecorrido > 350) currentAnim = &loopToRight;
+			xRecorrido += 2;
+			position.y = position.y;
+			position.x += 7;
 			break;
 		}
-
 		break;
+
 	case 3:
 
 		if (FASE == 1) {

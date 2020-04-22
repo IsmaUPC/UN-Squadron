@@ -41,6 +41,18 @@ private:
 	Animation twistToLeft;		//Efectua una giro hacia la izquierda
 	Animation twistToRightToDown;
 	Animation twistToLeftToDown;
+
+	//NEW VARS
+	bool startmove = false;
+	float countmove = 1;
+
+	int xRecorrido = 0;
+	int yRecorrido = 0;
+
+	int FASE = 1;
+
+	int n = 0;
+	float alpha = 0;
 };
 
 #endif // __ENEMY_YELLOWSHIP_H__

@@ -197,6 +197,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneIntro, 60); // no funciona
 		destroyed = true;
 	}
+	
 
 }
 void ModulePlayer::godModeUpdate(){

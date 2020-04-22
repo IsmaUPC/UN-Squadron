@@ -6,11 +6,9 @@
 Enemy_BrownShip::Enemy_BrownShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 {
 	flyInvers.PushBack({487,165,61,18});
-	currentAnim = &flyInvers;
 	flyInvers.speed = 0.01f;
 
 	fly.PushBack({ 559,165,62,18 });
-	
 	fly.speed = 0.01f;
 	
 	twistToRight.PushBack({ 414,169,62, 35 });
@@ -93,6 +91,7 @@ void Enemy_BrownShip::move() {
 	case 1:
 		switch (FASE) {
 		case 1:
+			currentAnim = &flyInvers;
 			if (xRecorrido < 200) {
 				xRecorrido = (spawnPos.x - position.x);
 
@@ -139,6 +138,7 @@ void Enemy_BrownShip::move() {
 	case 2:
 		switch (FASE) {
 		case 1:
+			currentAnim = &flyInvers;
 			if (xRecorrido < 200) {
 				xRecorrido = (spawnPos.x - position.x);
 
