@@ -27,6 +27,7 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
+	App->textures->Enable();
 	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
 	enemyShotTexture= App->textures->Load("Assets/EnemyShoot.png");
 	/*
@@ -54,7 +55,6 @@ bool ModuleParticles::Start()
 	playerLaser.speed.x = 25 + SCREEN_SPEED;
 	playerLaser.lifetime = 50;
 	playerLaser.anim.speed = 0.2f;
-
 
 	return true;
 }

@@ -21,10 +21,8 @@ SceneIntro::~SceneIntro()
 bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
-	App->textures->Enable();
-	App->audio->Enable();
-	App->audio->Init();
-	App->textures->Init();
+
+
 
 	bool ret = true;
 
@@ -60,8 +58,7 @@ bool SceneIntro::CleanUp()
 {
 	//Enable (and properly disable) the player module
 
-	App->textures->Disable();
-	App->audio->Disable();
+
 
 
 

@@ -25,7 +25,7 @@ bool ModuleScene::Start()
 	App->collisions->Enable();
 	App->textures-> Enable();
 	//App->audio->Enable();
-	App->textures->Init();
+	//App->textures->Init();
 	
 
 	LOG("Loading background assets");
@@ -110,7 +110,7 @@ bool ModuleScene::CleanUp()
 	App->player->Disable();
 	App->enemies->Disable();
 	App->collisions->Disable();
-	App->textures->Disable();
+	//App->textures->Disable();
 	//App->audio->Disable();
 	
 

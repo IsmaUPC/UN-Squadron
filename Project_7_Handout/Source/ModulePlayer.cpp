@@ -43,8 +43,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player textures");
 
-	App->particles->Enable();
-	App->particles->Init();
+
 	bool ret = true;
 	destroyedCountdown = 120;
 	destroyed = false;
@@ -146,6 +145,9 @@ update_status ModulePlayer::Update()
 		App->audio->PlayFx(laserFx);
 		cooldown--;
 	}
+	if (App->input->keys[SDL_SCANCODE_M] == KEY_STATE::KEY_DOWN ){
+		destroyed = true;
+	}
 	if(cooldown<11) cooldown--;
 	if (cooldown == 0)cooldown = 11;
 	// If no up/down movement detected, set the current animation back to idle
@@ -202,7 +204,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 		destroyed = true;
 	
-		App->particles->Disable();
+		//App->particles->Disable();
 		
 	}
 
