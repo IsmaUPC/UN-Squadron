@@ -92,6 +92,8 @@ SDL_Texture* const ModuleTextures::Load(const char* path)
 
 bool ModuleTextures::Unload(SDL_Texture* texture)
 {
+	LOG("Freeing a textures\n");
+
 	bool ret = false;
 
 	if (texture != nullptr)

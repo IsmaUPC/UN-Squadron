@@ -97,8 +97,7 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 {
 	bool ret = true;
 
-	if(music != NULL)
-	{
+	if(music != NULL){
 		if(fade_time > 0.0f)
 		{
 			// Warning: This call blocks the execution until fade out is done
@@ -166,6 +165,16 @@ uint ModuleAudio::LoadFx(const char* path)
 
 	return ret;
 }
+
+void ModuleAudio::UnLoadFX(int fx_id)
+{
+	LOG("Freeing a FX sound\n");
+
+	Mix_FreeChunk(soundFx[fx_id]);
+	soundFx[fx_id] != nullptr;
+}
+
+
 
 bool ModuleAudio::PlayFx(uint index, int repeat)
 {

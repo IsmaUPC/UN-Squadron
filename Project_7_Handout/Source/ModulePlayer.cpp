@@ -56,6 +56,7 @@ bool ModulePlayer::Start()
 	currentAnimation = &idleAnim;
 
 	laserFx = App->audio->LoadFx("Assets/PlayerShoot.wav");
+	
 	explosionFx = App->audio->LoadFx("Assets/10_Effect_Die.wav");
 
 	position.x = 80;
@@ -166,16 +167,15 @@ update_status ModulePlayer::Update()
 
 	currentAnimation->Update();
 
-	if (destroyed)
-	{
+	if (destroyed){
 		destroyedCountdown--;
 		if (destroyedCountdown <= 0){
+			clear();
 			App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneGameover, 60);
 			//return update_status::UPDATE_STOP;
 		}
-	}
-	else if (position.x ==2050 )
-	{
+	}else if (position.x ==2050 ){
+		clear();
 		App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneWin, 60);
 	}
 
@@ -221,6 +221,32 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	}
 	
 
+}
+void ModulePlayer::clear() {
+
+	if (scoreFont != NULL) {
+		App->fonts->UnLoad(scoreFont);
+		scoreFont = NULL;
+	}
+	if (scoreFont != NULL) {
+		App->fonts->UnLoad(scoreFont2);
+		scoreFont2 = NULL;
+	}
+	if (texture != NULL){
+		App->textures->Unload(texture);
+		texture = NULL;
+	}
+
+	/*
+	if (laserFx != NULL){
+		App->audio->UnLoadFX(laserFx);
+		laserFx = NULL;
+	}
+	if (explosionFx != NULL) {
+		App->audio->UnLoadFX(explosionFx);
+		explosionFx = NULL;
+	}
+	*/
 }
 void ModulePlayer::godModeUpdate(){
 	godMode = !godMode;

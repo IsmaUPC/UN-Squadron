@@ -70,6 +70,9 @@ int ModuleFonts::Load(const char* texture_path, const char* characters, uint row
 
 void ModuleFonts::UnLoad(int font_id)
 {
+	LOG("Freeing a font texture\n");
+
+
 	if(font_id >= 0 && font_id < MAX_FONTS && fonts[font_id].texture != nullptr)
 	{
 		App->textures->Unload(fonts[font_id].texture);
@@ -137,3 +140,4 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 	 */
 
 }
+

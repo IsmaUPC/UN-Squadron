@@ -34,6 +34,8 @@ public:
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
 
+	void clear();
+
 private:
 	int currentCameraX;
 
@@ -62,7 +64,8 @@ public:
 	Collider* collider = nullptr;
 
 	// A flag to detect when the player has been destroyed
-	bool destroyed,godMode = false;
+	bool destroyed = false;
+	bool godMode = false;
 
 	// A countdown to when the player gets destroyed. After a while, the game exits
 	uint destroyedCountdown = 120;
