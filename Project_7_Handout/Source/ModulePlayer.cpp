@@ -56,7 +56,7 @@ bool ModulePlayer::Start()
 	currentAnimation = &idleAnim;
 
 	laserFx = App->audio->LoadFx("Assets/PlayerShoot.wav");
-	explosionFx = App->audio->LoadFx("Assets/explosion.wav");
+	explosionFx = App->audio->LoadFx("Assets/10_Effect_Die.wav");
 
 	position.x = 80;
 	position.y = 230;
