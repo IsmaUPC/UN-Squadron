@@ -121,6 +121,9 @@
     <ClInclude Include="SceneGameover.h">
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="SceneWin.h">
+      <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Module.cpp">
@@ -205,6 +208,9 @@
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="SceneGameover.cpp">
+      <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneWin.cpp">
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
