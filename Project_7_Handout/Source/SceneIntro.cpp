@@ -37,7 +37,7 @@ bool SceneIntro::Start()
 	Uni_Fire.PushBack({510*i,0,510,443});
 
 	
-	Uni_Fire.speed = 0.15f;
+	Uni_Fire.speed = 0.1f;
 	Uni_Fire.loop = true;
 	currentAnim = &Uni_Fire;
 	return ret;
