@@ -45,6 +45,7 @@ bool ModuleScene::Start()
 	// Enemies ---	
 	//App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 600, 130, 100, 0);
 
+	//	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 250, 250, 90, 1);	//WAVE 5
 
 	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 30, 2);	//WAVE 1

@@ -77,6 +77,7 @@ void Enemy_GreenShip::Update()
 void Enemy_GreenShip::move() {
 	//spawnPos.x += SCREEN_SPEED;
 
+
 	switch (pattern) {
 	case 0:
 		switch (FASE)

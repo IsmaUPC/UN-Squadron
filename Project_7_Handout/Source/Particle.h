@@ -25,10 +25,10 @@ public:
 
 public:
 	// Defines the position in the screen
-	iPoint position;
+	fPoint position;
 
 	// Defines the speed at which the particle will move (pixels per second)
-	iPoint speed;
+	fPoint speed;
 
 	// A set of rectangle sprites
 	Animation anim;

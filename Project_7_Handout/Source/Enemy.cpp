@@ -53,13 +53,13 @@ void Enemy::OnCollision(Collider* collider)
 }
 
 void Enemy::shotEnemy() {
-	App->particles->AddParticle(App->particles->enemyLaser, position.x + 35, position.y + 10, Collider::Type::ENEMY_SHOT);
+	App->particles->AddParticle(App->particles->enemyLaser, position.x, position.y , Collider::Type::ENEMY_SHOT);
 
 }
 
 void Enemy::shotPattern() {
 
-	if (rand() % 1000 < 45 && !isShotDone) {
+	if (rand() % 5000 < 45 && !isShotDone) {
 		shotEnemy();
 		isShotDone = true;
 	}

@@ -54,7 +54,7 @@ private:
 	SDL_Texture* playerExplosionTexture = nullptr;
 	SDL_Texture* enemyShotTexture = nullptr;
 
-	int xPlayer , yPlayer = 0;
+	float xPlayer , yPlayer = 0;
 	float escalar = 0;
 	float magnitudPlayer = 0;
 	float magnitudEnemy = 0;
