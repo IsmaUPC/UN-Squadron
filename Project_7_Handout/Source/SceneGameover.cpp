@@ -54,7 +54,12 @@ update_status SceneGameover::PostUpdate()
 	return update_status::UPDATE_CONTINUE;
 }
 
-bool SceneGameover::CleanUp(){
-	   	  
+
+bool SceneGameover::CleanUp()
+{
+	//Enable (and properly disable) the player module
+	
+	//App->textures->Unload(bgTexture);
+
 	return true;
 }

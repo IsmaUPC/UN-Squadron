@@ -71,8 +71,12 @@ update_status SceneIntro::PostUpdate()
 	return update_status::UPDATE_CONTINUE;
 }
 
-bool SceneIntro::CleanUp(){
-	
-	SceneIntro::~SceneIntro();
+
+bool SceneIntro::CleanUp()
+{
+	//Enable (and properly disable) the player module
+	App->textures->Unload(bgTexture);
+	bgTexture = NULL;
+
 	return true;
 }

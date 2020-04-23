@@ -38,6 +38,9 @@ public:
 	// Returns an index to the sound fx array
 	// The index will be used to handle the effect (see PlayFx)
 	uint LoadFx(const char* path);
+
+	void ModuleAudio::UnLoadFX(int fx_id);
+
 	update_status ModuleAudio::Update() override;
 
 	// Plays a previously loaded WAV

@@ -18,7 +18,6 @@ ModuleFadeToBlack::~ModuleFadeToBlack()
 bool ModuleFadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
-
 	// Enable blending mode for transparency
 	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
 	return true;
@@ -67,8 +66,9 @@ update_status ModuleFadeToBlack::PostUpdate()
 	return update_status::UPDATE_CONTINUE;
 }
 
-bool ModuleFadeToBlack::FadeToBlack(Module* _moduleToDisable, Module* _moduleToEnable, float frames) 
-{
+bool ModuleFadeToBlack::FadeToBlack(Module* _moduleToDisable, Module* _moduleToEnable, float frames) {
+
+
 	bool ret = false;
 	moduleToDisable = _moduleToDisable;
 	moduleToEnable = _moduleToEnable;

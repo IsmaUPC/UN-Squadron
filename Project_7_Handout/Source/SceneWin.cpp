@@ -27,6 +27,7 @@ bool SceneWin::Start()
 	bool ret = true;
 
 	bgTexture = App->textures->Load("Assets/16_Stage_Clear.png");
+	App->audio->PlayMusic("Assets/16_Stage_Clear.ogg", 1.0f);
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
