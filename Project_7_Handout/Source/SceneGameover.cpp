@@ -27,6 +27,7 @@ bool SceneGameover::Start()
 	bool ret = true;
 
 	bgTexture = App->textures->Load("Assets/17_Game_Over.png");
+	App->audio->PlayMusic("Assets/17_Game_Over.ogg", 1.0f);
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
