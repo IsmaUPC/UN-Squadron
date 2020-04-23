@@ -38,6 +38,9 @@ ModulePlayer::~ModulePlayer()
 {
 	if (collider != nullptr)
 		collider->pendingToDelete = true;
+	App->textures->Unload(texture);
+
+	CleanUp();
 }
 
 bool ModulePlayer::Start()

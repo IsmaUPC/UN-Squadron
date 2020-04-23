@@ -45,7 +45,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 // Destructor
 ModuleCollisions::~ModuleCollisions()
 {
-
+	CleanUp();
 }
 
 update_status ModuleCollisions::PreUpdate()

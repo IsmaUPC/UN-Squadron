@@ -21,6 +21,7 @@ Enemy::~Enemy()
 {
 	if (collider != nullptr)
 		collider->pendingToDelete = true;
+	CleanUp();
 }
 
 const Collider* Enemy::GetCollider() const

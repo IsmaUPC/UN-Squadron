@@ -15,7 +15,12 @@ ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 }
 
 ModuleScene::~ModuleScene(){
+	CleanUp();
+	for each (SDL_Texture* texture in bgTextures){
+	App->textures->Unload(texture);
 
+	}
+	
 }
 // Load assets
 bool ModuleScene::Start()

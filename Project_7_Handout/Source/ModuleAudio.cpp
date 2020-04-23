@@ -15,7 +15,7 @@ ModuleAudio::ModuleAudio(bool startEnabled) : Module(startEnabled)
 
 ModuleAudio::~ModuleAudio()
 {
-
+	CleanUp();
 }
 
 bool ModuleAudio::Init()
@@ -178,4 +178,7 @@ bool ModuleAudio::PlayFx(uint index, int repeat)
 	}
 
 	return ret;
+}
+Mix_Music* ModuleAudio::getMusic() {
+	return music;
 }

@@ -22,7 +22,7 @@ bool SceneGameover::Start()
 {
 	LOG("Loading background assets");
 
-
+	
 
 	bool ret = true;
 
@@ -54,14 +54,7 @@ update_status SceneGameover::PostUpdate()
 	return update_status::UPDATE_CONTINUE;
 }
 
-bool SceneGameover::CleanUp()
-{
-	//Enable (and properly disable) the player module
-
-
-
-
-
-
+bool SceneGameover::CleanUp(){
+	   	  
 	return true;
 }
