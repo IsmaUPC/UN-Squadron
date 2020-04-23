@@ -1,5 +1,5 @@
-#ifndef __SCENE_INTRO_H__
-#define __SCENE_INTRO_H__
+#ifndef __SCENE_WIN_H__
+#define __SCENE_WIN_H__
 
 #include "Module.h"
 #include "Animation.h"
@@ -7,14 +7,14 @@
 
 struct SDL_Texture;
 
-class SceneIntro : public Module
+class SceneWin : public Module
 {
 public:
 	//Constructor
-	SceneIntro(bool startEnabled);
+	SceneWin(bool startEnabled);
 
 	//Destructor
-	~SceneIntro();
+	~SceneWin();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the map background
@@ -32,8 +32,6 @@ public:
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
-	Animation Uni_Fire;
-	Animation* currentAnim = nullptr;
 };
 
 #endif

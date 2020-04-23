@@ -96,6 +96,21 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
+update_status ModuleParticles::PreUpdate()
+{
+	// Remove all particles scheduled for deletion
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	{
+		if (particles[i] != nullptr && particles[i]->pendingToDelete)
+		{
+			delete particles[i];
+			particles[i] = nullptr;
+		}
+	}
+
+	return update_status::UPDATE_CONTINUE;
+}
+
 update_status ModuleParticles::Update()
 {
 	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
@@ -138,15 +153,18 @@ update_status ModuleParticles::PostUpdate()
 	return update_status::UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType, uint delay)
+Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType, uint delay)
 {
+
 	velShotEnemy = 4;
+
+	Particle* p = new Particle(particle);
+
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		//Finding an empty slot for a new particle
 		if (particles[i] == nullptr)
 		{
-			Particle* p = new Particle(particle);
 			p->frameCount = -(int)delay;			// We start the frameCount as the negative delay
 			p->position.x = x;						// so when frameCount reaches 0 the particle will be activated
 			p->position.y = y;
@@ -154,12 +172,10 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collid
 			//Adding the particle's collider
 			if (colliderType != Collider::Type::NONE)
 				p->collider = App->collisions->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);
-			if (p->collider == nullptr) break;
-		
+			if (p->collider == nullptr) break;s
 
 			if (p->collider->type == p->collider->ENEMY_SHOT) {
 				
-
 					xPlayer = App->player->position.x - x -10;
 					yPlayer = App->player->position.y - y + 5;
 					escalar = (xPlayer * x) + (yPlayer * y);
@@ -171,18 +187,11 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collid
 
 				p->speed.x = (App->player->position.x > x) ? (velShotEnemy  * cos(angulo))+ SCREEN_SPEED : (velShotEnemy  * cos(-angulo)) ;
 				p->speed.y = (App->player->position.y > y ) ? (velShotEnemy * sin(angulo)) :   (velShotEnemy * sin(-angulo) );
-
-				//if (App->player->position.x > x && App->player->position.y > y ) {
-				//	p->speed.x = velShotEnemy * cos(angulo) + (SCREEN_SPEED * cos(angulo));
-				//	p->speed.y = velShotEnemy * sin(angulo);
-				//}else if (App->player->position.x < x && App->player->position.y < y) {
-				//	p->speed.x = (velShotEnemy * (acos(angulo)))- (SCREEN_SPEED * sin(angulo));
-				//	p->speed.y = (velShotEnemy * asin(angulo));
-				//}
 				
 			}
 			particles[i] = p;
 			break;
 		}
 	}
+	return p;
 }

@@ -28,10 +28,12 @@ public:
 	// Called at the end of the application loop
 	// Performs the render call of the player sprite
 	update_status PostUpdate() override;
+
 	void godModeUpdate();
 
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
+
 private:
 	int currentCameraX;
 
@@ -74,7 +76,6 @@ public:
 	int scoreFont = -1;
 	int scoreFont2 = 2;
 	char scoreText[10] = { "\0" };
-	char* saludo;
 };
 
 #endif //!__MODULE_PLAYER_H__
