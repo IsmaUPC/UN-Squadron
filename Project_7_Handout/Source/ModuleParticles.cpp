@@ -172,7 +172,7 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 			//Adding the particle's collider
 			if (colliderType != Collider::Type::NONE)
 				p->collider = App->collisions->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);
-			if (p->collider == nullptr) break;s
+			if (p->collider == nullptr) break;
 
 			if (p->collider->type == p->collider->ENEMY_SHOT) {
 				
