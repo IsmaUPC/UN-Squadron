@@ -10,7 +10,7 @@ Enemy_GreenShip::Enemy_GreenShip(int x, int y, int _pattern) : Enemy(x, y,_patte
 	flyInvers.speed = 0.01f;
 
 	fly.PushBack({ 557,213,53,16 });
-	//currentAnim = &fly;
+	currentAnim = &fly;
 	fly.speed = 0.01f;
 
 	twistToRight.PushBack({ 435,221,54, 20 });
@@ -76,7 +76,8 @@ void Enemy_GreenShip::Update()
 
 void Enemy_GreenShip::move() {
 	//spawnPos.x += SCREEN_SPEED;
-
+	if (collider->pendingToDelete != true)
+		resizeCollider();
 
 	switch (pattern) {
 	case 0:

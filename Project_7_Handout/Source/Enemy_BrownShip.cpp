@@ -7,6 +7,7 @@ Enemy_BrownShip::Enemy_BrownShip(int x, int y,int _pattern) : Enemy(x, y,_patter
 {
 	flyInvers.PushBack({487,165,61,18});
 	flyInvers.speed = 0.01f;
+	currentAnim = &flyInvers;
 
 	fly.PushBack({ 559,165,62,18 });
 	fly.speed = 0.01f;
@@ -78,6 +79,9 @@ void Enemy_BrownShip::Update()
 void Enemy_BrownShip::move() {
 	spawnPos.x += SCREEN_SPEED;
 
+	if (collider->pendingToDelete != true)
+		resizeCollider();
+
 	switch (pattern) {
 	case 0:
 		currentAnim = path.GetCurrentAnimation();
@@ -94,7 +98,6 @@ void Enemy_BrownShip::move() {
 			currentAnim = &flyInvers;
 			if (xRecorrido < 200) {
 				xRecorrido = (spawnPos.x - position.x);
-
 				position.x -= 2;
 
 			}
@@ -105,7 +108,6 @@ void Enemy_BrownShip::move() {
 			currentAnim = &twistToRight;
 			if (position.y < SCREEN_HEIGHT/2) {
 				xRecorrido = (spawnPos.x - position.x);
-
 				position.y += sqrt(xRecorrido / 100);
 				position.x -= 2;
 			}
@@ -152,7 +154,7 @@ void Enemy_BrownShip::move() {
 			currentAnim = &twistToRight;
 			if (position.y > 135) {
 				xRecorrido = (spawnPos.x - position.x);
-
+		
 				position.y -= sqrt(xRecorrido / 30);
 				position.x -= 3;
 			}

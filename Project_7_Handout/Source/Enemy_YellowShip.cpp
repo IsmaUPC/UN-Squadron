@@ -6,7 +6,7 @@
 Enemy_YellowShip::Enemy_YellowShip(int x, int y,int _pattern):Enemy(x,y,_pattern)
 {
 	flyInvers.PushBack({ 790,105,66,39 });
-	//currentAnim = &flyInvers;
+	currentAnim = &flyInvers;
 	flyInvers.speed = 0.01f;
 
 	fly.PushBack({ 252,105,66,39 });
@@ -72,6 +72,7 @@ Enemy_YellowShip::Enemy_YellowShip(int x, int y,int _pattern):Enemy(x,y,_pattern
 	twistToLeftToDown.loop = false;
 	twistToLeftToDown.speed = 0.13f;
 
+			
 	//path.PushBack({ -0.5f , 0.0f }, 125, &flyInvers);
 	collider = App->collisions->AddCollider({ 0, 0, 66, 39 }, Collider::Type::ENEMY, (Module*)App->enemies);
 
@@ -88,6 +89,10 @@ void Enemy_YellowShip::Update()
 
 void Enemy_YellowShip::move() {
 	spawnPos.x += SCREEN_SPEED;
+
+
+	if (collider->pendingToDelete != true)
+		resizeCollider();
 
 	switch (pattern) {
 	case 0:

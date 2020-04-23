@@ -8,7 +8,7 @@
 Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 {
 	flyInvers.PushBack({ 790,29,66,39 });
-	//currentAnim = &flyInvers;
+	currentAnim = &flyInvers;
 	flyInvers.speed = 0.01f;
 
 
@@ -80,6 +80,8 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 
 	//path.PushBack({ 1.0f , 0.0f }, 250, &walkBack);
 	collider = App->collisions->AddCollider({ 0, 0, 66, 39 }, Collider::Type::ENEMY, (Module*)App->enemies);
+	int w = collider->rect.w;
+	int h = collider->rect.h;
 	position.x -= SCREEN_WIDTH+100;
 }
 
@@ -96,6 +98,9 @@ void Enemy_RedShip::Update()
 
 void Enemy_RedShip::move() {
 	spawnPos.x += SCREEN_SPEED;
+
+	if (collider->pendingToDelete != true)
+		resizeCollider();
 
 	switch (pattern) {
 	case 0:
@@ -123,7 +128,6 @@ void Enemy_RedShip::move() {
 			currentAnim = &twistToRight;
 			if (position.y < SCREEN_HEIGHT / 2) {
 				xRecorrido = (spawnPos.x - position.x);
-
 				position.y += sqrt(xRecorrido / 100);
 				position.x -= 2;
 			}
@@ -133,6 +137,7 @@ void Enemy_RedShip::move() {
 			break;
 		case 3:
 			if (position.y < 250) {
+		
 				xRecorrido = (spawnPos.x - position.x);
 				position.y += sqrt(xRecorrido / 150);
 				position.x += 4;
@@ -146,7 +151,6 @@ void Enemy_RedShip::move() {
 			//if (position.y >= 255)currentAnim = &loopToRight;
 			currentAnim = &fly;
 			xRecorrido = (spawnPos.x - position.x);
-
 			position.y += sqrt(xRecorrido / 150);
 			position.x += 6;
 			break;
@@ -169,7 +173,6 @@ void Enemy_RedShip::move() {
 			currentAnim = &twistToRight;
 			if (position.y > 135) {
 				xRecorrido = (spawnPos.x - position.x);
-
 				position.y -= sqrt(xRecorrido / 30);
 				position.x -= 3;
 			}
@@ -181,6 +184,7 @@ void Enemy_RedShip::move() {
 			if (position.y > 180) {
 				xRecorrido = (spawnPos.x - position.x);
 				position.y -= sqrt(xRecorrido / 50);
+
 				position.x += SCREEN_SPEED;
 			}
 			else
@@ -215,7 +219,6 @@ void Enemy_RedShip::move() {
 			currentAnim = &fly;
 			if (xRecorrido < 600) {
 				xRecorrido = position.x;
-
 				position.x += 4;
 
 			}
@@ -226,7 +229,6 @@ void Enemy_RedShip::move() {
 			currentAnim = &twistToLeft;
 			if (position.y > SCREEN_HEIGHT / 2) {
 				xRecorrido = position.x;
-
 				position.y -= sqrt(xRecorrido / 150);
 				position.x += 4;
 			}
@@ -259,7 +261,6 @@ void Enemy_RedShip::move() {
 			//if (position.y <= 105)currentAnim = &loopToRight;
 			currentAnim = &flyInvers;
 			xRecorrido = position.x;
-
 			position.y += sqrt(xRecorrido / 500);
 			position.x -= 5;
 			break;
@@ -271,7 +272,6 @@ void Enemy_RedShip::move() {
 			currentAnim = &fly;
 			if (xRecorrido < 300) {
 				xRecorrido += 4;
-
 				position.x += 4;
 
 			}
@@ -282,7 +282,6 @@ void Enemy_RedShip::move() {
 			currentAnim = &twistToLeftToDown;
 			if (position.y < SCREEN_HEIGHT / 2) {
 				xRecorrido += 5;
-
 				position.y += sqrt(position.x / 150);
 				position.x += 5;
 			}

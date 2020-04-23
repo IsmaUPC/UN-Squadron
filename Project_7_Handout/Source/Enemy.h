@@ -40,8 +40,9 @@ public:
 	void CleanUp();
 
 
+	
 
-public:
+
 	// The current position in the world
 	iPoint position;
 
@@ -54,14 +55,17 @@ public:
 	// A flag for the enemy removal. Important! We do not delete objects instantly
 	bool pendingToDelete = false;
 
+
+
 protected:
 	
+	Animation* currentAnim = nullptr;
 	
 	// A ptr to the current animation
-	Animation* currentAnim = nullptr;
 
 	void  shotPattern();
-
+	void resizeCollider();
+	//void setCurrentEnemyAnmi();
 	// The enemy's collider
 	Collider* collider = nullptr;
 

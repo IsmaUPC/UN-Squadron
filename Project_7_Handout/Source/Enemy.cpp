@@ -59,7 +59,7 @@ void Enemy::shotEnemy() {
 
 void Enemy::shotPattern() {
 
-	if (rand() % 5000 < 45 && !isShotDone) {
+	if (rand() % 9000 < 45 && !isShotDone) {
 		shotEnemy();
 		isShotDone = true;
 	}
@@ -74,3 +74,15 @@ void Enemy::SetToDelete()
 	if (collider != nullptr)
 		collider->pendingToDelete = true;
 }
+
+void Enemy::resizeCollider() {
+
+	collider->rect.w = (*currentAnim).GetCurrentFrame().w;
+	collider->rect.h = (*currentAnim).GetCurrentFrame().h;
+}
+//void Enemy::setCurrentEnemyAnmi(Animation* _currentAnim) {
+//
+//	currentAnim = _currentAnim;
+//	collider->rect.w = (*currentAnim).GetCurrentFrame().w;
+//	collider->rect.h = (*currentAnim).GetCurrentFrame().h;
+//}

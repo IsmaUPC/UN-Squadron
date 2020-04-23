@@ -45,9 +45,16 @@ void Enemy_BlueShip::Update()
 }
 
 void Enemy_BlueShip::move(){
+	int w = collider->rect.w;
+	int h = collider->rect.h;
+
+		if(collider->pendingToDelete != true)
+		resizeCollider();
+
 	switch (pattern) {
 	case 0:
 		currentAnim = &fly;
+	
 		//path.Update();
 		//position = spawnPos + path.GetRelativePosition();
 		switch (FASE) {
@@ -63,6 +70,7 @@ void Enemy_BlueShip::move(){
 			break;
 		case 2:
 			currentAnim = &downAnimToRight;
+			
 			position.y += 3;
 			position.x += 5;
 
