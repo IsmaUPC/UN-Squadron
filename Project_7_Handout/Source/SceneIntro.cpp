@@ -31,14 +31,13 @@ bool SceneIntro::Start()
 	bgTexture = App->textures->Load("Assets/Intro/Star_Menu_Sprite.png");	
 	App->audio->PlayMusic("Assets/01_Introduction.ogg", 1.0f);
 
-	App->render->camera.x = 0;
-	App->render->camera.y = 0;
+	App->render->camera.x, App->render->camera.y = 0;
 
-	Uni_Fire.PushBack({0,0,510,443});
-	Uni_Fire.PushBack({1020,0,510,443 });
-	Uni_Fire.PushBack({1530,0,510,443 });
-	Uni_Fire.PushBack({2040,0,510,443 });
-	Uni_Fire.speed = 0.1f;
+	for (int i = 0; i < 4; i++)
+	Uni_Fire.PushBack({510*i,0,510,443});
+
+	
+	Uni_Fire.speed = 0.15f;
 	Uni_Fire.loop = true;
 	currentAnim = &Uni_Fire;
 	return ret;
