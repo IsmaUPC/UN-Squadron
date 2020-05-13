@@ -30,7 +30,12 @@ typedef unsigned int uint;
 #define SCREEN_SIZE 1
 #define SCREEN_SPEED 1
 #define WIN_FULLSCREEN 0
-#define WIN_FULLSCREEN_DESKTOP 1
+
+
+//poner 1 para pantalla completa, 0 para tamaño real
+#define PantallaCompleta 0
+
+#define WIN_FULLSCREEN_DESKTOP PantallaCompleta
 #define WIN_BORDERLESS 0
 #define WIN_RESIZABLE 0
 #define VSYNC 1
