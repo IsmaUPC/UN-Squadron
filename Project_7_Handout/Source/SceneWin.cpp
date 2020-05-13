@@ -57,7 +57,7 @@ update_status SceneWin::PostUpdate()
 bool SceneWin::CleanUp()
 {
 	//Enable (and properly disable) the player module
-
+	App->textures->Unload(bgTexture);
 
 
 

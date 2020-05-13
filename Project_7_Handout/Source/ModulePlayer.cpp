@@ -173,12 +173,12 @@ update_status ModulePlayer::Update()
 	if (destroyed){
 		destroyedCountdown--;
 		if (destroyedCountdown <= 0){
-			clear();
+			CleanUp();
 			App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneGameover, 60);
 			//return update_status::UPDATE_STOP;
 		}
 	}else if (position.x ==2050 ){
-		clear();
+		CleanUp();
 		App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneWin, 60);
 	}
 
@@ -225,31 +225,16 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	
 
 }
-void ModulePlayer::clear() {
+bool ModulePlayer::CleanUp(){
 
-	if (scoreFont != NULL) {
-		App->fonts->UnLoad(scoreFont);
-		scoreFont = NULL;
-	}
-	if (scoreFont != NULL) {
-		App->fonts->UnLoad(scoreFont2);
-		scoreFont2 = NULL;
-	}
-	if (texture != NULL){
-		App->textures->Unload(texture);
-		texture = NULL;
-	}
+	App->textures->Unload(texture);
+	App->audio->UnloadFx(laserFx);
+	App->audio->UnloadFx(explosionFx);
+	App->fonts->UnLoad(scoreFont);
+	App->fonts->UnLoad(scoreFont2);
 
-	/*
-	if (laserFx != NULL){
-		App->audio->UnLoadFX(laserFx);
-		laserFx = NULL;
-	}
-	if (explosionFx != NULL) {
-		App->audio->UnLoadFX(explosionFx);
-		explosionFx = NULL;
-	}
-	*/
+
+	return true;
 }
 void ModulePlayer::godModeUpdate(){
 	godMode = !godMode;

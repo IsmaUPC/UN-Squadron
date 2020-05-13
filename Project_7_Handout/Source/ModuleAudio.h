@@ -39,7 +39,7 @@ public:
 	// The index will be used to handle the effect (see PlayFx)
 	uint LoadFx(const char* path);
 
-	void ModuleAudio::UnLoadFX(int fx_id);
+	bool UnloadFx(uint index);
 
 	update_status ModuleAudio::Update() override;
 

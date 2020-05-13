@@ -166,12 +166,17 @@ uint ModuleAudio::LoadFx(const char* path)
 	return ret;
 }
 
-void ModuleAudio::UnLoadFX(int fx_id)
+bool ModuleAudio::UnloadFx(uint index)
 {
-	LOG("Freeing a FX sound\n");
+	bool ret = false;
 
-	Mix_FreeChunk(soundFx[fx_id]);
-	soundFx[fx_id] != nullptr;
+	if (soundFx[index] != nullptr){
+		Mix_FreeChunk(soundFx[index]);
+		soundFx[index] = nullptr;
+		ret = true;
+	}
+
+	return ret;
 }
 
 

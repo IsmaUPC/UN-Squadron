@@ -89,6 +89,9 @@ bool ModuleEnemies::CleanUp()
 		}
 	}
 
+	App->textures->Unload(textureEnemies);
+	App->audio->UnloadFx(enemyDestroyedFx);
+
 	return true;
 }
 
