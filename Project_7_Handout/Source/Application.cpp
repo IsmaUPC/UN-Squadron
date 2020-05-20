@@ -8,8 +8,9 @@
 #include "ModulePlayer.h"
 #include "SceneIntro.h"
 #include "SceneWin.h"
-#include"ModuleScene.h"
-#include"SceneGameover.h"
+#include "ModuleScene.h"
+#include "ModuleScene2.h"
+#include "SceneGameover.h"
 #include "ModuleParticles.h"
 #include "ModuleEnemies.h"
 #include "ModuleCollisions.h"
@@ -28,7 +29,7 @@ Application::Application()
 	modules[3] = audio = new ModuleAudio(true);
 
 	modules[4] = sceneIntro = new SceneIntro(true);
-	modules[5] = scene = new ModuleScene(false);
+	modules[5] = level1 = new ModuleScene(false);
 	modules[6] = sceneGameover = new SceneGameover(false);
 	modules[7] = sceneWin = new SceneWin(false);
 
@@ -40,6 +41,9 @@ Application::Application()
 	modules[12] = fade = new ModuleFadeToBlack(true);
 	modules[13] = fonts = new ModuleFonts(true);
 	modules[14] = render = new ModuleRender(true);
+
+	modules[15] = level2 = new ModuleScene2(false);
+
 }
 
 Application::~Application()
@@ -67,6 +71,16 @@ bool Application::Init()
 	return ret;
 }
 
+Module* Application::GetActualScene(){
+
+	return actual;
+}
+
+void Application::SetActualScene(Module* scene)
+{
+	actual = scene;
+}
+
 update_status Application::Update()
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
@@ -85,6 +99,8 @@ update_status Application::Update()
 	return ret;
 }
  
+
+
 bool Application::CleanUp()
 {
 	bool ret = true;

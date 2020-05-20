@@ -40,8 +40,6 @@ public:
 	int cont[4] = {0};
 	
 
-	// The sprite rectangle for the ground
-	SDL_Texture* starsTexture = nullptr;
 
 };
 #endif

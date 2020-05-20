@@ -34,14 +34,7 @@ public:
 public:
 
 	// The scene sprite sheet loaded into an SDL_Texture
-
-
-	SDL_Texture* bgTextures[4] = { nullptr };
-	int cont[4] = { 0 };
-
-
-	// The sprite rectangle for the ground
-	SDL_Texture* starsTexture = nullptr;
+	SDL_Texture* bgTexture = nullptr ;
 
 };
 #endif
