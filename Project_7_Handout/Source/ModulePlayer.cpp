@@ -175,12 +175,13 @@ update_status ModulePlayer::Update()
 		if (destroyedCountdown <= 0){
 			CleanUp();
 			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
+			
 			//return update_status::UPDATE_STOP;
 		}
-	}else if (position.x ==2050 ){
+	}/*else if (position.x ==2050 ){
 		CleanUp();
 		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
-	}
+	}*/
 
 	return update_status::UPDATE_CONTINUE;
 }
