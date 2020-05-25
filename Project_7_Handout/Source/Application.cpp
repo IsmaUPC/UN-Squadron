@@ -13,6 +13,7 @@
 #include "SceneGameover.h"
 #include "ModuleParticles.h"
 #include "ModuleEnemies.h"
+#include "HUD.h"
 #include "ModuleCollisions.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
@@ -40,10 +41,11 @@ Application::Application()
 	modules[10] = enemies = new ModuleEnemies(false);	//Enemies start disabled
 	modules[11] = player = new ModulePlayer(false);		//Player starts disabled	
 
-	modules[12] = collisions = new ModuleCollisions(true);
-	modules[13] = fade = new ModuleFadeToBlack(true);
-	modules[14] = fonts = new ModuleFonts(true);
-	modules[15] = render = new ModuleRender(true);
+	modules[12] = hud = new HUD(false);
+	modules[13] = collisions = new ModuleCollisions(true);
+	modules[14] = fade = new ModuleFadeToBlack(true);
+	modules[15] = fonts = new ModuleFonts(true);
+	modules[16] = render = new ModuleRender(true);
 
 
 

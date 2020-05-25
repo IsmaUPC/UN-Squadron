@@ -8,6 +8,7 @@
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
+#include "HUD.h"
 
 
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
@@ -27,6 +28,7 @@ ModuleScene::~ModuleScene(){
 bool ModuleScene::Start()
 {
 	App->player->Enable();
+	App->hud->Enable();
 	App->enemies->Enable();
 	App->collisions->Enable();
 	//App->textures-> Enable();

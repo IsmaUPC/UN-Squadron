@@ -88,6 +88,7 @@
     <ClInclude Include="Enemy_RedShip.h" />
     <ClInclude Include="Enemy_Template.h" />
     <ClInclude Include="Enemy_YellowShip.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleCollisions.h" />
     <ClInclude Include="ModuleEnemies.h" />
@@ -123,6 +124,7 @@
     <ClCompile Include="Enemy_Template.cpp" />
     <ClCompile Include="Enemy_YellowShip.cpp" />
     <ClCompile Include="Globals.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleCollisions.cpp" />
     <ClCompile Include="ModuleEnemies.cpp" />

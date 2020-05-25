@@ -75,10 +75,11 @@ public:
 	uint explosionFx = 0;
 
 	// Font score index
-	uint score = 000;
+	int score = 000;
+	/*
 	int scoreFont = -1;
 	int scoreFont2 = 2;
-	char scoreText[10] = { "\0" };
+	char scoreText[10] = { "\0" };*/
 };
 
 #endif //!__MODULE_PLAYER_H__
