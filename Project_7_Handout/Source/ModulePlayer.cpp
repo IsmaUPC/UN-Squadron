@@ -65,12 +65,6 @@ bool ModulePlayer::Start()
 	position.x = 80;
 	position.y = 230;
 
-
-	//FONTS
-	scoreFont = App->fonts->Load("Assets/Fonts/rtype_font.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 1);
-	scoreFont2 = App->fonts->Load("Assets/Fonts/rtype_font3.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 2);
-	
-
 	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT }, Collider::Type::PLAYER, this);
 
 
@@ -190,15 +184,6 @@ update_status ModulePlayer::PostUpdate()
 		App->render->Blit(texture, position.x, position.y, &rect);
 	}
 
-	// Draw UI (score) --------------------------------------
-	sprintf_s(scoreText, 10, "%7d", score);
-
-	//Blit the text of the score at the bottom of the screen
-	
-	App->fonts->BlitText(10, 10, scoreFont, scoreText);
-		
-	
-
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -216,9 +201,6 @@ bool ModulePlayer::CleanUp(){
 	App->textures->Unload(texture);
 	App->audio->UnloadFx(laserFx);
 	App->audio->UnloadFx(explosionFx);
-	App->fonts->UnLoad(scoreFont);
-	App->fonts->UnLoad(scoreFont2);
-
 
 	return true;
 }

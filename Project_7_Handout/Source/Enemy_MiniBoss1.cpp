@@ -31,20 +31,17 @@ void Enemy_MiniBoss1::move()
 	float speedPatternY[6] = { 2.f, -2.f, 2.f, -2.f, 2.f, -2.f };
 	if (collider->pendingToDelete != true)
 		resizeCollider();
-	
+	int i = FASE;
 	switch (pattern) {
 	case 0:
 		yRecorrido += 2;
-		int i = FASE;
+		
 		if (yRecorrido >= i * 300 && yRecorrido < (i+1) * 300)
 		{
 			position.y += speedPatternY[i];
 			position.x += speedPatternX[i];
 			if (yRecorrido >= ((i+1) * 300)-2) FASE++;
 		}
-		break;
-	case 1:
-			
 		break;
 	}
 

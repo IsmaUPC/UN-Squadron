@@ -8,6 +8,7 @@
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
+#include "HUD.h"
 
 
 ModuleScene2::ModuleScene2(bool startEnabled) : Module(startEnabled)
@@ -25,6 +26,7 @@ ModuleScene2::~ModuleScene2() {
 bool ModuleScene2::Start()
 {
 	App->player->Enable();
+	App->hud->Enable();
 	App->enemies->Enable();
 	App->collisions->Enable();
 
@@ -58,7 +60,7 @@ void ModuleScene2::updateBackground() {
 		cont+=1;
 	}
 
-	//move y Background
+	//move Background_y
 	Y_BG = -(App->player->position.y * 0.35);
 
 }
@@ -67,21 +69,11 @@ void ModuleScene2::updateBackground() {
 // Update: draw background
 
 update_status ModuleScene2::PostUpdate() {
-	//1538
+
 	// Draw everything --------------------------------------
-	//App->render->Blit(bgTexture, 0, 0, NULL);
 	App->render->Blit(bgTexture, 1538 * (cont-1), Y_BG, NULL, 1.4f);
 	App->render->Blit(bgTexture, 1538 * cont, Y_BG, NULL, 1.4f);
 	App->render->Blit(bgTexture, 1538 * (cont+1), Y_BG, NULL, 1.4f);
-	//App->render->Blit(bgTexture, 1538 * (cont-1), 0, NULL, 1);
-	//App->render->Blit(bgTexture, 1538 * cont, 0, NULL, 1);
-
-	/*
-	for (int i = 0; i < N_GB; i++) {
-		App->render->Blit(bgTextures[i], SCREEN_WIDTH * cont[i], 0, NULL, i + 1);
-		//App->render->Blit(bgTextures[i], 1538 * cont[i], 0, NULL, 1);
-		//App->render->Blit(bgTextures[i], 1538 * (cont[i] + 1), 0, NULL, 1);
-	}*/
 
 	
 
