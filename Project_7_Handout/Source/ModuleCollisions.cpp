@@ -94,8 +94,6 @@ update_status ModuleCollisions::PreUpdate()
 		}
 	}
 	
-	//Putos
-
 	return update_status::UPDATE_CONTINUE;
 }
 
