@@ -179,7 +179,7 @@ update_status ModulePlayer::Update()
 		}
 	}else if (position.x ==2050 ){
 		clear();
-		App->fade->FadeToBlack((Module*)App->scene, (Module*)App->sceneWin, 60);
+		App->fade->FadeToBlack(this, (Module*)App->sceneWin, 60);
 	}
 
 	return update_status::UPDATE_CONTINUE;
