@@ -45,10 +45,8 @@ void Enemy_BlueShip::Update()
 }
 
 void Enemy_BlueShip::move(){
-	int w = collider->rect.w;
-	int h = collider->rect.h;
 
-		if(collider->pendingToDelete != true)
+	if(collider->pendingToDelete != true)
 		resizeCollider();
 
 	switch (pattern) {

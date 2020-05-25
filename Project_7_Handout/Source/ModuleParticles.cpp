@@ -30,18 +30,20 @@ bool ModuleParticles::Start()
 	App->textures->Enable();
 	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
 	enemyShotTexture= App->textures->Load("Assets/EnemyShoot.png");
-	playerExplosionTexture = App->textures->Load("Assets/EnemyShoot.png");
+	playerExplosionTexture = App->textures->Load("Assets/PlayerDead.png");
+
 	
 	// Explosion particle
-	explosion.anim.PushBack({274, 296, 33, 30});
-	explosion.anim.PushBack({313, 296, 33, 30});
-	explosion.anim.PushBack({346, 296, 33, 30});
-	explosion.anim.PushBack({382, 296, 33, 30});
-	explosion.anim.PushBack({419, 296, 33, 30});
-	explosion.anim.PushBack({457, 296, 33, 30});
+	explosion.anim.PushBack({0, 12, 37, 46});
+	explosion.anim.PushBack({42, 20, 36, 38});
+	explosion.anim.PushBack({85, 1, 45, 57});
+	explosion.anim.PushBack({137, 6, 46, 52});
+	explosion.anim.PushBack({190, 0, 49, 58});
+	explosion.anim.PushBack({246, 12, 49, 46});
+	explosion.anim.PushBack({ 307, 29, 50, 29 });
 	explosion.anim.loop = false;
 	explosion.anim.speed = 0.3f;
-	
+
 	playerLaser.anim.PushBack({ 0, 0, 40, 7 });
 
 
@@ -147,7 +149,16 @@ update_status ModuleParticles::PostUpdate()
 			else if (particle->collider->type == particle->collider->PLAYER_SHOT) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
+			
 		}
+		if (App->player->destroyed == true)
+		{
+			if (particle != nullptr && particle->collider != nullptr && particle->collider->type == particle->collider->PLAYER)
+			{
+				App->render->Blit(playerExplosionTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
+			}
+		}
+		
 	}
 
 	return update_status::UPDATE_CONTINUE;

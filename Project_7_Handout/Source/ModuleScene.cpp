@@ -56,10 +56,10 @@ bool ModuleScene::Start()
 
 	//	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 250, 250, 90, 1);	//WAVE 5
 
-	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);	//WAVE 1
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 30, 2);	//WAVE 1
-	App->enemies->spawningEnemies(3, ENEMY_TYPE::REDSHIP, 940, 350, 50, 3);		//WAVE 2
-	App->enemies->spawningEnemies(3, ENEMY_TYPE::YELLOWSHIP, 1100, 100, 50, 4);	//WAVE 2
+	//App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);	//WAVE 1
+	//App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 30, 2);	//WAVE 1
+	//App->enemies->spawningEnemies(3, ENEMY_TYPE::REDSHIP, 940, 350, 50, 3);		//WAVE 2
+	//App->enemies->spawningEnemies(3, ENEMY_TYPE::YELLOWSHIP, 1100, 100, 50, 4);	//WAVE 2
 	App->enemies->spawningEnemies(3, ENEMY_TYPE::BLUESHIP, 1400, 100, 30, 0);	//WAVE 3
 	App->enemies->spawningEnemies(3, ENEMY_TYPE::BLUESHIP, 1400, 350, 30, 1);	//WAVE 3
 	App->enemies->spawningEnemies(3, ENEMY_TYPE::REDSHIP, 1650, 100, 50, 4);	//WAVE 4
@@ -68,6 +68,7 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2000, 200, 90, 0);	//WAVE 5
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 320, 90, 1);	//WAVE 5
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 120, 90, 2);	//WAVE 5
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 600, 0, 0, 0);		//MINIBOSS
 
 	
 	App->render->camera.x = 0;

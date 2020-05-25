@@ -177,7 +177,7 @@ update_status ModulePlayer::Update()
 			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 			//return update_status::UPDATE_STOP;
 		}
-	}else if (position.x ==2050 ){
+	}else if (position.x ==2400 ){
 		CleanUp();
 		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
 	}

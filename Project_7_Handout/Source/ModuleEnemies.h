@@ -15,6 +15,7 @@ enum class ENEMY_TYPE
 	REDSHIP,
 	YELLOWSHIP,
 	BLUESHIP,
+	MINIBOOS1
 };
 
 struct EnemySpawnpoint

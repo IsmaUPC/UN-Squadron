@@ -11,7 +11,8 @@
 #include "Enemy_GreenShip.h"
 #include "Enemy_BrownShip.h"
 #include "Enemy_YellowShip.h"
-#include"Enemy_BlueShip.h"
+#include "Enemy_BlueShip.h"
+#include "Enemy_MiniBoss1.h"
 
 #define SPAWN_MARGIN 50
 
@@ -176,6 +177,9 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 					break;
 				case ENEMY_TYPE::BLUESHIP:
 					enemies[i] = new Enemy_BlueShip(info.x, info.y, info.pattern);
+					break;
+				case ENEMY_TYPE::MINIBOOS1:
+					enemies[i] = new Enemy_MiniBoss1(info.x, info.y, info.pattern);
 					break;
 			}
 			enemies[i]->texture = textureEnemies;
