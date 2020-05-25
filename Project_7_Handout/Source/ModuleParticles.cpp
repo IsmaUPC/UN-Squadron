@@ -30,24 +30,28 @@ bool ModuleParticles::Start()
 	App->textures->Enable();
 	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
 	enemyShotTexture= App->textures->Load("Assets/EnemyShoot.png");
-	playerExplosionTexture = App->textures->Load("Assets/EnemyShoot.png");
-	
-	// Explosion particle
-	explosion.anim.PushBack({274, 296, 33, 30});
-	explosion.anim.PushBack({313, 296, 33, 30});
-	explosion.anim.PushBack({346, 296, 33, 30});
-	explosion.anim.PushBack({382, 296, 33, 30});
-	explosion.anim.PushBack({419, 296, 33, 30});
-	explosion.anim.PushBack({457, 296, 33, 30});
+	playerExplosionTexture = App->textures->Load("Assets/PlayerDead.png");
+
+
+		// Explosion particle
+	explosion.anim.PushBack({ 0, 12, 37, 46 });
+	explosion.anim.PushBack({ 42, 20, 36, 38 });
+	explosion.anim.PushBack({ 85, 1, 45, 57 });
+	explosion.anim.PushBack({ 137, 6, 46, 52 });
+	explosion.anim.PushBack({ 190, 0, 49, 58 });
+	explosion.anim.PushBack({ 246, 12, 49, 46 });
+	explosion.anim.PushBack({ 307, 29, 50, 29 });
 	explosion.anim.loop = false;
-	explosion.anim.speed = 0.3f;
+	//explosion.speed.x += SCREEN_SPEED;
+
+	explosion.anim.speed = 0.1f;
 	
 	playerLaser.anim.PushBack({ 0, 0, 40, 7 });
 
 
 	for (int i = 0; i < 4; i++)
 	enemyLaser.anim.PushBack({ 10*i, 0, 10, 10 });
-	enemyLaser.speed.x = - SCREEN_SPEED;
+	enemyLaser.speed.x +=  SCREEN_SPEED;
 	enemyLaser.lifetime = 150;
 	enemyLaser.anim.speed = 0.4f;
 	
@@ -138,7 +142,7 @@ update_status ModuleParticles::PostUpdate()
 	{
 		Particle* particle = particles[i];
 		//Collider* colliderI= particle->collider;
-
+		//
 		if (particle != nullptr && particle->collider != nullptr && particle->isAlive)
 		{
 			if (particle->collider->type == particle->collider->ENEMY_SHOT) {
@@ -146,6 +150,9 @@ update_status ModuleParticles::PostUpdate()
 			}
 			else if (particle->collider->type == particle->collider->PLAYER_SHOT) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
+			}
+			else if (particle->collider->type == particle->collider->NONE) {
+				App->render->Blit(playerExplosionTexture, (particle->position.x-(particle->anim.GetCurrentFrame().w -PLAYER_WIDTH)), particle->position.y-(particle->anim.GetCurrentFrame().h / 2), &(particle->anim.GetCurrentFrame()));
 			}
 		}
 	}
@@ -170,7 +177,7 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 			p->position.y = y;
 
 			//Adding the particle's collider
-			if (colliderType != Collider::Type::NONE)
+			//if (colliderType != Collider::Type::NONE)
 				p->collider = App->collisions->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);
 			if (p->collider == nullptr) break;
 
