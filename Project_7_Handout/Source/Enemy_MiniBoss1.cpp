@@ -43,9 +43,7 @@ void Enemy_MiniBoss1::move()
 			if (yRecorrido >= ((i+1) * 300)-2) FASE++;
 		}
 		break;
-	case 1:
-			
-		break;
+	
 	}
 
 }
