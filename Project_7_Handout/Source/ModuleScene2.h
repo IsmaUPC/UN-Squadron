@@ -1,19 +1,19 @@
-#ifndef __MODULE_SCENE_H__
-#define __MODULE_SCENE_H__
+#ifndef __MODULE_SCENE_2_H__
+#define __MODULE_SCENE_2_H__
 
 #include "Module.h"
 #include "Animation.h"
 
 struct SDL_Texture;
 
-class ModuleScene : public Module
+class ModuleScene2 : public Module
 {
 public:
 	//Constructor
-	ModuleScene(bool startEnabled);
+	ModuleScene2(bool startEnabled);
 
 	//Destructor
-	~ModuleScene();
+	~ModuleScene2();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the map background
@@ -30,16 +30,11 @@ public:
 
 	// Disables the player and the enemies
 	bool CleanUp();
-	
+
 public:
-	
+
 	// The scene sprite sheet loaded into an SDL_Texture
-
-	
-	SDL_Texture* bgTextures[4] = {nullptr};
-	int cont[4] = {0};
-	
-
+	SDL_Texture* bgTexture = nullptr ;
 
 };
 #endif

@@ -54,7 +54,9 @@ update_status SceneIntro::Update()
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN){
 		Mix_HaltMusic();
 		//Mix_FreeMusic(App->audio->getMusic());
-		App->fade->FadeToBlack(this, (Module*)App->scene, 60.0f);
+
+		//Empezar Nivel
+		App->fade->FadeToBlack(this, (Module*)App->level1, 60.0f);
 	}
 
 	return update_status::UPDATE_CONTINUE;

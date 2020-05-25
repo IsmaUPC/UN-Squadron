@@ -72,6 +72,7 @@ bool ModuleFadeToBlack::FadeToBlack(Module* _moduleToDisable, Module* _moduleToE
 	bool ret = false;
 	moduleToDisable = _moduleToDisable;
 	moduleToEnable = _moduleToEnable;
+	App->SetActualScene(_moduleToEnable);
 	// If we are already in a fade process, ignore this call
 	if (currentStep == Fade_Step::NONE){
 

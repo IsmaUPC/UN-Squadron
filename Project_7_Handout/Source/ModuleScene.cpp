@@ -17,7 +17,7 @@ ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 ModuleScene::~ModuleScene(){
 	CleanUp();
 	for each (SDL_Texture* texture in bgTextures){
-	App->textures->Unload(texture);
+		App->textures->Unload(texture);
 
 	}
 	
@@ -41,6 +41,10 @@ bool ModuleScene::Start()
 	bgTextures[1] = App->textures->Load("Assets/centro_2_2.png");
 	bgTextures[2] = App->textures->Load("Assets/centro_3_2.png");
 	bgTextures[3] = App->textures->Load("Assets/centro_4_2.png");
+
+	for (int i = 0; i < 4; i++) {
+		cont[i] = 0;
+	}
 
 	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 6);
 
@@ -69,13 +73,6 @@ bool ModuleScene::Start()
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 	
-	for (int i = 0; i < 4; i++){
-		cont[i] = 0;
-	}
-
-
-
-
 	return ret;
 }
 
@@ -84,9 +81,6 @@ update_status ModuleScene::Update(){
 
 	App->render->camera.x += SCREEN_SPEED;
 	updateBackground();
-
-	//if (cen) {
-	//}
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -125,6 +119,11 @@ bool ModuleScene::CleanUp()
 	//App->textures->Disable();
 	//App->audio->Disable();
 	
+	App->textures->Unload(bgTextures[0]);
+	App->textures->Unload(bgTextures[1]);
+	App->textures->Unload(bgTextures[2]);
+	App->textures->Unload(bgTextures[3]);
+
 	return true;
 }
 
