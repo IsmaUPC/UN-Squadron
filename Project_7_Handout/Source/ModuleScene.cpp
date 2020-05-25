@@ -7,6 +7,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
+#include "ModuleFadeToBlack.h"
 
 
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
@@ -81,6 +82,13 @@ update_status ModuleScene::Update(){
 
 
 	App->render->camera.x += SCREEN_SPEED;
+	if (App->render->camera.x >= 2050)
+	{
+		//CleanUp();
+		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
+		App->render->camera.x =0;
+		SCREEN_SPEED == 0;
+	}
 	updateBackground();
 
 	return update_status::UPDATE_CONTINUE;

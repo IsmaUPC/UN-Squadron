@@ -1,4 +1,4 @@
-#include "Application.h"
+﻿#include "Application.h"
 
 #include "Module.h"
 #include "ModuleWindow.h"
@@ -18,6 +18,7 @@
 #include "ModuleFonts.h"
 #include "ModuleRender.h"
 
+
 Application::Application()
 {
 	// The order in which the modules are added is very important.
@@ -30,19 +31,21 @@ Application::Application()
 
 	modules[4] = sceneIntro = new SceneIntro(true);
 	modules[5] = level1 = new ModuleScene(false);
-	modules[6] = sceneGameover = new SceneGameover(false);
-	modules[7] = sceneWin = new SceneWin(false);
+	modules[6] = level2 = new ModuleScene2(false);
+
+	modules[7] = sceneGameover = new SceneGameover(false);
+	modules[8] = sceneWin = new SceneWin(false);
 
 	modules[8] = particles = new ModuleParticles(true);
 	modules[9] = enemies = new ModuleEnemies(false);	//Enemies start disabled
-	modules[10] = player = new ModulePlayer(false);		//Player starts disabled
+	modules[10] = player = new ModulePlayer(false);		//Player starts disabled	
 
-	modules[11] = collisions = new ModuleCollisions(true);
-	modules[12] = fade = new ModuleFadeToBlack(true);
-	modules[13] = fonts = new ModuleFonts(true);
-	modules[14] = render = new ModuleRender(true);
+	modules[12] = collisions = new ModuleCollisions(true);
+	modules[13] = fade = new ModuleFadeToBlack(true);
+	modules[14] = fonts = new ModuleFonts(true);
+	modules[15] = render = new ModuleRender(true);
 
-	modules[15] = level2 = new ModuleScene2(false);
+
 
 }
 
@@ -88,9 +91,7 @@ update_status Application::Update()
 	for (int i = 0; i < NUM_MODULES && ret == update_status::UPDATE_CONTINUE; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->PreUpdate() : update_status::UPDATE_CONTINUE;
 
-	//Putos
-
-	for (int i = 0; i < NUM_MODULES && ret == update_status::UPDATE_CONTINUE; ++i)
+	for (int i = 0; i < NUM_MODULES && ret == update_status::UPDATE_CONTINUE; ++i) 
 		ret = modules[i]->IsEnabled() ? modules[i]->Update() : update_status::UPDATE_CONTINUE;
 
 	for (int i = 0; i < NUM_MODULES && ret == update_status::UPDATE_CONTINUE; ++i)

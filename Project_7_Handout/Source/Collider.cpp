@@ -43,10 +43,8 @@ void Collider::AddListener(Module* listener)
 
 void Collider::AddListener(Enemy* listener)
 {
-	for (int i = 0; i < MAX_LISTENERS; ++i)
-	{
-		if (listenersE[i] == nullptr)
-		{
+	for (int i = 0; i < MAX_LISTENERS; ++i)	{
+		if (listenersE[i] == nullptr)		{
 			listenersE[i] = listener;
 			break;
 		}
