@@ -17,6 +17,7 @@ enum class main_states
 };
 
 Application* App = nullptr;
+unsigned int lastTime, currentTime;
 
 int main(int argc, char* argv[])
 {
@@ -27,13 +28,17 @@ int main(int argc, char* argv[])
 
 	while (state != main_states::MAIN_EXIT)
 	{
+		
+
 		switch (state)
 		{
 			case main_states::MAIN_CREATION:
 			{
 				LOG("Application Creation --------------\n");
+				
 				App = new Application();
 				state = main_states::MAIN_START;
+				
 			}	break;
 
 			case main_states::MAIN_START:
@@ -79,6 +84,7 @@ int main(int argc, char* argv[])
 				state = main_states::MAIN_EXIT;
 			}
 		}
+	
 	}
 
 	LOG("\nBye :)\n");
