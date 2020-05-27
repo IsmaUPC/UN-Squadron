@@ -18,8 +18,6 @@ ModuleScene2::ModuleScene2(bool startEnabled) : Module(startEnabled)
 
 ModuleScene2::~ModuleScene2() {
 	CleanUp();
-	App->textures->Unload(bgTexture);
-
 
 }
 // Load assets
@@ -49,6 +47,7 @@ update_status ModuleScene2::Update() {
 
 	App->render->camera.x += SCREEN_SPEED;
 	updateBackground();
+
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -86,6 +85,7 @@ bool ModuleScene2::CleanUp()
 	App->player->Disable();
 	App->enemies->Disable();
 	App->collisions->Disable();
+	App->hud->Disable();
 	//App->textures->Disable();
 	//App->audio->Disable();
 
