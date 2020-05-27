@@ -1,8 +1,8 @@
-#include "Application.h"
+#include "ModuleFonts.h"
 
+#include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
-#include "ModuleFonts.h"
 
 #include<string.h>
 
@@ -17,7 +17,7 @@ ModuleFonts::~ModuleFonts()
 }
 
 // Load new texture from file path
-int ModuleFonts::Load(const char* texture_path, const char* characters, uint rows)
+int ModuleFonts::Load(const char* texture_path, const char* characters, uint rows, int image_w, int image_h)
 {
 	int id = -1;
 
@@ -61,7 +61,12 @@ int ModuleFonts::Load(const char* texture_path, const char* characters, uint row
 	font.totalLength = strlen(characters);
 	strcpy_s(font.table, characters);
 	font.columns = font.totalLength / font.rows;
-	font.char_h = font.char_w = 8;
+
+	font.char_h = (image_h / font.rows);
+	//font.char_h = 15;
+
+	font.char_w = (image_w / font.columns);
+	//font.char_w = 13;
 
 	LOG("Successfully loaded BMP font from %s", texture_path);
 
@@ -103,7 +108,6 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 	for (uint i = 0; i < len; ++i)
 	{
 		uint charIndex = 0;
-
 
 		// TODO 2: Find the character in the table, its position in the texture and then Blit
 		// 1 - Find the location of the current character in the lookup table

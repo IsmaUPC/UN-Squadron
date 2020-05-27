@@ -21,27 +21,62 @@ HUD::~HUD(){
 bool HUD::Start()
 {
 	bool ret = true;
+	
+																																						//720 x 224
+	scoreFont = App->fonts->Load("Assets/Fonts/FontY.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,им?!*$%&()+-/:;<=>@__     ", 5,720,224);
+	scoreFont2 = App->fonts->Load("Assets/Fonts/FontG.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,0123456789им?!*$%&()+-/:;<=>@__     ", 5, 720, 224);
+	
+																																						//276 x 86
+	hudfont = App->fonts->Load("Assets/hud/hud_font2.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,0123456789им?!*$%&()+-/:;<=>@__     ", 5,235,75);
 
-	scoreFont = App->fonts->Load("Assets/Fonts/rtype_font.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 1);
-	scoreFont2 = App->fonts->Load("Assets/Fonts/rtype_font3.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 2);
+	hudTexture = App->textures->Load("Assets/hud/hud.png");
 
-	score = &App->player->score;
-
+	info.money = App->player->getMoney();
+	info.score = App->player->getScore();
+	info.level = App->player->getLevel();
+	info.pow = App->player->getPow();
+	info.total = App->player->getTotal();
+	info.lives = App->player->getLives();
+	
 	return ret;
 }
 
-update_status HUD::PostUpdate()
-{
-	sprintf_s(scoreText, 10, "%7d", *score);
+update_status HUD::PostUpdate(){
 
-	App->fonts->BlitText(10, 10, scoreFont, scoreText);
+	App->render->Blit(hudTexture, 0,0, NULL, 0,false);
+
+	sprintf_s(moneyText, 10, "%7d", *info.money);
+	sprintf_s(scoreText, 10, "%7d", *info.score);
+	sprintf_s(levelText, 5, "%3d", *info.level);
+	sprintf_s(powText, 5, "%3d", *info.pow);
+	sprintf_s(totalText, 5, "%3d", *info.total);
+	sprintf_s(livesText, 5, "%3d", *info.lives);
+
+	App->fonts->BlitText(20, 61, hudfont, scoreText);
+
+	App->fonts->BlitText(262, 61, hudfont, moneyText);
+
+	App->fonts->BlitText(322, 30, hudfont, levelText);
+
+	App->fonts->BlitText(390, 61, hudfont, powText);
+
+	App->fonts->BlitText(447, 61, hudfont, totalText);
+
+	App->fonts->BlitText(54,412, hudfont, livesText);
 
 	return update_status::UPDATE_CONTINUE;
+
 }
 
 bool HUD::CleanUp()
 {
+	
 	App->fonts->UnLoad(scoreFont);
 	App->fonts->UnLoad(scoreFont2);
+	App->fonts->UnLoad(hudfont);
+
+
+	App->textures->Unload(hudTexture);
+
 	return true;
 }
