@@ -56,8 +56,8 @@ update_status SceneIntro::Update()
 		//Mix_FreeMusic(App->audio->getMusic());
 
 		//Empezar Nivel
-		App->fade->FadeToBlack(this, (Module*)App->level1, 60.0f);
-		//App->fade->FadeToBlack(this, (Module*)App->level2, 60.0f);
+		//App->fade->FadeToBlack(this, (Module*)App->level1, 60.0f);
+		App->fade->FadeToBlack(this, (Module*)App->level2, 60.0f);
 	}
 
 	return update_status::UPDATE_CONTINUE;
