@@ -32,6 +32,8 @@ Enemy_BlueShip::Enemy_BlueShip(int x, int y,int _pattern) : Enemy(x, y, _pattern
 
 	collider = App->collisions->AddCollider({ 0, 0, 61, 18 }, Collider::Type::ENEMY, (Module*)App->enemies);
 	position.x -= SCREEN_WIDTH + 100;
+	if (pattern == 2)TOP = 410, pattern = 0;
+	if (pattern == 3)TOP = 410, pattern = 1;
 }
 
 void Enemy_BlueShip::Update()
@@ -57,7 +59,7 @@ void Enemy_BlueShip::move(){
 		//position = spawnPos + path.GetRelativePosition();
 		switch (FASE) {
 		case 1:
-			if (xRecorrido < 250) {
+			if (xRecorrido < TOP) {
 				xRecorrido += 4;
 				position.y = position.y;
 				position.x += 5;
@@ -80,7 +82,7 @@ void Enemy_BlueShip::move(){
 		currentAnim = &fly;
 		switch (FASE) {
 		case 1:
-			if (xRecorrido < 300) {
+			if (xRecorrido < TOP+50) {
 				xRecorrido += 4;
 				position.y = position.y;
 				position.x += 5;

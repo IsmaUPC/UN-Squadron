@@ -31,7 +31,8 @@ private:
 	int FASE = 0;
 	int xRecorrido = 0;
 	int yRecorrido = 0;
-
+	bool inMap = false;
+	int TOP = 300;
 	// This enemy has one sprite and one frame
 	// We are keeping it an animation for consistency with other enemies
 	Animation FirsAnim;

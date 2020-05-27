@@ -62,7 +62,16 @@ Enemy_GreenShip::Enemy_GreenShip(int x, int y, int _pattern) : Enemy(x, y,_patte
 	loopToLeft.speed = 0.3f;
 
 	collider = App->collisions->AddCollider({0, 0, 54, 16}, Collider::Type::ENEMY, (Module*)App->enemies);
-	
+	if (position.y == 260) TOP = 0.8;
+	if (pattern == 3)init = true;
+	if (pattern == 4)init = true;
+	if (pattern == 6)pattern = 2, MAX += 50, speedPattern2 += 1;
+	if (pattern == 5)pattern = 1, MAX += 50, speedPattern2 += 1;
+	if (pattern == 7)pattern = 2, MAX += 50, speedPattern2 += 1, up = -0.6;
+	if (pattern == 8)pattern = 2, MAX += 50, speedPattern2 += 1, up = -1.3;
+	if (pattern >= 2 && position.x > 2000 && position.x < 2200) multiSpeed = 1.5; //hay que cambiarlo a 3000
+	else multiSpeed = 1;
+
 }
 
 void Enemy_GreenShip::Update()
@@ -85,26 +94,46 @@ void Enemy_GreenShip::move() {
 		{
 		case 1:
 			currentAnim = &flyInvers;
-			if (xRecorrido < 350)
+			if (xRecorrido < 100)
 			{
-				xRecorrido += 4;
-				position.y -= 1;
-				position.x -= 4;
+				xRecorrido += 2;
+				position.y -= 0;
+				position.x -= 2;
 			}
 			else FASE = 2;
 			break;
 		case 2:
-			currentAnim = &twistToRight;
-			if (yRecorrido < 100)
+			currentAnim = &flyInvers;
+			if (xRecorrido < 300)
 			{
-				yRecorrido += 2;
-				position.y += 2;
-				position.x -= 1;
+				xRecorrido += 2;
+				position.y -= 0.85;
+				position.x -= 2;
 			}
 			else FASE = 3;
 			break;
 		case 3:
-			if (xRecorrido > 380) currentAnim = &loopToRight;
+			currentAnim = &twistToRight;
+			if (yRecorrido < 50)
+			{
+				yRecorrido += 2;
+				position.y += 2.1;
+				position.x -= 0.9;
+			}
+			else FASE = 4;
+			break;
+		case 4:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 110)
+			{
+				yRecorrido += 2;
+				position.y += TOP;
+				position.x += 1.8;
+			}
+			else FASE = 5;
+			break;
+		case 5:
+			if (xRecorrido > 315) currentAnim = &loopToRight;
 			xRecorrido += 2;
 			position.y = position.y;
 			position.x += 6;
@@ -116,29 +145,53 @@ void Enemy_GreenShip::move() {
 		{
 		case 1:
 			currentAnim = &flyInvers;
-			if (xRecorrido < 290)
+			if (xRecorrido < MAX)//50
 			{
-				xRecorrido += 3;
-				position.y -= 0.3;
-				position.x -= 4;
+				xRecorrido += speedPattern2;//2
+				position.y -= 0;
+				position.x -= speedPattern2 + 1;//3
 			}
 			else FASE = 2;
 			break;
 		case 2:
-			currentAnim = &twistToRight;
-			if (yRecorrido < 60)
+			currentAnim = &flyInvers;
+			if (xRecorrido < 200+MAX)//250
 			{
-				yRecorrido += 1;
-				position.y -= 0.5;
-				position.x += 0.5;
+				xRecorrido += speedPattern2;//2
+				position.y -= 0.5;//0.5
+				position.x -= speedPattern2+1;//3
 			}
-			else FASE = 3;
+			else 
+				FASE = 3;
 			break;
 		case 3:
-			if (xRecorrido > 350) currentAnim = &loopToRight;
-			xRecorrido += 2;
+			currentAnim = &twistToRight;
+			if (yRecorrido < 70)
+			{
+				yRecorrido += 2;
+				//if (init == true)position.y -= speed; 
+				position.y -= 1.5; //1.5
+				position.x += 0.8;
+			}
+			else FASE = 4;
+			break;
+		case 4:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 140)
+			{
+				yRecorrido += 2;
+				//if (init == true)position.y -= speed; 
+				position.y -= 1.5; //1.5
+				position.x += 1.4;
+			}
+			else FASE = 5;
+			break;
+		case 5:
+			if (xRecorrido > 250) currentAnim = &loopToRight;
+			xRecorrido += 2;								 
 			position.y = position.y;
-			position.x += 7;
+			//if (init == true)position.x += 6; 
+			position.x += 5; 
 		}
 		break;
 	case 2:
@@ -146,69 +199,155 @@ void Enemy_GreenShip::move() {
 		{
 		case 1:
 			currentAnim = &flyInvers;
-			if (xRecorrido < 290)
+			if (xRecorrido < MAX)//50
+			{
+				xRecorrido += speedPattern2;//2
+				position.y -= 0;
+				position.x -= speedPattern2+1;//3
+			}
+			else FASE = 2;
+			break;
+		case 2:
+			currentAnim = &flyInvers;
+			if (xRecorrido < 200+MAX)//250
+			{
+				xRecorrido += speedPattern2;//2
+				position.y += 0.5;//0.5
+				position.x -= speedPattern2+1;//3
+			}
+			else FASE = 3;
+			break;
+		case 3:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 70)
+			{
+				yRecorrido += 2;
+				//if (init == true)position.y += speed; 
+				position.y += up; //1
+				position.x += 0.8;
+			}
+			else FASE = 4;
+			break;
+		case 4:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 140)
+			{
+				yRecorrido += 2;
+				//if (init == true)position.y += speed; 
+				position.y += up; //1
+				position.x += 1.4;
+			}
+			else FASE = 5;
+			break;
+		case 5:
+			if (xRecorrido > 250) currentAnim = &loopToRight;
+			xRecorrido += 2;								
+			position.y = position.y;
+			//if (init == true)position.x += 6; 
+			position.x += multiSpeed*5; 
+		}
+		break;
+
+	case 3:
+		switch (FASE)
+		{
+		case 1:
+			currentAnim = &flyInvers;
+			if (xRecorrido < 100)
 			{
 				xRecorrido += 3;
-				position.y += 1;
+				position.y -= 0;
 				position.x -= 4;
 			}
 			else FASE = 2;
 			break;
 		case 2:
-			currentAnim = &twistToRight;
-			if (yRecorrido < 60)
+			currentAnim = &flyInvers;
+			if (xRecorrido < 300)
 			{
-				yRecorrido += 1;
-				position.y += 0.5;
-				position.x += 0.5;
+				xRecorrido += 3;
+				position.y -= 1;
+				position.x -= 4;
+			}
+			else
+				FASE = 3;
+			break;
+		case 3:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 70)
+			{
+				yRecorrido += 2;
+				position.y -= speed;
+				position.x += 0.8;
+			}
+			else FASE = 4;
+			break;
+		case 4:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 140)
+			{
+				yRecorrido += 2;
+				position.y -= speed;
+				position.x += 1.4;
+			}
+			else FASE = 5;
+			break;
+		case 5:
+			if (xRecorrido > 300) currentAnim = &loopToRight;
+			xRecorrido += 3;								 
+			position.y = position.y;
+			position.x += multiSpeed*6;
+		}
+		break;
+	case 4:
+		switch (FASE)
+		{
+		case 1:
+			currentAnim = &flyInvers;
+			if (xRecorrido < 100)
+			{
+				xRecorrido += 3;
+				position.y -= 0;
+				position.x -= 4;
+			}
+			else FASE = 2;
+			break;
+		case 2:
+			currentAnim = &flyInvers;
+			if (xRecorrido < 300)
+			{
+				xRecorrido += 3;
+				position.y += 1;
+				position.x -= 4;
 			}
 			else FASE = 3;
 			break;
 		case 3:
-			if (xRecorrido > 350) currentAnim = &loopToRight;
-			xRecorrido += 2;
-			position.y = position.y;
-			position.x += 7;
+			currentAnim = &twistToRight;
+			if (yRecorrido < 70)
+			{
+				yRecorrido += 2;
+				position.y += speed;
+				position.x += 0.8;
+			}
+			else FASE = 4;
 			break;
+		case 4:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 140)
+			{
+				yRecorrido += 2;
+				position.y += speed;
+				position.x += 1.4;
+			}
+			else FASE = 5;
+			break;
+		case 5:
+			if (xRecorrido > 300) currentAnim = &loopToRight;
+			xRecorrido += 3;								 
+			position.y = position.y;
+			position.x += multiSpeed*6;
 		}
-		break;
-
-	case 3:
-
-		if (FASE == 1) {
-			if (!startmove) {
-				startmove = true;
-				n = 270;
-			}
-
-			if (n <= 360) {
-
-				xRecorrido = (spawnPos.x - position.x);
-				n += 5;
-				alpha = n * M_PI / 180.0f;
-
-				position.x += (position.y * cos(alpha)) / 40;
-				position.y -= 2;
-			}
-			else {
-				FASE = 2;
-				startmove = false;
-			}
-		}
-		if (FASE == 2) {
-			if (!startmove) {
-				startmove = true;
-				n = 0;
-			}
-			xRecorrido = (spawnPos.x - position.x);
-			n += 3;
-			alpha = n * M_PI / 180.0f;
-			position.x += (position.y * cos(alpha)) / 40;
-			position.y -= 2;
-
-		}
-
-
 		break;
 
 	}

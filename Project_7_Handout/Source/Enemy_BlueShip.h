@@ -39,7 +39,7 @@ private:
 	int yRecorrido = 0;
 
 	int FASE = 1;
-
+	int TOP = 250;
 	int n = 0;
 	float alpha = 0;
 };

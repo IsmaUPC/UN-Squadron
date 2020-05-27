@@ -58,7 +58,7 @@ bool ModuleScene::Start()
 	//App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 600, 130, 100, 0);
 
 	//	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 250, 250, 90, 1);	//WAVE 5
-
+	/*
 	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 30, 2);	//WAVE 1
 	App->enemies->spawningEnemies(3, ENEMY_TYPE::REDSHIP, 940, 350, 50, 3);		//WAVE 2
@@ -71,8 +71,25 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2000, 200, 90, 0);	//WAVE 5
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 320, 90, 1);	//WAVE 5
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 120, 90, 2);	//WAVE 5
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 2200, 0, 0, 0);		//MINIBOSS
-
+	*/
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 2170-1000, -80, 0, 0);	//MINIBOSS 2170
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 2750 - 1000, SCREEN_HEIGHT, 0, 1);	//MINIBOSS 2750
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 3100 - 1000, -80, 0, 2);	//MINIBOSS 3100
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 3820 - 1000, SCREEN_HEIGHT, 0, 3);	//MINIBOSS  3820
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 4120 - 1000, SCREEN_HEIGHT, 0, 4);	//MINIBOSS 4120
+	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 2500 - 1000, 90, 30, 2);	//WAVE 6 2500
+	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 2500 - 1000, 350, 30, 3);	//WAVE 6 2500
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2690 - 1000, 190, 90, 4);	//WAVE 7 2690
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2690 - 1000, 270, 90, 3);	//WAVE 7 2690
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2710 - 1000, 120, 90, 6);	//WAVE 7 2710
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2720 - 1000, 320, 90, 5);	//WAVE 7 2720
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::BLUESHIP, 2900 - 1000, 150, 30, 2);	//WAVE 8 2900
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::BLUESHIP, 2880 - 1000, 350, 30, 3);	//WAVE 8 2880
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 3030 - 1000, 180, 90, 4);	//WAVE 9 
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 3030 - 1000, 230, 90, 3);	//WAVE 9 
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 3050 - 1000, 178, 90, 7);	//WAVE 9
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 3050 - 1000, 246, 90, 8);	//WAVE 9
+	
 	
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -84,7 +101,7 @@ update_status ModuleScene::Update(){
 
 
 	App->render->camera.x += SCREEN_SPEED;
-	if (App->render->camera.x >= 2400)
+	if (App->render->camera.x >= 4550)
 	{
 		//CleanUp();
 		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
