@@ -35,8 +35,13 @@ public:
 
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr ;
-	int cont = 0;
+
+	int moveBG1 = 0;
+	int moveBG2 = 1;
+	int loopBG = -1;
+	int limitBG = 0;
 
 	int Y_BG;
+
 };
 #endif

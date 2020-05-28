@@ -21,7 +21,10 @@ typedef unsigned int uint;
 
 // Window Configuration -----------
 
+//SCREEN_HEIGHT 440
 #define SCREEN_WIDTH 503
+
+//#define SCREEN_WIDTH 503
 #define SCREEN_HEIGHT 440
 
 #define PLAYER_WIDTH 68
