@@ -45,7 +45,7 @@ private:
 	int xRecorrido = 0;
 	int yRecorrido = 0;
 	float TOP = 2.1;//pattern 0
-	float speed = -0.8;//0.2 speed de bajada/subida
+	float speed = -0.8;//speed de bajada/subida
 	bool init = false;
 	int MAX = 50;//TOP recorrido
 	float speedPattern2 = 2; // speed de bajada/subida

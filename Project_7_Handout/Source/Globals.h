@@ -33,7 +33,7 @@ typedef unsigned int uint;
 
 
 //poner 1 para pantalla completa, 0 para tamaño real
-#define PantallaCompleta 0
+#define PantallaCompleta 1
 
 #define WIN_FULLSCREEN_DESKTOP PantallaCompleta
 #define WIN_BORDERLESS 0

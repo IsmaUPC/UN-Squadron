@@ -47,9 +47,11 @@ private:
 
 	int xRecorrido = 0;
 	int yRecorrido = 0;
-
+	float multiSpeed = 1.3;
 	int FASE = 1;
-
+	bool toRight = false;
+	int direction = 1;
+	int TOP = 0;
 	int n = 0;
 	float alpha = 0;
 

@@ -32,12 +32,12 @@ void Enemy_MiniBoss1::move()
 	float speedPatternY[6] = { 2.f, -2.f, 2.f, -2.f, 2.f, -2.f };
 	float speedPatternX2[6] = { 1.5f, 0.15f, 0.8f, 1.f, 0.6f, 0.6f };
 	float speedPatternY2[6] = { -2.f, 2.f, -2.f, 2.f, -2.f, +2.f };
-	float speedPatternX3[6] = { 1.2f, 1.2f, 1.3f, 1.4f, 1.f, 1.4f };
-	float speedPatternY3[6] = { 2.f, -2.f, 2.f, -2.f, 2.f, -2.f };
+	float speedPatternX3[6] = { 1.2f, 1.2f, 1.3f, 1.5f, 1.f, 1.4f };
+	float speedPatternY3[6] = { 2.f, -2.f, 2.f, -2.2f, 2.0f, -2.f };
 	float speedPatternX4[6] = { 1.3f, 1.3f, 1.3f, 0.6f, 0.8f, 1.3f };
-	float speedPatternY4[6] = { -2.f, 2.f, -2.f, 2.f, -2.f, +2.f };
+	float speedPatternY4[6] = { -1.6f, 1.6f, -1.6f, 1.6f, -1.6f, +1.6f };
 	float speedPatternX5[6] = { 1.2f, 1.f, 0.7f, 0.7f, 0.7f, 1.3f };
-	float speedPatternY5[6] = { -2.f, 2.f, -2.f, 2.f, -2.f, +2.f };
+	float speedPatternY5[6] = { -1.6f, 1.6f, -1.6f, 1.6f, -1.6f, +1.6f };
 	if (collider->pendingToDelete != true)
 		resizeCollider();
 	int i = FASE;
@@ -59,8 +59,8 @@ void Enemy_MiniBoss1::move()
 		if (inMap == true) yRecorrido += 2;
 		if (yRecorrido >= i * TOP && yRecorrido < (i + 1) * TOP)
 		{
-			position.y += 0.9*speedPatternY2[i];
-			position.x += 0.9*speedPatternX2[i];
+			position.y += speedPatternY2[i];
+			position.x += speedPatternX2[i];
 			if (yRecorrido >= ((i + 1) * TOP) - 2) FASE++;
 			if (yRecorrido == 300) TOP = 270;
 			if (yRecorrido == 1600) TOP = 300;
@@ -68,38 +68,38 @@ void Enemy_MiniBoss1::move()
 		break;
 	case 2:
 		if (position.y > 0) inMap = true;
-		if (inMap == true) yRecorrido += 2;
+		if (inMap == true ) yRecorrido += 2 / multiSpeed;
 		if (yRecorrido >= i * TOP && yRecorrido < (i + 1) * TOP)
 		{
-			position.y += speedPatternY3[i];
-			position.x += speedPatternX3[i];
+			position.y += multiSpeed * speedPatternY3[i];
+			position.x += multiSpeed * speedPatternX3[i];
 			if (yRecorrido >= ((i + 1) * TOP) - 2) FASE++;
 			if (yRecorrido == 300) TOP = 270;
 			if (yRecorrido == 1600) TOP = 300;
 		}
 		break;
-	case 3:
+	case 3:///////////////////////////////////////////////////////
 		if (position.y + 80 < SCREEN_HEIGHT) inMap = true;
-		if (inMap == true) yRecorrido += 2;
+		if (inMap == true) yRecorrido += 1.6;
 		if (yRecorrido >= i * TOP && yRecorrido < (i + 1) * TOP)
 		{
-			position.y += speedPatternY4[i];
-			position.x += speedPatternX4[i];
+			position.y += 1 * speedPatternY4[i];
+			position.x += 1 * speedPatternX4[i];
 			if (yRecorrido >= ((i + 1) * TOP) - 2) FASE++;
-			if (yRecorrido == 300) TOP = 270;
-			if (yRecorrido == 1600) TOP = 300;
+			//if (yRecorrido > 300) TOP = 270;
+			//if (yRecorrido > 1600) TOP = 300;
 		}
 		break;
 	case 4:
 		if (position.y + 80 < SCREEN_HEIGHT) inMap = true;
-		if (inMap == true) yRecorrido += 2;
+		if (inMap == true) yRecorrido += 1.6;
 		if (yRecorrido >= i * TOP && yRecorrido < (i + 1) * TOP)
 		{
-			position.y += speedPatternY5[i];
-			position.x += speedPatternX5[i];
+			position.y += 1 * speedPatternY5[i];
+			position.x += 1 * speedPatternX5[i];
 			if (yRecorrido >= ((i + 1) * TOP) - 2) FASE++;
-			if (yRecorrido == 300) TOP = 270;
-			if (yRecorrido == 1600) TOP = 300;
+			//if (yRecorrido > 300) TOP = 270;
+			//if (yRecorrido > 1600) TOP = 300;
 		}
 		break;
 	}

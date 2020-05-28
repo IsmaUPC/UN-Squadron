@@ -3,7 +3,7 @@
 
 #include "Module.h"
 
-#define MAX_ENEMIES 100
+#define MAX_ENEMIES 110
 
 // TODO 4: Create a new enemy type: the Enemy_RedShip
 

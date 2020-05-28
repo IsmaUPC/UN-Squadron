@@ -62,15 +62,15 @@ Enemy_GreenShip::Enemy_GreenShip(int x, int y, int _pattern) : Enemy(x, y,_patte
 	loopToLeft.speed = 0.3f;
 
 	collider = App->collisions->AddCollider({0, 0, 54, 16}, Collider::Type::ENEMY, (Module*)App->enemies);
-	if (position.y == 260) TOP = 0.8;
 	if (pattern == 3)init = true;
-	if (pattern == 4)init = true;
-	if (pattern == 6)pattern = 2, MAX += 50, speedPattern2 += 1;
-	if (pattern == 5)pattern = 1, MAX += 50, speedPattern2 += 1;
-	if (pattern == 7)pattern = 2, MAX += 50, speedPattern2 += 1, up = -0.6;
-	if (pattern == 8)pattern = 2, MAX += 50, speedPattern2 += 1, up = -1.3;
-	if (pattern >= 2 && position.x > 2000 && position.x < 2200) multiSpeed = 1.5; //hay que cambiarlo a 3000
-	else multiSpeed = 1;
+	else if (pattern == 4)init = true;
+	else if (pattern == 6)pattern = 2, MAX += 50, speedPattern2 += 1;
+	else if (pattern == 5)pattern = 1, MAX += 50, speedPattern2 += 1;
+	else if (pattern == 7)pattern = 2, MAX += 50, speedPattern2 += 1, up = -0.6;
+	else if (pattern == 8)pattern = 2, MAX += 50, speedPattern2 += 1, up = -1.3;
+	else if (pattern >= 2 && position.x > 3000 && position.x < 3000) multiSpeed = 1.5; //hay que cambiarlo a 3000
+	else multiSpeed = 1, MAX = 50, TOP=2.1;
+	if (position.y == 260) TOP = 0.8;
 
 }
 

@@ -76,7 +76,8 @@ Enemy_YellowShip::Enemy_YellowShip(int x, int y,int _pattern):Enemy(x,y,_pattern
 	//path.PushBack({ -0.5f , 0.0f }, 125, &flyInvers);
 	collider = App->collisions->AddCollider({ 0, 0, 66, 39 }, Collider::Type::ENEMY, (Module*)App->enemies);
 
-	position.x -= SCREEN_WIDTH +100;
+	if (pattern >= 3) position.x -= SCREEN_WIDTH +100;
+	if (pattern == 2)pattern = 4, toRight = true, direction = -1, TOP = 250;
 }
 
 void Enemy_YellowShip::Update()
@@ -210,11 +211,9 @@ void Enemy_YellowShip::move() {
 		switch (FASE) {
 		case 1:
 			currentAnim = &fly;
-			if (xRecorrido < 300) {
-				xRecorrido += 4;
-
-				position.x += 4;
-
+			if (xRecorrido < 330/ multiSpeed) {
+				xRecorrido += multiSpeed * 4;
+				position.x += multiSpeed * 4;
 			}
 			else
 				FASE = 2;
@@ -222,66 +221,51 @@ void Enemy_YellowShip::move() {
 		case 2:
 			currentAnim = &twistToLeft;
 			if (position.y > SCREEN_HEIGHT / 2) {
-				xRecorrido += 5;
-
-				position.y -= sqrt(position.x / 150);
-				position.x += 5;
+				xRecorrido += multiSpeed * 4;
+				position.y -= multiSpeed * 2;
+				position.x += multiSpeed * 4;
 			}
 			else
 				FASE = 3;
 
 			break;
 		case 3:
-			if (position.y > 100) {
-				xRecorrido += 3;
-				position.y -= sqrt(position.x / 100);
-				position.x += 3;
+			if (position.y > 110) {
+				xRecorrido += multiSpeed * 2;
+				position.y -= multiSpeed * 2;
+				position.x -= multiSpeed * 2;
 			}
 			else
 				FASE = 4;
 			break;
-
 		case 4:
-			if (xRecorrido < 700) {
-				xRecorrido += 3;
-
-				position.y = position.y; // sqrt(xRecorrido / 50);
-				position.x -= 3;
-			}
-			else
-				FASE = 5;
-			break;
-		case 5:
 			//if (position.y > 105)currentAnim = &fly;
 			//if (position.y <= 105)currentAnim = &loopToRight;
 			currentAnim = &flyInvers;
-			xRecorrido = position.x;
-
-			position.y += sqrt(xRecorrido / 500);
-			position.x -= 5;
+			position.y += multiSpeed * 1;
+			position.x -= multiSpeed * 5;
 			break;
 		}
 		break;
 	case 4:
 		switch (FASE) {
 		case 1:
-			currentAnim = &fly;
-			if (xRecorrido < 760) {
-				xRecorrido = position.x;
-
-				position.x += 4;
-
+			if (toRight == true) currentAnim = &flyInvers;
+			else currentAnim = &fly;
+			if (xRecorrido < 253-TOP) {
+				xRecorrido += 5;
+				position.x += multiSpeed * 4 * direction;
 			}
 			else
 				FASE = 2;
 			break;
 		case 2:
-			currentAnim = &twistToLeftToDown;
+			if (toRight == true) currentAnim = &twistToRightToDown;
+			else currentAnim = &twistToLeftToDown;
 			if (position.y < SCREEN_HEIGHT / 2) {
-				xRecorrido = position.x;
-
-				position.y += sqrt(xRecorrido / 150);
-				position.x += 4;
+				xRecorrido += 5;
+				position.y += multiSpeed * 2;
+				position.x += multiSpeed * 4*direction;
 			}
 			else
 				FASE = 3;
@@ -289,32 +273,20 @@ void Enemy_YellowShip::move() {
 			break;
 		case 3:
 			if (position.y < 330) {
-				xRecorrido = position.x;
-				position.y += sqrt(xRecorrido / 200);
-				position.x -= 1;
+				xRecorrido += 2;
+				position.y += multiSpeed * 2;
+				position.x -= multiSpeed * 2*direction;
 			}
 			else
 				FASE = 4;
 			break;
-
 		case 4:
-			if (xRecorrido > 960) {
-				xRecorrido = position.x;
-
-				position.y = position.y; // sqrt(xRecorrido / 50);
-				position.x -= 3;
-			}
-			else
-				FASE = 5;
-			break;
-		case 5:
 			//if (position.y > 105)currentAnim = &fly;
 			//if (position.y <= 105)currentAnim = &loopToRight;
-			currentAnim = &flyInvers;
-			xRecorrido = position.x;
-
-			position.y -= sqrt(xRecorrido / 500);
-			position.x -= 5;
+			if (toRight == true) currentAnim = &fly;
+			else currentAnim = &flyInvers;
+			position.y -= multiSpeed * 1*direction;
+			position.x -= multiSpeed * 5 * direction;
 			break;
 		}
 		break;

@@ -30,8 +30,9 @@ private:
 	Path path;
 	int FASE = 0;
 	int xRecorrido = 0;
-	int yRecorrido = 0;
+	float yRecorrido = 0;
 	bool inMap = false;
+	float multiSpeed =1;
 	int TOP = 300;
 	// This enemy has one sprite and one frame
 	// We are keeping it an animation for consistency with other enemies

@@ -82,7 +82,10 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 	collider = App->collisions->AddCollider({ 0, 0, 66, 39 }, Collider::Type::ENEMY, (Module*)App->enemies);
 	int w = collider->rect.w;
 	int h = collider->rect.h;
-	position.x -= SCREEN_WIDTH+100;
+	if(pattern>=3)position.x -= SCREEN_WIDTH+100;
+	if (pattern == 2)pattern = 4, toRight = true, direction = -1, TOP = 250;
+	if (pattern == 1)pattern = 3 , toRight = true, direction = -1, TOP = 250;
+	
 }
 
 void Enemy_RedShip::Update()
@@ -216,107 +219,87 @@ void Enemy_RedShip::move() {
 	case 3:
 		switch (FASE) {
 		case 1:
-			currentAnim = &fly;
-			if (xRecorrido < 600) {
-				xRecorrido = position.x;
-				position.x += 4;
-
+			if(toRight==true)currentAnim = &flyInvers;
+			else currentAnim = &fly;
+			if (xRecorrido < 253-TOP) {
+				xRecorrido += 5;
+				position.x += multiSpeed * 4 * direction;
 			}
 			else
 				FASE = 2;
 			break;
 		case 2:
-			currentAnim = &twistToLeft;
+			if (toRight == true) currentAnim = &twistToRight;
+			else currentAnim = &twistToLeft;
 			if (position.y > SCREEN_HEIGHT / 2) {
-				xRecorrido = position.x;
-				position.y -= sqrt(xRecorrido / 150);
-				position.x += 4;
+				xRecorrido += 5;
+				position.y -= multiSpeed * 2;
+				position.x += multiSpeed * 4 * direction;
 			}
 			else
 				FASE = 3;
 
 			break;
 		case 3:
-			if (position.y > 100) {
-				xRecorrido = position.x;
-				position.y -= sqrt(xRecorrido / 100);
-				position.x += 1;
+			if (position.y > 110) {
+				xRecorrido += 2;
+				position.y -= multiSpeed * 2;
+				position.x -= multiSpeed * 2 * direction;
 			}
 			else
 				FASE = 4;
 			break;
 
 		case 4:
-			if (xRecorrido > 800) {
-				xRecorrido = position.x;
-
-				position.y = position.y; // sqrt(xRecorrido / 50);
-				position.x -= 3;
-			}
-			else
-				FASE = 5;
-			break;
-		case 5:
 			//if (position.y > 105)currentAnim = &fly;
 			//if (position.y <= 105)currentAnim = &loopToRight;
-			currentAnim = &flyInvers;
-			xRecorrido = position.x;
-			position.y += sqrt(xRecorrido / 500);
-			position.x -= 5;
+			if (toRight == true) currentAnim = &fly;
+			else currentAnim = &flyInvers;
+			position.y += multiSpeed * 1 * direction;
+			position.x -= multiSpeed * 5 * direction;
 			break;
 		}
 		break;
 	case 4:
 		switch (FASE) {
 		case 1:
-			currentAnim = &fly;
-			if (xRecorrido < 300) {
-				xRecorrido += 4;
-				position.x += 4;
-
+			if(toRight==true) currentAnim = &flyInvers;
+			else currentAnim = &fly;
+			if (xRecorrido < 253-TOP) {
+				xRecorrido += 5;
+				position.x += multiSpeed * 4 * direction;
 			}
 			else
 				FASE = 2;
 			break;
 		case 2:
-			currentAnim = &twistToLeftToDown;
+			if (toRight == true) currentAnim = &twistToRightToDown;
+			else currentAnim = &twistToLeftToDown;
 			if (position.y < SCREEN_HEIGHT / 2) {
 				xRecorrido += 5;
-				position.y += sqrt(position.x / 150);
-				position.x += 5;
+				position.y += multiSpeed * 2;
+				position.x += multiSpeed * 4*direction;
 			}
 			else
 				FASE = 3;
 
 			break;
 		case 3:
-			if (position.y < 350) {
-				xRecorrido += 3;
-				position.y += sqrt(position.x / 100);
-				position.x += 1;
+			if (position.y < 330) {
+				xRecorrido += 2;
+				position.y += multiSpeed * 2;
+				position.x -= multiSpeed * 2 * direction;
 			}
 			else
 				FASE = 4;
 			break;
-
 		case 4:
-			if (xRecorrido < 700) {
-				xRecorrido += 3;
-
-				position.y = position.y; // sqrt(xRecorrido / 50);
-				position.x -= 3;
-			}
-			else
-				FASE = 5;
-			break;
-		case 5:
 			//if (position.y > 105)currentAnim = &fly;
 			//if (position.y <= 105)currentAnim = &loopToRight;
-			currentAnim = &flyInvers;
-			xRecorrido = position.x;
-
-			position.y -= sqrt(xRecorrido / 500);
-			position.x -= 5;
+			if (toRight == true) currentAnim = &fly;
+			else currentAnim = &flyInvers;
+			position.y -= multiSpeed * 1 * direction;
+			position.x -= multiSpeed * 5 * direction;
 			break;
 		}
 		break;
