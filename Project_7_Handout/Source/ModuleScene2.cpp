@@ -68,7 +68,7 @@ void ModuleScene2::updateBackground() {
 	}
 
 	//move Background_y
-	Y_BG = -(App->player->position.y * 0.34f);
+	Y_BG = -(App->player->position.y * 0.45f) + 27;
 
 }
 
