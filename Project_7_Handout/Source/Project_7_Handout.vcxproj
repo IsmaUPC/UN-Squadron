@@ -83,6 +83,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy_BlueShip.h" />
     <ClInclude Include="Enemy_BrownShip.h" />
+    <ClInclude Include="Enemy_FinalBoss1.h" />
     <ClInclude Include="Enemy_GreenShip.h" />
     <ClInclude Include="Enemy_MiniBoss1.h" />
     <ClInclude Include="Enemy_RedShip.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enemy_BlueShip.cpp" />
     <ClCompile Include="Enemy_BrownShip.cpp" />
+    <ClCompile Include="Enemy_FinalBoss1.cpp" />
     <ClCompile Include="Enemy_GreenShip.cpp" />
     <ClCompile Include="Enemy_MiniBoss1.cpp" />
     <ClCompile Include="Enemy_RedShip.cpp" />

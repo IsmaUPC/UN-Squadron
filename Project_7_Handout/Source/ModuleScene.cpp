@@ -9,6 +9,8 @@
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
 #include "HUD.h"
+#include "Enemy.h"
+#include "Enemy_FinalBoss1.h"
 
 
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
@@ -55,7 +57,8 @@ bool ModuleScene::Start()
 	//App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
 	
 	// Enemies ---	
-	
+	int menos =5000;
+	/*
 	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 20, 2);	//WAVE 1
 	App->enemies->spawningEnemies(3, ENEMY_TYPE::REDSHIP, 940, 350, 40, 3);		//WAVE 2
@@ -115,24 +118,29 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4700, 200, 90, 0);	//WAVE 15
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4720, 320, 90, 1);	//WAVE 15
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4720, 120, 90, 2);	//WAVE 15
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4950, 260, 90, 8);	//WAVE 16//////////
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4950, 200, 90, 7);	//WAVE 16
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4970, 260, 90, 8);	//WAVE 16
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4970, 200, 90, 7);	//WAVE 16
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 5250, 100, 20, 2);	//WAVE 17
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 5250, 340, 20, 1);	//WAVE 17
 	
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4950-menos, 260, 90, 8);	//WAVE 16//////////
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4950-menos, 200, 90, 7);	//WAVE 16
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4970-menos, 260, 90, 8);	//WAVE 16
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4970-menos, 200, 90, 7);	//WAVE 16
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 5250-menos, 100, 20, 2);	//WAVE 17
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 5250-menos, 340, 20, 1);	//WAVE 17
+	*/
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS1, 800, SCREEN_HEIGHT-90, 0, 0);	//FINAL BOSS
 	
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 	
 	return ret;
 }
-
+bool ModuleScene::Win(bool win) {
+	BossIsDead = win;
+	return BossIsDead;
+}
 update_status ModuleScene::Update(){
 
-
 	App->render->camera.x += SCREEN_SPEED;
+
 	if (App->render->camera.x >= 5400)
 	{
 		//CleanUp();
@@ -160,7 +168,6 @@ update_status ModuleScene::PostUpdate(){
 	
 	return update_status::UPDATE_CONTINUE;
 }
-
 
 void ModuleScene::updateBackground() {
 	

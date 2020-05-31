@@ -39,10 +39,6 @@ public:
 
 	void CleanUp();
 
-
-	
-
-
 	// The current position in the world
 	fPoint position;
 
@@ -54,7 +50,6 @@ public:
 
 	// A flag for the enemy removal. Important! We do not delete objects instantly
 	bool pendingToDelete = false;
-
 
 
 protected:

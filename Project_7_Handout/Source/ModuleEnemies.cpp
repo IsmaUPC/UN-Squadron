@@ -13,6 +13,7 @@
 #include "Enemy_YellowShip.h"
 #include "Enemy_BlueShip.h"
 #include "Enemy_MiniBoss1.h"
+#include "Enemy_FinalBoss1.h"
 
 #define SPAWN_MARGIN 50
 
@@ -31,6 +32,7 @@ ModuleEnemies::~ModuleEnemies()
 bool ModuleEnemies::Start()
 {
 	textureEnemies = App->textures->Load("Assets/UNSquadronSpritesEnemies.png");
+	finalBoss1= App->textures->Load("Assets/FinalBoss1.png");
 	enemyDestroyedFx = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");
 
 	return true;
@@ -91,6 +93,7 @@ bool ModuleEnemies::CleanUp()
 	}
 
 	App->textures->Unload(textureEnemies);
+	App->textures->Unload(finalBoss1);
 	App->audio->UnloadFx(enemyDestroyedFx);
 
 	return true;
@@ -143,7 +146,7 @@ void ModuleEnemies::HandleEnemiesDespawn()
 		if (enemies[i] != nullptr)
 		{
 			// Delete the enemy when it has reached the end of the screen
-			if ((enemies[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN)||(enemies[i]->position.x * SCREEN_SIZE > (App->render->camera.x+SCREEN_WIDTH+ SPAWN_MARGIN)))
+			if ((enemies[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN-261)||(enemies[i]->position.x * SCREEN_SIZE > (App->render->camera.x+SCREEN_WIDTH+ SPAWN_MARGIN)))
 			{
 				LOG("DeSpawning enemy at %d", enemies[i]->position.x * SCREEN_SIZE);
 
@@ -181,8 +184,12 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 				case ENEMY_TYPE::MINIBOOS1:
 					enemies[i] = new Enemy_MiniBoss1(info.x, info.y, info.pattern);
 					break;
+				case ENEMY_TYPE::BOSS1:
+					enemies[i] = new Enemy_FinalBoss1(info.x, info.y, info.pattern);
+					break;
 			}
-			enemies[i]->texture = textureEnemies;
+			if (info.type == ENEMY_TYPE::BOSS1) enemies[i]->texture = finalBoss1;
+			else enemies[i]->texture = textureEnemies;
 			enemies[i]->destroyedFx = enemyDestroyedFx;
 			break;
 		}

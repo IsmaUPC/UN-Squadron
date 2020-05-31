@@ -51,7 +51,7 @@ ModuleCollisions::~ModuleCollisions()
 
 update_status ModuleCollisions::PreUpdate()
 {
-	// Remove all colliders scheduled for deletion
+	// Remove all colliders scheduled for detection
 	for(uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if(colliders[i] != nullptr && colliders[i]->pendingToDelete == true)
