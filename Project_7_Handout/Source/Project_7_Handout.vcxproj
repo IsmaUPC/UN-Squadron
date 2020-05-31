@@ -110,6 +110,7 @@
     <ClInclude Include="Path.h" />
     <ClInclude Include="SceneGameover.h" />
     <ClInclude Include="SceneIntro.h" />
+    <ClInclude Include="SceneShop.h" />
     <ClInclude Include="SceneWin.h" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +145,7 @@
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="SceneGameover.cpp" />
     <ClCompile Include="SceneIntro.cpp" />
+    <ClCompile Include="SceneShop.cpp" />
     <ClCompile Include="SceneWin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
