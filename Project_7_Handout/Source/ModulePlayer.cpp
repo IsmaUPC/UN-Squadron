@@ -111,7 +111,7 @@ update_status ModulePlayer::Update()
 	{
 		/*controls the limit of the position "y" in which the player is,
 		taking into account the height of the player*/
-		if (position.y < (SCREEN_HEIGHT - PLAYER_HEIGHT)) {
+		if (position.y < (SCREEN_HEIGHT - (PLAYER_HEIGHT+40))) {
 			position.y += speed;
 			if (currentAnimation != &downAnim) {
 				downAnim.Reset();
@@ -119,7 +119,7 @@ update_status ModulePlayer::Update()
 			}
 		}
 		else {
-			position.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
+			position.y = SCREEN_HEIGHT - (PLAYER_HEIGHT+40);
 		}
 	}
 
@@ -127,7 +127,7 @@ update_status ModulePlayer::Update()
 	{
 		/*Does not allow movements less than 0, in case it exceeds it 
 		places the player to position 0*/
-		if (position.y > 0) {
+		if (position.y > 82) {
 			position.y -= speed;
 			if (currentAnimation != &upAnim)
 			{
@@ -136,7 +136,7 @@ update_status ModulePlayer::Update()
 			}
 		}
 		else {
-			position.y = 0;
+			position.y = 82;
 		}
 	}
 
