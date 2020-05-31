@@ -37,9 +37,11 @@ private:
 
 	int xRecorrido = 0;
 	int yRecorrido = 0;
-
+	int direction = 1;
+	bool toLeft = false;
+	bool noUp = false;
 	int FASE = 1;
-
+	int TOP = 250;
 	int n = 0;
 	float alpha = 0;
 };

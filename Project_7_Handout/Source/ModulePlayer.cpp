@@ -65,12 +65,6 @@ bool ModulePlayer::Start()
 	position.x = 80;
 	position.y = 230;
 
-
-	//FONTS
-	scoreFont = App->fonts->Load("Assets/Fonts/rtype_font.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 1);
-	scoreFont2 = App->fonts->Load("Assets/Fonts/rtype_font3.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 2);
-	
-
 	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT }, Collider::Type::PLAYER, this);
 
 
@@ -117,7 +111,7 @@ update_status ModulePlayer::Update()
 	{
 		/*controls the limit of the position "y" in which the player is,
 		taking into account the height of the player*/
-		if (position.y < (SCREEN_HEIGHT - PLAYER_HEIGHT)) {
+		if (position.y < (SCREEN_HEIGHT - (PLAYER_HEIGHT+40))) {
 			position.y += speed;
 			if (currentAnimation != &downAnim) {
 				downAnim.Reset();
@@ -125,7 +119,7 @@ update_status ModulePlayer::Update()
 			}
 		}
 		else {
-			position.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
+			position.y = SCREEN_HEIGHT - (PLAYER_HEIGHT+40);
 		}
 	}
 
@@ -133,7 +127,7 @@ update_status ModulePlayer::Update()
 	{
 		/*Does not allow movements less than 0, in case it exceeds it 
 		places the player to position 0*/
-		if (position.y > 0) {
+		if (position.y > 82) {
 			position.y -= speed;
 			if (currentAnimation != &upAnim)
 			{
@@ -142,7 +136,7 @@ update_status ModulePlayer::Update()
 			}
 		}
 		else {
-			position.y = 0;
+			position.y = 82;
 		}
 	}
 
@@ -177,6 +171,7 @@ update_status ModulePlayer::Update()
 			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 			//return update_status::UPDATE_STOP;
 		}
+
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -188,15 +183,6 @@ update_status ModulePlayer::PostUpdate()
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		App->render->Blit(texture, position.x, position.y, &rect);
 	}
-
-	// Draw UI (score) --------------------------------------
-	sprintf_s(scoreText, 10, "%7d", score);
-
-	//Blit the text of the score at the bottom of the screen
-	
-	App->fonts->BlitText(10, 10, scoreFont, scoreText);
-		
-	
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -215,9 +201,6 @@ bool ModulePlayer::CleanUp(){
 	App->textures->Unload(texture);
 	App->audio->UnloadFx(laserFx);
 	App->audio->UnloadFx(explosionFx);
-	App->fonts->UnLoad(scoreFont);
-	App->fonts->UnLoad(scoreFont2);
-
 
 	return true;
 }

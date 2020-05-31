@@ -44,9 +44,14 @@ private:
 
 	int xRecorrido = 0;
 	int yRecorrido = 0;
-
+	float TOP = 2.1;//pattern 0
+	float speed = -0.8;//speed de bajada/subida
+	bool init = false;
+	int MAX = 50;//TOP recorrido
+	float speedPattern2 = 2; // speed de bajada/subida
+	float up = 1;
 	int FASE = 1;
-
+	float multiSpeed = 1;
 	int n = 0;
 	float alpha = 0;
 };

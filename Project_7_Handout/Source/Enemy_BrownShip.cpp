@@ -11,7 +11,17 @@ Enemy_BrownShip::Enemy_BrownShip(int x, int y,int _pattern) : Enemy(x, y,_patter
 
 	fly.PushBack({ 559,165,62,18 });
 	fly.speed = 0.01f;
-	
+
+	flyDown.PushBack({ 487,188,61, 18 });
+	flyDown.speed = 0.01f;
+
+	flyAhead.PushBack({ 348,157,62, 47 });
+	flyAhead.speed = 0.01f;
+
+	flyAback.PushBack({ 979,155,62, 49 });
+	//flyAback.PushBack({ 1045,171,62, 33 });
+	flyAback.speed = 0.01f;
+
 	twistToRight.PushBack({ 414,169,62, 35 });
 	twistToRight.PushBack({ 348,157,62, 47 });
 	twistToRight.PushBack({ 295,157,49, 47 });
@@ -48,7 +58,7 @@ Enemy_BrownShip::Enemy_BrownShip(int x, int y,int _pattern) : Enemy(x, y,_patter
 	loopToRight.PushBack({ 66,155,62, 49 });
 	loopToRight.PushBack({ 0,171,62, 33 });
 	loopToRight.loop = true;
-	loopToRight.speed = 0.3f;
+	loopToRight.speed = 0.25f;
 
 	loopToLeft.PushBack({ 487,165,61,18 });
 	loopToLeft.PushBack({ 414, 169, 62, 35});
@@ -59,12 +69,17 @@ Enemy_BrownShip::Enemy_BrownShip(int x, int y,int _pattern) : Enemy(x, y,_patter
 	loopToLeft.PushBack({ 979,155,62, 49 });
 	loopToLeft.PushBack({ 1045,171,62, 33 });
 	loopToLeft.loop = true;
-	loopToLeft.speed = 0.3f;
+	loopToLeft.speed = 0.25f;
 
 	// TODO 3: Have the Brown Cookies describe a path in the screen
 	//path.PushBack({-0.8f , -0.5f}, 100, &flyInvers);
 	//path.PushBack({ -0.8f , 0.5f }, 100, &flyInvers);
 	collider = App->collisions->AddCollider({0, 0, 61, 18}, Collider::Type::ENEMY, (Module*)App->enemies);
+	if (pattern == 0)pattern = 1, angulo = 0.5;
+	if (pattern == 3&&(position.y==160 || position.y == 100))isTwist=true;
+	if (pattern == 4 && (position.y == 160 || position.y == 100))pattern = 3, isTwist2 = true, direction = -1;
+	if (pattern == 4)pattern = 3, direction = -1;
+	desacelaracion = 3;
 }
 
 void Enemy_BrownShip::Update()
@@ -95,10 +110,12 @@ void Enemy_BrownShip::move() {
 	case 1:
 		switch (FASE) {
 		case 1:
-			currentAnim = &flyInvers;
-			if (xRecorrido < 200) {
-				xRecorrido = (spawnPos.x - position.x);
-				position.x -= 2;
+			if (position.y == 200)currentAnim = &flyDown, TOP = 150;
+			else if (position.y == 160)currentAnim = &flyAhead, TOP = 150;
+			else currentAnim = &flyInvers, TOP = 100;
+			if (xRecorrido < TOP) {
+				xRecorrido += 3;
+				position.x -= 3;
 
 			}
 			else
@@ -106,36 +123,34 @@ void Enemy_BrownShip::move() {
 			break;
 		case 2:
 			currentAnim = &twistToRight;
-			if (position.y < SCREEN_HEIGHT/2) {
-				xRecorrido = (spawnPos.x - position.x);
-				position.y += sqrt(xRecorrido / 100);
-				position.x -= 2;
+			if (yRecorrido < 140) {
+				yRecorrido += 2.3;
+				position.y += angulo;
+				position.x -= desacelaracion;
+				desacelaracion -= 0.02;
 			}
 			else
 				FASE = 3;
 
 			break;
 		case 3:
-			if (position.y < 250) {
-				xRecorrido = (spawnPos.x - position.x);
-				position.y += sqrt(xRecorrido / 150);
-				position.x += 4;
+			if (yRecorrido < 160) {
+				yRecorrido += 2;
+				position.y += angulo;
+				position.x += desacelaracion;
+				desacelaracion += 0.06;
 			}
 			else
 				FASE = 4;
 			break;
 
 		case 4:
-			if (position.y < 255)currentAnim = &fly;
-			if (position.y >= 255)currentAnim = &loopToRight;
-
-			xRecorrido = (spawnPos.x - position.x);
-
-			position.y += sqrt(xRecorrido / 150);
-			position.x += 6;
+			currentAnim = &loopToRight;
+			
+			position.y += angulo;
+			position.x += 5;
 			break;
 		}
-
 		break;
 	case 2:
 		switch (FASE) {
@@ -192,45 +207,52 @@ void Enemy_BrownShip::move() {
 			position.x += 5 + SCREEN_SPEED;
 			break;
 		}
-
 		break;
 	case 3:
+		switch (FASE) {
+		case 1:
+			if (isTwist == true)currentAnim = &flyAback;
+			else if (position.y == 100 || position.y == 160)currentAnim = &flyAhead;
+			else if (position.y == 140 || position.y == 200)currentAnim = &flyDown;
+			else if(isTwist==false)currentAnim = &flyInvers;
+			if (xRecorrido < 150) {
+				xRecorrido += 3;
+				position.x -= 3;
 
-		if (FASE == 1) {
-			if (!startmove) {
-				startmove = true;
-				n = 270;
 			}
-
-			if (n <= 360) {
-
-				xRecorrido = (spawnPos.x - position.x);
-				n += 5;
-				alpha = n * M_PI / 180.0f;
-
-				position.x += (position.y * cos(alpha)) / 40;
-				position.y -= 2;
-			}
-			else {
+			else
 				FASE = 2;
-				startmove = false;
+			break;
+		case 2:
+			currentAnim = &twistToRight;
+			if (yRecorrido < 140) {
+				yRecorrido += 2.3;
+				position.y -= direction*1.2;
+				position.x -= desacelaracion;
+				desacelaracion -= 0.02;
 			}
-		}
-		if (FASE == 2) {
-			if (!startmove) {
-				startmove = true;
-				n = 0;
+			else
+				FASE = 3;
+
+			break;
+		case 3:
+			if (yRecorrido < 180) {
+				yRecorrido += 2;
+				position.y -= direction*1;
+				position.x += desacelaracion;
+				desacelaracion += 0.06;
 			}
-			xRecorrido = (spawnPos.x - position.x);
-			n += 3;
-			alpha = n * M_PI / 180.0f;
-			position.x += (position.y * cos(alpha)) / 40;
-			position.y -= 2;
+			else
+				FASE = 4;
+			break;
 
+		case 4:
+			currentAnim = &loopToRight;
+
+			position.y -= direction*0.6;
+			position.x += 6;
+			break;
 		}
-
-
 		break;
-
 	}
 }

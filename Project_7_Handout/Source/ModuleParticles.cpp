@@ -151,10 +151,16 @@ update_status ModuleParticles::PostUpdate()
 			else if (particle->collider->type == particle->collider->PLAYER_SHOT) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
-			else if (particle->collider->type == particle->collider->NONE) {
-				App->render->Blit(playerExplosionTexture, (particle->position.x-(particle->anim.GetCurrentFrame().w -PLAYER_WIDTH)), particle->position.y-(particle->anim.GetCurrentFrame().h / 2), &(particle->anim.GetCurrentFrame()));
+
+		}
+		if (App->player->destroyed == true)
+		{
+			if (particle != nullptr && particle->collider != nullptr && particle->collider->type == particle->collider->PLAYER)
+			{
+				App->render->Blit(playerExplosionTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
 		}
+		
 	}
 
 	return update_status::UPDATE_CONTINUE;

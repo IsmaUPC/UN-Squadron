@@ -3,7 +3,7 @@
 
 #include "Module.h"
 
-#define MAX_ENEMIES 100
+#define MAX_ENEMIES 110
 
 // TODO 4: Create a new enemy type: the Enemy_RedShip
 
@@ -15,6 +15,8 @@ enum class ENEMY_TYPE
 	REDSHIP,
 	YELLOWSHIP,
 	BLUESHIP,
+	MINIBOOS1,
+	BOSS1,
 };
 
 struct EnemySpawnpoint
@@ -85,6 +87,8 @@ private:
 
 	// The enemies sprite sheet
 	SDL_Texture* textureEnemies = nullptr;
+	SDL_Texture* finalBoss1 = nullptr;
+
 
 	// The audio fx for destroying an enemy
 	int enemyDestroyedFx = 0;

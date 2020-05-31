@@ -31,6 +31,13 @@ public:
 
 	void godModeUpdate();
 
+	int* getMoney() { return &money; };
+	int* getScore() { return &score; };
+	int* getLevel() { return &level; };
+	int* getPow() { return &pow; };
+	int* getTotal() { return &total; };
+	int* getLives() { return &lives; };
+
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
 
@@ -74,11 +81,14 @@ public:
 	uint laserFx = 0;
 	uint explosionFx = 0;
 
-	// Font score index
-	uint score = 000;
-	int scoreFont = -1;
-	int scoreFont2 = 2;
-	char scoreText[10] = { "\0" };
+	// hud information
+	int money = 0;
+	int score = 0;
+	int level = 1;
+	int pow = 0;
+	int total = 0;
+	int lives = 2;
+
 };
 
 #endif //!__MODULE_PLAYER_H__

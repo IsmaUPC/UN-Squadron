@@ -127,6 +127,20 @@
     <ClInclude Include="ModuleScene2.h">
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy_MiniBoss1.h">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClInclude>
+
+    <ClInclude Include="Enemy_FinalBoss1.h">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneShop.h">
+      <Filter>Source Files\Modules\Gameplay</Filter>
+
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Module.cpp">
@@ -218,6 +232,20 @@
     </ClCompile>
     <ClCompile Include="ModuleScene2.cpp">
       <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_MiniBoss1.cpp">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClCompile>
+
+    <ClCompile Include="Enemy_FinalBoss1.cpp">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneShop.cpp">
+      <Filter>Source Files\Modules\Gameplay</Filter>
+
     </ClCompile>
   </ItemGroup>
 </Project>

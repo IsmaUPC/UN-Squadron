@@ -30,16 +30,15 @@ public:
 
 	// Disables the player and the enemies
 	bool CleanUp();
+	bool Win(bool win);
 	
 public:
 	
 	// The scene sprite sheet loaded into an SDL_Texture
 
-	
 	SDL_Texture* bgTextures[4] = {nullptr};
 	int cont[4] = {0};
+	bool BossIsDead = false;
 	
-
-
 };
 #endif

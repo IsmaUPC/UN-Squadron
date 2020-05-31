@@ -1,19 +1,20 @@
-#ifndef __MODULE_SCENE_2_H__
-#define __MODULE_SCENE_2_H__
+#ifndef _SCENESHOP_H_
+#define _SCENESHOP_H_
 
 #include "Module.h"
 #include "Animation.h"
+#include"Path.h"
 
 struct SDL_Texture;
 
-class ModuleScene2 : public Module
+class SceneShop : public Module
 {
 public:
 	//Constructor
-	ModuleScene2(bool startEnabled);
+	SceneShop(bool startEnabled);
 
 	//Destructor
-	~ModuleScene2();
+	~SceneShop();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the map background
@@ -22,26 +23,20 @@ public:
 	// Called at the middle of the application loop
 	// Updates the scene's background animations
 	update_status Update() override;
-	void updateBackground();
+	bool CleanUp();
 
 	// Called at the end of the application loop.
 	// Performs the render call of all the parts of the scene's background
 	update_status PostUpdate() override;
-
-	// Disables the player and the enemies
-	bool CleanUp();
+	void select();
 
 public:
-
 	// The scene sprite sheet loaded into an SDL_Texture
-	SDL_Texture* bgTexture = nullptr ;
-
-	int moveBG1 = 0;
-	int moveBG2 = 1;
-	int loopBG = -1;
-	int limitBG = 0;
-
-	int Y_BG;
-
+	SDL_Texture* bgTexture = nullptr;
+	SDL_Texture* selectorTexture = nullptr;
+	int tienda[6][2];
+	int tiendaX = 0, tiendaY = 0;
+	enum weapon {Cluster,Phoenix,Falcon,Bullpup,S_Shell,T_Laser,Bomb,Napalm,Gunpod,Ceiling,MegaCrush,Exit};
+	int weaponsition = 0;
 };
-#endif
+#endif // !_SCENESHOP_H_
