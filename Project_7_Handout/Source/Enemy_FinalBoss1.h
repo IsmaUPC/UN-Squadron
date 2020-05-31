@@ -9,10 +9,13 @@ class Enemy_FinalBoss1 : public Enemy
 {
 public:
 	Enemy_FinalBoss1(int x, int y, int _pattern);
+	virtual void OnCollision(Collider* collider);
+
 
 	void Update() override;
 
 	void move();
+	bool isDead=true;
 	bool win = true;
 private:
 	// The position (as ratio) in the wave at a specific moment

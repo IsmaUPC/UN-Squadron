@@ -63,6 +63,7 @@ public:
 
 	ModulePlayer* player = nullptr;
 
+
 	SceneIntro* sceneIntro = nullptr;
 	SceneShop* sceneShop = nullptr;
 	SceneWin* sceneWin = nullptr;

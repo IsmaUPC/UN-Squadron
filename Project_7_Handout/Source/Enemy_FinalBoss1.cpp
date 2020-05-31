@@ -24,6 +24,11 @@ void Enemy_FinalBoss1::Update() {
 	// It will update the collider depending on the position
 	Enemy::Update();
 }
+void Enemy_FinalBoss1::OnCollision(Collider* collider){
+	//App->particles->AddParticle(App->particles->explosion, position.x, position.y);
+	App->level1->Win();
+	//isDead = false;
+}
 
 void Enemy_FinalBoss1::move() {
 	if (collider->pendingToDelete != true)

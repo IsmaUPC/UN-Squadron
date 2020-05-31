@@ -126,28 +126,24 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 5250-menos, 100, 20, 2);	//WAVE 17
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 5250-menos, 340, 20, 1);	//WAVE 17
 	*/
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS1, 800, SCREEN_HEIGHT-90, 0, 0);	//FINAL BOSS
+	 App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS1, 800, SCREEN_HEIGHT-90, 0, 0);	//FINAL BOSS
 	
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 	
 	return ret;
 }
-bool ModuleScene::Win(bool win) {
-	BossIsDead = win;
-	return BossIsDead;
+void ModuleScene::Win() {	
+	//CleanUp();
+		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
+		//App->render->camera.x =0;
+		//SCREEN_SPEED == 0;
+	
 }
 update_status ModuleScene::Update(){
 
 	App->render->camera.x += SCREEN_SPEED;
 
-	if (App->render->camera.x >= 5400)
-	{
-		//CleanUp();
-		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
-		App->render->camera.x =0;
-		SCREEN_SPEED == 0;
-	}
 	updateBackground();
 
 	return update_status::UPDATE_CONTINUE;

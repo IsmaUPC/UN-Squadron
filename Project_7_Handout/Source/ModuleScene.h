@@ -30,7 +30,7 @@ public:
 
 	// Disables the player and the enemies
 	bool CleanUp();
-	bool Win(bool win);
+	void Win();
 	
 public:
 	
