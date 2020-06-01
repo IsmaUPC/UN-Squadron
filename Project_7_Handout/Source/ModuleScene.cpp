@@ -57,7 +57,7 @@ bool ModuleScene::Start()
 	//App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
 	
 	// Enemies ---	
-	int menos =5000;
+	int menos =4700;
 	/*
 	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 20, 2);	//WAVE 1
@@ -126,7 +126,7 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 5250-menos, 100, 20, 2);	//WAVE 17
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 5250-menos, 340, 20, 1);	//WAVE 17
 	*/
-	 App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS1, 800, SCREEN_HEIGHT-90, 0, 0);	//FINAL BOSS
+	 App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS1, 5600-menos, SCREEN_HEIGHT-90, 0, 0);	//FINAL BOSS
 	
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
