@@ -120,6 +120,7 @@ bool HUD::Start()
 
 	hitLive.Reset();
 	restoredLive.Reset();
+	animFase = ENY;
 
 	return ret;
 }
