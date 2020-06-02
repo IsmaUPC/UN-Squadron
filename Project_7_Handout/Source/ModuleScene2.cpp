@@ -35,6 +35,11 @@ bool ModuleScene2::Start()
 	//1538 * 585
 	bgTexture = App->textures->Load("Assets/BG2.png");
 
+	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 6);
+
+	// Enemies ---	
+	
+	App->enemies->spawningEnemies(1,ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;

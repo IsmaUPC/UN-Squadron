@@ -14,6 +14,8 @@
 #include "Enemy_BlueShip.h"
 #include "Enemy_MiniBoss1.h"
 #include "Enemy_FinalBoss1.h"
+#include "Enemy_Green2.h"
+#include "Enemy_White.h"
 
 #define SPAWN_MARGIN 50
 
@@ -186,6 +188,12 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 					break;
 				case ENEMY_TYPE::BOSS1:
 					enemies[i] = new Enemy_FinalBoss1(info.x, info.y, info.pattern);
+					break;
+				case ENEMY_TYPE::GREEN:
+					enemies[i] = new Enemy_Green2(info.x, info.y, info.pattern);
+					break;
+				case ENEMY_TYPE::WHITE:
+					enemies[i] = new Enemy_White(info.x, info.y, info.pattern);
 					break;
 			}
 			if (info.type == ENEMY_TYPE::BOSS1) enemies[i]->texture = finalBoss1;

@@ -98,15 +98,6 @@ void Enemy_BrownShip::move() {
 		resizeCollider();
 
 	switch (pattern) {
-	case 0:
-		currentAnim = path.GetCurrentAnimation();
-		waveRatio += waveRatioSpeed;
-		path.Update();
-		position = spawnPos + path.GetRelativePosition();
-
-		position.x -= 1;
-		break;
-
 	case 1:
 		switch (FASE) {
 		case 1:

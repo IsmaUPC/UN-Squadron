@@ -7,6 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
 #include "HUD.h"
+#include <SDL_mixer\include\SDL_mixer.h>
 
 
 SceneShop::SceneShop(bool startEnabled) : Module(startEnabled)
@@ -27,7 +28,11 @@ bool SceneShop::Start()
 	App->hud->Disable();
 	bgTexture = App->textures->Load("Assets/shop_bg.png");
 	selectorTexture = App->textures->Load("Assets/selector_shop.png");
-	//App->audio->PlayMusic("Assets/16_Stage_Clear.ogg", 1.0f);
+	App->audio->PlayMusic("Assets/Store.ogg", 1.0f);
+
+	OptionSelection = App->audio->LoadFx("Assets/OptionSelection.wav");
+	SelectWeapon = App->audio->LoadFx("Assets/SelectionWeapon.wav");
+	InsuficientMoney = App->audio->LoadFx("Assets/InsuficientMoney.wav");
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -45,6 +50,7 @@ update_status SceneShop::Update()
 		{
 			tiendaY = 1;
 		}
+		App->audio->PlayFx(OptionSelection);
 	}
 	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN)
 	{
@@ -53,6 +59,7 @@ update_status SceneShop::Update()
 		{
 			tiendaY = 0;
 		}
+		App->audio->PlayFx(OptionSelection);
 	}
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN)
 	{
@@ -61,6 +68,7 @@ update_status SceneShop::Update()
 		{
 			tiendaX = 5;
 		}
+		App->audio->PlayFx(OptionSelection);
 	}
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN)
 	{
@@ -69,6 +77,7 @@ update_status SceneShop::Update()
 		{
 			tiendaX = 0;
 		}
+		App->audio->PlayFx(OptionSelection);
 	}
 	
 	weaponsition = tiendaX + (6 * tiendaY);

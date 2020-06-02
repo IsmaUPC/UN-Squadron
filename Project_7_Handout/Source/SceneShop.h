@@ -38,5 +38,8 @@ public:
 	int tiendaX = 0, tiendaY = 0;
 	enum weapon {Cluster,Phoenix,Falcon,Bullpup,S_Shell,T_Laser,Bomb,Napalm,Gunpod,Ceiling,MegaCrush,Exit};
 	int weaponsition = 0;
+	uint OptionSelection = 0;
+	uint SelectWeapon = 0;
+	uint InsuficientMoney = 0;
 };
 #endif // !_SCENESHOP_H_

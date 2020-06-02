@@ -106,15 +106,6 @@ void Enemy_RedShip::move() {
 		resizeCollider();
 
 	switch (pattern) {
-	case 0:
-		currentAnim = path.GetCurrentAnimation();
-		waveRatio += waveRatioSpeed;
-		path.Update();
-		position = spawnPos + path.GetRelativePosition();
-
-		position.x -= 1;
-		break;
-
 	case 1:
 		switch (FASE) {
 		case 1:
@@ -150,8 +141,6 @@ void Enemy_RedShip::move() {
 			break;
 
 		case 4:
-			//if (position.y < 255)currentAnim = &fly;
-			//if (position.y >= 255)currentAnim = &loopToRight;
 			currentAnim = &fly;
 			xRecorrido = (spawnPos.x - position.x);
 			position.y += sqrt(xRecorrido / 150);
@@ -205,11 +194,8 @@ void Enemy_RedShip::move() {
 				FASE = 5;
 			break;
 		case 5:
-			//if (position.y > 105)currentAnim = &fly;
-			//if (position.y <= 105)currentAnim = &loopToRight;
 			currentAnim = &fly;
 			xRecorrido = (spawnPos.x - position.x);
-
 			position.y -= sqrt(xRecorrido / 100);
 			position.x += 5 + SCREEN_SPEED;
 			break;
@@ -251,8 +237,6 @@ void Enemy_RedShip::move() {
 			break;
 
 		case 4:
-			//if (position.y > 105)currentAnim = &fly;
-			//if (position.y <= 105)currentAnim = &loopToRight;
 			if (toRight == true) currentAnim = &fly;
 			else currentAnim = &flyInvers;
 			position.y += multiSpeed * 1 * direction;
@@ -294,8 +278,6 @@ void Enemy_RedShip::move() {
 				FASE = 4;
 			break;
 		case 4:
-			//if (position.y > 105)currentAnim = &fly;
-			//if (position.y <= 105)currentAnim = &loopToRight;
 			if (toRight == true) currentAnim = &fly;
 			else currentAnim = &flyInvers;
 			position.y -= multiSpeed * 1 * direction;

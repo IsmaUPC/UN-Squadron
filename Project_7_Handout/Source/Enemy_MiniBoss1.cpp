@@ -78,7 +78,7 @@ void Enemy_MiniBoss1::move()
 			if (yRecorrido == 1600) TOP = 300;
 		}
 		break;
-	case 3:///////////////////////////////////////////////////////
+	case 3:
 		if (position.y + 80 < SCREEN_HEIGHT) inMap = true;
 		if (inMap == true) yRecorrido += 1.6;
 		if (yRecorrido >= i * TOP && yRecorrido < (i + 1) * TOP)
@@ -86,8 +86,6 @@ void Enemy_MiniBoss1::move()
 			position.y += 1 * speedPatternY4[i];
 			position.x += 1 * speedPatternX4[i];
 			if (yRecorrido >= ((i + 1) * TOP) - 2) FASE++;
-			//if (yRecorrido > 300) TOP = 270;
-			//if (yRecorrido > 1600) TOP = 300;
 		}
 		break;
 	case 4:
@@ -98,10 +96,7 @@ void Enemy_MiniBoss1::move()
 			position.y += 1 * speedPatternY5[i];
 			position.x += 1 * speedPatternX5[i];
 			if (yRecorrido >= ((i + 1) * TOP) - 2) FASE++;
-			//if (yRecorrido > 300) TOP = 270;
-			//if (yRecorrido > 1600) TOP = 300;
 		}
 		break;
 	}
-
 }

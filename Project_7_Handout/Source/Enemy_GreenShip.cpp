@@ -145,21 +145,21 @@ void Enemy_GreenShip::move() {
 		{
 		case 1:
 			currentAnim = &flyInvers;
-			if (xRecorrido < MAX)//50
+			if (xRecorrido < MAX)
 			{
-				xRecorrido += speedPattern2;//2
+				xRecorrido += speedPattern2;
 				position.y -= 0;
-				position.x -= speedPattern2 + 1;//3
+				position.x -= speedPattern2 + 1;
 			}
 			else FASE = 2;
 			break;
 		case 2:
 			currentAnim = &flyInvers;
-			if (xRecorrido < 200+MAX)//250
+			if (xRecorrido < 200+MAX)
 			{
-				xRecorrido += speedPattern2;//2
-				position.y -= 0.5;//0.5
-				position.x -= speedPattern2+1;//3
+				xRecorrido += speedPattern2;
+				position.y -= 0.5;
+				position.x -= speedPattern2+1;
 			}
 			else 
 				FASE = 3;
@@ -169,8 +169,7 @@ void Enemy_GreenShip::move() {
 			if (yRecorrido < 70)
 			{
 				yRecorrido += 2;
-				//if (init == true)position.y -= speed; 
-				position.y -= 1.5; //1.5
+				position.y -= 1.5; 
 				position.x += 0.8;
 			}
 			else FASE = 4;
@@ -180,8 +179,7 @@ void Enemy_GreenShip::move() {
 			if (yRecorrido < 140)
 			{
 				yRecorrido += 2;
-				//if (init == true)position.y -= speed; 
-				position.y -= 1.5; //1.5
+				position.y -= 1.5; 
 				position.x += 1.4;
 			}
 			else FASE = 5;
@@ -190,7 +188,6 @@ void Enemy_GreenShip::move() {
 			if (xRecorrido > 250) currentAnim = &loopToRight;
 			xRecorrido += 2;								 
 			position.y = position.y;
-			//if (init == true)position.x += 6; 
 			position.x += 5; 
 		}
 		break;
@@ -199,21 +196,21 @@ void Enemy_GreenShip::move() {
 		{
 		case 1:
 			currentAnim = &flyInvers;
-			if (xRecorrido < MAX)//50
+			if (xRecorrido < MAX)
 			{
-				xRecorrido += speedPattern2;//2
+				xRecorrido += speedPattern2;
 				position.y -= 0;
-				position.x -= speedPattern2+1;//3
+				position.x -= speedPattern2+1;
 			}
 			else FASE = 2;
 			break;
 		case 2:
 			currentAnim = &flyInvers;
-			if (xRecorrido < 200+MAX)//250
+			if (xRecorrido < 200+MAX)
 			{
-				xRecorrido += speedPattern2;//2
-				position.y += 0.5;//0.5
-				position.x -= speedPattern2+1;//3
+				xRecorrido += speedPattern2;
+				position.y += 0.5;
+				position.x -= speedPattern2+1;
 			}
 			else FASE = 3;
 			break;
@@ -222,8 +219,7 @@ void Enemy_GreenShip::move() {
 			if (yRecorrido < 70)
 			{
 				yRecorrido += 2;
-				//if (init == true)position.y += speed; 
-				position.y += up; //1
+				position.y += up; 
 				position.x += 0.8;
 			}
 			else FASE = 4;
@@ -233,8 +229,7 @@ void Enemy_GreenShip::move() {
 			if (yRecorrido < 140)
 			{
 				yRecorrido += 2;
-				//if (init == true)position.y += speed; 
-				position.y += up; //1
+				position.y += up; 
 				position.x += 1.4;
 			}
 			else FASE = 5;
@@ -243,7 +238,6 @@ void Enemy_GreenShip::move() {
 			if (xRecorrido > 250) currentAnim = &loopToRight;
 			xRecorrido += 2;								
 			position.y = position.y;
-			//if (init == true)position.x += 6; 
 			position.x += multiSpeed*5; 
 		}
 		break;

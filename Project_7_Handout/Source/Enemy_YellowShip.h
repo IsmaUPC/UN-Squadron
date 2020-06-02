@@ -18,17 +18,6 @@ public:
 	void move();
 
 private:
-	// The position (as ratio) in the wave at a specific moment
-	float waveRatio = 0.0f;
-
-	// The speed at which the wave ratio is increased
-	float waveRatioSpeed = 0.05f;
-
-	// The original spawning position. The wave will be calculated from that
-	int spawn_y = 0;
-
-	// The total height of the wave
-	int waveHeight = 15;
 	// A set of steps that define the position in the screen
 	// And an animation for each step
 	Path path;
@@ -43,9 +32,6 @@ private:
 	Animation twistToLeftToDown;
 
 	//NEW VARS
-	bool startmove = false;
-	float countmove = 1;
-
 	int xRecorrido = 0;
 	int yRecorrido = 0;
 	float multiSpeed = 1.3;
@@ -53,8 +39,6 @@ private:
 	bool toRight = false;
 	int direction = 1;
 	int TOP = 0;
-	int n = 0;
-	float alpha = 0;
 };
 
 #endif // __ENEMY_YELLOWSHIP_H__

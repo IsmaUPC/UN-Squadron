@@ -139,6 +139,12 @@
     <ClInclude Include="SceneShop.h">
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy_Green2.h">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_White.h">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Module.cpp">
@@ -242,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="SceneShop.cpp">
       <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Green2.cpp">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_White.cpp">
+      <Filter>Source Files\Entities\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -52,12 +52,10 @@ bool ModuleScene::Start()
 	}
 
 	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 6);
-
 	//Bottomside collider
 	//App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
 	
 	// Enemies ---	
-	int menos =4700;
 	/*
 	App->enemies->spawningEnemies(4,ENEMY_TYPE::BROWNSHIP, 600, 135, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::BROWNSHIP, 740, 330, 20, 2);	//WAVE 1
@@ -72,11 +70,11 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 320, 90, 1);	//WAVE 5
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 120, 90, 2);	//WAVE 5
 	
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 2170, -80, 0, 0);				//MINIBOSS 2170
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 2750 , SCREEN_HEIGHT, 0, 1);	//MINIBOSS 2750
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 2170, -80, 0, 0);			//MINIBOSS 2170
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 2750 , SCREEN_HEIGHT, 0, 1);//MINIBOSS 2750
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 3100, -80, 0, 2);			//MINIBOSS 3100
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 3870, SCREEN_HEIGHT, 0, 3);//MINIBOSS  3820
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 4470, SCREEN_HEIGHT, 0, 4);//MINIBOSS 412
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 3870, SCREEN_HEIGHT, 0, 3);	//MINIBOSS  3820
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 4470, SCREEN_HEIGHT, 0, 4);	//MINIBOSS 412
 
 	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 2500 , 90, 30, 2);	//WAVE 6 2500
 	App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 2500 , 350, 30, 3);	//WAVE 6 2500
@@ -90,6 +88,7 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 3030, 230, 90, 3);	//WAVE 9 
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 3050, 178, 90, 7);	//WAVE 9
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 3050, 246, 90, 8);	//WAVE 9
+
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::BLUESHIP, 3220 , 100, 30, 4);	//WAVE 10 
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::BLUESHIP, 3210 , 230, 30, 6);	//WAVE 10 
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::BLUESHIP, 3220 , 350, 30, 5);	//WAVE 10 
@@ -119,14 +118,14 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4720, 320, 90, 1);	//WAVE 15
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4720, 120, 90, 2);	//WAVE 15
 	
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4950-menos, 260, 90, 8);	//WAVE 16//////////
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4950-menos, 200, 90, 7);	//WAVE 16
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4970-menos, 260, 90, 8);	//WAVE 16
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4970-menos, 200, 90, 7);	//WAVE 16
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 5250-menos, 100, 20, 2);	//WAVE 17
-	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 5250-menos, 340, 20, 1);	//WAVE 17
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4950, 260, 90, 8);	//WAVE 16
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4950, 200, 90, 7);	//WAVE 16
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4970, 260, 90, 8);	//WAVE 16
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 4970, 200, 90, 7);	//WAVE 16
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 5250, 100, 20, 2);	//WAVE 17
+	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 5250, 340, 20, 1);	//WAVE 17
 	*/
-	 App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS1, 5600-menos, SCREEN_HEIGHT-90, 0, 0);	//FINAL BOSS
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS1, 5600-4800, SCREEN_HEIGHT-90, 0, 0);	//FINAL BOSS
 	
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -143,9 +142,7 @@ void ModuleScene::Win() {
 update_status ModuleScene::Update(){
 
 	App->render->camera.x += SCREEN_SPEED;
-
 	updateBackground();
-
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -161,7 +158,6 @@ update_status ModuleScene::PostUpdate(){
 		App->render->Blit(bgTextures[i], SCREEN_WIDTH * (cont[i] + 1), 0, NULL, i+1);
 		App->render->Blit(bgTextures[i], SCREEN_WIDTH * (cont[i] + 2), 0, NULL, i+1);
 	}
-	
 	return update_status::UPDATE_CONTINUE;
 }
 

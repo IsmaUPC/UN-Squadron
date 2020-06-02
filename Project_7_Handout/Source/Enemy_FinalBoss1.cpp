@@ -2,7 +2,7 @@
 
 #include "Application.h"
 #include "ModuleCollisions.h"
-
+#include "ModuleAudio.h"
 
 Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 {
@@ -34,6 +34,7 @@ Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pat
 
 	collider = App->collisions->AddCollider({ 0, 0, 261, 160 }, Collider::Type::ENEMY, (Module*)App->enemies);
 	position.x -= SCREEN_WIDTH+280;
+	//App->audio->PlayMusic("Assets/Boss 1.ogg", 6);
 }
 
 
@@ -100,25 +101,8 @@ void Enemy_FinalBoss1::move() {
 			else pattern = 5;
 		}
 		break;
-	case 4:
-		/*
-		if (xRecorrido < TOP)
-		{
-			xRecorrido++;
-			position.y += vecY[i];
-			position.x += vecX[i];
-		}
-		if (xRecorrido == TOP)
-		{
-			i++, xRecorrido = 0;
-			if (i == 3)i = 0;
-		}
-		if (i == 0 || i == 2) TOP = 90;
-		else TOP = 25;
-		break;
-		*/
-		
-		if (xRecorrido < 190)//550
+	case 4:		
+		if (xRecorrido < 190)
 		{
 			xRecorrido += 1;
 			position.y += 0.55;
@@ -127,7 +111,7 @@ void Enemy_FinalBoss1::move() {
 		else xRecorrido = 0, change = true, pattern = 3;
 		break;
 	case 5:
-		if (xRecorrido < 190)//740
+		if (xRecorrido < 190)
 		{
 			xRecorrido += 1;
 			position.y -= 0.55;
@@ -136,4 +120,4 @@ void Enemy_FinalBoss1::move() {
 		else xRecorrido = 0, change=false,pattern = 3;
 		break;
 	}
-}//4 3 5 3, la diferencia es de 90
+}
