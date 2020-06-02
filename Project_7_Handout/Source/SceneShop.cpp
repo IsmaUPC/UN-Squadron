@@ -8,6 +8,7 @@
 #include "ModuleFadeToBlack.h"
 #include "HUD.h"
 #include <SDL_mixer\include\SDL_mixer.h>
+#include <SDL\include\SDL_keyboard.h>
 
 
 SceneShop::SceneShop(bool startEnabled) : Module(startEnabled)
@@ -43,43 +44,36 @@ bool SceneShop::Start()
 update_status SceneShop::Update()
 {
 	
-	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_DOWN)
-	{
+	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_DOWN)	{
 		tiendaY -= 1;
-		if (tiendaY <0)
-		{
-			tiendaY = 1;
-		}
+		if (tiendaY <0)tiendaY = 1;
 		App->audio->PlayFx(OptionSelection);
 	}
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN)
-	{
+	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN)	{
 		tiendaY += 1;
-		if(tiendaY>1)
-		{
-			tiendaY = 0;
-		}
-		App->audio->PlayFx(OptionSelection);
-	}
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN)
-	{
-		tiendaX -= 1;
-		if (tiendaX <0)
-		{
-			tiendaX = 5;
-		}
-		App->audio->PlayFx(OptionSelection);
-	}
-	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN)
-	{
-		tiendaX += 1;
-		if (tiendaX > 5)
-		{
-			tiendaX = 0;
-		}
-		App->audio->PlayFx(OptionSelection);
-	}
+		if(tiendaY>1) tiendaY = 0;
 	
+		App->audio->PlayFx(OptionSelection);
+	}
+	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN)	{
+		tiendaX -= 1;
+		if (tiendaX < 0) {
+			tiendaX = 5;
+			tiendaY += (tiendaY == 1) ? -1 : 1;
+
+		}
+		App->audio->PlayFx(OptionSelection);
+	}
+  	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN)	{
+		tiendaX += 1;
+		if (tiendaX > 5) {
+			tiendaX = 0;
+			tiendaY += (tiendaY == 1) ? -1 : 1;
+		}
+
+		App->audio->PlayFx(OptionSelection);
+	}
+
 	weaponsition = tiendaX + (6 * tiendaY);
 	
 	
@@ -111,31 +105,32 @@ update_status SceneShop::PostUpdate()
 
 void SceneShop::select()
 {
-	switch (weaponsition)
+	switch ((SHOP_SLOT)weaponsition)
 	{
-	case Cluster:
+	case SHOP_SLOT::CLUSTER:
 		break;
-	case Phoenix:
+	case SHOP_SLOT::PHOENIX:
 		break;
-	case Falcon:
+	case SHOP_SLOT::FALCON:
 		break;
-	case Bullpup:
+	case SHOP_SLOT::BULLPUP:
 		break;
-	case S_Shell:
+	case SHOP_SLOT::S_SHELL:
 		break;
-	case T_Laser:
+	case SHOP_SLOT::T_LASER:
 		break;
-	case Bomb:
+	case SHOP_SLOT::BOMB:
 		break;
-	case Napalm:
+	case SHOP_SLOT::NAPALM:
 		break;
-	case Gunpod:
+	case SHOP_SLOT::GUNPOD:
 		break;
-	case Ceiling:
+	case SHOP_SLOT::CEILING:
 		break;
-	case MegaCrush:
+	case SHOP_SLOT::MEGACRUSH:
 		break;
-	case Exit:
+	case SHOP_SLOT::EXIT:
+		Mix_HaltMusic();
 		App->fade->FadeToBlack(this, (Module*)App->level1, 90);
 		break;
 	}
