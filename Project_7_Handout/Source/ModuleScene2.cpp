@@ -40,6 +40,16 @@ bool ModuleScene2::Start()
 	// Enemies ---	
 	
 	App->enemies->spawningEnemies(1,ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
+	/*
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
+	*/
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 680, 90, 30, 1);	//WAVE 1
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;

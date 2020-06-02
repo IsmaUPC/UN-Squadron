@@ -201,7 +201,6 @@ bool ModulePlayer::CleanUp(){
 	App->textures->Unload(texture);
 	App->audio->UnloadFx(laserFx);
 	App->audio->UnloadFx(explosionFx);
-
 	return true;
 }
 void ModulePlayer::godModeUpdate(){

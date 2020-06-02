@@ -136,6 +136,7 @@ void SceneShop::select()
 	case MegaCrush:
 		break;
 	case Exit:
+		Mix_HaltMusic();
 		App->fade->FadeToBlack(this, (Module*)App->level1, 90);
 		break;
 	}

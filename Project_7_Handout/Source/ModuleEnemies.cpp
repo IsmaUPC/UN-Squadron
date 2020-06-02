@@ -5,7 +5,7 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
-
+#include <SDL_mixer\include\SDL_mixer.h>
 #include "Enemy.h"
 #include "Enemy_RedShip.h"
 #include "Enemy_GreenShip.h"
@@ -211,7 +211,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 		if(enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
 			enemies[i]->OnCollision(c2); //Notify the enemy of a collision
-
+			App->audio->PlayFx(enemyDestroyedFx);
 			delete enemies[i];
 			enemies[i] = nullptr;
 			break;
