@@ -57,6 +57,7 @@ bool ModuleScene2::Start()
 	moveBG1 = 0;
 	moveBG2 = 1;
 	loopBG = -1;
+	limitBG = 0;
 
 	return ret;
 }
