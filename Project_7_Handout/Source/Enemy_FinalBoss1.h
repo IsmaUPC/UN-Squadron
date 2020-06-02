@@ -13,7 +13,6 @@ public:
 
 
 	void Update() override;
-
 	void move();
 	bool isDead=false;
 	bool win = true;

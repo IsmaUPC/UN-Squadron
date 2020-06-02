@@ -32,7 +32,8 @@ Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pat
 	Hit.loop = false;
 	Hit.speed = 0.1;
 
-	collider = App->collisions->AddCollider({ 0, 0, 261, 160 }, Collider::Type::ENEMY, (Module*)App->enemies);
+	collider = App->collisions->AddCollider({ 0, 0, 261, 60 }, Collider::Type::ENEMY, (Module*)App->enemies);
+
 	position.x -= SCREEN_WIDTH+280;
 	//App->audio->PlayMusic("Assets/Boss 1.ogg", 6);
 }
@@ -42,7 +43,7 @@ void Enemy_FinalBoss1::Update() {
 	move();
 	// Call to the base class. It must be called at the end
 	// It will update the collider depending on the position
-	Enemy::Update();
+	Draw();
 }
 void Enemy_FinalBoss1::OnCollision(Collider* collider){
 	//App->particles->AddParticle(App->particles->explosion, position.x, position.y);
@@ -50,12 +51,14 @@ void Enemy_FinalBoss1::OnCollision(Collider* collider){
 	isDead = true;
 }
 
+
 void Enemy_FinalBoss1::move() {
 
 	float vecX[4] = { 0.75 ,SCREEN_SPEED ,1.25 ,SCREEN_SPEED };
 	float vecY[4] = {0.55, 0, -0.55, 0};
-	if (collider->pendingToDelete != true)
-		resizeCollider();
+	
+	collider->SetPos(position.x, position.y+((*currentAnim).GetCurrentFrame().h/3)-(collider->rect.h/3));
+
 	switch (pattern) {
 	case 0:
 		if (xRecorrido < SCREEN_WIDTH + 90)
