@@ -7,6 +7,23 @@
 
 struct SDL_Texture;
 
+
+enum class SHOP_SLOT
+{
+	CLUSTER,
+	PHOENIX,
+	FALCON,
+	BULLPUP,
+	S_SHELL,
+	T_LASER,
+	BOMB,
+	NAPALM,
+	GUNPOD,
+	CEILING,
+	MEGACRUSH,
+	EXIT,
+
+};
 class SceneShop : public Module
 {
 public:
@@ -36,7 +53,6 @@ public:
 	SDL_Texture* selectorTexture = nullptr;
 	int tienda[6][2];
 	int tiendaX = 0, tiendaY = 0;
-	enum weapon {Cluster,Phoenix,Falcon,Bullpup,S_Shell,T_Laser,Bomb,Napalm,Gunpod,Ceiling,MegaCrush,Exit};
 	int weaponsition = 0;
 	uint OptionSelection = 0;
 	uint SelectWeapon = 0;
