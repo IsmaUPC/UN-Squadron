@@ -31,17 +31,17 @@ public:
 	// Disables the player and the enemies
 	bool CleanUp();
 
-public:
+private:
 
-	// The scene sprite sheet loaded into an SDL_Texture
+	// BackGround
 	SDL_Texture* bgTexture = nullptr ;
-
 	int moveBG1 = 0;
 	int moveBG2 = 1;
 	int loopBG = -1;
 	int limitBG = 0;
+	int Y_BG = 0;
+	
 
-	int Y_BG;
 
 };
 #endif
