@@ -24,6 +24,15 @@ HUD::HUD(bool startEnabled) : Module(startEnabled) {
 	}
 	joinInPlayer.speed = 0.35f;
 	joinInPlayer.loop = false;
+	
+	for (int i = 6; i >= 0; i--) {
+		deadPlayer.PushBack({ 0 + ((4 + 84) * i), 216, 84, 68 });
+	}
+	for (int i = 3; i >= -2; i--) {
+		deadPlayer.PushBack({ 0 + ((4 + 84) * i), 0, 84, 68 });
+	}
+	deadPlayer.speed = 0.35f;
+	deadPlayer.loop = false;
 
 	idlePlayer.PushBack({ 0 + ((4 + 84) * 7), 216, 84, 68 });
 	idlePlayer.loop = false;
@@ -120,6 +129,8 @@ bool HUD::Start()
 
 	hitLive.Reset();
 	restoredLive.Reset();
+	joinInPlayer.Reset();
+	deadPlayer.Reset();
 	animFase = ENY;
 
 	return ret;
@@ -128,15 +139,15 @@ bool HUD::Start()
 update_status HUD::Update() {
 
 	if (App->input->keys[SDL_SCANCODE_H] == KEY_STATE::KEY_DOWN){
-		countToStart = 900 / 30;
-		animFase = HIT;
-		currentAnimationPlayer = &hitPlayer;
-		hitLive.Reset();
-		currentAnimationlive = &hitLive;
+		hitOnPlayer();
+	}
+	if (App->input->keys[SDL_SCANCODE_J] == KEY_STATE::KEY_DOWN) {
+		shield();
 	}
 
 	switch (animFase){
 	case ENY:
+
 		countToStart--;
 		if (countToStart <= 0){
 			countToStart = 2000/30;
@@ -157,10 +168,8 @@ update_status HUD::Update() {
 		}
 		break;
 	case IDLE:
-		//currentAnimationPlayer = &idlePlayer;
 		break;
 	case HIT:
-		//currentAnimationPlayer = &hitPlayer;
 		countToStart--;
 		if (countToStart <= 0) {
 			countToStart = 5000 / 30;
@@ -172,21 +181,17 @@ update_status HUD::Update() {
 		}
 		break;
 	case DAMAGE:
-		countToStart--;
-		if (countToStart <= 0) {
-			animFase = IDLE;
-			currentAnimationPlayer = &idlePlayer;
-			currentAnimationcap = &idleCap;
-			currentAnimationbar = &idleBar;
-			restoredLive.Reset();
-			currentAnimationlive = &restoredLive;
-		}
 		break;
 	case DEAD:
+		currentAnimationlive = &emptyLive;
+		currentAnimationbar = &idleBar;
+		currentAnimationcap = &idleCap;
+		currentAnimationPlayer = &deadPlayer;
 		break;
 	}
 	return update_status::UPDATE_CONTINUE;
 }
+
 
 update_status HUD::PostUpdate(){
 
@@ -227,35 +232,6 @@ update_status HUD::PostUpdate(){
 	App->render->Blit(animTexturePlayer, 114 + (App->render->camera.x), 416, &rect);
 	
 
-	/*
-	switch (anim){
-	case JOIN:
-		break;
-	case IDLE:
-		break;
-	case HIT:
-		break;
-	case DAMAGE:
-		break;
-	case DEAD:
-		break;
-	default:
-		break;
-	}
-	*/
-	/*
-	short int x = 200 ;
-	short int y = 350 ;
-
-	uint32_t pixel = *( ( uint32_t * )screen->pixels + y * screen->w + x ) ;
-
-	uint8_t r ;
-	uint8_t g ;
-	uint8_t b ;
-
-	SDL_GetRGB( pixel, screen->format ,  &r, &g, &b );
-	*/
-
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -270,4 +246,28 @@ bool HUD::CleanUp()
 	App->textures->Unload(hudTexture);
 
 	return true;
+}
+
+void HUD::hitOnPlayer(){
+
+	if (animFase == IDLE) {
+		countToStart = 900 / 30;
+		animFase = HIT;
+		currentAnimationPlayer = &hitPlayer;
+		hitLive.Reset();
+		currentAnimationlive = &hitLive;
+	}else if(animFase == DAMAGE){
+		animFase = DEAD;
+	}
+}
+
+void HUD::shield(){
+	if (animFase == DAMAGE){
+		animFase = IDLE;
+		currentAnimationPlayer = &idlePlayer;
+		currentAnimationcap = &idleCap;
+		currentAnimationbar = &idleBar;
+		restoredLive.Reset();
+		currentAnimationlive = &restoredLive;
+	}
 }

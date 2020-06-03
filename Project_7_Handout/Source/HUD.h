@@ -23,7 +23,11 @@ public:
 
 	bool CleanUp() override;
 
-	void setDamage(bool _damage) { damage = _damage; };
+	//hit the player
+	void hitOnPlayer();
+
+	//the player recovers the shield
+	void shield();
 
 private:
 
