@@ -3,13 +3,20 @@
 
 #include "p2Point.h"
 #include "Animation.h"
+#include "ModuleParticles.h"
+
 
 struct SDL_Texture;
 struct Collider;
 
-class Enemy
-{
+enum class TYPE_PATTERN_SHOT {
 
+	NORMAL,
+	MINI_BOSS1,
+
+};
+
+class Enemy{
 public:
 	// Constructor
 	// Saves the spawn position for later movement calculations
@@ -59,6 +66,7 @@ protected:
 	// A ptr to the current animation
 
 	void  shotPattern();
+	void  shotPattern(TYPE_PATTERN_SHOT typeShot);
 	void resizeCollider();
 	//void setCurrentEnemyAnmi();
 	// The enemy's collider
@@ -67,7 +75,7 @@ protected:
 	// Original spawn position. Stored for movement calculations
 	fPoint spawnPos;
 	bool isShotDone =false;
-	void shotEnemy();
+	void shotEnemy(Particle particle);
 	int pattern = 0;
 
 };

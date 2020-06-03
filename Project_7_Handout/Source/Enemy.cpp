@@ -2,7 +2,6 @@
 
 #include "Application.h"
 #include "ModuleCollisions.h"
-#include "ModuleParticles.h"
 #include "ModuleAudio.h"
 #include "ModuleRender.h"
 
@@ -53,17 +52,39 @@ void Enemy::OnCollision(Collider* collider)
 	App->audio->PlayFx(destroyedFx);
 }
 
-void Enemy::shotEnemy() {
-	App->particles->AddParticle(App->particles->enemyLaser, position.x, position.y , Collider::Type::ENEMY_SHOT);
+void Enemy::shotEnemy(Particle particle) {
+	App->particles->AddParticle(particle , position.x, position.y , Collider::Type::ENEMY_SHOT);
 
 }
 
 void Enemy::shotPattern() {
 
+
 	if (rand() % 9000 < 45 && !isShotDone) {
-		shotEnemy();
+		shotEnemy(App->particles->enemyLaser);
 		isShotDone = true;
 	}
+}
+void Enemy::shotPattern(TYPE_PATTERN_SHOT typeShot) {
+
+	switch (typeShot){
+	case TYPE_PATTERN_SHOT::NORMAL:
+
+	if (rand() % 9000 < 45 && !isShotDone) {
+		shotEnemy(App->particles->enemyLaser);
+		isShotDone = true;
+	}
+		break;
+	case TYPE_PATTERN_SHOT::MINI_BOSS1:
+
+
+
+		break;
+	default:
+		break;
+	}
+
+
 }
 void Enemy::CleanUp() {
 
