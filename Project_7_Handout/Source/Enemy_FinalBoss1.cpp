@@ -47,6 +47,7 @@ void Enemy_FinalBoss1::Update() {
 }
 void Enemy_FinalBoss1::OnCollision(Collider* collider){
 	//App->particles->AddParticle(App->particles->explosion, position.x, position.y);
+	SetToDelete();
 	App->level1->Win();
 	isDead = true;
 }
@@ -55,10 +56,10 @@ void Enemy_FinalBoss1::OnCollision(Collider* collider){
 void Enemy_FinalBoss1::move() {
 
 	float vecX[4] = { 0.75 ,SCREEN_SPEED ,1.25 ,SCREEN_SPEED };
-	float vecY[4] = {0.55, 0, -0.55, 0};
-	
-	collider->SetPos(position.x, position.y+((*currentAnim).GetCurrentFrame().h/3)-(collider->rect.h/3));
-
+	float vecY[4] = { 0.55, 0, -0.55, 0 };
+	if (collider->pendingToDelete != true){
+	collider->SetPos(position.x, position.y + ((*currentAnim).GetCurrentFrame().h / 3) - (collider->rect.h / 3));
+}
 	switch (pattern) {
 	case 0:
 		if (xRecorrido < SCREEN_WIDTH + 90)
