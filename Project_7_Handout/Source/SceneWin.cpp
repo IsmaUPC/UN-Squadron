@@ -65,9 +65,5 @@ bool SceneWin::CleanUp()
 	App->textures->Unload(bgTexture);
 	//App->audio->Disable();
 
-
-
-
-
 	return true;
 }
