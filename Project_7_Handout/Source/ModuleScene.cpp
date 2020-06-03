@@ -11,6 +11,7 @@
 #include "HUD.h"
 #include "Enemy.h"
 #include "Enemy_FinalBoss1.h"
+#include <SDL_mixer\include\SDL_mixer.h>
 
 
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
@@ -134,6 +135,7 @@ bool ModuleScene::Start()
 }
 void ModuleScene::Win() {	
 	//CleanUp();
+		Mix_HaltMusic();
 		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
 		//App->render->camera.x =0;
 		//SCREEN_SPEED == 0;

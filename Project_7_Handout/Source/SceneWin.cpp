@@ -6,7 +6,9 @@
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
+
 #include "HUD.h"
+#include <SDL_mixer\include\SDL_mixer.h>
 
 SceneWin::SceneWin(bool startEnabled) : Module(startEnabled)
 {
@@ -41,7 +43,9 @@ update_status SceneWin::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
 	{
+		Mix_HaltMusic();
 		App->fade->FadeToBlack(this, (Module*)App->level2, 90);
+
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -59,7 +63,7 @@ bool SceneWin::CleanUp()
 {
 	//Enable (and properly disable) the player module
 	App->textures->Unload(bgTexture);
-	App->audio->Disable();
+	//App->audio->Disable();
 
 
 
