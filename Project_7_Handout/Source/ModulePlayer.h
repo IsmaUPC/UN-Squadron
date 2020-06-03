@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "p2Point.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -37,7 +38,9 @@ public:
 	int* getPow() { return &pow; };
 	int* getTotal() { return &total; };
 	int* getLives() { return &lives; };
+	void playerShot();
 
+	void MovePlayer();
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
 
@@ -45,6 +48,7 @@ public:
 
 private:
 	int currentCameraX;
+	Timer* timer;
 
 public:
 	// Position of the player in the map

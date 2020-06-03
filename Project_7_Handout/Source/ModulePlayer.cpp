@@ -9,6 +9,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
+#include "Timer.h"
 
 #include <stdio.h>
 
@@ -47,7 +48,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player textures");
 
-
+	timer= new Timer(100);
 	bool ret = true;
 	destroyedCountdown = 120;
 	destroyed = false;
@@ -71,99 +72,45 @@ bool ModulePlayer::Start()
 	return ret;
 }
 
-update_status ModulePlayer::Update()
-{
+update_status ModulePlayer::Update(){
 	//Save the position camera X
 	currentCameraX = App->render->camera.x;
+	timer->update();
 
 	// Moving the player with the camera scroll
 	App->player->position.x += SCREEN_SPEED;
 
-	//Activate god mode
-	if (App->input->keys[SDL_SCANCODE_G] == KEY_STATE::KEY_DOWN)
-		godModeUpdate();
-	
+	//Move player with AWSD
+	MovePlayer();
+	//Update the player collider 
+	collider->SetPos(position.x, position.y);
 
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
-	{
-		//Check that the position does not exceed the screen limit :D
-		if ( position.x > currentCameraX) {
-			position.x -= speed;
-		}
-		else {
-			position.x = currentCameraX;
-		}
+	//Activate God mode
+	if (App->input->keys[SDL_SCANCODE_G] == KEY_STATE::KEY_DOWN) godModeUpdate();
+
+	//Shot Player
+	if (cooldown == 11 && !destroyed) {
+		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN ) playerShot();
+		else if (timer->ready() && timer->check()) 
+		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_REPEAT) playerShot();
 	}
 
-	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
-	{
-		/*check that the player is not in a position larger than the screen size 
-		  in reference to the current camera position*/
-		if (position.x < (currentCameraX + (SCREEN_WIDTH  - PLAYER_WIDTH))){
-			position.x += speed;
-		}
-		else {
-			position.x = currentCameraX + (SCREEN_WIDTH - PLAYER_WIDTH);
-		}
-	}
-
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
-	{
-		/*controls the limit of the position "y" in which the player is,
-		taking into account the height of the player*/
-		if (position.y < (SCREEN_HEIGHT - (PLAYER_HEIGHT+40))) {
-			position.y += speed;
-			if (currentAnimation != &downAnim) {
-				downAnim.Reset();
-				currentAnimation = &downAnim;
-			}
-		}
-		else {
-			position.y = SCREEN_HEIGHT - (PLAYER_HEIGHT+40);
-		}
-	}
-
-	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
-	{
-		/*Does not allow movements less than 0, in case it exceeds it 
-		places the player to position 0*/
-		if (position.y > 82) {
-			position.y -= speed;
-			if (currentAnimation != &upAnim)
-			{
-				upAnim.Reset();
-				currentAnimation = &upAnim;
-			}
-		}
-		else {
-			position.y = 82;
-		}
-	}
-
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && cooldown == 11 && !destroyed)
-	{
-		App->particles->AddParticle(App->particles->playerLaser, position.x + 35, position.y+10, Collider::Type::PLAYER_SHOT);
-		App->audio->PlayFx(laserFx);
-		cooldown--;
-	}
+	//Suicide Player
 	if (App->input->keys[SDL_SCANCODE_M] == KEY_STATE::KEY_DOWN ){
 		//destroyed = true;
 		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE,9);
 		App->audio->PlayFx(explosionFx);
-
-		
 	}
+
 	if(cooldown<11) cooldown--;
 	if (cooldown == 0)cooldown = 11;
+
 	// If no up/down movement detected, set the current animation back to idle
 	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE
 		&& App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE)
 		currentAnimation = &idleAnim;
 
-	collider->SetPos(position.x, position.y);
-
 	currentAnimation->Update();
-
 	if (destroyed){
 		destroyedCountdown--;
 		if (destroyedCountdown <= 0){
@@ -171,9 +118,7 @@ update_status ModulePlayer::Update()
 			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 			//return update_status::UPDATE_STOP;
 		}
-
 	}
-
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -206,5 +151,55 @@ bool ModulePlayer::CleanUp(){
 }
 void ModulePlayer::godModeUpdate(){
 	godMode = !godMode;
-
 	}
+
+void ModulePlayer::playerShot() {
+	App->particles->AddParticle(App->particles->playerLaser, position.x + 35, position.y + 10, Collider::Type::PLAYER_SHOT);
+	App->audio->PlayFx(laserFx);
+	cooldown--;
+}
+
+void ModulePlayer::MovePlayer() {
+
+	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT){
+		//Check that the position does not exceed the screen limit :D
+		if (position.x > currentCameraX) {
+			position.x -= speed;
+		}
+		else position.x = currentCameraX;
+	}
+
+	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT){
+		/*check that the player is not in a position larger than the screen size
+		  in reference to the current camera position*/
+		if (position.x < (currentCameraX + (SCREEN_WIDTH - PLAYER_WIDTH))) {
+			position.x += speed;
+		}
+		else position.x = currentCameraX + (SCREEN_WIDTH - PLAYER_WIDTH);
+	}
+
+	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT){
+		/*controls the limit of the position "y" in which the player is,
+		taking into account the height of the player*/
+		if (position.y < (SCREEN_HEIGHT - (PLAYER_HEIGHT + 40))) {
+			position.y += speed;
+			if (currentAnimation != &downAnim) {
+				downAnim.Reset();
+				currentAnimation = &downAnim;
+			}
+		} else position.y = SCREEN_HEIGHT - (PLAYER_HEIGHT + 40);
+	
+	}
+
+	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT){
+		/*Does not allow movements less than 0, in case it exceeds it
+		places the player to position 0*/
+		if (position.y > 82) {
+			position.y -= speed;
+			if (currentAnimation != &upAnim){
+				upAnim.Reset();
+				currentAnimation = &upAnim;
+			}
+		} else position.y = 82;
+	}
+}
