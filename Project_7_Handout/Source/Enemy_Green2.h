@@ -23,10 +23,13 @@ private:
 	float radio = 4.8;//9
 	float grados = 270;
 	float radianes;
-	int direction = 1;
-	int following = 1;
-	int TOP = 155;
+	int angulo = 630;
 	bool roundTwo = false;
+	bool roundThree = false;
+	bool skip = false;
+	bool UpDown = false;
+	bool Do = false;
+	bool jump = false;
 	// This enemy has one sprite and one frame
 	// We are keeping it an animation for consistency with other enemies
 	Animation FirsAnim;

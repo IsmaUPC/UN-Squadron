@@ -14,21 +14,16 @@ public:
 	void move();
 
 private:
-	// The position (as ratio) in the wave at a specific moment
-	float waveRatio = 0.0f;
-
-	// The speed at which the wave ratio is increased
-	float waveRatioSpeed = 0.05f;
-
-	// The original spawning position. The wave will be calculated from that
-	int spawn_y = 0;
-
-	// The total height of the wave
-	int waveHeight = 15;
 	// A set of steps that define the position in the screen
 	// And an animation for each step
 	Path path;
-
+	int xRecorrido = 0;
+	int yRecorrido = 0;
+	float radio = 5;
+	float angulo = 450;
+	float radianes;
+	float grados = 0;
+	int speed = SCREEN_SPEED;
 	// This enemy has one sprite and one frame
 	// We are keeping it an animation for consistency with other enemies
 	Animation FirsAnim;

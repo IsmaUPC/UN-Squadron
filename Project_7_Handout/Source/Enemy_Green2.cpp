@@ -21,6 +21,7 @@ Enemy_Green2::Enemy_Green2(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 	Down.loop = false;
 
 	collider = App->collisions->AddCollider({ 0, 0, 54, 14 }, Collider::Type::ENEMY, (Module*)App->enemies);
+	if (pattern == 0)position.x += -220;
 }
 
 
@@ -34,16 +35,23 @@ void Enemy_Green2::Update() {
 }
 
 void Enemy_Green2::move() {
-	following = (position.y < App->player->position.y-20 && position.y > App->player->position.y + 20) ? -1 : 1;
 	switch (pattern) {
 	case 0:
-		if (yRecorrido < 110)
+		if (yRecorrido < 75)
 		{
 			yRecorrido++;
-			position.x += -1;
-			position.y += 1;
+			position.x += SCREEN_SPEED;
+			position.y += 2;
 		}
-		else yRecorrido = 0, pattern = 2;
+		else
+		{
+			jump = true, xRecorrido = 110, yRecorrido = 0;
+			if (position.y<App->player->position.y + 30 && position.y>App->player->position.y - 30)skip = true;
+			else skip = false;
+			if (skip == false)pattern = 2;
+			else pattern = 7;
+		}
+		break;
 	case 1:
 		if (xRecorrido < 110)
 		{
@@ -52,7 +60,9 @@ void Enemy_Green2::move() {
 		}
 		else
 		{
-			if (direction == 1)pattern = 2;
+			if (position.y<App->player->position.y + 30 && position.y>App->player->position.y - 30)skip = true;
+			else skip = false;
+			if (skip == false)pattern = 2;
 			else pattern = 7;
 		}
 		break;
@@ -65,7 +75,11 @@ void Enemy_Green2::move() {
 			position.y += 2;
 			position.x += SCREEN_SPEED;
 		}
-		else pattern = 3;
+		else
+		{
+			if (roundThree == true)angulo = 700;
+			pattern = 3;
+		}
 		break;
 	case 3:
 		if (yRecorrido < 55)currentAnim = &Up;
@@ -76,7 +90,11 @@ void Enemy_Green2::move() {
 			position.y -= 2;
 			position.x += 1;
 		}
-		else pattern = 4;
+		else
+		{
+			if (jump == false)pattern = 4;
+			else pattern = 7;
+		}
 		break;
 	case 4:
 		if (yRecorrido < 105)currentAnim = &Down;
@@ -112,16 +130,29 @@ void Enemy_Green2::move() {
 		else pattern = 7;
 		break;
 	case 7:
-		currentAnim = &Up;
 		if (grados != 90)
 		{
 			radianes = grados * PI / 180;
 			position.x -= radio * sin(radianes);
-			position.y -= (radio * cos(radianes)*direction)*following;
+			if (Do == false)
+			{
+				if (position.y < App->player->position.y) currentAnim = &Down, UpDown = false;
+				else currentAnim = &Up, UpDown = true;
+				Do = true;
+			}
+			
+			if(UpDown==false) position.y += radio * cos(radianes);
+			else position.y -= radio * cos(radianes);
+
 			grados += 2.5;
 			if (grados == 360)grados = 0;
 		}
-		else grados = 270, pattern = 8;
+		else
+		{
+			if (roundThree == true) angulo = 700;
+			grados = 270, pattern = 8;
+			Do = false;
+		}
 		break;
 	case 8:///////////////////////////////////
 		currentAnim = &FirsAnim;
@@ -133,47 +164,66 @@ void Enemy_Green2::move() {
 		else
 		{
 			pattern = 9;
-			if (roundTwo==false)radio = 1.7;
-			else radio = 3.5;
+			radio = 1.7;
 		}
 		break;
 	case 9:
-		currentAnim = &Up;
+		
 		if (grados != 90)
 		{
 			radianes = grados * PI / 180;
 			position.x += radio * sin(radianes);
-			position.y -= (radio * cos(radianes))*following;
+			if (Do == false)
+			{
+				if (position.y < App->player->position.y)currentAnim = &Down, UpDown = false;
+				else currentAnim = &Up, UpDown = true;
+				Do = true;
+			}
+			if (UpDown==false) position.y += radio * cos(radianes);
+			else position.y -= radio * cos(radianes);
 			grados += 2.5;
 			if (grados == 360)grados = 0;
 		}
 		else
 		{
-			if (roundTwo==false)pattern = 10;
-			else xRecorrido=0,pattern = 11;
+			xRecorrido = 0, Do = false, pattern = 11;
 		}
 		break;
 	case 10:
 		radio = 2.5;
 		if(radio * cos(radianes)<0)currentAnim = &Down;
 		else currentAnim = &Up;
-		if (grados != 630)
+		if (grados != angulo)
 		{
 			radianes = grados * PI / 180;
 			position.x += 2.6;
 			position.y -= radio * cos(radianes);
 			grados += 2.5;
 		}
-		else xRecorrido=110, yRecorrido=0, direction=-1, grados=270,radio=4.8,roundTwo=true,pattern = 2;
+		else
+		{
+			xRecorrido = 110, yRecorrido = 0, grados = 270, radio = 4.8, roundThree = true;
+			if (position.y<App->player->position.y + 30 && position.y>App->player->position.y - 30)skip = true;
+			else skip = false;
+			if (skip == false)pattern = 2;
+			else pattern = 7;
+		}
 		break;
 	case 11:
-		currentAnim = &Up;
-		if (xRecorrido < 60)
+		
+		if (xRecorrido < 40)
 		{
 			xRecorrido++;
 			position.x += 3.5;
-			position.y -= 3*following;
+			if (Do == false)
+			{
+				if (position.y < App->player->position.y) currentAnim = &Down, UpDown = false;
+				else currentAnim = &Up, UpDown = true;
+				Do = true;
+			}
+			if (UpDown==false) position.y += 3;// (3 * following);
+			else position.y -= 3;
 		}
-		else pattern = 10;
+		else Do = false, pattern = 10;
 	}
 }
