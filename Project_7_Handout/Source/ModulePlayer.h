@@ -44,11 +44,15 @@ public:
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
 
+	void timeRegeneration();
+
 	bool CleanUp() override;
 
 private:
 	int currentCameraX;
 	Timer* timer;
+
+	int countTimeToShield;
 
 public:
 	// Position of the player in the map
@@ -76,6 +80,7 @@ public:
 
 	// A flag to detect when the player has been destroyed
 	bool destroyed = false;
+	bool oneHit = false;
 	bool godMode = false;
 
 	// A countdown to when the player gets destroyed. After a while, the game exits
@@ -85,13 +90,15 @@ public:
 	uint laserFx = 0;
 	uint explosionFx = 0;
 
+
+
 	// hud information
 	int money = 0;
 	int score = 0;
 	int level = 1;
 	int pow = 0;
 	int total = 0;
-	int lives = 2;
+	int lives = 0;
 
 };
 

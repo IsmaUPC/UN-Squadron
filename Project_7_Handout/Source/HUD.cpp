@@ -113,12 +113,12 @@ bool HUD::Start()
 
 	
 	//information of the HUD
-	info.money = App->player->getMoney();
-	info.score = App->player->getScore();
-	info.level = App->player->getLevel();
-	info.pow = App->player->getPow();
-	info.total = App->player->getTotal();
-	info.lives = App->player->getLives();
+	money = App->player->getMoney();
+	score = App->player->getScore();
+	level = App->player->getLevel();
+	pow = App->player->getPow();
+	total = App->player->getTotal();
+	lives = App->player->getLives();
 
 	//Animations
 	animTexturePlayer = App->textures->Load("Assets/hud/hudAnimations.png");
@@ -132,7 +132,7 @@ bool HUD::Start()
 	joinInPlayer.Reset();
 	deadPlayer.Reset();
 	animFase = ENY;
-
+	countToStart = count / 30;
 	return ret;
 }
 
@@ -197,12 +197,12 @@ update_status HUD::PostUpdate(){
 
 	App->render->Blit(hudTexture, 0,0, NULL, 0,false);
 
-	sprintf_s(moneyText, 10, "%7d", *info.money);
-	sprintf_s(scoreText, 10, "%7d", *info.score);
-	sprintf_s(levelText, 5, "%3d", *info.level);
-	sprintf_s(powText, 5, "%3d", *info.pow);
-	sprintf_s(totalText, 5, "%3d", *info.total);
-	sprintf_s(livesText, 5, "%3d", *info.lives);
+	sprintf_s(moneyText, 10, "%7d", *money);
+	sprintf_s(scoreText, 10, "%7d", *score);
+	sprintf_s(levelText, 5, "%3d",	*level);
+	sprintf_s(powText, 5, "%3d",	*pow);
+	sprintf_s(totalText, 5, "%3d",	*total);
+	sprintf_s(livesText, 5, "%3d",	*lives);
 
 	App->fonts->BlitText(20, 61, hudfont, scoreText);
 	App->fonts->BlitText(262, 61, hudfont, moneyText);

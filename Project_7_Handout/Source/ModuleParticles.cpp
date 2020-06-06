@@ -91,7 +91,8 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 			delete particles[i];
 			particles[i] = nullptr;
 			if (c1->type == Collider::PLAYER_SHOT && c2->type == Collider::ENEMY || c2->type == Collider::PLAYER_SHOT && c1->type == Collider::ENEMY) {
-				App->player->score += 20;
+				App->player->score += 100;
+				App->player->money += 300;
 				
 
 			}

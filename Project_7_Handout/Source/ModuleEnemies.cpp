@@ -212,9 +212,15 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 		{
 			enemies[i]->OnCollision(c2); //Notify the enemy of a collision
 			App->audio->PlayFx(enemyDestroyedFx);
+			
+			//switch type enemi for diferent score and money
+			//Need creat a variable type in enemymodules
+			
 			delete enemies[i];
 			enemies[i] = nullptr;
 			break;
+
+
 		}
 	}
 }

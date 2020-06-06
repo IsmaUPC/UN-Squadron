@@ -28,20 +28,18 @@ public:
 
 	//the player recovers the shield
 	void shield();
+	enum anim { ENY, JOIN, IDLE, HIT, DAMAGE, DEAD };
+	int animFase = ENY;
 
 private:
 
 	//information of the HUD
-	struct information
-	{
-		int* money = nullptr;
-		int* score = nullptr;
-		int* level = nullptr;
-		int* pow = nullptr;
-		int* total = nullptr;
-		int* lives = nullptr;
-
-	}info;
+	int* money = nullptr;
+	int* score = nullptr;
+	int* level = nullptr;
+	int* pow = nullptr;
+	int* total = nullptr;
+	int* lives = nullptr;
 
 	SDL_Texture* hudTexture = nullptr;
 
@@ -67,10 +65,8 @@ private:
 	Animation damagePlayer;
 	Animation deadPlayer;
 	
-	enum anim {ENY,JOIN,IDLE,HIT,DAMAGE,DEAD};
-	int animFase = ENY;
-	int count = 2000;
-	int countToStart = count;
+	int count = 1000;
+	int countToStart = 0;
 	
 	//Animations of cap
 	Animation* currentAnimationcap = nullptr;

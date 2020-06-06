@@ -9,6 +9,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
+#include "HUD.h"
 #include "Timer.h"
 
 #include <stdio.h>
@@ -48,12 +49,19 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player textures");
 
+	countTimeToShield = 5000 / 30;
 	timer= new Timer(100);
 	bool ret = true;
 	destroyedCountdown = 120;
+	oneHit = false;
 	destroyed = false;
 	godMode = false;
-	score = 0;
+	money = MONEY;
+	score = SCORE;
+	level = LEVEL;
+	pow = POW;
+	total = TOTAL;
+	lives = LIVES;
 
 	
 	texture = App->textures->Load("Assets/PlayerSprites.png");
@@ -76,7 +84,7 @@ update_status ModulePlayer::Update(){
 	//Save the position camera X
 	currentCameraX = App->render->camera.x;
 	timer->update();
-
+	timeRegeneration();
 	// Moving the player with the camera scroll
 	App->player->position.x += SCREEN_SPEED;
 
@@ -136,12 +144,38 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
 	if (c1 == collider && destroyed == false && godMode==false)	{
 		App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE, 9);
 		App->audio->PlayFx(explosionFx);
-		destroyed = true;
-		collider->pendingToDelete = true;
+		if (oneHit == false){
+			oneHit = true;
+			App->hud->hitOnPlayer();
+		}else{
+			if (App->hud->animFase == App->hud->DAMAGE){
+				App->hud->hitOnPlayer();
+				destroyed = true;
+				collider->pendingToDelete = true;
+			}
+		}
+	}
+
+}
+void ModulePlayer::timeRegeneration(){
+	if (oneHit == true){
+		countTimeToShield--;
+		if (countTimeToShield <=0) {
+			oneHit = false;
+			countTimeToShield = 5900 / 30;
+			App->hud->shield();
+		}
 	}
 
 }
 bool ModulePlayer::CleanUp(){
+
+	MONEY = money;
+	SCORE = score;
+	LEVEL = level;
+	POW = pow;
+	TOTAL = total;
+	LIVES = lives;
 
 	App->textures->Unload(texture);
 	App->audio->UnloadFx(laserFx);
