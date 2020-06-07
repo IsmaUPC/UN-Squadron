@@ -27,13 +27,14 @@ typedef unsigned int uint;
 //#define SCREEN_WIDTH 503
 #define SCREEN_HEIGHT 440
 
-#define PLAYER_WIDTH 68
-#define PLAYER_HEIGHT 22
-
 #define SCREEN_SIZE 1
 #define SCREEN_SPEED 1
 #define WIN_FULLSCREEN 0
 
+#define SPAWN_MARGIN 50
+
+#define PLAYER_WIDTH 68
+#define PLAYER_HEIGHT 22
 
 //poner 1 para pantalla completa, 0 para tamaño real
 #define PantallaCompleta 0
@@ -44,5 +45,12 @@ typedef unsigned int uint;
 #define VSYNC 1
  
 static int VOLUME_GAME = 180 ;
+
+static int MONEY = 0;
+static int SCORE = 3000;
+static int LEVEL = 1;
+static int POW = 0;
+static int TOTAL = 0;
+static int LIVES = 2;
 
 #endif // __GLOBALS_H__

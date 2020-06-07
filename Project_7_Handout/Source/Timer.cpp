@@ -3,11 +3,12 @@
 
 
 
-Timer::Timer(int miliseconds = 1000) {
+Timer::Timer(int miliseconds){
 	interval = miliseconds;
 	acumulator = 0;
 	total = 0;
-	cur_time = last_time = SDL_GetTicks();
+	cur_time =SDL_GetTicks(); 
+	last_time = SDL_GetTicks()+miliseconds*2;
 }
 int Timer::ready() {
 	return acumulator > interval;

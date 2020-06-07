@@ -43,19 +43,20 @@ bool SceneIntro::Start()
 	return ret;
 }
 
-update_status SceneIntro::Update()
-{
-	if (currentAnim != nullptr)
-	{
+update_status SceneIntro::Update(){
+	GamePad& pad = App->input->pads[0];
+
+	if (currentAnim != nullptr){
 		currentAnim->Update();
 	}
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN){
+
+	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a){
 		Mix_HaltMusic();
 		//Mix_FreeMusic(App->audio->getMusic());
 
 		//Empezar Nivel
-		//App->fade->FadeToBlack(this, (Module*)App->sceneShop, 60.0f);
-		App->fade->FadeToBlack(this, (Module*)App->level2, 60.0f);
+		App->fade->FadeToBlack(this, (Module*)App->sceneShop, 60.0f);
+		//App->fade->FadeToBlack(this, (Module*)App->level2, 60.0f);
 	}
 
 	return update_status::UPDATE_CONTINUE;

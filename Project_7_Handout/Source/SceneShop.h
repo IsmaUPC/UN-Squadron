@@ -51,11 +51,13 @@ public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
 	SDL_Texture* selectorTexture = nullptr;
-	int tienda[6][2];
 	int tiendaX = 0, tiendaY = 0;
 	int weaponsition = 0;
 	uint OptionSelection = 0;
 	uint SelectWeapon = 0;
 	uint InsuficientMoney = 0;
+
+	bool keyDownPad = false;
+
 };
 #endif // !_SCENESHOP_H_

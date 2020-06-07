@@ -35,8 +35,7 @@ void Enemy::Update()
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
-
-	shotPattern();
+	if(collider->type== Collider::ENEMY_SHOT)shotType();
 
 }
 
@@ -52,32 +51,24 @@ void Enemy::OnCollision(Collider* collider)
 	App->audio->PlayFx(destroyedFx);
 }
 
-void Enemy::shotEnemy(Particle particle) {
-	App->particles->AddParticle(particle , position.x, position.y , Collider::Type::ENEMY_SHOT);
+void Enemy::shotEnemy(Particle particle, Collider::Type type) {
+	App->particles->AddParticle(particle , position.x, position.y +10, type);
 
 }
 
-void Enemy::shotPattern() {
-
-
-	if (rand() % 9000 < 45 && !isShotDone) {
-		shotEnemy(App->particles->enemyLaser);
-		isShotDone = true;
-	}
-}
-void Enemy::shotPattern(TYPE_PATTERN_SHOT typeShot) {
+void Enemy::shotType(TypeShot typeShot) {
 
 	switch (typeShot){
-	case TYPE_PATTERN_SHOT::NORMAL:
+	case TypeShot::ENEMY_SHOT:
 
 	if (rand() % 9000 < 45 && !isShotDone) {
-		shotEnemy(App->particles->enemyLaser);
+		shotEnemy(App->particles->enemyLaser, Collider::Type::ENEMY_SHOT);
 		isShotDone = true;
 	}
 		break;
-	case TYPE_PATTERN_SHOT::MINI_BOSS1:
+	case TypeShot::MINI_BOSS1:
 
-
+			shotEnemy(App->particles->mBoss1Shot, Collider::Type::M_BOSS1_SHOT);
 
 		break;
 	default:
@@ -90,21 +81,13 @@ void Enemy::CleanUp() {
 
 }
 
-void Enemy::SetToDelete()
-{
+void Enemy::SetToDelete(){
 	pendingToDelete = true;
 	if (collider != nullptr)
 		collider->pendingToDelete = true;
 }
 
 void Enemy::resizeCollider() {
-
 	collider->rect.w = (*currentAnim).GetCurrentFrame().w;
 	collider->rect.h = (*currentAnim).GetCurrentFrame().h;
 }
-//void Enemy::setCurrentEnemyAnmi(Animation* _currentAnim) {
-//
-//	currentAnim = _currentAnim;
-//	collider->rect.w = (*currentAnim).GetCurrentFrame().w;
-//	collider->rect.h = (*currentAnim).GetCurrentFrame().h;
-//}

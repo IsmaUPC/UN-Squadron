@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "p2Point.h"
+#include "Path.h"
 
 struct Collider;
 
@@ -32,6 +33,9 @@ public:
 
 	// Defines the speed at which the particle will move (pixels per second)
 	fPoint speed;
+
+	Path path ;
+	fPoint spawnPos;
 
 	// A set of rectangle sprites
 	Animation anim;

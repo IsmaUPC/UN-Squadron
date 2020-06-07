@@ -43,41 +43,47 @@ bool SceneShop::Start()
 
 update_status SceneShop::Update()
 {
-	
-	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_DOWN)	{
+	GamePad& pad = App->input->pads[0];
+
+	if ((App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_DOWN || pad.l_y < 0 || pad.up) && keyDownPad == false){
 		tiendaY -= 1;
 		if (tiendaY <0)tiendaY = 1;
 		App->audio->PlayFx(OptionSelection);
+		keyDownPad = true;
 	}
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN)	{
+	if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN || pad.l_y > 0 || pad.down) && keyDownPad == false){
 		tiendaY += 1;
 		if(tiendaY>1) tiendaY = 0;
-	
 		App->audio->PlayFx(OptionSelection);
+		keyDownPad = true;
 	}
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN)	{
+	if ((App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN || pad.l_x < 0 || pad.left) && keyDownPad == false){
 		tiendaX -= 1;
 		if (tiendaX < 0) {
 			tiendaX = 5;
 			tiendaY += (tiendaY == 1) ? -1 : 1;
-
 		}
 		App->audio->PlayFx(OptionSelection);
+		keyDownPad = true;
 	}
-  	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN)	{
+  	if ((App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN || pad.l_x > 0 || pad.right) && keyDownPad == false){
 		tiendaX += 1;
 		if (tiendaX > 5) {
 			tiendaX = 0;
 			tiendaY += (tiendaY == 1) ? -1 : 1;
 		}
-
 		App->audio->PlayFx(OptionSelection);
+		keyDownPad = true;
+	}
+	
+	if (pad.l_y == 0 && pad.l_x == 0 && pad.up == false && pad.down == false && pad.left == false && pad.right == false) {
+		keyDownPad = false;
 	}
 
 	weaponsition = tiendaX + (6 * tiendaY);
 	
 	
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a)
 	{
 		select();
 	}
@@ -95,8 +101,7 @@ bool SceneShop::CleanUp()
 	return true;
 }
 
-update_status SceneShop::PostUpdate()
-{
+update_status SceneShop::PostUpdate(){
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, NULL);
 	App->render->Blit(selectorTexture, 19+(79*tiendaX), 240+(96*tiendaY), NULL);

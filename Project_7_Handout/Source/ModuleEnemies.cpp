@@ -18,7 +18,6 @@
 #include "Enemy_White.h"
 #include "Enemy_FinalBoss2.h"
 
-#define SPAWN_MARGIN 50
 
 
 ModuleEnemies::ModuleEnemies(bool startEnabled) : Module(startEnabled)
@@ -151,7 +150,8 @@ void ModuleEnemies::HandleEnemiesDespawn()
 		if (enemies[i] != nullptr)
 		{
 			// Delete the enemy when it has reached the end of the screen
-			if ((enemies[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN-261)||(enemies[i]->position.x * SCREEN_SIZE > (App->render->camera.x+SCREEN_WIDTH+ SPAWN_MARGIN)))
+			if ((enemies[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN-261)
+				||(enemies[i]->position.x * SCREEN_SIZE > (App->render->camera.x+SCREEN_WIDTH+ SPAWN_MARGIN)))
 			{
 				LOG("DeSpawning enemy at %d", enemies[i]->position.x * SCREEN_SIZE);
 
@@ -219,9 +219,15 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 		{
 			enemies[i]->OnCollision(c2); //Notify the enemy of a collision
 			App->audio->PlayFx(enemyDestroyedFx);
+			
+			//switch type enemi for diferent score and money
+			//Need creat a variable type in enemymodules
+			
 			delete enemies[i];
 			enemies[i] = nullptr;
 			break;
+
+
 		}
 	}
 }
