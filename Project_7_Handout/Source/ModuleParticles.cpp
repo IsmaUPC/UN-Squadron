@@ -93,8 +93,6 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 			if (c1->type == Collider::PLAYER_SHOT && c2->type == Collider::ENEMY || c2->type == Collider::PLAYER_SHOT && c1->type == Collider::ENEMY) {
 				App->player->score += 100;
 				App->player->money += 300;
-				
-
 			}
 			break;
 		}

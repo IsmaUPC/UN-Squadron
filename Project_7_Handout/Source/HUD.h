@@ -57,7 +57,7 @@ private:
 	bool damage = false;
 
 	//Animations image Player
-	SDL_Texture* animTexturePlayer = nullptr;
+	SDL_Texture* animHUDTexture = nullptr;
 	Animation* currentAnimationPlayer = nullptr;
 	Animation joinInPlayer;
 	Animation idlePlayer;

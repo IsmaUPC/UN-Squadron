@@ -28,9 +28,10 @@ HUD::HUD(bool startEnabled) : Module(startEnabled) {
 	for (int i = 6; i >= 0; i--) {
 		deadPlayer.PushBack({ 0 + ((4 + 84) * i), 216, 84, 68 });
 	}
-	for (int i = 3; i >= -2; i--) {
+	for (int i = 3; i >= 0; i--) {
 		deadPlayer.PushBack({ 0 + ((4 + 84) * i), 0, 84, 68 });
 	}
+	deadPlayer.PushBack({ 0, 0, 0, 0 });
 	deadPlayer.speed = 0.35f;
 	deadPlayer.loop = false;
 
@@ -52,7 +53,6 @@ HUD::HUD(bool startEnabled) : Module(startEnabled) {
 	countToStart = count/60;
 
 	//cap Animations 
-
 	idleCap.PushBack({ 385,39,32,30 });
 	idleCap.loop = false;
 	damageCap.PushBack({ 385,39,32,30 });
@@ -121,7 +121,7 @@ bool HUD::Start()
 	lives = App->player->getLives();
 
 	//Animations
-	animTexturePlayer = App->textures->Load("Assets/hud/hudAnimations.png");
+	animHUDTexture = App->textures->Load("Assets/hud/hudAnimations.png");
 
 	currentAnimationcap = &idleCap;
 	currentAnimationbar = &idleBar;
@@ -216,20 +216,20 @@ update_status HUD::PostUpdate(){
 	if (animFase != ENY){
 		currentAnimationPlayer->Update();
 		rect = currentAnimationPlayer->GetCurrentFrame();
-		App->render->Blit(animTexturePlayer, 142+(App->render->camera.x), 12, &rect);
+		App->render->Blit(animHUDTexture, 142+(App->render->camera.x), 12, &rect);
 	}
 	currentAnimationcap->Update();
 	rect = currentAnimationcap->GetCurrentFrame();
-	App->render->Blit(animTexturePlayer, 30 + (App->render->camera.x),402, &rect);
+	App->render->Blit(animHUDTexture, 30 + (App->render->camera.x),402, &rect);
 
 	currentAnimationbar->Update();
 	rect = currentAnimationbar->GetCurrentFrame();
-	App->render->Blit(animTexturePlayer, 110 + (App->render->camera.x), 412, &rect);
+	App->render->Blit(animHUDTexture, 110 + (App->render->camera.x), 412, &rect);
 
 	
 	currentAnimationlive->Update();
 	rect = currentAnimationlive->GetCurrentFrame();
-	App->render->Blit(animTexturePlayer, 114 + (App->render->camera.x), 416, &rect);
+	App->render->Blit(animHUDTexture, 114 + (App->render->camera.x), 416, &rect);
 	
 
 	return update_status::UPDATE_CONTINUE;
@@ -241,9 +241,9 @@ bool HUD::CleanUp()
 	App->fonts->UnLoad(scoreFont);
 	App->fonts->UnLoad(scoreFont2);
 	App->fonts->UnLoad(hudfont);
-
-
 	App->textures->Unload(hudTexture);
+	App->textures->Unload(animHUDTexture);
+
 
 	return true;
 }

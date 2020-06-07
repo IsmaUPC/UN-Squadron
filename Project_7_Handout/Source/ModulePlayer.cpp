@@ -89,18 +89,21 @@ update_status ModulePlayer::Update(){
 	App->player->position.x += SCREEN_SPEED;
 
 	//Move player with AWSD
-	MovePlayer();
+	if (destroyed == false)
+		MovePlayer();
+	
 	//Update the player collider 
 	collider->SetPos(position.x, position.y);
 
+	GamePad& pad = App->input->pads[0];
 	//Activate God mode
 	if (App->input->keys[SDL_SCANCODE_G] == KEY_STATE::KEY_DOWN) godModeUpdate();
 
 	//Shot Player
 	if (cooldown == 11 && !destroyed) {
-		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN ) playerShot();
+		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) playerShot();
 		else if (timer->ready() && timer->check()) 
-		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_REPEAT) playerShot();
+		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_REPEAT || pad.a) playerShot();
 	}
 
 	//Suicide Player
@@ -114,8 +117,8 @@ update_status ModulePlayer::Update(){
 	if (cooldown == 0)cooldown = 11;
 
 	// If no up/down movement detected, set the current animation back to idle
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE
-		&& App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE)
+	if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE || pad.l_y > 0)
+		&& (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE || pad.l_y < 0))
 		currentAnimation = &idleAnim;
 
 	currentAnimation->Update();
@@ -194,7 +197,9 @@ void ModulePlayer::playerShot() {
 
 void ModulePlayer::MovePlayer() {
 
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT){
+	GamePad& pad = App->input->pads[0];
+
+	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT || pad.l_x < 0){
 		//Check that the position does not exceed the screen limit :D
 		if (position.x > currentCameraX) {
 			position.x -= speed;
@@ -202,7 +207,7 @@ void ModulePlayer::MovePlayer() {
 		else position.x = currentCameraX;
 	}
 
-	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT){
+	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT || pad.l_x > 0){
 		/*check that the player is not in a position larger than the screen size
 		  in reference to the current camera position*/
 		if (position.x < (currentCameraX + (SCREEN_WIDTH - PLAYER_WIDTH))) {
@@ -211,7 +216,7 @@ void ModulePlayer::MovePlayer() {
 		else position.x = currentCameraX + (SCREEN_WIDTH - PLAYER_WIDTH);
 	}
 
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT){
+	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || pad.l_y > 0){
 		/*controls the limit of the position "y" in which the player is,
 		taking into account the height of the player*/
 		if (position.y < (SCREEN_HEIGHT - (PLAYER_HEIGHT + 40))) {
@@ -224,7 +229,7 @@ void ModulePlayer::MovePlayer() {
 	
 	}
 
-	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT){
+	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || pad.l_y < 0){
 		/*Does not allow movements less than 0, in case it exceeds it
 		places the player to position 0*/
 		if (position.y > 82) {

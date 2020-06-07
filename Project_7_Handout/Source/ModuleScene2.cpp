@@ -38,7 +38,6 @@ bool ModuleScene2::Start()
 	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 6);
 
 	// Enemies ---	
-	
 	App->enemies->spawningEnemies(1,ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1440, 340, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1520, 340, 30, 1);	//WAVE 1
