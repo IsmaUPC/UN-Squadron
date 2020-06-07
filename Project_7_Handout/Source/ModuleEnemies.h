@@ -19,6 +19,7 @@ enum class ENEMY_TYPE
 	BOSS1,
 	GREEN,
 	WHITE,
+	BOSS2
 };
 
 struct EnemySpawnpoint
@@ -90,7 +91,7 @@ private:
 	// The enemies sprite sheet
 	SDL_Texture* textureEnemies = nullptr;
 	SDL_Texture* finalBoss1 = nullptr;
-
+	SDL_Texture* finalBoss2 = nullptr;
 
 	// The audio fx for destroying an enemy
 	int enemyDestroyedFx = 0;

@@ -82,8 +82,9 @@ bool ModuleScene2::Start()
 
 update_status ModuleScene2::Update() {
 
-	if (App->render->camera.x >= 3000)
+	if (App->render->camera.x >= 3200)
 	{
+		App->render->camera.x =0;
 		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
 	}
 	

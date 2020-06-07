@@ -16,6 +16,7 @@
 #include "Enemy_FinalBoss1.h"
 #include "Enemy_Green2.h"
 #include "Enemy_White.h"
+#include "Enemy_FinalBoss2.h"
 
 #define SPAWN_MARGIN 50
 
@@ -35,6 +36,7 @@ bool ModuleEnemies::Start()
 {
 	textureEnemies = App->textures->Load("Assets/UNSquadronSpritesEnemies.png");
 	finalBoss1= App->textures->Load("Assets/FinalBoss1.png");
+	finalBoss2 = App->textures->Load("Assets/FinalBoss2.png");
 	enemyDestroyedFx = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");
 
 	return true;
@@ -96,6 +98,7 @@ bool ModuleEnemies::CleanUp()
 
 	App->textures->Unload(textureEnemies);
 	App->textures->Unload(finalBoss1);
+	App->textures->Unload(finalBoss2);
 	App->audio->UnloadFx(enemyDestroyedFx);
 
 	return true;
@@ -195,8 +198,12 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 				case ENEMY_TYPE::WHITE:
 					enemies[i] = new Enemy_White(info.x, info.y, info.pattern);
 					break;
+				case ENEMY_TYPE::BOSS2:
+					enemies[i] = new Enemy_FinalBoss2(info.x, info.y, info.pattern);
+					break;
 			}
 			if (info.type == ENEMY_TYPE::BOSS1) enemies[i]->texture = finalBoss1;
+			if (info.type == ENEMY_TYPE::BOSS2) enemies[i]->texture = finalBoss2;
 			else enemies[i]->texture = textureEnemies;
 			enemies[i]->destroyedFx = enemyDestroyedFx;
 			break;

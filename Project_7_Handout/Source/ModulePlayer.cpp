@@ -48,7 +48,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player textures");
 
-	timer= new Timer(100);
+	timer= new Timer(500);
 	bool ret = true;
 	destroyedCountdown = 120;
 	destroyed = false;
