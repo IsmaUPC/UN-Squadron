@@ -36,8 +36,9 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 	downAnim.speed = 0.1f;
 }
 
-ModulePlayer::~ModulePlayer()
-{
+ModulePlayer::~ModulePlayer(){
+
+	saveInfo();
 	if (collider != nullptr)
 		collider->pendingToDelete = true;
 	App->textures->Unload(texture);
@@ -58,14 +59,20 @@ bool ModulePlayer::Start()
 	oneHit = false;
 	destroyed = false;
 	godMode = false;
-	money = MONEY;
-	score = SCORE;
-	level = LEVEL;
-	pow = POW;
-	total = TOTAL;
-	lives = LIVES;
 
-	
+	loadInfo();
+
+	// select a Weapon for start, if exist ammo for someone
+	bool noAmmo = false;
+	for (int i = 0; i < 11 && noAmmo == false; i++) {
+		if (ammo[i] > 0) {
+			indexWeapon = i;
+			noAmmo = true;
+		}else {
+			indexWeapon = 12;
+		}
+	}
+
 	texture = App->textures->Load("Assets/PlayerSprites.png");
 	currentAnimation = &idleAnim;
 
@@ -91,9 +98,10 @@ update_status ModulePlayer::Update(){
 	App->player->position.x += SCREEN_SPEED;
 
 	//Move player with AWSD
-	if (destroyed == false)
+	if (destroyed == false) {
 		MovePlayer();
-	
+		SpecialWeapons();
+	}
 	//Update the player collider 
 	collider->SetPos(position.x, position.y);
 
@@ -110,7 +118,7 @@ update_status ModulePlayer::Update(){
 
 	//Suicide Player
 	if (App->input->keys[SDL_SCANCODE_M] == KEY_STATE::KEY_DOWN ){
-		//destroyed = true;
+		OnCollision(collider,collider);
 		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE);
 		App->audio->PlayFx(explosionFx);
 	}
@@ -172,13 +180,6 @@ void ModulePlayer::timeRegeneration(){
 
 }
 bool ModulePlayer::CleanUp(){
-
-	MONEY = money;
-	SCORE = score;
-	LEVEL = level;
-	POW = pow;
-	TOTAL = total;
-	LIVES = lives;
 
 	App->textures->Unload(texture);
 	App->audio->UnloadFx(laserFx);
@@ -246,4 +247,93 @@ void ModulePlayer::MovePlayer() {
 		currentAnimation = &idleAnim;
 
 
+}
+
+void ModulePlayer::SpecialWeapons(){
+
+	if (indexWeapon != 12){
+
+		//change weapon
+		if (App->input->keys[SDL_SCANCODE_Z] == KEY_STATE::KEY_DOWN) {
+			int actualWeapon = indexWeapon;
+
+			/*
+			for (int i = actualWeapon; i < 11 && changeWeapon == false; i++) {
+				if (ammo[i] > 0) {
+					indexWeapon = i;
+					changeWeapon = true;
+				}
+			}
+			for (int i = 0; i < actualWeapon && changeWeapon == false; i++) {
+				if (ammo[i] > 0) {
+					indexWeapon = i;
+					changeWeapon = true;
+				}
+			}*/
+			for (int i = actualWeapon+1; i < 11; i++){
+				if (ammo[i] > 0){
+					indexWeapon = i;
+				}
+			}
+			for (int i = 0; i < actualWeapon; i++){
+				if (ammo[i] > 0) {
+					indexWeapon = i;
+				}
+			}
+		}
+
+		//use weapon
+		if (App->input->keys[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN) {
+			ammo[indexWeapon]--;
+			if (ammo[indexWeapon] <= 0) {
+				bool noAmmo = false;
+
+				for (int i = 0; i < 11 && noAmmo == false; i++) {
+					if (ammo[i] > 0) {
+						indexWeapon = i;
+						noAmmo = true;
+					}
+					else {
+						indexWeapon = 12;
+					}
+				}
+			}
+		}
+	}
+
+
+}
+
+void ModulePlayer::loadInfo() {
+	SDL_RWops* f = SDL_RWFromFile("INFO.txt", "r+b");
+
+	if (f != NULL) {
+		SDL_RWread(f, &money, sizeof(int), 1);
+		SDL_RWread(f, &score, sizeof(int), 1);
+		SDL_RWread(f, &level, sizeof(int), 1);
+		SDL_RWread(f, &pow, sizeof(int), 1);
+		SDL_RWread(f, &total, sizeof(int), 1);
+		SDL_RWread(f, &lives, sizeof(int), 1);
+		for (int i = 0; i < 11; i++) {
+			SDL_RWread(f, &ammo[i], sizeof(int), 1);
+		}
+		SDL_RWclose(f);
+	}
+
+}
+
+void ModulePlayer::saveInfo() {
+	SDL_RWops* f = SDL_RWFromFile("INFO.txt", "w+");
+
+	SDL_RWwrite(f, &money, sizeof(int), 1);
+	SDL_RWwrite(f, &score, sizeof(int), 1);
+	SDL_RWwrite(f, &level, sizeof(int), 1);
+	SDL_RWwrite(f, &pow, sizeof(int), 1);
+	SDL_RWwrite(f, &total, sizeof(int), 1);
+	SDL_RWwrite(f, &lives, sizeof(int), 1);
+	for (int i = 0; i < 11; i++) {
+		SDL_RWwrite(f, &ammo[i], sizeof(int), 1);
+	}
+
+	SDL_RWclose(f);
 }
