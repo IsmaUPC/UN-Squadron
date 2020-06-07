@@ -6,8 +6,11 @@
 #include "Globals.h"
 #include "Particle.h"
 #include "Collider.h"
+#include "Enemy.h"
+#include "Path.h"
 
-#define MAX_ACTIVE_PARTICLES 100
+
+#define MAX_ACTIVE_PARTICLES 64
 
 struct SDL_Texture;
 struct Collider;
@@ -39,24 +42,31 @@ public:
 	// Iterates all the particles and draws them
 	update_status PostUpdate() override;
 
+	void resizeParticle(Particle* particle);
+
 	// Called on application exit
 	// Destroys all active particles left in the array
 	bool CleanUp() override;
 
 	// Called when a particle collider hits another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
+	void setShotDirection(Particle* p, int x, int y);
+
+	void ChekParticlesDespawn(Particle* _particle);
 
 	// Creates a new particle and adds it to the array
 	// Param particle	- A template particle from which the new particle will be created
 	// Param x, y		- Position x,y in the screen (upper left axis)
 	// Param delay		- Delay time from the moment the function is called until the particle is displayed in screen
 	Particle* AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType = Collider::Type::NONE, uint delay = 0);
-
 private:
 	// Particles spritesheet loaded into an SDL Texture
 	SDL_Texture* playerShotTexture = nullptr;
 	SDL_Texture* playerExplosionTexture = nullptr;
 	SDL_Texture* enemyShotTexture = nullptr;
+	SDL_Texture* miniBoss1ShotTx = nullptr;
+
+
 
 	float xPlayer , yPlayer = 0;
 	float escalar = 0;
@@ -76,6 +86,12 @@ public:
 	//Template particle for a laser
 	Particle playerLaser;
 	Particle enemyLaser;
+	Particle mBoss1Shot;
+	Animation mBoss1ShotOpen;
+	Animation mBoss1ShotOpening;
+	Animation mBoss1ShotClose;
+
+	//Animation* currentAnim = nullptr;
 };
 
 #endif // !__MODULEPARTICLES_H__

@@ -16,6 +16,11 @@ void Collider::SetPos(int x, int y)
 	rect.x = x;
 	rect.y = y;
 }
+void Collider::SetPos(fPoint floatPoint)
+{
+	rect.x = floatPoint.x;
+	rect.y = floatPoint.y;
+}
 
 bool Collider::Intersects(const SDL_Rect& r) const
 {

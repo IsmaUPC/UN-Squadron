@@ -9,15 +9,14 @@ Particle::Particle()
 }
 
 Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed),
-										frameCount(p.frameCount), lifetime(p.lifetime)
-{
-
+frameCount(p.frameCount), lifetime(p.lifetime){
+	
 }
 
-Particle::~Particle()
-{
+Particle::~Particle(){
 	if (collider != nullptr)
 		collider->pendingToDelete = true;
+		//this->path.CleanUp();
 }
 
 bool Particle::Update()
@@ -31,6 +30,9 @@ bool Particle::Update()
 
 	if (isAlive)
 	{
+
+		if(collider->type == Collider::Type::M_BOSS1_SHOT) path.Update();
+		if (path.GetCurrentAnimation() != nullptr)path.GetCurrentAnimation()->Update();
 		anim.Update();
 
 		// If the particle has a specific lifetime, check when it has to be destroyed
@@ -52,7 +54,7 @@ bool Particle::Update()
 	}
 
 	return ret;
-}
+} 
 
 void Particle::SetToDelete()
 {

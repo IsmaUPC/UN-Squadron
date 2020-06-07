@@ -1,9 +1,10 @@
 #ifndef __COLLIDER_H__
 #define __COLLIDER_H__
+#include "p2Point.h"
 
 #include "SDL/include/SDL_Rect.h"
 
-#define MAX_LISTENERS 5
+#define MAX_LISTENERS 7
 
 class Module;
 class Enemy;
@@ -18,6 +19,8 @@ struct Collider
 		ENEMY,
 		PLAYER_SHOT,
 		ENEMY_SHOT,
+		M_BOSS1_SHOT,
+		BOSS1,
 
 		MAX
 	};
@@ -27,6 +30,8 @@ struct Collider
 	Collider(SDL_Rect rectangle, Type type, Enemy* listener = nullptr);
 
 	void SetPos(int x, int y);
+	void SetPos(fPoint floatPoint);
+
 
 	bool Intersects(const SDL_Rect& r) const;
 

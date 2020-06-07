@@ -48,7 +48,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player textures");
 
-	timer= new Timer(100);
+	timer= new Timer(500);
 	bool ret = true;
 	destroyedCountdown = 120;
 	destroyed = false;
@@ -98,17 +98,13 @@ update_status ModulePlayer::Update(){
 	//Suicide Player
 	if (App->input->keys[SDL_SCANCODE_M] == KEY_STATE::KEY_DOWN ){
 		//destroyed = true;
-		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE,9);
+		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE);
 		App->audio->PlayFx(explosionFx);
 	}
 
 	if(cooldown<11) cooldown--;
 	if (cooldown == 0)cooldown = 11;
 
-	// If no up/down movement detected, set the current animation back to idle
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE
-		&& App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE)
-		currentAnimation = &idleAnim;
 
 	currentAnimation->Update();
 	if (destroyed){
@@ -134,7 +130,7 @@ update_status ModulePlayer::PostUpdate()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
 	if (c1 == collider && destroyed == false && godMode==false)	{
-		App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE, 9);
+		App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE);
 		App->audio->PlayFx(explosionFx);
 		destroyed = true;
 		collider->pendingToDelete = true;
@@ -201,4 +197,9 @@ void ModulePlayer::MovePlayer() {
 			}
 		} else position.y = 82;
 	}
+	// If no up/down movement detected, set the current animation back to idle
+	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE
+		&& App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE)
+		currentAnimation = &idleAnim;
+
 }

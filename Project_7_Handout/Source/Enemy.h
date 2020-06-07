@@ -9,15 +9,16 @@
 struct SDL_Texture;
 struct Collider;
 
-enum class TYPE_PATTERN_SHOT {
 
-	NORMAL,
-	MINI_BOSS1,
-
-};
 
 class Enemy{
 public:
+	
+	enum TypeShot {
+	ENEMY_SHOT,
+	MINI_BOSS1,
+	};
+
 	// Constructor
 	// Saves the spawn position for later movement calculations
 	Enemy::Enemy(int x, int y);
@@ -65,8 +66,9 @@ protected:
 	
 	// A ptr to the current animation
 
-	void  shotPattern();
-	void  shotPattern(TYPE_PATTERN_SHOT typeShot);
+	void  shotType(TypeShot typeShot= TypeShot::ENEMY_SHOT);
+
+
 	void resizeCollider();
 	//void setCurrentEnemyAnmi();
 	// The enemy's collider
@@ -75,7 +77,8 @@ protected:
 	// Original spawn position. Stored for movement calculations
 	fPoint spawnPos;
 	bool isShotDone =false;
-	void shotEnemy(Particle particle);
+
+	void shotEnemy(Particle particle, Collider::Type typeCollider);
 	int pattern = 0;
 
 };

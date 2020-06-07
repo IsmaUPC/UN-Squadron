@@ -95,8 +95,7 @@ bool SceneShop::CleanUp()
 	return true;
 }
 
-update_status SceneShop::PostUpdate()
-{
+update_status SceneShop::PostUpdate(){
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, NULL);
 	App->render->Blit(selectorTexture, 19+(79*tiendaX), 240+(96*tiendaY), NULL);

@@ -7,7 +7,7 @@
 
 class Timer {
 public:
-	Timer(int seconds);
+	Timer(int miliseconds=1000);
 	~Timer() {
 		delete[] this;
 	};

@@ -31,6 +31,7 @@ bool SceneWin::Start()
 	App->hud->Disable();
 	bgTexture = App->textures->Load("Assets/16_Stage_Clear.png");
 	App->audio->PlayMusic("Assets/16_Stage_Clear.ogg", 1.0f);
+	App->render->cameraSpeed=0;
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
