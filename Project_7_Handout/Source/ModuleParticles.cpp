@@ -91,13 +91,12 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 	{
 		// Always destroy particles that collide
 		if (particles[i] != nullptr && particles[i]->collider == c1){
-			//particles[i]->SetToDelete();
-			delete particles[i];
-			particles[i] = nullptr;
-			
-			if (c1->type == Collider::PLAYER_SHOT && c2->type == Collider::ENEMY 
-				|| c2->type == Collider::PLAYER_SHOT && c1->type == Collider::ENEMY) {
-				App->player->score += 20;
+			particles[i]->SetToDelete();
+
+			if (c1->type == Collider::PLAYER_SHOT && c2->type == Collider::ENEMY || c2->type == Collider::PLAYER_SHOT && c1->type == Collider::ENEMY) {
+				App->player->score += 100;
+				App->player->money += 300;
+
 			}
 			break;
 		}

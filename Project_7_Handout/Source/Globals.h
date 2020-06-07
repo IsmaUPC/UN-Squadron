@@ -46,4 +46,11 @@ typedef unsigned int uint;
  
 static int VOLUME_GAME = 180 ;
 
+static int MONEY = 0;
+static int SCORE = 3000;
+static int LEVEL = 1;
+static int POW = 0;
+static int TOTAL = 0;
+static int LIVES = 2;
+
 #endif // __GLOBALS_H__

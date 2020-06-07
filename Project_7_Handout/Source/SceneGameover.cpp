@@ -37,10 +37,11 @@ bool SceneGameover::Start()
 
 update_status SceneGameover::Update()
 {
+	GamePad& pad = App->input->pads[0];
 
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a)
 	{
-		App->fade->FadeToBlack(this, (Module*)App->sceneIntro, 90);
+		App->fade->FadeToBlack(this, (Module*)App->sceneShop, 60.0f);
 	}
 
 	return update_status::UPDATE_CONTINUE;

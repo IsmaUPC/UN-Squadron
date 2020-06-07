@@ -41,8 +41,9 @@ bool SceneWin::Start()
 
 update_status SceneWin::Update()
 {
+	GamePad& pad = App->input->pads[0];
 
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a)
 	{
 		Mix_HaltMusic();
 		App->fade->FadeToBlack(this, (Module*)App->level2, 90);
