@@ -8,6 +8,7 @@
 struct SDL_Texture;
 
 
+
 enum class SHOP_SLOT
 {
 	CLUSTER,
@@ -58,6 +59,9 @@ public:
 	uint InsuficientMoney = 0;
 
 	bool keyDownPad = false;
+	int hudfont1 = 0;
+	int money;
+	char moneyText[10] = { "\0" };
 
 };
 #endif // !_SCENESHOP_H_

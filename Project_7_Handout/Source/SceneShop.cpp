@@ -1,12 +1,15 @@
 #include "SceneShop.h"
 
 #include "Application.h"
+#include "stdio.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
+#include "ModuleFonts.h"
 #include "ModuleFadeToBlack.h"
 #include "HUD.h"
+#include "ModulePlayer.h"
 #include <SDL_mixer\include\SDL_mixer.h>
 #include <SDL\include\SDL_keyboard.h>
 
@@ -20,6 +23,7 @@ SceneShop::~SceneShop()
 {
 
 }
+
 
 bool SceneShop::Start()
 {
@@ -35,9 +39,11 @@ bool SceneShop::Start()
 	SelectWeapon = App->audio->LoadFx("Assets/SelectionWeapon.wav");
 	InsuficientMoney = App->audio->LoadFx("Assets/InsuficientMoney.wav");
 
+	hudfont1 = App->fonts->Load("Assets/hud/hud_font2.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,0123456789им?!*$%&()+-/:;<=>@__     ", 5, 235, 75);
+
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
-
+	money = MONEY;
 	return ret;
 }
 
@@ -93,6 +99,7 @@ update_status SceneShop::Update()
 
 bool SceneShop::CleanUp()
 {
+	MONEY = money;
 	//Enable (and properly disable) the player module
 	App->textures->Unload(bgTexture);
 	App->textures->Unload(selectorTexture);
@@ -105,34 +112,57 @@ update_status SceneShop::PostUpdate(){
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, NULL);
 	App->render->Blit(selectorTexture, 19+(79*tiendaX), 240+(96*tiendaY), NULL);
+
+	sprintf_s(moneyText, 10, "%7d", money);
+	App->fonts->BlitText(262, 61, hudfont1, moneyText);
 	return update_status::UPDATE_CONTINUE;
 }
 
 void SceneShop::select()
 {
+
 	switch ((SHOP_SLOT)weaponsition)
 	{
 	case SHOP_SLOT::CLUSTER:
+		
 		break;
 	case SHOP_SLOT::PHOENIX:
+		
 		break;
 	case SHOP_SLOT::FALCON:
+		
+		
 		break;
 	case SHOP_SLOT::BULLPUP:
+		
+		
 		break;
 	case SHOP_SLOT::S_SHELL:
+		if (money > 10000) {
+			money - 10000;
+		}
 		break;
 	case SHOP_SLOT::T_LASER:
+		
 		break;
 	case SHOP_SLOT::BOMB:
+		
 		break;
 	case SHOP_SLOT::NAPALM:
+		
 		break;
 	case SHOP_SLOT::GUNPOD:
+		if (money > 15000) {
+			money - 15000;
+		}
 		break;
 	case SHOP_SLOT::CEILING:
+		if (money > 15000) {
+			money - 15000;
+		}
 		break;
 	case SHOP_SLOT::MEGACRUSH:
+		
 		break;
 	case SHOP_SLOT::EXIT:
 		Mix_HaltMusic();
