@@ -3,10 +3,10 @@
 #include "Application.h"
 
 #include "ModulePlayer.h"
+#include "SceneShop.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleCollisions.h"
-
 
 #include "SDL/include/SDL_timer.h"
 
@@ -20,8 +20,8 @@ ModuleParticles::~ModuleParticles(){
 
 }
 
-bool ModuleParticles::Start()
-{
+bool ModuleParticles::Start(){
+
 	LOG("Loading particles");
 	App->textures->Enable();
 	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
@@ -73,6 +73,14 @@ bool ModuleParticles::Start()
 	playerLaser.speed.x = 25 + SCREEN_SPEED;
 	playerLaser.lifetime = 50;
 	playerLaser.anim.speed = 0.2f;
+
+	//SPECIAL WEAPONS
+	int indexWeapon;
+	indexWeapon = App->sceneShop->BOMB;
+	SpecialWeapon[indexWeapon].anim.PushBack({ 0, 0, 10, 7 });
+	SpecialWeaponAnim[indexWeapon].PushBack({ 0, 0, 10, 7 });
+	SpecialWeapon[indexWeapon].lifetime = 150;
+
 
 	return true;
 }
@@ -153,10 +161,14 @@ update_status ModuleParticles::Update()
 
 		if(particle == nullptr)	continue;
 		
-		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_IDLE && particle->collider->type==Collider::Type::M_BOSS1_SHOT)
-		{
+		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_IDLE && particle->collider->type==Collider::Type::M_BOSS1_SHOT){
 			particles[i]->path.SetCurrentAnimation(new Animation(mBoss1ShotOpen));
 		}
+
+		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_IDLE && particle->collider->type == Collider::Type::SW_BOMB){
+			particles[i]->path.SetCurrentAnimation(new Animation(SpecialWeaponAnim[App->sceneShop->BOMB]));
+		}
+
 		// Call particle Update. If it has reached its lifetime, destroy it
 		if(particle->Update() == false)	particle->SetToDelete();
 				
@@ -184,6 +196,14 @@ update_status ModuleParticles::PostUpdate()
 				particle->position = particle->spawnPos + particle->path.GetRelativePosition();
 				particle->path.Update();
 				App->render->Blit(miniBoss1ShotTx, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));		
+			}
+			//SWs
+			if (particle->collider->type == particle->collider->SW_BOMB) {
+				resizeParticle(particle);
+				particle->collider->SetPos(particle->spawnPos + particle->path.GetRelativePosition());
+				particle->position = particle->spawnPos + particle->path.GetRelativePosition();
+				particle->path.Update();
+				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));
 			}
 			if (particle->collider->type == particle->collider->ENEMY_SHOT) {
 				App->render->Blit(enemyShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));		
@@ -274,6 +294,69 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 					p->path.PushBack({ -4.0f  , 0.0f },150, new Animation(mBoss1ShotOpen));
 				}
 			
+			particles[i] = p;
+			break;
+		}
+	}
+	return p;
+}
+
+Particle* ModuleParticles::AddSWParticle(const Particle& particle, int _indexWeapon, int x, int y, Collider::Type colliderType, uint delay) {
+
+	Particle* p = new Particle(particle);
+
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
+		//Finding an empty slot for a new particle
+		if (particles[i] == nullptr) {
+			p->frameCount = -(int)delay;			// We start the frameCount as the negative delay
+			p->position.x = x;						// so when frameCount reaches 0 the particle will be activated
+			p->position.y = y;
+
+			//Adding the particle's collider 
+			p->collider = App->collisions->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);
+
+			switch (_indexWeapon) {
+			case App->sceneShop->CLUSTER:
+
+				break;
+			case App->sceneShop->PHOENIX:
+
+				break;
+			case App->sceneShop->FALCON:
+
+				break;
+			case App->sceneShop->BULLPUP:
+
+				break;
+			case App->sceneShop->S_SHELL:
+
+				break;
+			case App->sceneShop->T_LASER:
+
+				break;
+			case App->sceneShop->BOMB:
+				p->spawnPos.create(x, y);
+				p->lives = 1;
+
+				p->path.PushBack({ SCREEN_SPEED + 0.5f , 1.f }, 25, new Animation(SpecialWeaponAnim[_indexWeapon]));
+				p->path.PushBack({ SCREEN_SPEED + 0.5f , 1.5f }, 25, new Animation(SpecialWeaponAnim[_indexWeapon]));
+				p->path.PushBack({ SCREEN_SPEED + 0.5f , 2.f }, 25, new Animation(SpecialWeaponAnim[_indexWeapon]));
+				p->path.PushBack({ SCREEN_SPEED + 0.5f , 2.5f }, 150, new Animation(SpecialWeaponAnim[_indexWeapon]));
+
+				break;
+			case App->sceneShop->NAPALM:
+
+				break;
+			case App->sceneShop->GUNPOD:
+
+				break;
+			case App->sceneShop->CEILING:
+
+				break;
+			case App->sceneShop->MEGACRUSH:
+
+				break;
+			}
 			particles[i] = p;
 			break;
 		}

@@ -13,21 +13,6 @@ struct WeaponsPrice{
 	int priceWeapon;
 };
 
-enum SHOP_SLOT{
-	CLUSTER,
-	PHOENIX,
-	FALCON,
-	BULLPUP,
-	S_SHELL,
-	T_LASER,
-	BOMB,
-	NAPALM,
-	GUNPOD,
-	CEILING,
-	MEGACRUSH,
-	EXIT,
-
-};
 class SceneShop : public Module
 {
 public:
@@ -78,6 +63,8 @@ public:
 	int total=0;
 	int lives=2;
 
+	bool infiniteMoney = false;
+
 	WeaponsPrice weapons[11];
 
 	char moneyText[10] = { "\0" };
@@ -85,5 +72,20 @@ public:
 	//solved
 	SDL_Texture* WeaponsSold = nullptr;
 
+	enum SHOP_SLOT {
+		CLUSTER,
+		PHOENIX,
+		FALCON,
+		BULLPUP,
+		S_SHELL,
+		T_LASER,
+		BOMB,
+		NAPALM,
+		GUNPOD,
+		CEILING,
+		MEGACRUSH,
+		EXIT,
+
+	};
 };
 #endif // !_SCENESHOP_H_

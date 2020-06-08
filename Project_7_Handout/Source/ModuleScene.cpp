@@ -70,13 +70,13 @@ bool ModuleScene::Start()
 	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2000, 200, 90, 0);	//WAVE 5
 	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 320, 90, 1);	//WAVE 5
 	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2020, 120, 90, 2);	//WAVE 5
-	
+	/*
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 2170-1500, -80, 0, 0);			//MINIBOSS 2170
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 2750 , SCREEN_HEIGHT, 0, 1);//MINIBOSS 2750
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 3100, -80, 0, 2);			//MINIBOSS 3100
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 3870, SCREEN_HEIGHT, 0, 3);	//MINIBOSS  3820
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::MINIBOOS1, 4470, SCREEN_HEIGHT, 0, 4);	//MINIBOSS 412
-
+	*/
 	//App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 2500 , 90, 30, 2);	//WAVE 6 2500
 	//App->enemies->spawningEnemies(2, ENEMY_TYPE::BLUESHIP, 2500 , 350, 30, 3);	//WAVE 6 2500
 	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREENSHIP, 2690 , 190, 90, 4);	//WAVE 7 2690

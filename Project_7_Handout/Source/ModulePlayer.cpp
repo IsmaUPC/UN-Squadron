@@ -9,6 +9,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
+#include "SceneShop.h"
 #include "HUD.h"
 #include "Timer.h"
 
@@ -38,7 +39,6 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 
 ModulePlayer::~ModulePlayer(){
 
-	saveInfo();
 	if (collider != nullptr)
 		collider->pendingToDelete = true;
 	App->textures->Unload(texture);
@@ -127,7 +127,8 @@ update_status ModulePlayer::Update(){
 
 	//Suicide Player
 	if (App->input->keys[SDL_SCANCODE_M] == KEY_STATE::KEY_DOWN ){
-
+		
+		App->hud->animFase = App->hud->DEAD;
 		destroyed = true;
 
 		OnCollision(collider,collider);
@@ -195,7 +196,7 @@ void ModulePlayer::timeRegeneration(){
 
 }
 bool ModulePlayer::CleanUp(){
-
+	saveInfo();
 	App->textures->Unload(texture);
 	App->audio->UnloadFx(laserFx);
 	App->audio->UnloadFx(explosionFx);
@@ -269,22 +270,8 @@ void ModulePlayer::SpecialWeapons(){
 	if (indexWeapon != 12){
 
 		//change weapon
-		if (App->input->keys[SDL_SCANCODE_Z] == KEY_STATE::KEY_DOWN) {
+		if (App->input->keys[SDL_SCANCODE_J] == KEY_STATE::KEY_DOWN) {
 			int actualWeapon = indexWeapon;
-
-			/*
-			for (int i = actualWeapon; i < 11 && changeWeapon == false; i++) {
-				if (ammo[i] > 0) {
-					indexWeapon = i;
-					changeWeapon = true;
-				}
-			}
-			for (int i = 0; i < actualWeapon && changeWeapon == false; i++) {
-				if (ammo[i] > 0) {
-					indexWeapon = i;
-					changeWeapon = true;
-				}
-			}*/
 			for (int i = actualWeapon+1; i < 11; i++){
 				if (ammo[i] > 0){
 					indexWeapon = i;
@@ -298,11 +285,48 @@ void ModulePlayer::SpecialWeapons(){
 		}
 
 		//use weapon
-		if (App->input->keys[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN) {
+		if (App->input->keys[SDL_SCANCODE_K] == KEY_STATE::KEY_DOWN) {
 			ammo[indexWeapon]--;
+
+			switch (indexWeapon){
+			case App->sceneShop->CLUSTER:
+
+				break;
+			case App->sceneShop->PHOENIX:
+
+				break;
+			case App->sceneShop->FALCON:
+
+				break;
+			case App->sceneShop->BULLPUP:
+
+				break;
+			case App->sceneShop->S_SHELL:
+
+				break;
+			case App->sceneShop->T_LASER:
+
+				break;
+			case App->sceneShop->BOMB:
+				App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 35, position.y + 10, Collider::Type::SW_BOMB);
+
+				break;
+			case App->sceneShop->NAPALM:
+
+				break;
+			case App->sceneShop->GUNPOD:
+
+				break;
+			case App->sceneShop->CEILING:
+
+				break;
+			case App->sceneShop->MEGACRUSH:
+
+				break;
+			}
+
 			if (ammo[indexWeapon] <= 0) {
 				bool noAmmo = false;
-
 				for (int i = 0; i < 11 && noAmmo == false; i++) {
 					if (ammo[i] > 0) {
 						indexWeapon = i;

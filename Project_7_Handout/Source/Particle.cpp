@@ -20,10 +20,10 @@ Particle::~Particle(){
 		//this->path.CleanUp();
 }
 
-bool Particle::Update()
-{
-	if (timerHitParticle != nullptr)
-	{
+bool Particle::Update(){
+
+
+	if (timerHitParticle != nullptr){
 		timerHitParticle->update();
 		if (timerHitParticle->check())stateParticle = status_Particle::STATE_PARTICLE_IDLE;
 	}
@@ -34,10 +34,10 @@ bool Particle::Update()
 	if (!isAlive && frameCount >= 0)
 		isAlive = true;
 
-	if (isAlive)
-	{
+	if (isAlive){
 
 		if(collider->type == Collider::Type::M_BOSS1_SHOT) path.Update();
+		if(collider->type == Collider::Type::SW_BOMB) path.Update();
 		if (path.GetCurrentAnimation() != nullptr)path.GetCurrentAnimation()->Update();
 		anim.Update();
 
