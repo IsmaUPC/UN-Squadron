@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "ModuleParticles.h"
+#include "ModulePlayer.h"
 
 
 struct SDL_Texture;
@@ -65,6 +66,7 @@ public:
 	bool pendingToDelete = false;
 	int lives;
 	
+	status_Enemies stateEnemy;
 
 protected:
 	
@@ -81,7 +83,6 @@ protected:
 	// Original spawn position. Stored for movement calculations
 	fPoint spawnPos;
 	bool isShotDone =false;
-	status_Enemies stateEnemy;
 	Timer* timerShot;
 	void shotEnemy(Particle particle, Collider::Type typeCollider);
 	int pattern = 0;

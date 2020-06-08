@@ -16,11 +16,11 @@ struct Collider
 		NONE ,
 		WALL,
 		PLAYER,
+		BOSS1,
 		ENEMY,
 		PLAYER_SHOT,
 		ENEMY_SHOT,
 		M_BOSS1_SHOT,
-		BOSS1,
 		M_BOSS1,
 
 		MAX

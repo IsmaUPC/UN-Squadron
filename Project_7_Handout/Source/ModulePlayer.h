@@ -11,7 +11,7 @@ struct Collider;
 
 enum class status_player
 {
-	SATATE_IDLE = 1,
+	STATE_IDLE = 1,
 	STATE_HIT,
 	STATE_DEADING,
 	STATE_DEAD,
@@ -71,7 +71,7 @@ public:
 private:
 	int currentCameraX;
 	Timer* timer;
-	Timer* timerHit;
+	
 	status_player statusPlayer;
 	int countTimeToShield;
 
@@ -82,7 +82,7 @@ public:
 	// The speed in which we move the player (pixels per frame)
 	int speed = 5;
 	int cooldown = 11;
-
+	Timer* timerHit;
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;
 	SDL_Texture* explosion = nullptr;

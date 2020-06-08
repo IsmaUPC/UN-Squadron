@@ -12,6 +12,7 @@ enum class status_Particle
 	STATE_PARTICLE_HIT,
 	STATE_PARTICLE_DEADING,
 	STATE_PARTICLE_DEAD,
+	STATE_PARTICLE_CHANGE_ANIMATION,
 };
 struct Particle
 {
@@ -30,7 +31,7 @@ public:
 	// Returns false when the particle reaches its lifetime
 	bool Update();
 	status_Particle GetStateParticle() { return stateParticle; }
-	void SetStateParticle(); 
+	void SetStateParticle(status_Particle _state);
 	// Sets flag for deletion and for the collider aswell
 	void SetToDelete();
 

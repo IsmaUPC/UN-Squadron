@@ -59,6 +59,7 @@ update_status ModuleEnemies::PreUpdate(){
 update_status ModuleEnemies::Update()
 {
 	HandleEnemiesSpawn();
+	
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
@@ -222,13 +223,11 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 			//App->audio->PlayFx(enemyDestroyedFx);
 			//switch type enemi for diferent score and money
 			//Need creat a variable type in enemymodules
-			if(App->player->getStatusPlayer()!=status_player::STATE_HIT)enemies[i]->lives--;
-			if (enemies[i]->lives <= 0)
-			{
+			if (enemies[i]->lives <= 0)	{
 				enemies[i]->SetToDelete();
 				SDL_Rect colliderI = enemies[i]->GetCollider()->rect;
 				App->particles->AddParticle(App->particles->explosionEnemies, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2);
-				App->audio->PlayFx(enemies[i]->destroyedFx);
+				//App->audio->PlayFx(enemies[i]->destroyedFx);
 			}
 			
 			break;

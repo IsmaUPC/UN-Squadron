@@ -6,11 +6,12 @@ Particle::Particle()
 {
 	position.SetToZero();
 	speed.SetToZero();
+	lives = 0;
 	timerHitParticle = new Timer(200);
 }
 
 Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed),
-frameCount(p.frameCount), lifetime(p.lifetime),timerHitParticle(p.timerHitParticle){
+frameCount(p.frameCount), lifetime(p.lifetime),timerHitParticle(p.timerHitParticle), lives(p.lives){
 	
 }
 
@@ -25,7 +26,7 @@ bool Particle::Update()
 	if (timerHitParticle != nullptr)
 	{
 		timerHitParticle->update();
-		if (timerHitParticle->check())stateParticle = status_Particle::STATE_PARTICLE_IDLE;
+		if (timerHitParticle->check()&&stateParticle==status_Particle::STATE_PARTICLE_HIT)stateParticle = status_Particle::STATE_PARTICLE_CHANGE_ANIMATION;
 	}
 	bool ret = true;
 	frameCount++;
@@ -61,9 +62,9 @@ bool Particle::Update()
 
 	return ret;
 }
-void Particle::SetStateParticle()
+void Particle::SetStateParticle(status_Particle _state)
 {
-	stateParticle = status_Particle::STATE_PARTICLE_HIT;
+	stateParticle = _state;
 }
 
 

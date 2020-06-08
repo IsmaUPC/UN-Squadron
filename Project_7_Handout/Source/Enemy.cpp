@@ -33,6 +33,7 @@ const Collider* Enemy::GetCollider() const
 
 void Enemy::Update()
 {
+	resizeCollider();
 	timerShot->update();
 	if(collider->type== Collider::Type::ENEMY && timerShot->check())shotType(TypeShot::ENEMY_SHOT);
 	if (currentAnim != nullptr)
@@ -52,7 +53,8 @@ void Enemy::Draw()
 
 void Enemy::OnCollision(Collider* _collider)
 {
-	stateEnemy = status_Enemies::STATE_ENEMY_HIT;
+
+	if (App->player->getStatusPlayer() != status_player::STATE_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT;;
 }
 
 void Enemy::shotEnemy(Particle particle, Collider::Type type) {

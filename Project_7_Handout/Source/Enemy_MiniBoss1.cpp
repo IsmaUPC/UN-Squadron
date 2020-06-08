@@ -32,7 +32,7 @@ void Enemy_MiniBoss1::Update() {
 		shotMissil();
 	}
 	move();
-	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT) currentAnim = &Hit;
+	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT) currentAnim = &Hit ;
 	// Call to the base class. It must be called at the end
 	// It will update the collider depending on the position
 	Enemy::Update();

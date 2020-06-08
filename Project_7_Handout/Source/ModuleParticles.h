@@ -94,6 +94,8 @@ public:
 	Animation mBoss1ShotClose;
 	Animation hit;
 
+	int soundExplosion;
+
 	//Animation* currentAnim = nullptr;
 };
 

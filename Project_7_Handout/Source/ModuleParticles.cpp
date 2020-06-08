@@ -28,6 +28,8 @@ bool ModuleParticles::Start()
 	enemyShotTexture= App->textures->Load("Assets/EnemyShoot.png");
 	playerExplosionTexture = App->textures->Load("Assets/PlayerDead.png");
 	miniBoss1ShotTx = App->textures->Load("Assets/shot_miniBoss1.png");
+	soundExplosion = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");
+
 	
 
 		// Explosion particle
@@ -102,7 +104,7 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 		// Always destroy particles that collide
 		if (p == nullptr) continue;
 
-		p->SetStateParticle();
+		p->SetStateParticle(status_Particle::STATE_PARTICLE_HIT);
 		if (p != nullptr && p->collider == c1){
 			if (App->player->getStatusPlayer() != status_player::STATE_HIT && p->GetStateParticle()==status_Particle::STATE_PARTICLE_HIT)
 			{
@@ -112,12 +114,11 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 			if (p->lives <= 0)
 			{
 				p->SetToDelete();
-				if (p->collider->type != Collider::Type::PLAYER_SHOT)
-				{
+				if (p->collider->type != Collider::Type::PLAYER_SHOT && p->collider->type != Collider::Type::ENEMY_SHOT){
 					SDL_Rect pCollider = p->collider->rect;
+					App->audio->PlayFx(*(new int(soundExplosion)));
 					AddParticle(explosionEnemies, pCollider.x, pCollider.y);
 				}
-				//App->audio->PlayFx(Enemy::destroyedFx);
 			}
 			
 			if (c1->type == Collider::PLAYER_SHOT && c2->type == Collider::ENEMY || c2->type == Collider::PLAYER_SHOT && c1->type == Collider::ENEMY) {
@@ -153,9 +154,10 @@ update_status ModuleParticles::Update()
 
 		if(particle == nullptr)	continue;
 		
-		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_IDLE && particle->collider->type==Collider::Type::M_BOSS1_SHOT)
+		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_CHANGE_ANIMATION && particle->collider->type==Collider::Type::M_BOSS1_SHOT)
 		{
 			particles[i]->path.SetCurrentAnimation(new Animation(mBoss1ShotOpen));
+			particles[i]->SetStateParticle(status_Particle::STATE_PARTICLE_IDLE);
 		}
 		// Call particle Update. If it has reached its lifetime, destroy it
 		if(particle->Update() == false)	particle->SetToDelete();
@@ -260,20 +262,23 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 			//Adding the particle's collider 
 			p->collider = App->collisions->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);
 
+			
+			if (p->collider !=nullptr) {
+			if(p->collider->type== Collider::Type::NONE)App->audio->PlayFx(*(new int(soundExplosion)));;
 				//Set direction to shotEnemy
-				if (p->collider->type == p->collider->ENEMY_SHOT) p= setShotDirection(p, x, y);
+				if (p->collider->type == p->collider->ENEMY_SHOT) p = setShotDirection(p, x, y);
 				if (p->collider->type == p->collider->M_BOSS1_SHOT) {
 					//p->timerHitParticle = new Timer(100);
-					p->spawnPos.create(x,y);
+					p->spawnPos.create(x, y);
 					p->lives = 4;
 
-					p->path.PushBack({  SCREEN_SPEED , 0.0f }, 25, new Animation(mBoss1ShotClose));
-					p->path.PushBack({ SCREEN_SPEED , 0.0f },20, new Animation(mBoss1ShotOpening));
-					p->path.PushBack({ -0.9 , 0.0f },25, new Animation(mBoss1ShotOpen));
-					p->path.PushBack({ -3.0f  , 0.0f },25, new Animation(mBoss1ShotOpen));
-					p->path.PushBack({ -4.0f  , 0.0f },150, new Animation(mBoss1ShotOpen));
+					p->path.PushBack({ SCREEN_SPEED , 0.0f }, 25, new Animation(mBoss1ShotClose));
+					p->path.PushBack({ SCREEN_SPEED , 0.0f }, 20, new Animation(mBoss1ShotOpening));
+					p->path.PushBack({ -0.9 , 0.0f }, 25, new Animation(mBoss1ShotOpen));
+					p->path.PushBack({ -3.0f  , 0.0f }, 25, new Animation(mBoss1ShotOpen));
+					p->path.PushBack({ -4.0f  , 0.0f }, 150, new Animation(mBoss1ShotOpen));
 				}
-			
+			}
 			particles[i] = p;
 			break;
 		}
