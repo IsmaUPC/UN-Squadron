@@ -30,13 +30,15 @@ bool SceneShop::Start()
 
 	bool ret = true;
 	App->hud->Disable();
-	bgTexture = App->textures->Load("Assets/shop_bg2.png");
+	bgTexture = App->textures->Load("Assets/shop_bg3.png");
 	selectorTexture = App->textures->Load("Assets/selector_shop.png");
 	App->audio->PlayMusic("Assets/Store.ogg", 1.0f);
 
 	OptionSelection = App->audio->LoadFx("Assets/OptionSelection.wav");
 	SelectWeapon = App->audio->LoadFx("Assets/SelectionWeapon.wav");
 	InsuficientMoney = App->audio->LoadFx("Assets/InsuficientMoney.wav");
+
+	WeaponsSold = App->textures->Load("Assets/soldWeapons2.png");
 
 	hudfont1 = App->fonts->Load("Assets/hud/hud_font2.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,0123456789им?!*$%&()+-/:;<=>@__     ", 5, 235, 75);
 
@@ -54,6 +56,10 @@ bool SceneShop::Start()
 update_status SceneShop::Update()
 {
 	GamePad& pad = App->input->pads[0];
+
+	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a){
+		select();
+	}
 
 	if ((App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_DOWN || pad.l_y < 0 || pad.up) && keyDownPad == false){
 		tiendaY -= 1;
@@ -92,12 +98,6 @@ update_status SceneShop::Update()
 
 	weaponsition = tiendaX + (6 * tiendaY);
 	
-	
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a)
-	{
-		select();
-	}
-	LOG("Weapon Position %d \n",weaponsition);
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -107,6 +107,7 @@ bool SceneShop::CleanUp()
 	//Enable (and properly disable) the player module
 	App->textures->Unload(bgTexture);
 	App->textures->Unload(selectorTexture);
+	App->textures->Unload(WeaponsSold);
 
 	App->audio->UnloadFx(OptionSelection);
 	App->audio->UnloadFx(SelectWeapon);
@@ -127,11 +128,32 @@ update_status SceneShop::PostUpdate(){
 
 	sprintf_s(moneyText, 10, "%9d", money);
 	App->fonts->BlitText(24, 219, hudfont1, moneyText);
+
+	SDL_Rect rect;
+	rect = { 0,0,64,81 };
+	if (weapons[S_SHELL].selected == true) {
+		App->render->Blit(WeaponsSold, 345, 250, &rect);
+	}
+
+	rect = { 0,81,64,81 };
+	if (weapons[GUNPOD].selected == true) {
+		App->render->Blit(WeaponsSold, 188, 345, &rect);
+	}
+
+	rect = { 0,162,64,81 };
+	if (weapons[CEILING].selected == true) {
+		App->render->Blit(WeaponsSold, 267, 345, &rect);
+	}
+
+	rect = { 0,243,64,81 };
+	if (weapons[BOMB].selected == true) {
+		App->render->Blit(WeaponsSold, 31, 345, &rect);
+	}
+
 	return update_status::UPDATE_CONTINUE;
 }
 
-void SceneShop::select()
-{
+void SceneShop::select(){
 
 	switch (weaponsition)
 	{
@@ -150,7 +172,7 @@ void SceneShop::select()
 		
 		break;
 	case S_SHELL:
-		if (money > 10000) {
+		if (money >= 10000 || weapons[S_SHELL].selected == true) {
 			weapons[S_SHELL].priceWeapon = 10000;
 			weapons[S_SHELL].ammo = 5;
 			activeSelected(S_SHELL);
@@ -160,20 +182,24 @@ void SceneShop::select()
 		
 		break;
 	case BOMB:
-		
+		if (money >= 5000 || weapons[BOMB].selected == true) {
+			weapons[BOMB].priceWeapon = 5000;
+			weapons[BOMB].ammo = 30;
+			activeSelected(BOMB);
+		}
 		break;
 	case NAPALM:
 		
 		break;
 	case GUNPOD:
-		if (money > 15000) {
+		if (money >= 15000 || weapons[GUNPOD].selected == true) {
 			weapons[GUNPOD].priceWeapon = 15000;
 			weapons[GUNPOD].ammo = 15;
 			activeSelected(GUNPOD);
 		}
 		break;
 	case CEILING:
-		if (money > 15000) {
+		if (money >= 15000 || weapons[CEILING].selected == true) {
 			weapons[CEILING].priceWeapon = 15000;
 			weapons[CEILING].ammo = 10;
 			activeSelected(CEILING);
@@ -200,12 +226,10 @@ void SceneShop::activeSelected(int _weapon){
 	weapons[_weapon].selected = !weapons[_weapon].selected;
 	if (weapons[_weapon].selected == true) {
 		money -= weapons[_weapon].priceWeapon;
-	}
-	else {
+	}else {
 		money += weapons[_weapon].priceWeapon;
 	}
 }
-
 void SceneShop::loadInfo(){
 
 	if (begin == false){

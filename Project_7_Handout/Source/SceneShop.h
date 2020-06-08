@@ -71,7 +71,7 @@ public:
 	bool begin = false;
 	
 	//info
-	int money=9000;
+	int money=30000;
 	int score=0;
 	int level=1;
 	int pow=0;
@@ -80,9 +80,10 @@ public:
 
 	WeaponsPrice weapons[11];
 
-
-
 	char moneyText[10] = { "\0" };
+
+	//solved
+	SDL_Texture* WeaponsSold = nullptr;
 
 };
 #endif // !_SCENESHOP_H_
