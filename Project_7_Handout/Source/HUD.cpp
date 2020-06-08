@@ -91,6 +91,12 @@ HUD::HUD(bool startEnabled) : Module(startEnabled) {
 
 	currentAnimationlive = nullptr;
 
+	//weapons Animation
+	for (int i = 0; i < 12; i++){
+		spriteWeapons[i].PushBack({0,40*i,160,40});
+		spriteWeapons[i].loop = false;
+	}
+	currentWeapon = nullptr;
 
 	animFase = ENY;
 }
@@ -110,7 +116,7 @@ bool HUD::Start()
 	hudfont = App->fonts->Load("Assets/hud/hud_font2.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,0123456789им?!*$%&()+-/:;<=>@__     ", 5,235,75);
 
 	hudTexture = App->textures->Load("Assets/hud/hud - copia.png");
-
+	weaponsHUDTexture = App->textures->Load("Assets/hud/Guns.png");
 	
 	//information of the HUD
 	money = App->player->getMoney();
@@ -119,6 +125,12 @@ bool HUD::Start()
 	pow = App->player->getPow();
 	total = App->player->getTotal();
 	lives = App->player->getLives();
+	indexWeapon = App->player->getindeWeapon();
+
+	for (int i = 0; i < 11; i++){
+		ammo[i]= App->player->getAmmo(i);
+	}
+
 
 	//Animations
 	animHUDTexture = App->textures->Load("Assets/hud/hudAnimations.png");
@@ -189,6 +201,8 @@ update_status HUD::Update() {
 		currentAnimationPlayer = &deadPlayer;
 		break;
 	}
+
+
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -202,7 +216,12 @@ update_status HUD::PostUpdate(){
 	sprintf_s(levelText, 5, "%3d",	*level);
 	sprintf_s(powText, 5, "%3d",	*pow);
 	sprintf_s(totalText, 5, "%3d",	*total);
-	sprintf_s(livesText, 5, "%3d",	*lives);
+	sprintf_s(livesText, 5, "%3d", *lives);
+	
+	if (*indexWeapon != 12){
+		sprintf_s(ammoText, 5, "%3d",	*ammo[*indexWeapon]);
+		App->fonts->BlitText(446, 414, hudfont, ammoText);
+	}
 
 	App->fonts->BlitText(20, 61, hudfont, scoreText);
 	App->fonts->BlitText(262, 61, hudfont, moneyText);
@@ -232,6 +251,11 @@ update_status HUD::PostUpdate(){
 	App->render->Blit(animHUDTexture, 114 + (App->render->camera.x), 416, &rect);
 	
 
+	currentWeapon = &spriteWeapons[*indexWeapon];
+	rect = currentWeapon->GetCurrentFrame();
+	App->render->Blit(weaponsHUDTexture, 300 + (App->render->camera.x), 400, &rect);
+
+
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -243,6 +267,7 @@ bool HUD::CleanUp()
 	App->fonts->UnLoad(hudfont);
 	App->textures->Unload(hudTexture);
 	App->textures->Unload(animHUDTexture);
+	App->textures->Unload(weaponsHUDTexture);
 
 
 	return true;

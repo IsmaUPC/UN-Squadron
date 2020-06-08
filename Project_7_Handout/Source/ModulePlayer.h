@@ -42,19 +42,31 @@ public:
 	int* getMoney() { return &money; };
 	int* getScore() { return &score; };
 	int* getLevel() { return &level; };
-	int* getPow() { return &pow; };
+	int* getPow()	{ return &pow; };
 	int* getTotal() { return &total; };
 	int* getLives() { return &lives; };
+
 	status_player getStatusPlayer() { return statusPlayer; }
+
+	int* getindeWeapon() { return &indexWeapon; };
+
+	int* getAmmo(int i) {return &ammo[i]; };
+
+
 	void playerShot();
 
 	void MovePlayer();
+	void SpecialWeapons();
+
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
 
 	void timeRegeneration();
 
 	bool CleanUp() override;
+
+	void loadInfo();
+	void saveInfo();
 
 private:
 	int currentCameraX;
@@ -104,10 +116,13 @@ public:
 	// hud information
 	int money = 0;
 	int score = 0;
-	int level = 1;
+	int level = 0;
 	int pow = 0;
 	int total = 0;
 	int lives = 0;
+
+	int indexWeapon = 0;
+	int ammo[11] = {0};
 
 };
 

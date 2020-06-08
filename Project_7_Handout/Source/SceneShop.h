@@ -7,9 +7,13 @@
 
 struct SDL_Texture;
 
+struct WeaponsPrice{
+	bool selected = false;
+	int ammo;
+	int priceWeapon;
+};
 
-enum class SHOP_SLOT
-{
+enum SHOP_SLOT{
 	CLUSTER,
 	PHOENIX,
 	FALCON,
@@ -46,6 +50,10 @@ public:
 	// Performs the render call of all the parts of the scene's background
 	update_status PostUpdate() override;
 	void select();
+	void activeSelected(int _weapon);
+
+	void loadInfo();
+	void saveInfo();
 
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
@@ -58,6 +66,23 @@ public:
 	uint InsuficientMoney = 0;
 
 	bool keyDownPad = false;
+	int hudfont1 = 0;
+	
+	bool begin = false;
+	
+	//info
+	int money=9000;
+	int score=0;
+	int level=1;
+	int pow=0;
+	int total=0;
+	int lives=2;
+
+	WeaponsPrice weapons[11];
+
+
+
+	char moneyText[10] = { "\0" };
 
 };
 #endif // !_SCENESHOP_H_

@@ -40,6 +40,9 @@ private:
 	int* pow = nullptr;
 	int* total = nullptr;
 	int* lives = nullptr;
+	int* indexWeapon = nullptr;
+	int* ammo[11] = { nullptr };
+
 
 	SDL_Texture* hudTexture = nullptr;
 
@@ -53,6 +56,7 @@ private:
 	char powText[10] = { "\0" };
 	char totalText[10] = { "\0" };
 	char livesText[10] = { "\0" };
+	char ammoText[10] = { "\0" };
 
 	bool damage = false;
 
@@ -83,6 +87,11 @@ private:
 	Animation fullLive;
 	Animation hitLive;
 	Animation restoredLive;
+
+	//Special Weapon
+	SDL_Texture* weaponsHUDTexture = nullptr;
+	Animation* currentWeapon = nullptr;
+	Animation spriteWeapons[12];
 };
 
 
