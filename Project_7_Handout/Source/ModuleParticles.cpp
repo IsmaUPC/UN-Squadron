@@ -40,7 +40,13 @@ bool ModuleParticles::Start()
 	explosion.anim.speed = 0.1f;
 	explosion.anim.loop = false;
 	
-
+	for (int i = 0; i < 7; i++)
+	{
+		explosionEnemies.anim.PushBack({571+i*60,386,60,60});
+		explosionEnemies.anim.loop = false;
+		explosionEnemies.anim.speed = 0.2f;
+	}
+	
 	
 	playerLaser.anim.PushBack({ 0, 0, 40, 7 });
 	
@@ -161,8 +167,13 @@ update_status ModuleParticles::PostUpdate()
 			else if (particle->collider->type == particle->collider->PLAYER_SHOT) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
-			else if (particle->collider->type == particle->collider->NONE && App->player->destroyed == true) {
-				App->render->Blit(playerExplosionTexture, (particle->position.x - (particle->anim.GetCurrentFrame().w - PLAYER_WIDTH)),
+			else if (particle->collider->type == particle->collider->NONE) {
+				if (App->player->destroyed == true) {
+					App->render->Blit(playerExplosionTexture, (particle->position.x - (particle->anim.GetCurrentFrame().w - PLAYER_WIDTH)),
+						particle->position.y - (particle->anim.GetCurrentFrame().h / 2), &(particle->anim.GetCurrentFrame()));
+				}
+				else if(App->player->getStatusPlayer()!=status_player::STATE_DEAD)
+				App->render->Blit(App->enemies->GetTextureEnemies(), (particle->position.x + -(particle->anim.GetCurrentFrame().w/2 )),
 					particle->position.y - (particle->anim.GetCurrentFrame().h / 2), &(particle->anim.GetCurrentFrame()));
 			}
 		

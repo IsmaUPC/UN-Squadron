@@ -7,6 +7,7 @@
 
 Enemy_MiniBoss1::Enemy_MiniBoss1(float x, float y, int _pattern) :Enemy(x, y, _pattern)
 {
+	lives = 45;
 	//Animation
 	FirsAnim.PushBack({ 559,299,220,80 });
 	currentAnim = &FirsAnim;

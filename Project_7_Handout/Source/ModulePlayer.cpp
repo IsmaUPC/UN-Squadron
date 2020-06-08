@@ -50,7 +50,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player textures");
 
 	timer= new Timer(500);
-
+	timerHit = new Timer(2000);
 	countTimeToShield = 5000 / 30;
 
 	bool ret = true;
@@ -64,7 +64,8 @@ bool ModulePlayer::Start()
 	pow = POW;
 	total = TOTAL;
 	lives = LIVES;
-
+	
+	
 	
 	texture = App->textures->Load("Assets/PlayerSprites.png");
 	currentAnimation = &idleAnim;
@@ -83,6 +84,8 @@ bool ModulePlayer::Start()
 }
 
 update_status ModulePlayer::Update(){
+	timerHit->update();
+	if (timerHit->check())statusPlayer = status_player::SATATE_IDLE;
 	//Save the position camera X
 	currentCameraX = App->render->camera.x;
 	timer->update();
@@ -110,7 +113,7 @@ update_status ModulePlayer::Update(){
 
 	//Suicide Player
 	if (App->input->keys[SDL_SCANCODE_M] == KEY_STATE::KEY_DOWN ){
-		//destroyed = true;
+		destroyed = true;
 		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE);
 		App->audio->PlayFx(explosionFx);
 	}
@@ -145,16 +148,18 @@ update_status ModulePlayer::PostUpdate()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
 	if (c1 == collider && destroyed == false && godMode==false)	{
-		App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE);
-		App->audio->PlayFx(explosionFx);
+		
 		if (oneHit == false){
 			oneHit = true;
 			App->hud->hitOnPlayer();
-		}else{
+			statusPlayer = status_player::STATE_HIT;
+		}else if(statusPlayer==status_player::SATATE_IDLE){
 			if (App->hud->animFase == App->hud->DAMAGE){
 				App->hud->hitOnPlayer();
 				destroyed = true;
 				collider->pendingToDelete = true;
+				App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE);
+				App->audio->PlayFx(explosionFx);
 			}
 		}
 	}

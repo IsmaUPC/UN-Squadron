@@ -9,6 +9,13 @@
 struct SDL_Texture;
 struct Collider;
 
+enum class status_player
+{
+	SATATE_IDLE = 1,
+	STATE_HIT,
+	STATE_DEADING,
+	STATE_DEAD,
+};
 class ModulePlayer : public Module
 {
 public:
@@ -38,6 +45,7 @@ public:
 	int* getPow() { return &pow; };
 	int* getTotal() { return &total; };
 	int* getLives() { return &lives; };
+	status_player getStatusPlayer() { return statusPlayer; }
 	void playerShot();
 
 	void MovePlayer();
@@ -51,7 +59,8 @@ public:
 private:
 	int currentCameraX;
 	Timer* timer;
-
+	Timer* timerHit;
+	status_player statusPlayer;
 	int countTimeToShield;
 
 public:

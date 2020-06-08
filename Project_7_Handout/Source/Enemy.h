@@ -46,7 +46,6 @@ public:
 	virtual void SetToDelete();
 
 	void CleanUp();
-
 	// The current position in the world
 	fPoint position;
 
@@ -58,7 +57,8 @@ public:
 
 	// A flag for the enemy removal. Important! We do not delete objects instantly
 	bool pendingToDelete = false;
-
+	int lives;
+	
 
 protected:
 	
@@ -66,9 +66,7 @@ protected:
 	
 	// A ptr to the current animation
 
-	void  shotType(TypeShot typeShot= TypeShot::ENEMY_SHOT);
-
-
+	void shotType(TypeShot typeShot= TypeShot::ENEMY_SHOT);
 	void resizeCollider();
 	//void setCurrentEnemyAnmi();
 	// The enemy's collider

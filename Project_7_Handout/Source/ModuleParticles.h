@@ -8,7 +8,7 @@
 #include "Collider.h"
 #include "Enemy.h"
 #include "Path.h"
-
+#include "ModuleEnemies.h"
 
 #define MAX_ACTIVE_PARTICLES 64
 
@@ -87,6 +87,7 @@ public:
 	Particle playerLaser;
 	Particle enemyLaser;
 	Particle mBoss1Shot;
+	Particle explosionEnemies;
 	Animation mBoss1ShotOpen;
 	Animation mBoss1ShotOpening;
 	Animation mBoss1ShotClose;

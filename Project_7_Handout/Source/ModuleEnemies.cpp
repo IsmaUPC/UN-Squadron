@@ -218,13 +218,18 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 		if(enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
 			enemies[i]->OnCollision(c2); //Notify the enemy of a collision
-			App->audio->PlayFx(enemyDestroyedFx);
-			
+			//App->audio->PlayFx(enemyDestroyedFx);
 			//switch type enemi for diferent score and money
 			//Need creat a variable type in enemymodules
+			enemies[i]->lives--;
+			if (enemies[i]->lives <= 0)
+			{
+				enemies[i]->SetToDelete();
+				SDL_Rect colliderI = enemies[i]->GetCollider()->rect;
+				App->particles->AddParticle(App->particles->explosionEnemies, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2);
+				App->audio->PlayFx(enemies[i]->destroyedFx);
+			}
 			
-			delete enemies[i];
-			enemies[i] = nullptr;
 			break;
 
 

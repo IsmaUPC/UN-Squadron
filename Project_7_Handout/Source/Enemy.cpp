@@ -45,10 +45,15 @@ void Enemy::Draw()
 		App->render->Blit(texture, position.x, position.y, &(currentAnim->GetCurrentFrame()));
 }
 
-void Enemy::OnCollision(Collider* collider)
+void Enemy::OnCollision(Collider* _collider)
 {
-	//App->particles->AddParticle(App->particles->explosion, position.x, position.y);
-	App->audio->PlayFx(destroyedFx);
+	lives--;
+	if (lives == 0)
+	{
+		App->particles->AddParticle(App->particles->explosionEnemies, position.x + collider->rect.w / 2, position.y + collider->rect.h / 2);
+		App->audio->PlayFx(destroyedFx);
+	}
+	
 }
 
 void Enemy::shotEnemy(Particle particle, Collider::Type type) {

@@ -70,13 +70,13 @@ public:
 
 	void spawningEnemies(int numEnemies, ENEMY_TYPE type, int x, int y, int enemiesDistance,int pattern);
 
-
+	
 	// Iterates the queue and checks for camera position
 	void HandleEnemiesSpawn();
 
 	// Destroys any enemies that have moved outside the camera limits
 	void HandleEnemiesDespawn();
-
+	SDL_Texture* GetTextureEnemies() { return finalBoss1; }
 private:
 	// Spawns a new enemy using the data from the queue
 	void SpawnEnemy(const EnemySpawnpoint& info);
