@@ -60,6 +60,8 @@ public:
 	// Param x, y		- Position x,y in the screen (upper left axis)
 	// Param delay		- Delay time from the moment the function is called until the particle is displayed in screen
 	Particle* AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType = Collider::Type::NONE, uint delay = 0);
+
+	Particle* AddSWParticle(const Particle& particle, int _indexWeapon, int x, int y, Collider::Type colliderType = Collider::Type::NONE, uint delay = 0);
 private:
 	// Particles spritesheet loaded into an SDL Texture
 	SDL_Texture* playerShotTexture = nullptr;
@@ -82,8 +84,6 @@ public:
 	//Template particle for an explosion
 	Particle explosion;
 
-	
-
 	//Template particle for a laser
 	Particle playerLaser;
 	Particle enemyLaser;
@@ -94,7 +94,12 @@ public:
 	Animation mBoss1ShotClose;
 	Animation hit;
 
+<<<<<<< HEAD
 	int soundExplosion;
+=======
+	Particle SpecialWeapon[11];
+	Animation SpecialWeaponAnim[11];
+>>>>>>> 1ea55539ed7dac61ce427e92a278959508841eba
 
 	//Animation* currentAnim = nullptr;
 };

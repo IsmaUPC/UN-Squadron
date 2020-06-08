@@ -22,6 +22,10 @@ struct Collider
 		ENEMY_SHOT,
 		M_BOSS1_SHOT,
 		M_BOSS1,
+		SW_BOMB,
+		SW_S_SHELL,
+		SW_GUNPOD,
+		SW_CEILING,
 
 		MAX
 	};

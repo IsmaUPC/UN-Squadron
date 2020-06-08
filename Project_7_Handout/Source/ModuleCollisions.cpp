@@ -15,6 +15,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::WALL][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::WALL][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::WALL][Collider::Type::PLAYER_SHOT] = true;
+	matrix[Collider::Type::WALL][Collider::Type::SW_BOMB] = true;
 	matrix[Collider::Type::WALL][Collider::Type::ENEMY_SHOT] = true;
 	matrix[Collider::Type::WALL][Collider::Type::M_BOSS1] = false;
 
@@ -22,6 +23,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER_SHOT] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::SW_BOMB] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_SHOT] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::NONE] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::M_BOSS1] = true;
@@ -30,6 +32,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER_SHOT] = true;
+	matrix[Collider::Type::ENEMY][Collider::Type::SW_BOMB] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY_SHOT] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::NONE] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::M_BOSS1_SHOT] = false;
@@ -39,6 +42,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::PLAYER_SHOT] = false;
+	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::SW_BOMB] = false;
 	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::ENEMY_SHOT] = false;
 	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::M_BOSS1_SHOT] = true;
 	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::NONE] = false;
@@ -48,6 +52,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::ENEMY] = false;
 	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::PLAYER_SHOT] = false;
+	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::SW_BOMB] = false;
 	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::ENEMY_SHOT] = false;
 	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::M_BOSS1_SHOT] = false;
 	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::M_BOSS1] = false;
@@ -57,6 +62,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::M_BOSS1_SHOT][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::M_BOSS1_SHOT][Collider::Type::ENEMY] = false;
 	matrix[Collider::Type::M_BOSS1_SHOT][Collider::Type::PLAYER_SHOT] = true;
+	matrix[Collider::Type::M_BOSS1_SHOT][Collider::Type::SW_BOMB] = true;
 	matrix[Collider::Type::M_BOSS1_SHOT][Collider::Type::ENEMY_SHOT] = false;
 	matrix[Collider::Type::M_BOSS1_SHOT][Collider::Type::NONE] = false;
 	matrix[Collider::Type::M_BOSS1_SHOT][Collider::Type::M_BOSS1] = false;
@@ -65,8 +71,10 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::BOSS1][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::BOSS1][Collider::Type::ENEMY] = false;
 	matrix[Collider::Type::BOSS1][Collider::Type::PLAYER_SHOT] = false;
+	matrix[Collider::Type::BOSS1][Collider::Type::SW_BOMB] = false;
 	matrix[Collider::Type::BOSS1][Collider::Type::ENEMY_SHOT] = false;
 	matrix[Collider::Type::BOSS1][Collider::Type::M_BOSS1] = false;
+
 
 	matrix[Collider::Type::NONE][Collider::Type::WALL] = false;
 	matrix[Collider::Type::NONE][Collider::Type::M_BOSS1_SHOT] = false;
@@ -77,15 +85,34 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::NONE][Collider::Type::NONE] = false;
 	matrix[Collider::Type::NONE][Collider::Type::M_BOSS1] = false;
 
-	
+	matrix[Collider::Type::SW_BOMB][Collider::Type::WALL] = true;
+	matrix[Collider::Type::SW_BOMB][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::SW_BOMB][Collider::Type::ENEMY] = true;
+	matrix[Collider::Type::SW_BOMB][Collider::Type::PLAYER_SHOT] = false;
+	matrix[Collider::Type::SW_BOMB][Collider::Type::ENEMY_SHOT] = false;
+	matrix[Collider::Type::SW_BOMB][Collider::Type::M_BOSS1_SHOT] = true;
+	matrix[Collider::Type::SW_BOMB][Collider::Type::SW_BOMB] = true;
+	matrix[Collider::Type::SW_BOMB][Collider::Type::NONE] = false;
+
 	matrix[Collider::Type::M_BOSS1][Collider::Type::WALL] = false;
 	matrix[Collider::Type::M_BOSS1][Collider::Type::M_BOSS1_SHOT] = false;
 	matrix[Collider::Type::M_BOSS1][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::M_BOSS1][Collider::Type::ENEMY] = false;
 	matrix[Collider::Type::M_BOSS1][Collider::Type::PLAYER_SHOT] = true;
+	matrix[Collider::Type::M_BOSS1][Collider::Type::SW_BOMB] = true;
 	matrix[Collider::Type::M_BOSS1][Collider::Type::ENEMY_SHOT] = false;
-	matrix[Collider::Type::M_BOSS1][Collider::Type::NONE] = false;
 	matrix[Collider::Type::M_BOSS1][Collider::Type::M_BOSS1] = false;
+	matrix[Collider::Type::M_BOSS1][Collider::Type::NONE] = false;
+
+	matrix[Collider::Type::NONE][Collider::Type::WALL] = false;
+	matrix[Collider::Type::NONE][Collider::Type::M_BOSS1_SHOT] = false;
+	matrix[Collider::Type::NONE][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::NONE][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::NONE][Collider::Type::PLAYER_SHOT] = false;
+	matrix[Collider::Type::NONE][Collider::Type::SW_BOMB] = false;
+	matrix[Collider::Type::NONE][Collider::Type::ENEMY_SHOT] = false;
+	matrix[Collider::Type::NONE][Collider::Type::NONE] = false;
+
 }
 
 // Destructor

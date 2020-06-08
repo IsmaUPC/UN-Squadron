@@ -35,6 +35,7 @@ bool SceneShop::Start()
 	App->audio->PlayMusic("Assets/Store.ogg", 1.0f);
 
 	OptionSelection = App->audio->LoadFx("Assets/OptionSelection.wav");
+	//
 	SelectWeapon = App->audio->LoadFx("Assets/SelectionWeapon.wav");
 	InsuficientMoney = App->audio->LoadFx("Assets/InsuficientMoney.wav");
 
@@ -91,13 +92,26 @@ update_status SceneShop::Update()
 		App->audio->PlayFx(OptionSelection);
 		keyDownPad = true;
 	}
-	
+	if (App->input->keys[SDL_SCANCODE_G] == KEY_STATE::KEY_DOWN){
+		infiniteMoney = true;
+	}
+
 	if (pad.l_y == 0 && pad.l_x == 0 && pad.up == false && pad.down == false && pad.left == false && pad.right == false) {
 		keyDownPad = false;
 	}
 
 	weaponsition = tiendaX + (6 * tiendaY);
 	
+	if (infiniteMoney) {
+		money += 10000;
+		if (money >= 100000){
+			money += 100000;
+		}
+		if (money >= 9999990){
+			money = 9999990;
+		}
+	}
+
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -176,6 +190,8 @@ void SceneShop::select(){
 			weapons[S_SHELL].priceWeapon = 10000;
 			weapons[S_SHELL].ammo = 5;
 			activeSelected(S_SHELL);
+		}else {
+			App->audio->PlayFx(InsuficientMoney);
 		}
 		break;
 	case T_LASER:
@@ -186,6 +202,8 @@ void SceneShop::select(){
 			weapons[BOMB].priceWeapon = 5000;
 			weapons[BOMB].ammo = 30;
 			activeSelected(BOMB);
+		}else{
+			App->audio->PlayFx(InsuficientMoney);
 		}
 		break;
 	case NAPALM:
@@ -196,6 +214,8 @@ void SceneShop::select(){
 			weapons[GUNPOD].priceWeapon = 15000;
 			weapons[GUNPOD].ammo = 15;
 			activeSelected(GUNPOD);
+		}else {
+			App->audio->PlayFx(InsuficientMoney);
 		}
 		break;
 	case CEILING:
@@ -203,6 +223,8 @@ void SceneShop::select(){
 			weapons[CEILING].priceWeapon = 15000;
 			weapons[CEILING].ammo = 10;
 			activeSelected(CEILING);
+		}else {
+			App->audio->PlayFx(InsuficientMoney);
 		}
 		break;
 	case MEGACRUSH:
@@ -223,13 +245,16 @@ void SceneShop::select(){
 }
 
 void SceneShop::activeSelected(int _weapon){
+	
 	weapons[_weapon].selected = !weapons[_weapon].selected;
 	if (weapons[_weapon].selected == true) {
+		App->audio->PlayFx(SelectWeapon);
 		money -= weapons[_weapon].priceWeapon;
 	}else {
 		money += weapons[_weapon].priceWeapon;
 	}
 }
+
 void SceneShop::loadInfo(){
 
 	if (begin == false){
