@@ -47,13 +47,7 @@ void Enemy::Draw()
 
 void Enemy::OnCollision(Collider* _collider)
 {
-	lives--;
-	if (lives == 0)
-	{
-		App->particles->AddParticle(App->particles->explosionEnemies, position.x + collider->rect.w / 2, position.y + collider->rect.h / 2);
-		App->audio->PlayFx(destroyedFx);
-	}
-	
+	stateEnemy = status_Enemies::STATE_ENEMY_HIT;
 }
 
 void Enemy::shotEnemy(Particle particle, Collider::Type type) {

@@ -7,6 +7,7 @@
 #include "ModuleRender.h"
 #include "ModuleCollisions.h"
 
+
 #include "SDL/include/SDL_timer.h"
 
 ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled)
@@ -52,13 +53,15 @@ bool ModuleParticles::Start()
 	
 	
 	//Mini boss shot
-		mBoss1ShotClose.PushBack({ 0, 0, 76, 50 });
-		mBoss1ShotOpening.PushBack({ 90 , 0, 90, 74 });
+		mBoss1ShotClose.PushBack({ 22, 29, 45, 12 });
+		mBoss1ShotOpening.PushBack({ 113 , 9, 45, 52 });
 	for (int i = 0; i < 2; i++) {
-		mBoss1ShotOpen.PushBack({ 90 *(i+2), 0, 90, 74 });
+		mBoss1ShotOpen.PushBack({ 90 *(i+2), 8, 90, 54 });
 	}
-
 	mBoss1ShotOpen.speed = 0.5f;
+
+	hit.PushBack({362,7,88,55});
+	hit.loop = false;
 
 	for (int i = 0; i < 4; i++)
 	enemyLaser.anim.PushBack({ 10*i, 0, 10, 10 });
@@ -95,10 +98,28 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
+		Particle* p = particles[i];
 		// Always destroy particles that collide
-		if (particles[i] != nullptr && particles[i]->collider == c1){
-			particles[i]->SetToDelete();
+		if (p == nullptr) continue;
 
+		p->SetStateParticle();
+		if (p != nullptr && p->collider == c1){
+			if (App->player->getStatusPlayer() != status_player::STATE_HIT && p->GetStateParticle()==status_Particle::STATE_PARTICLE_HIT)
+			{
+				if(p->collider->type==Collider::Type::M_BOSS1_SHOT)p->path.SetCurrentAnimation(new Animation (hit));
+				p->lives--;
+			}
+			if (p->lives <= 0)
+			{
+				p->SetToDelete();
+				if (p->collider->type != Collider::Type::PLAYER_SHOT)
+				{
+					SDL_Rect pCollider = p->collider->rect;
+					AddParticle(explosionEnemies, pCollider.x, pCollider.y);
+				}
+				//App->audio->PlayFx(Enemy::destroyedFx);
+			}
+			
 			if (c1->type == Collider::PLAYER_SHOT && c2->type == Collider::ENEMY || c2->type == Collider::PLAYER_SHOT && c1->type == Collider::ENEMY) {
 				App->player->score += 100;
 				App->player->money += 300;
@@ -132,7 +153,10 @@ update_status ModuleParticles::Update()
 
 		if(particle == nullptr)	continue;
 		
-
+		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_IDLE && particle->collider->type==Collider::Type::M_BOSS1_SHOT)
+		{
+			particles[i]->path.SetCurrentAnimation(new Animation(mBoss1ShotOpen));
+		}
 		// Call particle Update. If it has reached its lifetime, destroy it
 		if(particle->Update() == false)	particle->SetToDelete();
 				
@@ -239,10 +263,10 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 				//Set direction to shotEnemy
 				if (p->collider->type == p->collider->ENEMY_SHOT) setShotDirection(p, x, y);
 				if (p->collider->type == p->collider->M_BOSS1_SHOT) {
-					//p->path.Clear();
+					//p->timerHitParticle = new Timer(100);
 					p->spawnPos.create(x,y);
-					//p->path.Reset();
-					
+					p->lives = 4;
+
 					p->path.PushBack({  SCREEN_SPEED , 0.0f }, 25, new Animation(mBoss1ShotClose));
 					p->path.PushBack({ SCREEN_SPEED , 0.0f },20, new Animation(mBoss1ShotOpening));
 					p->path.PushBack({ -0.9 , 0.0f },25, new Animation(mBoss1ShotOpen));

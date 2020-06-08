@@ -27,10 +27,11 @@ private:
 	bool stateShoting=false;
 
 	Timer* timerShoting;
-
+	Timer* timerState;
 	// This enemy has one sprite and one frame
 	// We are keeping it an animation for consistency with other enemies
 	Animation FirsAnim;
+	Animation Hit;
 	Path path;
 
 };

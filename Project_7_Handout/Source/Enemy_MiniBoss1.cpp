@@ -11,9 +11,10 @@ Enemy_MiniBoss1::Enemy_MiniBoss1(float x, float y, int _pattern) :Enemy(x, y, _p
 	//Animation
 	FirsAnim.PushBack({ 559,299,220,80 });
 	currentAnim = &FirsAnim;
+	Hit.PushBack({320,299,220,80});
 
 	timerShoting= new Timer(1000);
-
+	timerState = new Timer(100);
 	collider = App->collisions->AddCollider({ 0, 0, 220, 80 }, Collider::Type::ENEMY, (Module*)App->enemies);   
 	if(pattern!=4)position.x -= 330;
 	if(pattern==4)position.x -= 420;
@@ -24,13 +25,14 @@ Enemy_MiniBoss1::Enemy_MiniBoss1(float x, float y, int _pattern) :Enemy(x, y, _p
 void Enemy_MiniBoss1::Update() {
 
 	timerShoting->update();
-
+	timerState->update();
+	if (timerState->check())stateEnemy = status_Enemies::STATE_ENEMY_IDLE, currentAnim = &FirsAnim;
 	if (App->input->keys[SDL_SCANCODE_E] == KEY_STATE::KEY_DOWN) {
 		//shotType(TypeShot::MINI_BOSS1);
 		shotMissil();
 	}
 	move();
-
+	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT) currentAnim = &Hit;
 	// Call to the base class. It must be called at the end
 	// It will update the collider depending on the position
 	Enemy::Update();

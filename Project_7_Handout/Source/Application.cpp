@@ -39,8 +39,8 @@ Application::Application()
 	modules[8] = sceneGameover = new SceneGameover(false);
 	modules[9] = sceneWin = new SceneWin(false);
 
-	modules[10] = particles = new ModuleParticles(true);
-	modules[11] = enemies = new ModuleEnemies(false);	//Enemies start disabled
+	modules[10] = enemies = new ModuleEnemies(false);	//Enemies start disabled
+	modules[11] = particles = new ModuleParticles(true);
 	modules[12] = player = new ModulePlayer(false);		//Player starts disabled	
 
 	modules[13] = hud = new HUD(false);

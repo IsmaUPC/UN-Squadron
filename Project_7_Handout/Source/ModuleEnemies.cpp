@@ -17,6 +17,7 @@
 #include "Enemy_Green2.h"
 #include "Enemy_White.h"
 #include "Enemy_FinalBoss2.h"
+#include "ModulePlayer.h"
 
 
 
@@ -221,7 +222,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 			//App->audio->PlayFx(enemyDestroyedFx);
 			//switch type enemi for diferent score and money
 			//Need creat a variable type in enemymodules
-			enemies[i]->lives--;
+			if(App->player->getStatusPlayer()!=status_player::STATE_HIT)enemies[i]->lives--;
 			if (enemies[i]->lives <= 0)
 			{
 				enemies[i]->SetToDelete();

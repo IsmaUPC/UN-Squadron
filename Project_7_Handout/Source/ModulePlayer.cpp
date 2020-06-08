@@ -59,18 +59,14 @@ bool ModulePlayer::Start()
 	oneHit = false;
 	destroyed = false;
 	godMode = false;
-
+	/*
 	money = MONEY;
 	score = SCORE;
 	level = LEVEL;
 	pow = POW;
 	total = TOTAL;
 	lives = LIVES;
-	
-	
-	
-
-
+	*/
 	loadInfo();
 
 	// select a Weapon for start, if exist ammo for someone
@@ -83,7 +79,6 @@ bool ModulePlayer::Start()
 			indexWeapon = 12;
 		}
 	}
-
 
 	texture = App->textures->Load("Assets/PlayerSprites.png");
 	currentAnimation = &idleAnim;

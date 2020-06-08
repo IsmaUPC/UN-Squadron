@@ -40,6 +40,11 @@ Animation* Path::GetCurrentAnimation()
 	return steps[currentStep].animation;
 }
 
+void Path::SetCurrentAnimation(Animation* _animation)
+{
+	steps[currentStep].animation = _animation;
+}
+
 void Path::Reset()
 {
 	currentStepFrame = 0;

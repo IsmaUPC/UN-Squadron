@@ -8,7 +8,13 @@
 
 struct SDL_Texture;
 struct Collider;
-
+enum class status_Enemies
+{
+	STATE_ENEMY_IDLE = 1,
+	STATE_ENEMY_HIT,
+	STATE_ENEMY_DEADING,
+	STATE_ENEMY_DEAD,
+};
 
 
 class Enemy{
@@ -75,6 +81,7 @@ protected:
 	// Original spawn position. Stored for movement calculations
 	fPoint spawnPos;
 	bool isShotDone =false;
+	status_Enemies stateEnemy;
 
 	void shotEnemy(Particle particle, Collider::Type typeCollider);
 	int pattern = 0;

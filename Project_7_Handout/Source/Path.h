@@ -25,9 +25,9 @@ public:
 
 	// Returns the position relative to the start of the path
 	fPoint GetRelativePosition() const;
-
 	// Returns the animation linked to the current step
 	Animation* GetCurrentAnimation();
+	void SetCurrentAnimation(Animation* _animation);
 
 	// Resets the path to the first step
 	void Reset();

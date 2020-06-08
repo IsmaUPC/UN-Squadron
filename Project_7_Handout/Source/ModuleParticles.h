@@ -9,6 +9,7 @@
 #include "Enemy.h"
 #include "Path.h"
 #include "ModuleEnemies.h"
+#include "ModuleAudio.h"
 
 #define MAX_ACTIVE_PARTICLES 64
 
@@ -66,16 +67,14 @@ private:
 	SDL_Texture* enemyShotTexture = nullptr;
 	SDL_Texture* miniBoss1ShotTx = nullptr;
 
-
-
 	float xPlayer , yPlayer = 0;
 	float escalar = 0;
 	float magnitudPlayer = 0;
 	float magnitudEnemy = 0;
 	float angulo=0;
 	int velShotEnemy = 0;
-
-
+	
+	uint explosionFx;
 	// An array to store and handle all the particles
 	Particle* particles[MAX_ACTIVE_PARTICLES] = { nullptr };
 
@@ -91,6 +90,7 @@ public:
 	Animation mBoss1ShotOpen;
 	Animation mBoss1ShotOpening;
 	Animation mBoss1ShotClose;
+	Animation hit;
 
 	//Animation* currentAnim = nullptr;
 };
