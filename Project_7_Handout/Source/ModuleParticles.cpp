@@ -245,7 +245,7 @@ void ModuleParticles::resizeParticle(Particle* particle)
 
 Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType, uint delay){
 
-	velShotEnemy = 4;
+	velShotEnemy = 7;
 
 	Particle* p = new Particle(particle);
 
@@ -261,7 +261,7 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 			p->collider = App->collisions->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);
 
 				//Set direction to shotEnemy
-				if (p->collider->type == p->collider->ENEMY_SHOT) setShotDirection(p, x, y);
+				if (p->collider->type == p->collider->ENEMY_SHOT) p= setShotDirection(p, x, y);
 				if (p->collider->type == p->collider->M_BOSS1_SHOT) {
 					//p->timerHitParticle = new Timer(100);
 					p->spawnPos.create(x,y);
@@ -281,7 +281,7 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 	return p;
 }
 
-void ModuleParticles::setShotDirection(Particle* p, int x, int y) {
+Particle* ModuleParticles::setShotDirection(Particle* p, int x, int y) {
 
 	xPlayer = App->player->position.x - x - 10;
 	yPlayer = App->player->position.y - y + 5;
@@ -295,4 +295,5 @@ void ModuleParticles::setShotDirection(Particle* p, int x, int y) {
 	p->speed.x = (App->player->position.x > x) ? (velShotEnemy * cos(angulo)) + SCREEN_SPEED : (velShotEnemy * cos(-angulo));
 	p->speed.y = (App->player->position.y > y) ? (velShotEnemy * sin(angulo)) : (velShotEnemy * sin(-angulo));
 
+	return p;
 }

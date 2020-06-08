@@ -204,7 +204,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 					break;
 			}
 			if (info.type == ENEMY_TYPE::BOSS1) enemies[i]->texture = finalBoss1;
-			if (info.type == ENEMY_TYPE::BOSS2) enemies[i]->texture = finalBoss2;
+			else if (info.type == ENEMY_TYPE::BOSS2) enemies[i]->texture = finalBoss2;
 			else enemies[i]->texture = textureEnemies;
 			enemies[i]->destroyedFx = enemyDestroyedFx;
 			break;

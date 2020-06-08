@@ -21,6 +21,7 @@ struct Collider
 		ENEMY_SHOT,
 		M_BOSS1_SHOT,
 		BOSS1,
+		M_BOSS1,
 
 		MAX
 	};

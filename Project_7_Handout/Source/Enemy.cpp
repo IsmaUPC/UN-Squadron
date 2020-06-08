@@ -10,10 +10,13 @@
 Enemy::Enemy(int x, int y) : position(x, y)
 {
 	spawnPos = position;
+	timerShot = new Timer(200);
 }
 Enemy::Enemy(int x, int y, int _pattern) : position(x, y) , pattern(_pattern)
 {
 	spawnPos = position;
+	timerShot = new Timer(200);
+
 }
 
 Enemy::~Enemy()
@@ -30,6 +33,8 @@ const Collider* Enemy::GetCollider() const
 
 void Enemy::Update()
 {
+	timerShot->update();
+	if(collider->type== Collider::Type::ENEMY && timerShot->check())shotType(TypeShot::ENEMY_SHOT);
 	if (currentAnim != nullptr)
 		currentAnim->Update();
 
@@ -60,7 +65,7 @@ void Enemy::shotType(TypeShot typeShot) {
 	switch (typeShot){
 	case TypeShot::ENEMY_SHOT:
 
-	if (rand() % 9000 < 45 && !isShotDone) {
+	if (rand() % 90 < 45 && !isShotDone) {
 		shotEnemy(App->particles->enemyLaser, Collider::Type::ENEMY_SHOT);
 		isShotDone = true;
 	}

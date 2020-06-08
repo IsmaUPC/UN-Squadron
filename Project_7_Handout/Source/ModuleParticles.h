@@ -51,7 +51,7 @@ public:
 
 	// Called when a particle collider hits another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
-	void setShotDirection(Particle* p, int x, int y);
+	Particle* setShotDirection(Particle* p, int x, int y);
 
 	void ChekParticlesDespawn(Particle* _particle);
 
@@ -81,6 +81,8 @@ private:
 public:
 	//Template particle for an explosion
 	Particle explosion;
+
+	
 
 	//Template particle for a laser
 	Particle playerLaser;

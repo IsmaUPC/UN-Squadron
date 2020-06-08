@@ -82,7 +82,7 @@ protected:
 	fPoint spawnPos;
 	bool isShotDone =false;
 	status_Enemies stateEnemy;
-
+	Timer* timerShot;
 	void shotEnemy(Particle particle, Collider::Type typeCollider);
 	int pattern = 0;
 

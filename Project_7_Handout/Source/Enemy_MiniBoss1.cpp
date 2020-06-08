@@ -15,7 +15,7 @@ Enemy_MiniBoss1::Enemy_MiniBoss1(float x, float y, int _pattern) :Enemy(x, y, _p
 
 	timerShoting= new Timer(1000);
 	timerState = new Timer(100);
-	collider = App->collisions->AddCollider({ 0, 0, 220, 80 }, Collider::Type::ENEMY, (Module*)App->enemies);   
+	collider = App->collisions->AddCollider({ 0, 0, 220, 80 }, Collider::Type::M_BOSS1, (Module*)App->enemies);   
 	if(pattern!=4)position.x -= 330;
 	if(pattern==4)position.x -= 420;
 	
