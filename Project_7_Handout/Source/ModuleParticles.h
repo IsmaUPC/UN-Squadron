@@ -94,12 +94,11 @@ public:
 	Animation mBoss1ShotClose;
 	Animation hit;
 
-<<<<<<< HEAD
 	int soundExplosion;
-=======
+
 	Particle SpecialWeapon[11];
 	Animation SpecialWeaponAnim[11];
->>>>>>> 1ea55539ed7dac61ce427e92a278959508841eba
+
 
 	//Animation* currentAnim = nullptr;
 };
