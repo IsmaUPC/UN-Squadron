@@ -9,7 +9,7 @@ class Enemy_MiniBoss1 : public Enemy
 {
 public:
 	Enemy_MiniBoss1(float x, float y, int _pattern);
-
+	virtual void OnCollision(Collider* collider);
 	void Update() override;
 	void shotMissil();
 
@@ -25,9 +25,11 @@ private:
 	float multiSpeed =1;
 	int TOP = 300;
 	bool stateShoting=false;
-
 	Timer* timerShoting;
+
 	Timer* timerState;
+	Timer* timerStateCollision;//Whith player
+	Timer* timerAnim;
 	// This enemy has one sprite and one frame
 	// We are keeping it an animation for consistency with other enemies
 	Animation FirsAnim;

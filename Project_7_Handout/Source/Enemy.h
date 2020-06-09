@@ -11,8 +11,9 @@ struct SDL_Texture;
 struct Collider;
 enum class status_Enemies
 {
-	STATE_ENEMY_IDLE = 1,
+	STATE_ENEMY_IDLE,
 	STATE_ENEMY_HIT,
+	STATE_ENEMY_HIT_COLLISION,
 	STATE_ENEMY_DEADING,
 	STATE_ENEMY_DEAD,
 };

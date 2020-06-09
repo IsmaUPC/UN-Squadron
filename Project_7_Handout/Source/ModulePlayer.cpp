@@ -97,7 +97,7 @@ bool ModulePlayer::Start()
 }
 
 update_status ModulePlayer::Update(){
-	timerHit->update();
+	if(statusPlayer == status_player::STATE_HIT)timerHit->update();
 	if (timerHit->check())statusPlayer = status_player::STATE_IDLE;
 	//Save the position camera X
 	currentCameraX = App->render->camera.x;

@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Path.h"
 #include "ModuleScene.h"
+#include "Timer.h"
 
 class Enemy_FinalBoss1 : public Enemy
 {
@@ -14,7 +15,6 @@ public:
 
 	void Update() override;
 	void move();
-	bool isDead=false;
 	bool win = true;
 private:
 
@@ -29,7 +29,9 @@ private:
 	// A set of steps that define the position in the screen
 	// And an animation for each step
 	Path path;
-
+	Timer* timerState;
+	Timer* timerStateCollision;//Whith player
+	Timer* timerAnim;
 	// This enemy has one sprite and one frame
 	// We are keeping it an animation for consistency with other enemies
 	Animation FirsAnim;

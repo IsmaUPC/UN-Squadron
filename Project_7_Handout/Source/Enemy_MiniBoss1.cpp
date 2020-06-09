@@ -12,9 +12,12 @@ Enemy_MiniBoss1::Enemy_MiniBoss1(float x, float y, int _pattern) :Enemy(x, y, _p
 	FirsAnim.PushBack({ 559,299,220,80 });
 	currentAnim = &FirsAnim;
 	Hit.PushBack({320,299,220,80});
+	Hit.loop = false;
 
 	timerShoting= new Timer(1000);
-	timerState = new Timer(100);
+	timerState = new Timer(60);
+	timerStateCollision = new Timer(2000);
+	timerAnim = new Timer(100);
 	collider = App->collisions->AddCollider({ 0, 0, 220, 80 }, Collider::Type::M_BOSS1, (Module*)App->enemies);   
 	if(pattern!=4)position.x -= 330;
 	if(pattern==4)position.x -= 420;
@@ -25,19 +28,30 @@ Enemy_MiniBoss1::Enemy_MiniBoss1(float x, float y, int _pattern) :Enemy(x, y, _p
 void Enemy_MiniBoss1::Update() {
 
 	timerShoting->update();
-	timerState->update();
-	if (timerState->check())stateEnemy = status_Enemies::STATE_ENEMY_IDLE, currentAnim = &FirsAnim;
+	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT)timerState->update();
+	if (timerState->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
+
+	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT_COLLISION)timerStateCollision->update();
+	if (timerStateCollision->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
+	timerAnim->update();
+	if (timerAnim->check())currentAnim = &FirsAnim;
+
 	if (App->input->keys[SDL_SCANCODE_E] == KEY_STATE::KEY_DOWN) {
 		//shotType(TypeShot::MINI_BOSS1);
 		shotMissil();
 	}
 	move();
-	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT) currentAnim = &Hit ;
+	//if (stateEnemy == status_Enemies::STATE_ENEMY_HIT) currentAnim = &Hit ;
 	// Call to the base class. It must be called at the end
 	// It will update the collider depending on the position
 	Enemy::Update();
 }
-
+void Enemy_MiniBoss1::OnCollision(Collider* collider) {
+	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT;
+	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION;
+	currentAnim = &Hit;
+	
+}
 void Enemy_MiniBoss1::move() 
 {
 	float speedPatternX[6] = { 1.5f, 1.25f, 1, 1.25f, 0.4f, 1.5f };

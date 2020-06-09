@@ -3,9 +3,13 @@
 #include "Application.h"
 #include "ModuleCollisions.h"
 #include "ModuleAudio.h"
-
+#include "SDL_mixer/include/SDL_mixer.h"
 Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 {
+	lives = 138; //60 fire //yotal lives=138
+	timerState = new Timer(60);
+	timerStateCollision = new Timer(2000);
+	timerAnim = new Timer(100);
 	//Animation
 	FirsAnim.PushBack({ 7,10,261,160 });
 	currentAnim = &FirsAnim;
@@ -32,24 +36,32 @@ Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pat
 	Hit.loop = false;
 	Hit.speed = 0.1;
 
-	collider = App->collisions->AddCollider({ 0, 0, 261, 60 }, Collider::Type::ENEMY, (Module*)App->enemies);
+	collider = App->collisions->AddCollider({ 0, 0, 261, 60 }, Collider::Type::BOSS1, (Module*)App->enemies);
 
 	position.x -= SCREEN_WIDTH+280;
-	//App->audio->PlayMusic("Assets/Boss 1.ogg", 6);
+	App->audio->PlayMusic("Assets/Boss 1.ogg", 0);
 }
 
 
 void Enemy_FinalBoss1::Update() {
+	if(stateEnemy == status_Enemies::STATE_ENEMY_HIT)timerState->update();
+	if (timerState->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
+
+	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT_COLLISION)timerStateCollision->update();
+	if (timerStateCollision->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
+
+	timerAnim->update();
+	if (timerAnim->check())currentAnim = &FirsAnim;
 	move();
 	// Call to the base class. It must be called at the end
 	// It will update the collider depending on the position
 	Draw();
 }
 void Enemy_FinalBoss1::OnCollision(Collider* collider){
-	//App->particles->AddParticle(App->particles->explosion, position.x, position.y);
-	SetToDelete();
-	App->level1->Win();
-	isDead = true;
+	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT;
+	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION;
+	currentAnim = &Hit;
+	if(lives<=0 && App->player->destroyed==false) App->level1->Win();
 }
 
 

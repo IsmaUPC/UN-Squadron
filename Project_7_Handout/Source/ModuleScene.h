@@ -38,7 +38,6 @@ public:
 
 	SDL_Texture* bgTextures[4] = {nullptr};
 	int cont[4] = {0};
-	bool BossIsDead = false;
 	
 };
 #endif
