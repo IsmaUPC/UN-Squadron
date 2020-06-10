@@ -1,4 +1,4 @@
-![U.N.Squadron](https://github.com/IsmaUPC/Proyecto1_4HD/blob/master/assets/wiki/Imagenes/Redimensiones%20IU/Logo%20U.N.Squadron.png)
+![](https://github.com/IsmaUPC/Proyecto1_4HD/blob/master/assets/wiki/Imagenes/Redimensiones%20IU/Logo%20U.N.Squadron)
 
 
 # U.N.Squadron
@@ -57,9 +57,9 @@ General/developer controls:
 - EXIT GAME: SELECT
 ~~~~~~~~~~~~~~~
 
-# FrozenSloth Studios - Our team
+# 4Head Dragons - Our team
 
-![](https://github.com/IsmaUPC/Proyecto_1_HIMA/blob/master/assets/wiki/IMG_20200228_120143_1.jpg)
+![](https://raw.githubusercontent.com/IsmaUPC/Proyecto_1_HIMA/master/assets/wiki/IMG_20200228_120143_1.jpg)
 
 ## Team members
 
@@ -73,7 +73,7 @@ _Hernandez Fernandez, Mario's Github account_
 
 _Morales Calero, Enric's Github account_
 
-*[Github account](https://github.com/enricmc19)
+* [Github account](https://github.com/enricmc19)
 
 _Tejada Coca, Ismael's Github account_
 
