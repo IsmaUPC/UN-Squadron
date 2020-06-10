@@ -77,6 +77,9 @@ update_status ModuleInput::PreUpdate()
 			break;
 		}
 		}
+		if (keys[SDL_SCANCODE_ESCAPE]) {
+			return update_status::UPDATE_STOP;
+		}
 	}
 
 	UpdateGamepadsInput();
