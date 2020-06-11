@@ -11,7 +11,8 @@ Particle::Particle()
 }
 
 Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed),
-frameCount(p.frameCount), lifetime(p.lifetime),timerHitParticle(p.timerHitParticle), lives(p.lives){
+frameCount(p.frameCount), lifetime(p.lifetime),timerHitParticle(p.timerHitParticle), 
+lives(p.lives),explodes(p.explodes), inmortal(p.inmortal),path(p.path){
 	
 }
 

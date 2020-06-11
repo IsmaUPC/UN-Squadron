@@ -20,6 +20,7 @@ update_status Module::PreUpdate()
 
 update_status Module::Update()
 {
+	
 	return update_status::UPDATE_CONTINUE;
 }
 

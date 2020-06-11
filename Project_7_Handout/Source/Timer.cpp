@@ -8,7 +8,7 @@ Timer::Timer(int miliseconds){
 	acumulator = 0;
 	total = 0;
 	cur_time =SDL_GetTicks(); 
-	last_time = SDL_GetTicks()+miliseconds*2;
+	last_time = SDL_GetTicks()+ miliseconds*3;
 }
 int Timer::ready() {
 	return acumulator > interval;
@@ -24,7 +24,7 @@ int Timer::check(){
 }
 void Timer::update() {
 	int delta;
-	cur_time = SDL_GetTicks();
+    	cur_time = SDL_GetTicks();
 	delta = cur_time - last_time;
 	total += delta;
 	acumulator += delta;

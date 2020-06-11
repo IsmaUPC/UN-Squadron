@@ -43,7 +43,8 @@ typedef unsigned int uint;
 #define WIN_BORDERLESS 0
 #define WIN_RESIZABLE 0
 #define VSYNC 1
- 
+#define PI 3.141592
+
 static int VOLUME_GAME = 180 ;
 
 #endif // __GLOBALS_H__

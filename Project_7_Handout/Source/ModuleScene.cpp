@@ -126,7 +126,7 @@ bool ModuleScene::Start()
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::YELLOWSHIP, 5250, 100, 20, 2);	//WAVE 17
 	App->enemies->spawningEnemies(4, ENEMY_TYPE::REDSHIP, 5250, 340, 20, 1);	//WAVE 17
 	
-	int testBoss = 0;
+	int testBoss = 0;// 4800;
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS1, 5700-testBoss, SCREEN_HEIGHT-90, 0, 0);	//FINAL BOSS
 	
 	App->render->camera.x = 0;

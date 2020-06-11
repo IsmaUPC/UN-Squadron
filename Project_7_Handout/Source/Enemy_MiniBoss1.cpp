@@ -14,7 +14,7 @@ Enemy_MiniBoss1::Enemy_MiniBoss1(float x, float y, int _pattern) :Enemy(x, y, _p
 	Hit.PushBack({320,299,220,80});
 	Hit.loop = false;
 
-	timerShoting= new Timer(1000);
+	timerShoting= new Timer(750);
 	timerState = new Timer(60);
 	timerStateCollision = new Timer(2000);
 	timerAnim = new Timer(100);
@@ -29,6 +29,7 @@ void Enemy_MiniBoss1::Update() {
 
 	timerShoting->update();
 	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT)timerState->update();
+
 	if (timerState->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
 
 	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT_COLLISION)timerStateCollision->update();

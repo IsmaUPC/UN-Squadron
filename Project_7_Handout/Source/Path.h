@@ -31,6 +31,7 @@ public:
 
 	// Resets the path to the first step
 	void Reset();
+	int getTotalSteps() { return totalSteps; }
 
 public:
 	// Defines wether the path should go back to the beginning when finished
@@ -38,11 +39,11 @@ public:
 
 	// The set of steps that will define the path
 	Step steps[MAX_STEPS];
+	bool isFinish=false;
 
 private:
 	// Total amount of steps
 	uint totalSteps = 0;
-
 	// Current frame from the current step
 	uint currentStepFrame = 0;
 
