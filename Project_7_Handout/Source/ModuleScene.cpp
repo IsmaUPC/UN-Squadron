@@ -4,6 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
+#include "ModuleInput.h"
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
@@ -28,8 +29,8 @@ ModuleScene::~ModuleScene(){
 	
 }
 // Load assets
-bool ModuleScene::Start()
-{
+bool ModuleScene::Start(){
+
 	App->player->Enable();
 	App->hud->Enable();
 	App->enemies->Enable();
@@ -134,15 +135,32 @@ bool ModuleScene::Start()
 	
 	return ret;
 }
+update_status ModuleScene::PreUpdate(){
+
+	return update_status::UPDATE_CONTINUE;
+
+}
 void ModuleScene::Win() {	
 	//CleanUp();
 		Mix_HaltMusic();
 		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
-		//App->render->camera.x =0;
+		//App->render->camera.x = 0;
 		//SCREEN_SPEED == 0;
 	
 }
 update_status ModuleScene::Update(){
+	if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
+		App->player->CleanUp();
+		Win();
+	}
+
+	if (App->input->keys[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
+		App->player->CleanUp();
+		Mix_HaltMusic();
+		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
+		*App->player->getLives() = (*App->player->getLives() - 1);
+	}
+
 
 	App->render->camera.x += SCREEN_SPEED;
 	updateBackground();
@@ -181,7 +199,6 @@ bool ModuleScene::CleanUp()
 	App->hud->Disable();
 	//App->textures->Disable();
 	//App->audio->Disable();
-	
 	App->textures->Unload(bgTextures[0]);
 	App->textures->Unload(bgTextures[1]);
 	App->textures->Unload(bgTextures[2]);

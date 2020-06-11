@@ -30,6 +30,8 @@ public:
 	// After the first step, the modules should be switched
 	bool FadeToBlack(Module* toDisable, Module* toEnable, float frames = 60);
 
+	Module* getLastLevel() { return lastLevel; };
+
 private:
 
 	enum Fade_Step
@@ -49,6 +51,8 @@ private:
 	// The modules that should be switched after the first step
 	Module* moduleToEnable = nullptr;
 	Module* moduleToDisable = nullptr;
+	Module* lastLevel = nullptr;
+
 };
 
 #endif //__MODULEFADETOBLACK_H__

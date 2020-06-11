@@ -46,8 +46,8 @@ private:
 
 	SDL_Texture* hudTexture = nullptr;
 
-	int scoreFont = 0;
-	int scoreFont2 = 0;
+	/*int scoreFont = 0;
+	int scoreFont2 = 0;*/
 	int hudfont = 0;
 
 	char moneyText[10] = { "\0" };

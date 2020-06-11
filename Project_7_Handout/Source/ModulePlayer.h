@@ -116,10 +116,10 @@ public:
 	// hud information
 	int money = 0;
 	int score = 0;
-	int level = 0;
+	int level = 1;
 	int pow = 0;
 	int total = 0;
-	int lives = 0;
+	int lives = 2;
 
 	int indexWeapon = 0;
 	int ammo[11] = {0};

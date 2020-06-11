@@ -7,7 +7,6 @@
 #include "ModuleFonts.h"
 #include "ModuleInput.h"
 
-
 #include "ModuleScene.h"
 
 #include <stdio.h>
@@ -109,10 +108,10 @@ bool HUD::Start()
 {
 	bool ret = true;
 	
-																																						//720 x 224
+	/*																																					//720 x 224
 	scoreFont = App->fonts->Load("Assets/Fonts/FontY.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,им?!*$%&()+-/:;<=>@__     ", 5,720,224);
 	scoreFont2 = App->fonts->Load("Assets/Fonts/FontG.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,0123456789им?!*$%&()+-/:;<=>@__     ", 5, 720, 224);
-																																					//276 x 86
+	*/																																				//232 x 75
 	hudfont = App->fonts->Load("Assets/hud/hud_font2.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,0123456789им?!*$%&()+-/:;<=>@__     ", 5,235,75);
 
 	hudTexture = App->textures->Load("Assets/hud/hud - copia.png");
@@ -138,6 +137,7 @@ bool HUD::Start()
 	currentAnimationcap = &idleCap;
 	currentAnimationbar = &idleBar;
 	currentAnimationlive = &emptyLive;
+	currentWeapon = &spriteWeapons[*indexWeapon];
 
 	hitLive.Reset();
 	restoredLive.Reset();
@@ -250,11 +250,11 @@ update_status HUD::PostUpdate(){
 	rect = currentAnimationlive->GetCurrentFrame();
 	App->render->Blit(animHUDTexture, 114 + (App->render->camera.x), 416, &rect);
 	
-
+	currentWeapon->Update();
 	currentWeapon = &spriteWeapons[*indexWeapon];
 	rect = currentWeapon->GetCurrentFrame();
 	App->render->Blit(weaponsHUDTexture, 300 + (App->render->camera.x), 400, &rect);
-
+	
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -262,8 +262,8 @@ update_status HUD::PostUpdate(){
 bool HUD::CleanUp()
 {
 	
-	App->fonts->UnLoad(scoreFont);
-	App->fonts->UnLoad(scoreFont2);
+	/*App->fonts->UnLoad(scoreFont);
+	App->fonts->UnLoad(scoreFont2);*/
 	App->fonts->UnLoad(hudfont);
 	App->textures->Unload(hudTexture);
 	App->textures->Unload(animHUDTexture);

@@ -40,6 +40,10 @@ bool SceneIntro::Start()
 	Uni_Fire.speed = 0.1f;
 	Uni_Fire.loop = true;
 	currentAnim = &Uni_Fire;
+
+	App->render->camera.x = 0;
+	App->render->camera.y = 0;
+
 	return ret;
 }
 
