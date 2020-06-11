@@ -75,6 +75,7 @@ bool ModuleParticles::Start(){
 		explosionEnemies.anim.PushBack({571+i*60,386,60,60});
 	
 		explosionEnemies.anim.loop = false;
+		explosionEnemies.explodes = false;
 		explosionEnemies.anim.speed = 0.2f;
 	
 	//player shot
@@ -343,7 +344,7 @@ void ModuleParticles::ChekParticlesDespawn(Particle* _particle) {
 			|| (posParticle.x * SCREEN_SIZE < posCamera.x - SPAWN_MARGIN)|| (posParticle.x * SCREEN_SIZE > (posCamera.x + SCREEN_WIDTH + SPAWN_MARGIN))) {
 
 			LOG("DeSpawning enemy at %d", _particle->position.x * SCREEN_SIZE);
-			
+			_particle->explodes = false;
 			_particle->SetToDelete();
 			//delete _particle;
 			//_particle = nullptr;
