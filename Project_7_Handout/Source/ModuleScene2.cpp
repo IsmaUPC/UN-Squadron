@@ -4,6 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
+#include "ModuleInput.h"
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
@@ -21,8 +22,7 @@ ModuleScene2::~ModuleScene2() {
 
 }
 // Load assets
-bool ModuleScene2::Start()
-{
+bool ModuleScene2::Start(){
 	App->player->Enable();
 	App->hud->Enable();
 	App->enemies->Enable();
@@ -81,8 +81,19 @@ bool ModuleScene2::Start()
 
 update_status ModuleScene2::Update() {
 
-	if (App->render->camera.x >= 3200)
-	{
+
+	if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
+		App->player->CleanUp();
+		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
+	}
+
+	if (App->input->keys[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
+		App->player->CleanUp();
+		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
+		*App->player->getLives() = (*App->player->getLives() - 1);
+	}
+
+	if (App->render->camera.x >= 3200){
 		App->render->camera.x =0;
 		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
 	}

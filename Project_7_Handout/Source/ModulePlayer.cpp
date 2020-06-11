@@ -116,7 +116,7 @@ update_status ModulePlayer::Update(){
 
 	GamePad& pad = App->input->pads[0];
 	//Activate God mode
-	if (App->input->keys[SDL_SCANCODE_G] == KEY_STATE::KEY_DOWN) godModeUpdate();
+	if (App->input->keys[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) godModeUpdate();
 
 	//Shot Player
 	if (cooldown == 11 && !destroyed) {
@@ -148,7 +148,13 @@ update_status ModulePlayer::Update(){
 		destroyedCountdown--;
 		if (destroyedCountdown <= 0){
 			CleanUp();
-			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
+			lives--;
+			/*if (lives < 0){
+				App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneIntro, 60);
+			}else{
+				App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
+			}*/
+				App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 			//return update_status::UPDATE_STOP;
 		}
 	}

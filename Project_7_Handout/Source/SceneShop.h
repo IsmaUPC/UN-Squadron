@@ -26,6 +26,8 @@ public:
 	// Loads the necessary textures for the map background
 	bool Start() override;
 
+	update_status PreUpdate()override;
+
 	// Called at the middle of the application loop
 	// Updates the scene's background animations
 	update_status Update() override;
@@ -54,7 +56,8 @@ public:
 	int hudfont1 = 0;
 	
 	bool begin = false;
-	
+	bool newGame = false;
+
 	//info
 	int money=30000;
 	int score=0;
@@ -87,5 +90,11 @@ public:
 		EXIT,
 
 	};
+
+	//shopkeeper 
+	SDL_Texture* shopkeeperTexture = nullptr;
+	Animation* currentAnimationshopkeeper = nullptr;
+	Animation shopkeeperTalking;
+
 };
 #endif // !_SCENESHOP_H_
