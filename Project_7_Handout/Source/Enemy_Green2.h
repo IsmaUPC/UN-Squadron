@@ -3,21 +3,26 @@
 
 #include "Enemy.h"
 #include "Path.h"
-
+#include "Timer.h"
 class Enemy_Green2 : public Enemy
 {
 public:
 	Enemy_Green2(int x, int y, int _pattern);
 
 	void Update() override;
-
+	virtual void OnCollision(Collider* collider);
 	void move();
+	bool upDown(bool _Do);
 
 private:
 	
 	// A set of steps that define the position in the screen
 	// And an animation for each step
 	Path path;
+	Timer* timerState;
+	Timer* timerStateCollision;//Whith player
+	Timer* timerAnim;
+
 	int xRecorrido = 0;
 	int yRecorrido = 0;
 	float radio = 4.8;//9
@@ -35,6 +40,7 @@ private:
 	Animation FirsAnim;
 	Animation Up;
 	Animation Down;
+	Animation Hit;
 };
 
 #endif // !__ENEMY_TEMPLATE_H__

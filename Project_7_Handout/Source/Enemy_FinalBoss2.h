@@ -3,7 +3,7 @@
 
 #include "Enemy.h"
 #include "Path.h"
-#include "ModuleScene.h"
+#include "ModuleScene2.h"
 #include "Timer.h"
 
 class Enemy_FinalBoss2 : public Enemy
@@ -25,7 +25,6 @@ private:
 	Timer* timerStateCollision;//Whith player
 	Timer* timerAnim;
 	int xRecorrido = 0;
-
 	float radio = 4;
 	float radianes;
 	float grados = 0;

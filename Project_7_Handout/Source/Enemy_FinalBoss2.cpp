@@ -11,7 +11,7 @@
 Enemy_FinalBoss2::Enemy_FinalBoss2(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 {
 	//Animation
-	lives = 30;
+	lives = 60;
 	timerState = new Timer(60);
 	timerStateCollision = new Timer(2000);
 	timerAnim = new Timer(100);
@@ -38,7 +38,7 @@ void Enemy_FinalBoss2::Update() {
 	if (timerStateCollision->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
 	
 	timerAnim->update();
-	if (timerAnim->check())currentAnim = &FirsAnim;
+	//if (timerAnim->check())currentAnim = &FirsAnim;
 	move();
 
 	// Call to the base class. It must be called at the end
@@ -52,15 +52,15 @@ void Enemy_FinalBoss2::Anim1()
 }
 void Enemy_FinalBoss2::Anim2()
 {
-	if (radio * cos(radianes) > 0)currentAnim = &FirsAnim;
-	else currentAnim = &Down;
+	if (radio * cos(radianes) > 0 && timerAnim->check())currentAnim = &FirsAnim;
+	else if(timerAnim->check()) currentAnim = &Down;
 }
 void Enemy_FinalBoss2::OnCollision(Collider* collider)
 {
-	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT;
-	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION;
-	currentAnim = &Hit;
-	if (lives <= 0 && App->player->destroyed == false) App->level1->Win();
+	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
+	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION, currentAnim = &Hit;
+	if (collider->type == Collider::Type::SW_S_SHELL && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives -= 2, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION, currentAnim = &Hit;//-3lives
+	if (lives <= 0 && App->player->destroyed == false) App->level2->Win();
 }
 
 bool Enemy_FinalBoss2::upDown(bool _Do)
@@ -83,10 +83,10 @@ void Enemy_FinalBoss2::move() {
 	case 0:
 		switch (FASE) {
 		case 0:
-			if (radio * cos(radianes) < 0)currentAnim = &FirsAnim;
-			else currentAnim = &Down;
 			if (grados != angulo)
 			{
+				if (radio * cos(radianes && timerAnim->check()) < 0)currentAnim = &FirsAnim;
+				else if (timerAnim->check()) currentAnim = &Down;
 				radianes = grados * PI / 180;
 				position.x -= 2;
 				position.y += radio * cos(radianes);
@@ -132,9 +132,9 @@ void Enemy_FinalBoss2::move() {
 			else FASE = 4, Do = false;
 			break;
 		case 4:
-			currentAnim = &Inclined;
 			if (xRecorrido < 120)
 			{
+				if (timerAnim->check())currentAnim = &Inclined;
 				xRecorrido++;
 				position.x += 3;
 			}
@@ -179,11 +179,13 @@ void Enemy_FinalBoss2::move() {
 			{
 				position.x += 3;
 				position.y -= 2;
+				if (timerAnim->check()) currentAnim = &FirsAnim;
 			}
 			else if (position.y < 219)
 			{
 				position.x += 3;
 				position.y += 2;
+				if (timerAnim->check()) currentAnim = &Down;
 			}
 			else FASE = 9;
 			break;
@@ -192,18 +194,20 @@ void Enemy_FinalBoss2::move() {
 			{
 				xRecorrido++;
 				position.x -= 3;
+				if (timerAnim->check()) currentAnim = &Inclined;
 			}
 			else FASE = 1, xRecorrido = 0, angulo = 180, grados = 0;
 			break;
 		}
 		break;
 	case 1:
-		switch (FASE){
+		switch (FASE) {
 		case 0:
 			if (xRecorrido < 30)
 			{
 				xRecorrido++;
 				position.x += 3;
+				if (timerAnim->check()) currentAnim = &Inclined;
 			}
 			else FASE = 1;
 			break;
@@ -213,14 +217,15 @@ void Enemy_FinalBoss2::move() {
 				xRecorrido++;
 				position.x += 3.1;
 				position.y -= 2;
+				if (timerAnim->check()) currentAnim = &FirsAnim;
 			}
 			else FASE = 2, angulo = 250, grados = 90;
 			break;
 		case 2:
 			radio = 4;
-			currentAnim = &Down;
 			if (grados <= angulo)
 			{
+				if (timerAnim->check())currentAnim = &Down;
 				radianes = grados * PI / 180;
 				position.x += (radio + 2) * sin(radianes);
 				position.y -= radio * cos(radianes);
@@ -233,6 +238,7 @@ void Enemy_FinalBoss2::move() {
 			{
 				position.x -= 3;
 				position.y -= 2;
+				if (timerAnim->check()) currentAnim = &FirsAnim;
 			}
 			else FASE = 4, angulo = 270, grados = 180;
 			break;
@@ -242,7 +248,7 @@ void Enemy_FinalBoss2::move() {
 			if (grados <= angulo)
 			{
 				radianes = grados * PI / 180;
-				position.x -= (radio+1)* sin(radianes);
+				position.x -= (radio + 1) * sin(radianes);
 				if (UpDown == false)position.y -= radio * cos(radianes), Anim2();
 				else position.y += radio * cos(radianes), Anim1();
 				grados += 2;
@@ -250,7 +256,7 @@ void Enemy_FinalBoss2::move() {
 			else FASE = 5, Do = false;
 			break;
 		case 5:
-			if (position.x<App->render->camera.x+SCREEN_WIDTH-100)
+			if (position.x < App->render->camera.x + SCREEN_WIDTH - 100)
 			{
 				position.x += 3;
 				if (UpDown == false)position.y -= 2, Anim1();
@@ -259,7 +265,7 @@ void Enemy_FinalBoss2::move() {
 			else FASE = 6;
 			break;
 		case 6:
-			if (position.x > App->render->camera.x )
+			if (position.x > App->render->camera.x)
 			{
 				position.x -= 2.5;
 				if (UpDown == false)position.y += 2, Anim2();
@@ -268,7 +274,7 @@ void Enemy_FinalBoss2::move() {
 			else FASE = 7;
 			break;
 		case 7:
-			if (position.x < App->render->camera.x + (SCREEN_WIDTH /2)-60)
+			if (position.x < App->render->camera.x + (SCREEN_WIDTH / 2) - 60)
 			{
 				position.x += 3;
 				if (UpDown == true)position.y += 2.5, Anim2();
@@ -277,42 +283,46 @@ void Enemy_FinalBoss2::move() {
 			else FASE = 8;
 			break;
 		case 8:
-			if(position.y<App->player->position.y + 3 && position.y > App->player->position.y - 3) FASE = 9;
-			else if(position.y< App->player->position.y)
+			if (position.y<App->player->position.y + 3 && position.y > App->player->position.y - 3) FASE = 9;
+			else if (position.y < App->player->position.y)
 			{
 				position.x += 3;
-				position.y += 2.5, currentAnim = &Down;
+				position.y += 2.5;
+				if (timerAnim->check())currentAnim = &Down;
 			}
 			else
 			{
 				position.x += 3;
-				position.y -= 2.5, currentAnim = &FirsAnim;
+				position.y -= 2.5;
+				if (timerAnim->check())currentAnim = &FirsAnim;
 			}
 			break;
 		case 9:
-			if (position.x < App->render->camera.x + SCREEN_WIDTH -100) position.x += 5;
+			if (position.x < App->render->camera.x + SCREEN_WIDTH - 100) position.x += 5;
 			else FASE = 10;
 		case 10:
 			if (position.x > App->render->camera.x)
 			{
 				position.x -= 2;
+				if (timerAnim->check()) currentAnim = &Inclined;
 			}
 			else FASE = 11;
 			break;
 		case 11:
-			if (position.y<220 + 3 && position.y > 220 - 3) FASE = 3;
+			if (position.y < 220 + 3 && position.y > 220 - 3) FASE = 3;
 			else if (position.y < 220)
 			{
 				position.x += SCREEN_SPEED;
-				position.y += 2.5, currentAnim = &Down;
+				position.y += 2.5;
+				if (timerAnim->check())currentAnim = &Down;
 			}
 			else
 			{
 				position.x += SCREEN_SPEED;
-				position.y -= 2.5, currentAnim = &FirsAnim;
+				position.y -= 2.5;
+				if (timerAnim->check())currentAnim = &FirsAnim;
 			}
 			break;
-
 		}
 		break;
 	case 2:
@@ -323,6 +333,7 @@ void Enemy_FinalBoss2::move() {
 			{
 				xRecorrido++;
 				position.x -= 3;
+				if (timerAnim->check()) currentAnim = &Inclined;
 			}
 			else FASE = 1;
 			break;
@@ -331,18 +342,21 @@ void Enemy_FinalBoss2::move() {
 			else if (position.y < App->player->position.y)
 			{
 				position.x -= 3;
-				position.y += 2, currentAnim = &Down;
+				position.y += 2;
+				if (timerAnim->check())currentAnim = &Down;
 			}
 			else
 			{
 				position.x -= 3;
-				position.y -= 2, currentAnim = &FirsAnim;
+				position.y -= 2;
+				if (timerAnim->check())currentAnim = &FirsAnim;
 			}
 			break;
 		case 2:
 			if (position.x > App->render->camera.x)
 			{
 				position.x -= 2;
+				if (timerAnim->check()) currentAnim = &Inclined;
 			}
 			else FASE = 3;
 			break;
@@ -351,26 +365,29 @@ void Enemy_FinalBoss2::move() {
 			{
 				xRecorrido++;
 				position.x += 3;
+				if (timerAnim->check()) currentAnim = &Inclined;
 			}
 			else FASE = 4;
 			break;
 		case 4:
 			if (position.y < 220 + 3 && position.y > 220 - 3) FASE = 5, grados = 270, radio = 3;
-			else if (position.y <220)
+			else if (position.y < 220)
 			{
 				position.x += 3;
-				position.y += 1.5, currentAnim = &Down;
+				position.y += 1.5;
+				if (timerAnim->check())currentAnim = &Down;
 			}
 			else
 			{
 				position.x += 3;
-				position.y -= 1.5, currentAnim = &FirsAnim;
+				position.y -= 1.5;
+				if (timerAnim->check())currentAnim = &FirsAnim;
 			}
 			break;
 		case 5:
 			angulo = 450;
 			if (Do == false)upDown(Do);
-			if (grados <= angulo &&!(position.y < App->player->position.y + 3 && position.y > App->player->position.y - 3))
+			if (grados <= angulo && !(position.y < App->player->position.y + 3 && position.y > App->player->position.y - 3))
 			{
 				radianes = grados * PI / 180;
 				position.x -= radio * sin(radianes);
@@ -384,6 +401,8 @@ void Enemy_FinalBoss2::move() {
 			if (position.x > App->render->camera.x + 200)
 			{
 				position.x -= 2;
+				if (timerAnim->check()) currentAnim = &Inclined;
+
 			}
 			else FASE = 7, grados = 90, angulo = 180;
 			break;
@@ -417,11 +436,11 @@ void Enemy_FinalBoss2::move() {
 			{
 				xRecorrido++;
 				position.x += 3;
+				if (timerAnim->check()) currentAnim = &Inclined;
 			}
 			else FASE = 1, xRecorrido = 0, grados = 0, Do = false;
 			break;
 		}
-
 		break;
-	}	
+	}
 }

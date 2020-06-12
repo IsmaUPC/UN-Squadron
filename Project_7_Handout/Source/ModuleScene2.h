@@ -42,6 +42,6 @@ private:
 	int loopBG = -1;
 	int limitBG = 0;
 	int Y_BG = 0;
-
+	int bosses = 3;
 };
 #endif

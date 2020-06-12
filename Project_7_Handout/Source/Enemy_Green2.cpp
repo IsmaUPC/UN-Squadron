@@ -8,6 +8,11 @@
 Enemy_Green2::Enemy_Green2(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 {
 	//Animation
+	lives = 5;
+	timerState = new Timer(60);
+	timerStateCollision = new Timer(2000);
+	timerAnim = new Timer(100);
+
 	FirsAnim.PushBack({ 891,421,54,14 });
 	currentAnim = &FirsAnim;
 
@@ -19,13 +24,23 @@ Enemy_Green2::Enemy_Green2(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 	Down.speed = 0.08;
 	Down.loop = false;
 
+	Hit.PushBack({951,447,54,21});
+	Hit.loop = false;
+
 	collider = App->collisions->AddCollider({ 0, 0, 54, 14 }, Collider::Type::ENEMY, (Module*)App->enemies);
 	if (pattern == 0)position.x += -220;
 }
 
 
 void Enemy_Green2::Update() {
+	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT)timerState->update();
+	if (timerState->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
 
+	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT_COLLISION)timerStateCollision->update();
+	if (timerStateCollision->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
+
+	timerAnim->update();
+	//if (timerAnim->check())currentAnim = &FirsAnim;
 	move();
 
 	// Call to the base class. It must be called at the end
@@ -33,11 +48,28 @@ void Enemy_Green2::Update() {
 	Enemy::Update();
 }
 
+void Enemy_Green2::OnCollision(Collider* collider)
+{
+	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
+	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION, currentAnim = &Hit;
+}
+bool Enemy_Green2::upDown(bool _Do)
+{
+	if (_Do == false)
+	{
+		if (position.y < App->player->position.y) UpDown = false;
+		else UpDown = true;
+		Do = true;
+	}
+	return UpDown;
+}
 void Enemy_Green2::move() {
 	switch (pattern) {
 	case 0:
+		
 		if (yRecorrido < 75)
 		{
+			if (timerAnim->check()) currentAnim = &FirsAnim;
 			yRecorrido++;
 			position.x += SCREEN_SPEED;
 			position.y += 2;
@@ -54,6 +86,7 @@ void Enemy_Green2::move() {
 	case 1:
 		if (xRecorrido < 110)
 		{
+			if (timerAnim->check()) currentAnim = &FirsAnim;
 			xRecorrido++;
 			position.x += -1;
 		}
@@ -66,10 +99,10 @@ void Enemy_Green2::move() {
 		}
 		break;
 	case 2:
-		if(yRecorrido < 10)currentAnim = &Down;
-		else currentAnim = &FirsAnim;
 		if (yRecorrido < 25)
 		{
+			if(yRecorrido < 10 && timerAnim->check())currentAnim = &Down;
+			else if (timerAnim->check()) currentAnim = &FirsAnim;
 			yRecorrido++;
 			position.y += 2;
 			position.x += SCREEN_SPEED;
@@ -81,10 +114,10 @@ void Enemy_Green2::move() {
 		}
 		break;
 	case 3:
-		if (yRecorrido < 55)currentAnim = &Up;
-		else currentAnim = &FirsAnim;
 		if (yRecorrido < 75)
 		{
+			if (yRecorrido < 55 && timerAnim->check())currentAnim = &Up;
+			else if (timerAnim->check())currentAnim = &FirsAnim;
 			yRecorrido++;
 			position.y -= 2;
 			position.x += 1;
@@ -96,10 +129,10 @@ void Enemy_Green2::move() {
 		}
 		break;
 	case 4:
-		if (yRecorrido < 105)currentAnim = &Down;
-		else currentAnim = &FirsAnim;
 		if (yRecorrido < 125)
 		{
+			if (yRecorrido < 105 && timerAnim->check())currentAnim = &Down;
+			else if (timerAnim->check()) currentAnim = &FirsAnim;
 			yRecorrido++;
 			position.y += 2;
 			position.x += 1;
@@ -107,10 +140,10 @@ void Enemy_Green2::move() {
 		else pattern = 5;
 		break;
 	case 5:
-		if (yRecorrido < 155)currentAnim = &Up;
-		else currentAnim = &FirsAnim;
 		if (yRecorrido < 175)
 		{
+			if (yRecorrido < 155 && timerAnim->check())currentAnim = &Up;
+			else if (timerAnim->check())currentAnim = &FirsAnim;
 			yRecorrido++;
 			position.y -= 2;
 			position.x += 1;
@@ -118,10 +151,10 @@ void Enemy_Green2::move() {
 		else pattern = 6;
 		break;
 	case 6:
-		if (yRecorrido < 185)currentAnim = &Down;
-		else currentAnim = &FirsAnim;
 		if (yRecorrido < 200)
 		{
+			if (yRecorrido < 185 && timerAnim->check())currentAnim = &Down;
+			else if (timerAnim->check())currentAnim = &FirsAnim;
 			yRecorrido++;
 			position.y += 2;
 			position.x += 1;
@@ -133,13 +166,9 @@ void Enemy_Green2::move() {
 		{
 			radianes = grados * PI / 180;
 			position.x -= radio * sin(radianes);
-			if (Do == false)
-			{
-				if (position.y < App->player->position.y) currentAnim = &Down, UpDown = false;
-				else currentAnim = &Up, UpDown = true;
-				Do = true;
-			}
-			
+			if (Do == false)upDown(Do);
+			if (UpDown == false && timerAnim->check())currentAnim = &Down;
+			else if (UpDown == true && timerAnim->check())currentAnim = &Up;
 			if(UpDown==false) position.y += radio * cos(radianes);
 			else position.y -= radio * cos(radianes);
 
@@ -154,9 +183,9 @@ void Enemy_Green2::move() {
 		}
 		break;
 	case 8:///////////////////////////////////
-		currentAnim = &FirsAnim;
 		if (xRecorrido < 155)
 		{
+			if (timerAnim->check())currentAnim = &FirsAnim;
 			xRecorrido++;
 			position.x -= 3;
 		}
@@ -172,12 +201,9 @@ void Enemy_Green2::move() {
 		{
 			radianes = grados * PI / 180;
 			position.x += radio * sin(radianes);
-			if (Do == false)
-			{
-				if (position.y < App->player->position.y)currentAnim = &Down, UpDown = false;
-				else currentAnim = &Up, UpDown = true;
-				Do = true;
-			}
+			if (Do == false)upDown(Do);
+			if (UpDown == false && timerAnim->check())currentAnim = &Down;
+			else if (UpDown == true && timerAnim->check())currentAnim = &Up;
 			if (UpDown==false) position.y += radio * cos(radianes);
 			else position.y -= radio * cos(radianes);
 			grados += 2.5;
@@ -190,10 +216,10 @@ void Enemy_Green2::move() {
 		break;
 	case 10:
 		radio = 2.5;
-		if(radio * cos(radianes)<0)currentAnim = &Down;
-		else currentAnim = &Up;
 		if (grados != angulo)
 		{
+			if (radio * cos(radianes) < 0 && timerAnim->check())currentAnim = &Down;
+			else if (timerAnim->check())currentAnim = &Up;
 			radianes = grados * PI / 180;
 			position.x += 2.6;
 			position.y -= radio * cos(radianes);
@@ -214,13 +240,10 @@ void Enemy_Green2::move() {
 		{
 			xRecorrido++;
 			position.x += 3.5;
-			if (Do == false)
-			{
-				if (position.y < App->player->position.y) currentAnim = &Down, UpDown = false;
-				else currentAnim = &Up, UpDown = true;
-				Do = true;
-			}
-			if (UpDown==false) position.y += 3;// (3 * following);
+			if (Do == false)upDown(Do);
+			if (UpDown == false && timerAnim->check())currentAnim = &Down;
+			else if (UpDown == true && timerAnim->check())currentAnim = &Up;
+			if (UpDown==false) position.y += 3;
 			else position.y -= 3;
 		}
 		else Do = false, pattern = 10;
