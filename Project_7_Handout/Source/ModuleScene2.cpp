@@ -88,12 +88,13 @@ bool ModuleScene2::Start(){
 }
 
 void ModuleScene2::Win() {
-	CleanUp();
-	Mix_HaltMusic();
-	App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
-	//App->render->camera.x = 0;
-	//SCREEN_SPEED == 0;
-
+	//CleanUp();
+	bosses--;
+	if (bosses <= 0)
+	{
+		Mix_HaltMusic();
+		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
+	}
 }
 update_status ModuleScene2::Update() {
 
@@ -112,13 +113,6 @@ update_status ModuleScene2::Update() {
 			Mix_HaltMusic();
 			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 		}
-	}
-
-
-
-	if (App->render->camera.x >= 3200){
-		App->render->camera.x =0;
-		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
 	}
 	
 	App->render->camera.x += SCREEN_SPEED;

@@ -142,10 +142,8 @@ update_status ModuleScene::PreUpdate(){
 }
 void ModuleScene::Win() {	
 	//CleanUp();
-		Mix_HaltMusic();
-		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
-		//App->render->camera.x = 0;
-		//SCREEN_SPEED == 0;
+	Mix_HaltMusic();
+	App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
 	
 }
 update_status ModuleScene::Update(){

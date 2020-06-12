@@ -57,10 +57,9 @@ void Enemy_FinalBoss2::Anim2()
 }
 void Enemy_FinalBoss2::OnCollision(Collider* collider)
 {
-	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT;
-	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION;
-	currentAnim = &Hit;
-	if (lives <= 0 && App->player->destroyed == false) App->level1->Win();
+	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
+	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION, currentAnim = &Hit;
+	if (lives <= 0 && App->player->destroyed == false) App->level2->Win();
 }
 
 bool Enemy_FinalBoss2::upDown(bool _Do)

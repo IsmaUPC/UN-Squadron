@@ -34,9 +34,7 @@ public:
 	void Win();
 	
 public:
-	
 	// The scene sprite sheet loaded into an SDL_Texture
-
 	SDL_Texture* bgTextures[4] = {nullptr};
 	int cont[4] = {0};
 	
