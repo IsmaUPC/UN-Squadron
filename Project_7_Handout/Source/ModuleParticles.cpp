@@ -45,8 +45,15 @@ bool ModuleParticles::Start(){
 	ballShotBoss1.explodes = true;
 
 	//Moab
-	pMoabBoss1.path.PushBack({0,0},0,nullptr);
-	aMoabBoss1.PushBack({0,0,0,0});
+	for (int i = 0; i < 3; i++) 
+		pMoabBoss1.anim.PushBack({ 556+(45*i),313,45,20 });
+	for (int i = 0; i < 3; i++) {
+		pMoabBoss1.anim.PushBack({ 556 + (45 * i),342,45,38 });
+		pMoabBoss1.anim.PushBack({ 556 + (45 * i),342,45,38 });
+	}
+	pMoabBoss1.anim.speed = 0.2f;
+	pMoabBoss1.speed.y = 3.0f;
+	pMoabBoss1.explodes = true;
 	
 
 	//Boss1 laser
@@ -230,7 +237,7 @@ update_status ModuleParticles::PreUpdate()
 
 void ModuleParticles::laserBallExplosion( const uint& i)
 {
-	float spdL = 2;
+	float spdL = 4;
 	float rad = 45 * PI / 180;
 	bossBallLaser.explodes = false;
 	bossBallLaser.speed = { spdL + SCREEN_SPEED, 0.0f };
@@ -304,7 +311,7 @@ update_status ModuleParticles::PostUpdate()
 		if (particle != nullptr && particle->collider != nullptr && particle->isAlive)
 		{
 			colliderI = particle->collider;
-			if (colliderI->type == Collider::Type::BOSS1_SHOT_BALL|| colliderI->type == Collider::Type::BOSS_MOAB) {
+			if (colliderI->type == Collider::Type::BOSS1_SHOT_BALL) {
 				pathRefresh(particle);
 				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));
 				 if (particle->path.isFinish)particle->SetToDelete();
@@ -327,11 +334,9 @@ update_status ModuleParticles::PostUpdate()
 			else if (colliderI->type == Collider::Type::PLAYER_SHOT|| colliderI->type == Collider::Type::BOSS_SHOT_LASER) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
-			//Ball boss's explosion
-			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT) {
+			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT|| colliderI->type == Collider::Type::BOSS_MOAB) {
 				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
-	
 			else if (colliderI->type == Collider::Type::NONE && colliderI->type!=Collider::Type::BOSS_EXPLOSION_BALL) {
 				if (App->player->destroyed == true) {
 					

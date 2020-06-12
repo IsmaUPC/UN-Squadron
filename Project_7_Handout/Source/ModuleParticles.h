@@ -99,7 +99,7 @@ public:
 	Particle ballShotBoss1;
 	Particle pExplBallBoss1;
 	Particle pBurstshotBallBoss1;
-	Particle pMoabBoss1;
+
 
 	Particle bossBallLaser;
 
@@ -108,7 +108,9 @@ public:
 	Animation mBoss1ShotClose;
 	Animation hitMBoss1;
 
+	Particle pMoabBoss1;
 	Animation aMoabBoss1;
+	Animation aMoabDownBoss1;
 
 	Animation animBallShotBoss1;
 	Animation hitBallShotBoss1;

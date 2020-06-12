@@ -156,12 +156,10 @@ void Enemy_FinalBoss1::burstShot() {
 	if (timerBurstShot->check() && burst < 4) {
 		App->particles->AddParticle(App->particles->pBurstshotBallBoss1, position.x, position.y + 60, Collider::Type::BOSS_BURSTSHOT);
 		//Insert sound here
+		moab();
 		++burst;
 	}
 }void Enemy_FinalBoss1::moab() {
-
-	/*if () {
-		App->particles->AddParticle(, position.x, position.y , Collider::Type::);
-
-	}*/
+		App->particles->AddParticle(App->particles->pMoabBoss1, position.x + 105, position.y + 120, Collider::Type::BOSS_MOAB);
+	
 }
