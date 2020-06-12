@@ -88,7 +88,7 @@ bool ModuleScene2::Start(){
 }
 
 void ModuleScene2::Win() {
-	//CleanUp();
+	CleanUp();
 	Mix_HaltMusic();
 	App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
 	//App->render->camera.x = 0;
@@ -100,6 +100,7 @@ update_status ModuleScene2::Update() {
 	if (App->hud->animFase == App->hud->IDLE) {
 		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
 			App->player->CleanUp();
+			CleanUp();
 			Win();
 		}
 
@@ -107,6 +108,7 @@ update_status ModuleScene2::Update() {
 			App->player->godMode = true;
 			App->player->DEAD();
 			App->player->CleanUp();
+			CleanUp();
 			Mix_HaltMusic();
 			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 		}
@@ -165,8 +167,8 @@ bool ModuleScene2::CleanUp(){
 	App->hud->Disable();
 	//App->textures->Disable();
 	//App->audio->Disable();
-
 	App->textures->Unload(bgTexture);
+	App->enemies->CleanUp();
 
 	return true;
 }

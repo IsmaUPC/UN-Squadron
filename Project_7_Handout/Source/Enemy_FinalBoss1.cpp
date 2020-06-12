@@ -32,7 +32,6 @@ Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pat
 	ShootBombs.PushBack({ 285,10,261,160 });
 	ShootBombs.loop = false;
 	ShootBombs.speed = 0.08;
-	//currentAnim = &ShootBombs;
 
 	Hit.PushBack({562,513,261,160});
 	Hit.loop = false;

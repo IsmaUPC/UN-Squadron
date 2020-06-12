@@ -271,9 +271,6 @@ void SceneShop::select(){
 		break;
 	case EXIT:
 
-
-		Mix_HaltMusic();
-
 		if (!newGame){
 			newGame = true;
 			App->fade->FadeToBlack(this, (Module*)App->level1, 90);

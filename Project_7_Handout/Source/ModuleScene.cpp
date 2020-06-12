@@ -208,6 +208,8 @@ bool ModuleScene::CleanUp()
 	App->textures->Unload(bgTextures[2]);
 	App->textures->Unload(bgTextures[3]);
 
+	App->enemies->CleanUp();
+
 	return true;
 }
 

@@ -154,9 +154,6 @@ update_status ModulePlayer::Update(){
 				App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 			}*/
 			DEAD();
-			for (int i = 0; i < 11; i++) {
-				ammo[i] = 0;
-			}
 
 			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 			//return update_status::UPDATE_STOP;
@@ -207,10 +204,14 @@ void ModulePlayer::timeRegeneration(){
 
 }
 bool ModulePlayer::CleanUp(){
+	for (int i = 0; i < 11; i++) {
+		ammo[i] = 0;
+	}
 	saveInfo();
 	App->textures->Unload(texture);
 	App->audio->UnloadFx(laserFx);
 	App->audio->UnloadFx(explosionFx);
+
 	return true;
 }
 void ModulePlayer::godModeUpdate(){
