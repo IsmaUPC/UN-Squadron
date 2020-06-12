@@ -38,6 +38,7 @@ bool ModuleScene2::Start()
 	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 6);
 
 	// Enemies ---	
+	
 	App->enemies->spawningEnemies(1,ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1440, 340, 30, 1);	//WAVE 1
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1520, 340, 30, 1);	//WAVE 1
@@ -67,6 +68,11 @@ bool ModuleScene2::Start()
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1750, 130, 30, 0);	//WAVE 4
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1850, 220, 30, 0);	//WAVE 4
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 2000, 130, 30, 0);	//WAVE 4
+	
+	int testBoss2 = 0;
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS2, 2800-testBoss2, 220, 30, 0);	//BOSS
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS2, 2800 - testBoss2, 300, 30, 1);	//BOSS
+	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS2, 2850 - testBoss2, 300, 30, 2);	//BOSS
 	
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;

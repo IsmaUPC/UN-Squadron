@@ -26,6 +26,7 @@ struct Collider
 		SW_S_SHELL,
 		SW_GUNPOD,
 		SW_CEILING,
+		BOSS2,
 
 		MAX
 	};

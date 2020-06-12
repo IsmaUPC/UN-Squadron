@@ -240,6 +240,7 @@ void SceneShop::select(){
 
 		Mix_HaltMusic();
 		App->fade->FadeToBlack(this, (Module*)App->level1, 90);
+		//App->fade->FadeToBlack(this, (Module*)App->level2, 90);
 		break;
 	}
 }

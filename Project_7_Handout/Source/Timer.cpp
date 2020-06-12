@@ -24,7 +24,7 @@ int Timer::check(){
 }
 void Timer::update() {
 	int delta;
-	cur_time = SDL_GetTicks();
+ 	cur_time = SDL_GetTicks();
 	delta = cur_time - last_time;
 	total += delta;
 	acumulator += delta;
