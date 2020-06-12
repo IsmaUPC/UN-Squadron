@@ -11,7 +11,7 @@
 Enemy_FinalBoss2::Enemy_FinalBoss2(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 {
 	//Animation
-	lives = 30;
+	lives = 60;
 	timerState = new Timer(60);
 	timerStateCollision = new Timer(2000);
 	timerAnim = new Timer(100);
