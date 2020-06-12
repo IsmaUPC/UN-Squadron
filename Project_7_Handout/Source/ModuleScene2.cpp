@@ -92,6 +92,7 @@ void ModuleScene2::Win() {
 	bosses--;
 	if (bosses <= 0)
 	{
+		bosses = 3;
 		Mix_HaltMusic();
 		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
 	}
@@ -102,6 +103,7 @@ update_status ModuleScene2::Update() {
 		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
 			App->player->CleanUp();
 			CleanUp();
+			bosses = 0;
 			Win();
 		}
 
