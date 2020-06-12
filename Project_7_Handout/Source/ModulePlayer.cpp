@@ -52,8 +52,9 @@ bool ModulePlayer::Start()
 
 	timer= new Timer(500);
 	timerHit = new Timer(2000);
+	CeilingCooldown = new Timer(400);
 	countTimeToShield = 5000 / 30;
-
+	
 	bool ret = true;
 	destroyedCountdown = 120;
 	oneHit = false;
@@ -89,6 +90,8 @@ bool ModulePlayer::Start()
 
 	position.x = 80;
 	position.y = 230;
+	
+	int n_shots = 0;
 
 	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT }, Collider::Type::PLAYER, this);
 
@@ -107,16 +110,16 @@ update_status ModulePlayer::Update(){
 	App->player->position.x += SCREEN_SPEED;
 
 	//Move player with AWSD
-	if (destroyed == false) {
+	if (!destroyed) {
 		MovePlayer();
 		SpecialWeapons();
+		//Activate God mode
+		if (App->input->keys[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) godModeUpdate();
 	}
 	//Update the player collider 
 	collider->SetPos(position.x, position.y);
 
 	GamePad& pad = App->input->pads[0];
-	//Activate God mode
-	if (App->input->keys[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) godModeUpdate();
 
 	//Shot Player
 	if (cooldown == 11 && !destroyed) {
@@ -126,7 +129,7 @@ update_status ModulePlayer::Update(){
 	}
 
 	//Suicide Player
-	if (App->input->keys[SDL_SCANCODE_M] == KEY_STATE::KEY_DOWN ){
+	/*if (App->input->keys[SDL_SCANCODE_M] == KEY_STATE::KEY_DOWN ){
 		
 		App->hud->animFase = App->hud->DEAD;
 		destroyed = true;
@@ -135,29 +138,31 @@ update_status ModulePlayer::Update(){
 
 		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE);
 		//App->audio->PlayFx(explosionFx);
-	}
+	}*/
 
 	if(cooldown<11) cooldown--;
-	if (cooldown == 0)cooldown = 11;
-
-
-	
+	if (cooldown <= 0) cooldown = 11;
 
 	currentAnimation->Update();
 	if (destroyed){
 		destroyedCountdown--;
 		if (destroyedCountdown <= 0){
 			CleanUp();
-			lives--;
 			/*if (lives < 0){
 				App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneIntro, 60);
 			}else{
 				App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 			}*/
-				App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
+			DEAD();
+			for (int i = 0; i < 11; i++) {
+				ammo[i] = 0;
+			}
+
+			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 			//return update_status::UPDATE_STOP;
 		}
 	}
+
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -209,6 +214,11 @@ bool ModulePlayer::CleanUp(){
 	return true;
 }
 void ModulePlayer::godModeUpdate(){
+	ammo[App->sceneShop->S_SHELL] = 1;
+	ammo[App->sceneShop->BOMB] = 1;
+	ammo[App->sceneShop->CEILING] = 1;
+	ammo[App->sceneShop->GUNPOD] = 1;
+	indexWeapon = App->sceneShop->S_SHELL;
 	godMode = !godMode;
 	}
 
@@ -292,7 +302,9 @@ void ModulePlayer::SpecialWeapons(){
 
 		//use weapon
 		if (App->input->keys[SDL_SCANCODE_K] == KEY_STATE::KEY_DOWN) {
-			ammo[indexWeapon]--;
+			if (!godMode){
+				ammo[indexWeapon]--;
+			}
 
 			switch (indexWeapon){
 			case App->sceneShop->CLUSTER:
@@ -308,13 +320,14 @@ void ModulePlayer::SpecialWeapons(){
 
 				break;
 			case App->sceneShop->S_SHELL:
-
+				App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 35, position.y + 10, Collider::Type::SW_S_SHELL);
+				
 				break;
 			case App->sceneShop->T_LASER:
 
 				break;
 			case App->sceneShop->BOMB:
-				App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 35, position.y + 10, Collider::Type::SW_BOMB);
+				App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 25, position.y + 15, Collider::Type::SW_BOMB);
 
 				break;
 			case App->sceneShop->NAPALM:
@@ -324,7 +337,7 @@ void ModulePlayer::SpecialWeapons(){
 
 				break;
 			case App->sceneShop->CEILING:
-
+				n_shots = 3;
 				break;
 			case App->sceneShop->MEGACRUSH:
 
@@ -337,12 +350,20 @@ void ModulePlayer::SpecialWeapons(){
 					if (ammo[i] > 0) {
 						indexWeapon = i;
 						noAmmo = true;
-					}
-					else {
+					}else {
 						indexWeapon = 12;
 					}
 				}
 			}
+		}
+
+		if (n_shots >0){
+			CeilingCooldown->update();
+		}
+
+		if (n_shots > 0 && CeilingCooldown->check()) {
+			n_shots--;
+			App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 25, position.y + 5, Collider::Type::SW_CEILING);
 		}
 	}
 

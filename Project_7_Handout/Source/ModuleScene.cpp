@@ -149,16 +149,20 @@ void ModuleScene::Win() {
 	
 }
 update_status ModuleScene::Update(){
-	if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
-		App->player->CleanUp();
-		Win();
-	}
 
-	if (App->input->keys[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
-		App->player->CleanUp();
-		Mix_HaltMusic();
-		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
-		*App->player->getLives() = (*App->player->getLives() - 1);
+	if (App->hud->animFase == App->hud->IDLE){
+		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
+			App->player->CleanUp();
+			Win();
+		}
+
+		if (App->input->keys[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
+			App->player->godMode = true;
+			App->player->DEAD();
+			App->player->CleanUp();
+			Mix_HaltMusic();
+			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
+		}
 	}
 
 

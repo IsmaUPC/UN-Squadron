@@ -228,7 +228,10 @@ update_status HUD::PostUpdate(){
 	App->fonts->BlitText(322, 30, hudfont, levelText);
 	App->fonts->BlitText(390, 61, hudfont, powText);
 	App->fonts->BlitText(447, 61, hudfont, totalText);
-	App->fonts->BlitText(54,412, hudfont, livesText);
+	if (*lives < 0){
+		sprintf_s(livesText, 5, "%3d", 0);
+	}
+		App->fonts->BlitText(54,412, hudfont, livesText);
 
 	/*-------------------------------------------------*/
 	SDL_Rect rect;
@@ -250,8 +253,8 @@ update_status HUD::PostUpdate(){
 	rect = currentAnimationlive->GetCurrentFrame();
 	App->render->Blit(animHUDTexture, 114 + (App->render->camera.x), 416, &rect);
 	
-	currentWeapon->Update();
 	currentWeapon = &spriteWeapons[*indexWeapon];
+	currentWeapon->Update();
 	rect = currentWeapon->GetCurrentFrame();
 	App->render->Blit(weaponsHUDTexture, 300 + (App->render->camera.x), 400, &rect);
 	

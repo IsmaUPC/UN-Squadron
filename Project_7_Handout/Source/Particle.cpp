@@ -39,7 +39,7 @@ bool Particle::Update(){
 	if (isAlive){
 
 		if(collider->type == Collider::Type::M_BOSS1_SHOT) path.Update();
-		if(collider->type == Collider::Type::SW_BOMB) path.Update();
+		if(collider->type == Collider::Type::SW_BOMB || collider->type == Collider::Type::SW_CEILING || collider->type == Collider::Type::SW_S_SHELL) path.Update();
 		if (path.GetCurrentAnimation() != nullptr)path.GetCurrentAnimation()->Update();
 		anim.Update();
 

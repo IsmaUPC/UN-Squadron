@@ -111,7 +111,7 @@ public:
 	int distanceBall=0;
 	bool firstSecond =true ;
 
-
+	SDL_Texture* SpecialWeaponTexture = nullptr;
 	Particle SpecialWeapon[11];
 	Animation SpecialWeaponAnim[11];
 

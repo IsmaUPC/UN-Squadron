@@ -28,10 +28,10 @@ bool ModuleParticles::Start(){
 	enemyShotTexture= App->textures->Load("Assets/EnemyShoot.png");
 	playerExplosionTexture = App->textures->Load("Assets/PlayerDead.png");
 	miniBoss1ShotTx = App->textures->Load("Assets/shot_miniBoss1.png");
-	soundExplosion = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");
 	boss1Tx = App->textures->Load("Assets/FinalBoss1.png");
+	SpecialWeaponTexture = App->textures->Load("Assets/SW_Texture.png");
 	
-	
+	soundExplosion = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");
 
 	//Shot boss
 	animBallShotBoss1.speed = 0.3f;
@@ -114,10 +114,29 @@ bool ModuleParticles::Start(){
 	//SPECIAL WEAPONS
 	int indexWeapon;
 	indexWeapon = App->sceneShop->BOMB;
-	SpecialWeapon[indexWeapon].anim.PushBack({ 0, 0, 10, 7 });
-	SpecialWeaponAnim[indexWeapon].PushBack({ 0, 0, 10, 7 });
+	SpecialWeaponAnim[indexWeapon].PushBack({ 22, 0, 22, 21 });
+	SpecialWeaponAnim[indexWeapon].PushBack({ 22, 0, 22, 21 });
+	SpecialWeaponAnim[indexWeapon].PushBack({ 0, 0, 22, 21 });
+	SpecialWeaponAnim[indexWeapon].PushBack({ 0, 0, 22, 21 });
+	SpecialWeaponAnim[indexWeapon].PushBack({ 0, 0, 22, 21 });
+	SpecialWeaponAnim[indexWeapon].speed = 0.1f;
+	SpecialWeaponAnim[indexWeapon].loop = false;
 	SpecialWeapon[indexWeapon].lifetime = 150;
 
+	indexWeapon = App->sceneShop->CEILING;
+	SpecialWeaponAnim[indexWeapon].PushBack({ 47, 0, 12, 32 });
+	SpecialWeaponAnim[indexWeapon].PushBack({ 62, 0, 12, 32 });
+	SpecialWeaponAnim[indexWeapon].speed = 0.2f;
+	SpecialWeapon[indexWeapon].lifetime = 150;
+
+	indexWeapon = App->sceneShop->S_SHELL;
+	SpecialWeaponAnim[indexWeapon].PushBack({ 40, 38, 117, 22 });
+	SpecialWeaponAnim[indexWeapon].PushBack({ 40, 67, 117, 22 });
+	SpecialWeaponAnim[indexWeapon].speed = 0.1f;
+	SpecialWeaponAnim[indexWeapon].loop = true;
+	SpecialWeapon[indexWeapon].lifetime = 50;
+
+	return true;
 
 	return true;
 }
@@ -125,17 +144,27 @@ bool ModuleParticles::Start(){
 bool ModuleParticles::CleanUp()
 {
 	LOG("Unloading particles");
+	App->textures->Unload(playerShotTexture);
+	App->textures->Unload(enemyShotTexture);
+	App->textures->Unload(playerExplosionTexture);
+	App->textures->Unload(miniBoss1ShotTx);
+	App->textures->Unload(boss1Tx);
+	App->textures->Unload(SpecialWeaponTexture);
+
+	App->audio->UnloadFx(soundExplosion);
 
 	// Delete all remaining active particles on application exit 
-	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
-		if(particles[i] != nullptr)
-		{
-			delete particles[i];
-			particles[i] = nullptr;
+		if (particles[i] != nullptr) {
+			for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
+				if (particles[i] != nullptr) {
+					delete particles[i];
+					particles[i] = nullptr;
+				}
+			}
 		}
 	}
-
 	return true;
 }
 
@@ -241,8 +270,14 @@ update_status ModuleParticles::Update()
 			particles[i]->SetStateParticle(status_Particle::STATE_PARTICLE_IDLE);
 		}
 
-		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_IDLE && particle->collider->type == Collider::Type::SW_BOMB){
+		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_IDLE && particle->collider->type == Collider::Type::SW_BOMB) {
 			particles[i]->path.SetCurrentAnimation(new Animation(SpecialWeaponAnim[App->sceneShop->BOMB]));
+		}
+		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_IDLE && particle->collider->type == Collider::Type::SW_CEILING) {
+			particles[i]->path.SetCurrentAnimation(new Animation(SpecialWeaponAnim[App->sceneShop->CEILING]));
+		}
+		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_IDLE && particle->collider->type == Collider::Type::SW_S_SHELL) {
+			particles[i]->path.SetCurrentAnimation(new Animation(SpecialWeaponAnim[App->sceneShop->S_SHELL]));
 		}
 
 		// Call particle Update. If it has reached its lifetime, destroy it
@@ -283,12 +318,12 @@ update_status ModuleParticles::PostUpdate()
 				App->render->Blit(miniBoss1ShotTx, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));		
 			}
 			//SWs
-			if (particle->collider->type == particle->collider->SW_BOMB) {
+			if (particle->collider->type == particle->collider->SW_BOMB || particle->collider->type == particle->collider->SW_CEILING || particle->collider->type == particle->collider->SW_S_SHELL || particle->collider->type == particle->collider->SW_GUNPOD) {
 				resizeParticle(particle);
 				particle->collider->SetPos(particle->spawnPos + particle->path.GetRelativePosition());
 				particle->position = particle->spawnPos + particle->path.GetRelativePosition();
 				particle->path.Update();
-				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));
+				App->render->Blit(SpecialWeaponTexture, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));
 			}
 			//shot enemy 
 			if (particle->collider->type == particle->collider->ENEMY_SHOT) {
@@ -440,6 +475,9 @@ Particle* ModuleParticles::AddSWParticle(const Particle& particle, int _indexWea
 
 				break;
 			case App->sceneShop->S_SHELL:
+				p->spawnPos.create(x, y);
+				p->lives = 10;
+				p->path.PushBack({ SCREEN_SPEED + 5, 0 }, 150, new Animation(SpecialWeaponAnim[_indexWeapon]));
 
 				break;
 			case App->sceneShop->T_LASER:
@@ -462,6 +500,10 @@ Particle* ModuleParticles::AddSWParticle(const Particle& particle, int _indexWea
 
 				break;
 			case App->sceneShop->CEILING:
+				p->spawnPos.create(x, y);
+				p->lives = 1;
+
+				p->path.PushBack({ SCREEN_SPEED , -4.f }, 25, new Animation(SpecialWeaponAnim[_indexWeapon]));
 
 				break;
 			case App->sceneShop->MEGACRUSH:

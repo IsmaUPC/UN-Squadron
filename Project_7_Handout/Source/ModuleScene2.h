@@ -31,6 +31,8 @@ public:
 	// Disables the player and the enemies
 	bool CleanUp();
 
+	void Win();
+
 private:
 
 	// BackGround

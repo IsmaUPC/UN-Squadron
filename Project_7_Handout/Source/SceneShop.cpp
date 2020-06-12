@@ -37,7 +37,6 @@ bool SceneShop::Start()
 	LOG("Loading background assets");
 
 	bool ret = true;
-	App->hud->Disable();
 	bgTexture = App->textures->Load("Assets/shop_bg3.png");
 	selectorTexture = App->textures->Load("Assets/selector_shop.png");
 	App->audio->PlayMusic("Assets/Store.ogg", 1.0f);
@@ -59,6 +58,10 @@ bool SceneShop::Start()
 
 	for (int i = 0; i < 11; i++) {
 		weapons[i].selected = false;
+	}
+
+	for (int i = 0; i < 11; i++) {
+		weapons[i].ammo = 0;
 	}
 
 	currentAnimationshopkeeper = &shopkeeperTalking;
@@ -120,7 +123,7 @@ update_status SceneShop::PreUpdate(){
 }
 
 update_status SceneShop::Update(){
-
+	
 	weaponsition = tiendaX + (6 * tiendaY);
 	
 	if (infiniteMoney) {
@@ -133,12 +136,15 @@ update_status SceneShop::Update(){
 			money = 9999990;
 	}
 
+
+
 	return update_status::UPDATE_CONTINUE;
 }
 
 bool SceneShop::CleanUp()
 {
 	saveInfo();
+	Mix_HaltMusic();
 	//Enable (and properly disable) the player module
 	App->textures->Unload(bgTexture);
 	App->textures->Unload(selectorTexture);
@@ -218,7 +224,7 @@ void SceneShop::select(){
 	case S_SHELL:
 		if (money >= 10000 || weapons[S_SHELL].selected == true) {
 			weapons[S_SHELL].priceWeapon = 10000;
-			weapons[S_SHELL].ammo = 5;
+			weapons[S_SHELL].ammo = 20;
 			activeSelected(S_SHELL);
 		}else {
 			App->audio->PlayFx(InsuficientMoney);
@@ -265,19 +271,15 @@ void SceneShop::select(){
 		break;
 	case EXIT:
 
-		/*for (int i = 0; i < 11; i++){
-			if (weapons[i].selected == true) {
-				AMMO[i] = weapons[i].ammo;
-			}
-		}*/
 
-		Mix_HaltMusic();
 		if (!newGame){
 			newGame = true;
 			App->fade->FadeToBlack(this, (Module*)App->level1, 90);
+
 		}else{
 			App->fade->FadeToBlack(this, (Module*)App->fade->getLastLevel(), 90);
 		}
+
 		break;
 	}
 }
@@ -289,6 +291,7 @@ void SceneShop::activeSelected(int _weapon){
 		App->audio->PlayFx(SelectWeapon);
 		money -= weapons[_weapon].priceWeapon;
 	}else {
+		weapons[_weapon].ammo = 0;
 		money += weapons[_weapon].priceWeapon;
 	}
 }
@@ -302,6 +305,7 @@ void SceneShop::loadInfo(){
 		pow = 0;
 		total = 0;
 		lives = 2;
+		newGame = false;
 		begin = true;
 		return;
 	}
