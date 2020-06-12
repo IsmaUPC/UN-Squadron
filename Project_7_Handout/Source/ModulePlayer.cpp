@@ -50,9 +50,9 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player textures");
 
-	timer= new Timer(500);
+	timer= new Timer(100);
 	timerHit = new Timer(2000);
-	CeilingCooldown = new Timer(400);
+	CeilingCooldown = new Timer(1000);
 	countTimeToShield = 5000 / 30;
 	
 	bool ret = true;
@@ -91,7 +91,7 @@ bool ModulePlayer::Start()
 	position.x = 80;
 	position.y = 230;
 	
-	int n_shots = 0;
+	int n_shots = 3;
 
 	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT }, Collider::Type::PLAYER, this);
 
@@ -100,8 +100,9 @@ bool ModulePlayer::Start()
 }
 
 update_status ModulePlayer::Update(){
+
 	if(statusPlayer == status_player::STATE_HIT)timerHit->update();
-	if (timerHit->check())statusPlayer = status_player::STATE_IDLE;
+	if (timerHit->check())statusPlayer = status_player::STATE_IDLE, n_shots=0;
 	//Save the position camera X
 	currentCameraX = App->render->camera.x;
 	timer->update();
@@ -111,6 +112,7 @@ update_status ModulePlayer::Update(){
 
 	//Move player with AWSD
 	if (!destroyed) {
+		CeilingCooldown->update();
 		MovePlayer();
 		SpecialWeapons();
 		//Activate God mode
@@ -302,49 +304,57 @@ void ModulePlayer::SpecialWeapons(){
 		}
 
 		//use weapon
-		if (App->input->keys[SDL_SCANCODE_K] == KEY_STATE::KEY_DOWN) {
-			if (!godMode){
+		if (App->input->keys[SDL_SCANCODE_K] == KEY_STATE::KEY_DOWN ) {
+			n_shots = 0;
+			if (!godMode) {
 				ammo[indexWeapon]--;
 			}
 
-			switch (indexWeapon){
-			case App->sceneShop->CLUSTER:
+				switch (indexWeapon) {
+				case App->sceneShop->CLUSTER:
 
-				break;
-			case App->sceneShop->PHOENIX:
+					break;
+				case App->sceneShop->PHOENIX:
 
-				break;
-			case App->sceneShop->FALCON:
+					break;
+				case App->sceneShop->FALCON:
 
-				break;
-			case App->sceneShop->BULLPUP:
+					break;
+				case App->sceneShop->BULLPUP:
 
-				break;
-			case App->sceneShop->S_SHELL:
-				App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 35, position.y + 10, Collider::Type::SW_S_SHELL);
-				
-				break;
-			case App->sceneShop->T_LASER:
+					break;
+				case App->sceneShop->S_SHELL:
 
-				break;
-			case App->sceneShop->BOMB:
-				App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 25, position.y + 15, Collider::Type::SW_BOMB);
+					//if (CeilingCooldown->check()) {
+						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 35, position.y + 10, Collider::Type::SW_S_SHELL);
+					
+					break;
+				case App->sceneShop->T_LASER:
 
-				break;
-			case App->sceneShop->NAPALM:
+					break;
+				case App->sceneShop->BOMB:
+					if (CeilingCooldown->check()) {
+						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 25, position.y + 15, Collider::Type::SW_BOMB);
+					}
+					break;
+				case App->sceneShop->NAPALM:
 
-				break;
-			case App->sceneShop->GUNPOD:
+					break;
+				case App->sceneShop->GUNPOD:
 
-				break;
-			case App->sceneShop->CEILING:
-				n_shots = 3;
-				break;
-			case App->sceneShop->MEGACRUSH:
+					break;
+				case App->sceneShop->CEILING:
+					if (CeilingCooldown->check()) {
+						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 25, position.y-5 , Collider::Type::SW_CEILING, 0);
+						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 35, position.y-5 , Collider::Type::SW_CEILING, 10);
+						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 45, position.y-5 , Collider::Type::SW_CEILING, 20);
+					}
+					break;
+				case App->sceneShop->MEGACRUSH:
 
-				break;
+					break;
+				}
 			}
-
 			if (ammo[indexWeapon] <= 0) {
 				bool noAmmo = false;
 				for (int i = 0; i < 11 && noAmmo == false; i++) {
@@ -356,16 +366,8 @@ void ModulePlayer::SpecialWeapons(){
 					}
 				}
 			}
-		}
 
-		if (n_shots >0){
-			CeilingCooldown->update();
-		}
-
-		if (n_shots > 0 && CeilingCooldown->check()) {
-			n_shots--;
-			App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 25, position.y + 5, Collider::Type::SW_CEILING);
-		}
+	
 	}
 
 

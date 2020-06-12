@@ -80,8 +80,7 @@ Enemy_RedShip::Enemy_RedShip(int x, int y,int _pattern) : Enemy(x, y,_pattern)
 
 	//path.PushBack({ 1.0f , 0.0f }, 250, &walkBack);
 	collider = App->collisions->AddCollider({ 0, 0, 66, 39 }, Collider::Type::ENEMY, (Module*)App->enemies);
-	int w = collider->rect.w;
-	int h = collider->rect.h;
+
 	if(pattern>=3)position.x -= SCREEN_WIDTH+100;
 	if (pattern == 2)pattern = 4, toRight = true, direction = -1, TOP = 250;
 	if (pattern == 1)pattern = 3 , toRight = true, direction = -1, TOP = 250;

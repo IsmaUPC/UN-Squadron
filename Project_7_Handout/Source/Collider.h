@@ -32,6 +32,7 @@ struct Collider
 		BOSS_EXPLOSION_BALL,
 		BOSS_SHOT_LASER,
 		BOSS_BURSTSHOT,
+		BOSS_MOAB,
 
 		MAX
 	};

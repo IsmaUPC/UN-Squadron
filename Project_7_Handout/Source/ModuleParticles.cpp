@@ -43,6 +43,10 @@ bool ModuleParticles::Start(){
 	pExplBallBoss1.anim.loop = false;
 	pExplBallBoss1.anim.speed = 0.3f;
 	ballShotBoss1.explodes = true;
+
+	//Moab
+	pMoabBoss1.path.PushBack({0,0},0,nullptr);
+	aMoabBoss1.PushBack({0,0,0,0});
 	
 
 	//Boss1 laser
@@ -96,7 +100,7 @@ bool ModuleParticles::Start(){
 	mBoss1Shot.path.PushBack({ SCREEN_SPEED , 0.0f }, 10, new Animation(mBoss1ShotOpening));
 	mBoss1Shot.path.PushBack({ -0.9 , 0.0f }, 25, new Animation(mBoss1ShotOpen));
 	mBoss1Shot.path.PushBack({ -3.0f  , 0.0f }, 25, new Animation(mBoss1ShotOpen));
-	mBoss1Shot.path.PushBack({ -5.0f  , 0.0f }, 150, new Animation(mBoss1ShotOpen));
+	mBoss1Shot.path.PushBack({ -4.0f  , 0.0f }, 150, new Animation(mBoss1ShotOpen));
 	mBoss1Shot.explodes = true;
 
 	//enemy laser
@@ -299,51 +303,36 @@ update_status ModuleParticles::PostUpdate()
 		//
 		if (particle != nullptr && particle->collider != nullptr && particle->isAlive)
 		{
-			if (particle->collider->type == particle->collider->BOSS1_SHOT_BALL) {
-
-				resizeParticle(particle);
-				particle->collider->SetPos(particle->spawnPos + particle->path.GetRelativePosition());
-				particle->position = particle->spawnPos + particle->path.GetRelativePosition();
-				particle->path.Update();
+			colliderI = particle->collider;
+			if (colliderI->type == Collider::Type::BOSS1_SHOT_BALL|| colliderI->type == Collider::Type::BOSS_MOAB) {
+				pathRefresh(particle);
 				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));
-				
-				if (particle->path.isFinish)particle->SetToDelete();
+				 if (particle->path.isFinish)particle->SetToDelete();
 			}
 			//Shot mini boss
-			if (particle->collider->type == particle->collider->M_BOSS1_SHOT) {
-				resizeParticle(particle);
-				particle->collider->SetPos(particle->spawnPos + particle->path.GetRelativePosition());
-				particle->position = particle->spawnPos + particle->path.GetRelativePosition();
-				particle->path.Update();
+			else if (colliderI->type == Collider::Type::M_BOSS1_SHOT ) {
+				pathRefresh(particle);
 				App->render->Blit(miniBoss1ShotTx, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));		
-			}
+			}	
 			//SWs
-			if (particle->collider->type == particle->collider->SW_BOMB || particle->collider->type == particle->collider->SW_CEILING || particle->collider->type == particle->collider->SW_S_SHELL || particle->collider->type == particle->collider->SW_GUNPOD) {
-				resizeParticle(particle);
-				particle->collider->SetPos(particle->spawnPos + particle->path.GetRelativePosition());
-				particle->position = particle->spawnPos + particle->path.GetRelativePosition();
-				particle->path.Update();
+			else if (colliderI->type == Collider::Type::SW_BOMB || colliderI->type == Collider::Type::SW_CEILING || colliderI->type == Collider::Type::SW_S_SHELL || colliderI->type == Collider::Type::SW_GUNPOD) {
+				pathRefresh(particle);
 				App->render->Blit(SpecialWeaponTexture, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));
 			}
 			//shot enemy 
-			if (particle->collider->type == particle->collider->ENEMY_SHOT) {
+			else if (colliderI->type == Collider::Type::ENEMY_SHOT) {
 				App->render->Blit(enemyShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));		
 			}
 			//player shot
-			else if (particle->collider->type == particle->collider->PLAYER_SHOT) {
+			else if (colliderI->type == Collider::Type::PLAYER_SHOT|| colliderI->type == Collider::Type::BOSS_SHOT_LASER) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
 			//Ball boss's explosion
-			else if (particle->collider->type == particle->collider->BOSS_EXPLOSION_BALL) {
+			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT) {
 				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
-			else if (particle->collider->type == particle->collider->BOSS_BURSTSHOT) {
-				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
-			}
-			else if (particle->collider->type == particle->collider->BOSS_SHOT_LASER) {
-				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
-			}
-			else if (particle->collider->type == particle->collider->NONE && particle->collider->type!=Collider::Type::BOSS_EXPLOSION_BALL) {
+	
+			else if (colliderI->type == Collider::Type::NONE && colliderI->type!=Collider::Type::BOSS_EXPLOSION_BALL) {
 				if (App->player->destroyed == true) {
 					
 						App->render->Blit(playerExplosionTexture, (particle->position.x - (particle->anim.GetCurrentFrame().w - PLAYER_WIDTH)),
@@ -364,6 +353,14 @@ update_status ModuleParticles::PostUpdate()
 	}
 
 	return update_status::UPDATE_CONTINUE;
+}
+
+void ModuleParticles::pathRefresh(Particle* particle)
+{
+	resizeParticle(particle);
+	particle->collider->SetPos(particle->spawnPos + particle->path.GetRelativePosition());
+	particle->position = particle->spawnPos + particle->path.GetRelativePosition();
+	particle->path.Update();
 }
 
 
@@ -420,24 +417,12 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 			if(p->collider->type== Collider::Type::NONE)App->audio->PlayFx(*(new int(soundExplosion)));
 				//Set direction to shotEnemy
 				if (p->collider->type == p->collider->ENEMY_SHOT) p = setShotDirection(p, x, y);
-				if (p->collider->type == p->collider->M_BOSS1_SHOT) {
-					//p->timerHitParticle = new Timer(100);
-					p->spawnPos.create(x, y);
+				if (p->collider->type == p->collider->M_BOSS1_SHOT) p->spawnPos.create(x, y);
+				if (p->collider->type == p->collider->BOSS1_SHOT_BALL)	createBallBoss(p, x, y);
+				if (p->collider->type == p->collider->BOSS_MOAB) {
 				
-				}
-				if(p->collider->type == p->collider->BOSS1_SHOT_BALL){
-					distanceBall = (firstSecond) ? 40: 0;
-					firstSecond = !firstSecond;
-
-					p->spawnPos.create(x, y);
-					p->lives = 4;
-					p->path.loop = false;
-					p->path.PushBack({ -0.5f,-1.0f  }, 50, new Animation(animBallShotBoss1));
-					p->path.PushBack({ -0.5f,-0.5f  }, 10, new Animation(animBallShotBoss1));
-					p->path.PushBack({ -0.5f,-0.0f  }, 5, new Animation(animBallShotBoss1));
-					p->path.PushBack({ -0.5f,+0.5f  }, 10, new Animation(animBallShotBoss1));
-					p->path.PushBack({ -0.5f,+1.0f  }, distanceBall, new Animation(animBallShotBoss1));
-					p->path.PushBack({ SCREEN_SPEED,0.0f  }, 0, new Animation(animBallShotBoss1));
+				
+				
 				}
 			}
 			particles[i] = p;
@@ -445,6 +430,22 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 		}
 	}
 	return p;
+}
+
+void ModuleParticles::createBallBoss(Particle* p, int x, int y)
+{
+	distanceBall = (firstSecond) ? 40 : 0;
+	firstSecond = !firstSecond;
+
+	p->spawnPos.create(x, y);
+	p->lives = 4;
+	p->path.loop = false;
+	p->path.PushBack({ -0.5f,-1.0f }, 50, new Animation(animBallShotBoss1));
+	p->path.PushBack({ -0.5f,-0.5f }, 10, new Animation(animBallShotBoss1));
+	p->path.PushBack({ -0.5f,-0.0f }, 5, new Animation(animBallShotBoss1));
+	p->path.PushBack({ -0.5f,+0.5f }, 10, new Animation(animBallShotBoss1));
+	p->path.PushBack({ -0.5f,+1.0f }, distanceBall, new Animation(animBallShotBoss1));
+	p->path.PushBack({ SCREEN_SPEED,0.0f }, 0, new Animation(animBallShotBoss1));
 }
 
 Particle* ModuleParticles::AddSWParticle(const Particle& particle, int _indexWeapon, int x, int y, Collider::Type colliderType, uint delay) {
@@ -503,7 +504,7 @@ Particle* ModuleParticles::AddSWParticle(const Particle& particle, int _indexWea
 				p->spawnPos.create(x, y);
 				p->lives = 1;
 
-				p->path.PushBack({ SCREEN_SPEED , -4.f }, 25, new Animation(SpecialWeaponAnim[_indexWeapon]));
+				p->path.PushBack({ 0.5f , -4.f }, 25, new Animation(SpecialWeaponAnim[_indexWeapon]));
 
 				break;
 			case App->sceneShop->MEGACRUSH:

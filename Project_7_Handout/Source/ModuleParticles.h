@@ -45,6 +45,8 @@ public:
 	// Iterates all the particles and draws them
 	update_status PostUpdate() override;
 
+	void pathRefresh(Particle* particle);
+
 	void resizeParticle(Particle* particle);
 
 	// Called on application exit
@@ -62,6 +64,8 @@ public:
 	// Param x, y		- Position x,y in the screen (upper left axis)
 	// Param delay		- Delay time from the moment the function is called until the particle is displayed in screen
 	Particle* AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType = Collider::Type::NONE, uint delay = 0);
+
+	void createBallBoss(Particle* p, int x, int y);
 
 	Particle* AddSWParticle(const Particle& particle, int _indexWeapon, int x, int y, Collider::Type colliderType = Collider::Type::NONE, uint delay = 0);
 private:
@@ -95,6 +99,7 @@ public:
 	Particle ballShotBoss1;
 	Particle pExplBallBoss1;
 	Particle pBurstshotBallBoss1;
+	Particle pMoabBoss1;
 
 	Particle bossBallLaser;
 
@@ -102,6 +107,8 @@ public:
 	Animation mBoss1ShotOpening;
 	Animation mBoss1ShotClose;
 	Animation hitMBoss1;
+
+	Animation aMoabBoss1;
 
 	Animation animBallShotBoss1;
 	Animation hitBallShotBoss1;
@@ -115,7 +122,7 @@ public:
 	Particle SpecialWeapon[11];
 	Animation SpecialWeaponAnim[11];
 
-
+	Collider* colliderI;
 
 	//Animation* currentAnim = nullptr;
 };

@@ -17,6 +17,7 @@ public:
 
 	void ballShot();
 	void burstShot();
+	void moab();
 
 private:
 

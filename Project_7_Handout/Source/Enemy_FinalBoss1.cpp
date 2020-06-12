@@ -159,4 +159,10 @@ void Enemy_FinalBoss1::burstShot() {
 		//Insert sound here
 		++burst;
 	}
+}void Enemy_FinalBoss1::moab() {
+
+	/*if () {
+		App->particles->AddParticle(, position.x, position.y , Collider::Type::);
+
+	}*/
 }
