@@ -99,7 +99,7 @@ void ModuleScene2::Win() {
 }
 update_status ModuleScene2::Update() {
 
-	if (App->hud->animFase == App->hud->IDLE) {
+	if (App->hud->animFase >= App->hud->IDLE) {
 		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
 			App->player->CleanUp();
 			CleanUp();

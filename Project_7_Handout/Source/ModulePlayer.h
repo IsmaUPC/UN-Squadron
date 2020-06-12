@@ -87,16 +87,24 @@ public:
 	Timer* timerHit;
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;
-	SDL_Texture* explosion = nullptr;
+	//SDL_Texture* explosion = nullptr;
+	SDL_Texture* smokeTexture = nullptr;
 	
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
+	Animation* smokeDamageAnimation = nullptr;
 
 	// A set of animations
 	Animation idleAnim;
 	Animation upAnim;
 	Animation downAnim;
+
+	Animation idleDamageAnim;
+	Animation upDamageAnim;
+	Animation downDamageAnim;
+
+	Animation SmokeAnim;
 
 	// The player's collider
 	Collider* collider = nullptr;

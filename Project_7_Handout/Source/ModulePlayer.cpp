@@ -21,20 +21,34 @@
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
 	// idle animation - just one sprite
-	idleAnim.PushBack({ 80, 4, 68, 20 });
-
+	idleAnim.PushBack({ 75, 0, 67, 19 });
+	for (int i = 0; i < 2; i++){
+		idleDamageAnim.PushBack({ 75, 24*i, 67, 19 });
+	}
+	idleDamageAnim.loop = true;
 	// move upwards
-	downAnim.PushBack({ 155, 4, 68, 24 });
-	//upAnim.PushBack({ 132, 0, 32, 14 });
-	upAnim.loop = false;
-	upAnim.speed = 0.1f;
-	
-
+	downAnim.PushBack({ 155, 0, 68, 23 });
+	for (int i = 0; i < 2; i++){
+		downDamageAnim.PushBack({ 155, 24*i, 68, 23 });
+	}
+	downDamageAnim.loop = true;
 	// Move down
-	upAnim.PushBack({ 5, 4, 68, 22 });
-	//downAnim.PushBack({ 0, 1, 32, 14 });
-	downAnim.loop = false;
-	downAnim.speed = 0.1f;
+	upAnim.PushBack({ 0, 0, 67, 21 });
+	for (int i = 0; i < 2; i++) {
+		upDamageAnim.PushBack({ 0, 24 * i, 67, 21 });
+	}
+	upDamageAnim.loop = true;
+	downDamageAnim.speed = idleDamageAnim.speed = upDamageAnim.speed = 0.2f;
+	
+	//Smoke Damage
+	for (int i = 0; i < 3; i++){
+		SmokeAnim.PushBack({ 177 + (i * 38),65,38,14 });
+	}
+	for (int i = 2; i >= 0; i--){
+		SmokeAnim.PushBack({ 177 + (i * 38),65,38,14 });
+	}
+	SmokeAnim.loop = true;
+	SmokeAnim.speed = 0.5f;
 }
 
 ModulePlayer::~ModulePlayer(){
@@ -81,8 +95,11 @@ bool ModulePlayer::Start()
 		}
 	}
 
-	texture = App->textures->Load("Assets/PlayerSprites.png");
+	texture = App->textures->Load("Assets/PlayerSprites3.png");
 	currentAnimation = &idleAnim;
+
+	smokeTexture = App->textures->Load("Assets/PlayerDead2.png");
+	smokeDamageAnimation = &SmokeAnim;
 
 	laserFx = App->audio->LoadFx("Assets/PlayerShoot.wav");
 	
@@ -146,6 +163,7 @@ update_status ModulePlayer::Update(){
 	if (cooldown <= 0) cooldown = 11;
 
 	currentAnimation->Update();
+	smokeDamageAnimation->Update();
 	if (destroyed){
 		destroyedCountdown--;
 		if (destroyedCountdown <= 0){
@@ -167,9 +185,21 @@ update_status ModulePlayer::Update(){
 
 update_status ModulePlayer::PostUpdate()
 {
+	SDL_Rect rectsmoke;
+	SDL_Rect rectPlayer;
+	rectPlayer = currentAnimation->GetCurrentFrame();
+	rectsmoke = smokeDamageAnimation->GetCurrentFrame();
+
 	if (!destroyed){
-		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		App->render->Blit(texture, position.x, position.y, &rect);
+		if (oneHit){
+			App->render->Blit(smokeTexture, position.x - 17, position.y + 7, &rectsmoke);
+			App->render->Blit(smokeTexture, position.x - 17, position.y + 2, &rectsmoke);
+			App->render->Blit(texture, position.x, position.y, &rectPlayer);
+			App->render->Blit(smokeTexture, position.x - 7, position.y + 5, &rectsmoke);
+		}else{
+			App->render->Blit(texture, position.x, position.y, &rectPlayer);
+		}
+
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -239,8 +269,8 @@ void ModulePlayer::MovePlayer() {
 		//Check that the position does not exceed the screen limit :D
 		if (position.x > currentCameraX) {
 			position.x -= speed;
-		}
-		else position.x = currentCameraX;
+		}else position.x = currentCameraX;
+
 	}
 
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT || pad.l_x > 0){
@@ -257,9 +287,9 @@ void ModulePlayer::MovePlayer() {
 		taking into account the height of the player*/
 		if (position.y < (SCREEN_HEIGHT - (PLAYER_HEIGHT + 40))) {
 			position.y += speed;
-			if (currentAnimation != &downAnim) {
+			if (currentAnimation != &downAnim && currentAnimation != &downDamageAnim) {
 				downAnim.Reset();
-				currentAnimation = &downAnim;
+				currentAnimation = (oneHit) ?&downDamageAnim : &downAnim;			
 			}
 		} else position.y = SCREEN_HEIGHT - (PLAYER_HEIGHT + 40);
 	
@@ -270,18 +300,18 @@ void ModulePlayer::MovePlayer() {
 		places the player to position 0*/
 		if (position.y > 82) {
 			position.y -= speed;
-			if (currentAnimation != &upAnim){
+			if (currentAnimation != &upAnim && currentAnimation != &upDamageAnim){
 				upAnim.Reset();
-				currentAnimation = &upAnim;
+				currentAnimation = (oneHit) ? &upDamageAnim : &upAnim;
 			}
 		} else position.y = 82;
 	}
 	// If no up/down movement detected, set the current animation back to idle
 	if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE || pad.l_y > 0)
 		&& (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE || pad.l_y < 0))
-		currentAnimation = &idleAnim;
+			currentAnimation = (oneHit) ? &idleDamageAnim : &idleAnim;
 
-
+	
 }
 
 void ModulePlayer::SpecialWeapons(){
