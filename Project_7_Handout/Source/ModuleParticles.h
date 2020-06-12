@@ -34,6 +34,8 @@ public:
 	// Removes all particles pending to delete
 	update_status PreUpdate() override;
 
+	void laserBallExplosion(const uint& i);
+
 	// Called at the middle of the application loop
 	// Iterates all the particles and calls its Update()
 	// Removes any "dead" particles
@@ -68,13 +70,14 @@ private:
 	SDL_Texture* playerExplosionTexture = nullptr;
 	SDL_Texture* enemyShotTexture = nullptr;
 	SDL_Texture* miniBoss1ShotTx = nullptr;
+	SDL_Texture* boss1Tx = nullptr;
 
 	float xPlayer , yPlayer = 0;
 	float escalar = 0;
 	float magnitudPlayer = 0;
 	float magnitudEnemy = 0;
 	float angulo=0;
-	int velShotEnemy = 0;
+	int speedShots = 0;
 	
 	uint explosionFx;
 	// An array to store and handle all the particles
@@ -89,15 +92,29 @@ public:
 	Particle enemyLaser;
 	Particle mBoss1Shot;
 	Particle explosionEnemies;
+	Particle ballShotBoss1;
+	Particle pExplBallBoss1;
+	Particle pBurstshotBallBoss1;
+
+	Particle bossBallLaser;
+
 	Animation mBoss1ShotOpen;
 	Animation mBoss1ShotOpening;
 	Animation mBoss1ShotClose;
-	Animation hit;
+	Animation hitMBoss1;
+
+	Animation animBallShotBoss1;
+	Animation hitBallShotBoss1;
+	Animation explosionBallBoss1;
 
 	int soundExplosion;
+	int distanceBall=0;
+	bool firstSecond =true ;
 
+	SDL_Texture* SpecialWeaponTexture = nullptr;
 	Particle SpecialWeapon[11];
 	Animation SpecialWeaponAnim[11];
+
 
 
 	//Animation* currentAnim = nullptr;

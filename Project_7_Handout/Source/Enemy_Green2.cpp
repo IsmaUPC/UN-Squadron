@@ -4,7 +4,6 @@
 #include "ModulePlayer.h"
 #include "ModuleCollisions.h"
 #include <math.h>
-#define PI 3.141592
 
 Enemy_Green2::Enemy_Green2(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 {

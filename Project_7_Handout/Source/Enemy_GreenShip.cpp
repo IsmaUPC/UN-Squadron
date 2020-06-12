@@ -50,11 +50,11 @@ Enemy_GreenShip::Enemy_GreenShip(int x, int y, int _pattern) : Enemy(x, y,_patte
 	loopToRight.loop = true;
 	loopToRight.speed = 0.3f;
 
-	loopToLeft.PushBack({ 497,213,54,16 });
+	loopToLeft.PushBack({ 497,210,54,16 });
 	loopToLeft.PushBack({ 435,221,54, 20 });
 	loopToLeft.PushBack({ 373,214,54, 31 });
 	loopToLeft.PushBack({ 194,315,54, 20 });
-	loopToLeft.PushBack({ 497,233,54,16 });
+	loopToLeft.PushBack({ 497,230,54,16 });
 	loopToLeft.PushBack({ 923,315,54,20 });
 	loopToLeft.PushBack({ 920,214,53, 31 });
 	loopToLeft.PushBack({ 979,219,54, 20 });

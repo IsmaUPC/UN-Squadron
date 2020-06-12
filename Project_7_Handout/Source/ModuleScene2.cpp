@@ -4,11 +4,13 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
+#include "ModuleInput.h"
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
 #include "HUD.h"
+#include <SDL_mixer\include\SDL_mixer.h>
 
 
 ModuleScene2::ModuleScene2(bool startEnabled) : Module(startEnabled)
@@ -17,12 +19,12 @@ ModuleScene2::ModuleScene2(bool startEnabled) : Module(startEnabled)
 }
 
 ModuleScene2::~ModuleScene2() {
-	CleanUp();
 
+	CleanUp();
+	
 }
 // Load assets
-bool ModuleScene2::Start()
-{
+bool ModuleScene2::Start(){
 	App->player->Enable();
 	App->hud->Enable();
 	App->enemies->Enable();
@@ -85,10 +87,34 @@ bool ModuleScene2::Start()
 	return ret;
 }
 
+void ModuleScene2::Win() {
+	//CleanUp();
+	Mix_HaltMusic();
+	App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
+	//App->render->camera.x = 0;
+	//SCREEN_SPEED == 0;
+
+}
 update_status ModuleScene2::Update() {
 
-	if (App->render->camera.x >= 3200)
-	{
+	if (App->hud->animFase == App->hud->IDLE) {
+		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
+			App->player->CleanUp();
+			Win();
+		}
+
+		if (App->input->keys[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
+			App->player->godMode = true;
+			App->player->DEAD();
+			App->player->CleanUp();
+			Mix_HaltMusic();
+			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
+		}
+	}
+
+
+
+	if (App->render->camera.x >= 3200){
 		App->render->camera.x =0;
 		App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneWin, 60);
 	}
@@ -127,13 +153,11 @@ update_status ModuleScene2::PostUpdate() {
 	App->render->Blit(bgTexture, 1538 * moveBG2, Y_BG, NULL, 2);
 	//App->render->Blit(bgTexture, 1538 * (cont+1), Y_BG, NULL, 1.4f);
 
-	
-
 	return update_status::UPDATE_CONTINUE;
 }
 
-bool ModuleScene2::CleanUp()
-{
+bool ModuleScene2::CleanUp(){
+
 	//Enable (and properly disable) the player module
 	App->player->Disable();
 	App->enemies->Disable();
@@ -143,7 +167,6 @@ bool ModuleScene2::CleanUp()
 	//App->audio->Disable();
 
 	App->textures->Unload(bgTexture);
-
 
 	return true;
 }

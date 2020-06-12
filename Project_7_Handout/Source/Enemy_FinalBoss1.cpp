@@ -10,6 +10,9 @@ Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pat
 	timerState = new Timer(60);
 	timerStateCollision = new Timer(2000);
 	timerAnim = new Timer(100);
+	timerBallShot = new Timer(5000);
+	timerBurstShot = new Timer(150);
+
 	//Animation
 	FirsAnim.PushBack({ 7,10,261,160 });
 	currentAnim = &FirsAnim;
@@ -43,6 +46,11 @@ Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pat
 
 
 void Enemy_FinalBoss1::Update() {
+	timerBallShot->update();
+	timerBurstShot->update();
+	
+	
+
 	if(stateEnemy == status_Enemies::STATE_ENEMY_HIT)timerState->update();
 	if (timerState->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
 
@@ -66,11 +74,11 @@ void Enemy_FinalBoss1::OnCollision(Collider* collider){
 
 void Enemy_FinalBoss1::move() {
 
+	burstShot();
 	float vecX[4] = { 0.75 ,SCREEN_SPEED ,1.25 ,SCREEN_SPEED };
 	float vecY[4] = { 0.55, 0, -0.55, 0 };
-	if (collider->pendingToDelete != true){
-	collider->SetPos(position.x, position.y + ((*currentAnim).GetCurrentFrame().h / 3) - (collider->rect.h / 3));
-}
+	if (collider->pendingToDelete != true)	collider->SetPos(position.x, position.y + ((*currentAnim).GetCurrentFrame().h / 3) - (collider->rect.h / 3));
+	if (pattern > 1 && timerBallShot->check())ballShot(), burst = 0;
 	switch (pattern) {
 	case 0:
 		if (xRecorrido < SCREEN_WIDTH + 90)
@@ -121,7 +129,7 @@ void Enemy_FinalBoss1::move() {
 		{
 			xRecorrido += 1;
 			position.y += 0.55;
-			position.x += 0.75;
+			position.x += 0.78;
 		}
 		else xRecorrido = 0, change = true, pattern = 3;
 		break;
@@ -134,5 +142,22 @@ void Enemy_FinalBoss1::move() {
 		}
 		else xRecorrido = 0, change=false,pattern = 3;
 		break;
+	}
+}
+
+
+void Enemy_FinalBoss1::ballShot() {
+
+	App->particles->AddParticle(App->particles->ballShotBoss1, position.x+105, position.y+70, Collider::Type::BOSS1_SHOT_BALL);
+	App->particles->AddParticle(App->particles->ballShotBoss1, position.x+105, position.y+10, Collider::Type::BOSS1_SHOT_BALL);
+
+
+}
+void Enemy_FinalBoss1::burstShot() {
+
+	if (timerBurstShot->check() && burst < 4) {
+		App->particles->AddParticle(App->particles->pBurstshotBallBoss1, position.x, position.y + 60, Collider::Type::BOSS_BURSTSHOT);
+		//Insert sound here
+		++burst;
 	}
 }

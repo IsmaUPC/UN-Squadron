@@ -11,7 +11,8 @@ Particle::Particle()
 }
 
 Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed),
-frameCount(p.frameCount), lifetime(p.lifetime),timerHitParticle(p.timerHitParticle), lives(p.lives){
+frameCount(p.frameCount), lifetime(p.lifetime),timerHitParticle(p.timerHitParticle), 
+lives(p.lives),explodes(p.explodes), inmortal(p.inmortal),path(p.path){
 	
 }
 
@@ -38,7 +39,7 @@ bool Particle::Update(){
 	if (isAlive){
 
 		if(collider->type == Collider::Type::M_BOSS1_SHOT) path.Update();
-		if(collider->type == Collider::Type::SW_BOMB) path.Update();
+		if(collider->type == Collider::Type::SW_BOMB || collider->type == Collider::Type::SW_CEILING || collider->type == Collider::Type::SW_S_SHELL) path.Update();
 		if (path.GetCurrentAnimation() != nullptr)path.GetCurrentAnimation()->Update();
 		anim.Update();
 

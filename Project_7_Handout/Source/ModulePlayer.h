@@ -46,6 +46,8 @@ public:
 	int* getTotal() { return &total; };
 	int* getLives() { return &lives; };
 
+	void DEAD() { lives--; };
+
 	status_player getStatusPlayer() { return statusPlayer; }
 
 	int* getindeWeapon() { return &indexWeapon; };
@@ -116,14 +118,20 @@ public:
 	// hud information
 	int money = 0;
 	int score = 0;
-	int level = 0;
+	int level = 1;
 	int pow = 0;
 	int total = 0;
-	int lives = 0;
+	int lives = 2;
 
+
+	//SW
 	int indexWeapon = 0;
 	int ammo[11] = {0};
-
+	int n_shots = 0;
+	bool use_SW = false;
+	//Celing
+	Timer* CeilingCooldown;
+	int x_posCeling;
 };
 
 #endif //!__MODULE_PLAYER_H__

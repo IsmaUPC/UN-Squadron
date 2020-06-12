@@ -23,8 +23,12 @@ void Path::Update()
 		else if (loop) // Otherwise, if the path loops, go back to the beginning
 		{
 			currentStep = 0;
+		}else  {
+			isFinish=true;
 		}
+
 		currentStepFrame = 0;
+
 	}
 
 	relativePosition += steps[currentStep].speed;

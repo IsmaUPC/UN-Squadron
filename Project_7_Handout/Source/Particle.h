@@ -42,11 +42,15 @@ public:
 	// Defines the speed at which the particle will move (pixels per second)
 	fPoint speed;
 
-	Path path ;
+	Path path;
+
 	fPoint spawnPos;
 	Timer* timerHitParticle = nullptr;
 	// A set of rectangle sprites
 	Animation anim;
+
+	bool inmortal = false;
+	bool explodes = false;
 
 	// Defines wether the particle is alive or not
 	// Particles will be set to not alive until "spawnTime" is reached

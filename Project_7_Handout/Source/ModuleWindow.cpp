@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Globals.h"
 
+#include "SDL_image/include/SDL_image.h"
 #include "SDL/include/SDL.h"
 
 
@@ -12,8 +13,9 @@ ModuleWindow::ModuleWindow(bool startEnabled) : Module(startEnabled)
 ModuleWindow::~ModuleWindow()
 {}
 
-bool ModuleWindow::Init()
-{
+bool ModuleWindow::Init(){
+	
+	icon = IMG_Load("Assets/logo_1.png");
 	LOG("Init SDL window & surface");
 	bool ret = true;
 
@@ -21,9 +23,7 @@ bool ModuleWindow::Init()
 	{
 		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
-	}
-	else
-	{
+	}else{
 		//Create window
 		Uint32 flags = SDL_WINDOW_SHOWN;
 
@@ -39,15 +39,14 @@ bool ModuleWindow::Init()
 		if (WIN_FULLSCREEN_DESKTOP == true)
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
-		window = SDL_CreateWindow("Project 7 - Enemies", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE, flags);
+		window = SDL_CreateWindow("U.N.Squadron", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE, flags);
+		
+		SDL_SetWindowIcon(window, icon);
 
-		if (window == nullptr)
-		{
+		if (window == nullptr){
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			ret = false;
-		}
-		else
-		{
+		}else{
 			screenSurface = SDL_GetWindowSurface(window);
 		}
 	}
@@ -59,6 +58,7 @@ bool ModuleWindow::CleanUp()
 {
 	LOG("Destroying SDL window and quitting all SDL systems");
 
+	SDL_FreeSurface(icon);
 	//Destroy window
 	if (window != nullptr)
 		SDL_DestroyWindow(window);
