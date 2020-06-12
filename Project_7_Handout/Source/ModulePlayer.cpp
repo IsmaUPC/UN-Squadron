@@ -413,6 +413,7 @@ void ModulePlayer::loadInfo() {
 		SDL_RWread(f, &pow, sizeof(int), 1);
 		SDL_RWread(f, &total, sizeof(int), 1);
 		SDL_RWread(f, &lives, sizeof(int), 1);
+		SDL_RWread(f, &damage, sizeof(int), 1);
 		for (int i = 0; i < 11; i++) {
 			SDL_RWread(f, &ammo[i], sizeof(int), 1);
 		}
@@ -430,9 +431,9 @@ void ModulePlayer::saveInfo() {
 	SDL_RWwrite(f, &pow, sizeof(int), 1);
 	SDL_RWwrite(f, &total, sizeof(int), 1);
 	SDL_RWwrite(f, &lives, sizeof(int), 1);
+	SDL_RWwrite(f, &damage, sizeof(int), 1);
 	for (int i = 0; i < 11; i++) {
 		SDL_RWwrite(f, &ammo[i], sizeof(int), 1);
 	}
-
 	SDL_RWclose(f);
 }
