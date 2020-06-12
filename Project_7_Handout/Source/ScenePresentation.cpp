@@ -10,6 +10,13 @@
 
 ScenePresentation::ScenePresentation(bool startEnabled) : Module(startEnabled)
 {
+	for (int i = 0; i < 8; i++) {
+		Presentation_Anim.PushBack({ 510 * i,0,510,443 });
+	}
+
+	Presentation_Anim.speed = 0.009f;
+	Presentation_Anim.loop = false;
+	currentAnim = nullptr;
 
 }
 
@@ -25,13 +32,12 @@ bool ScenePresentation::Start()
 	LOG("Loading background assets");
 
 
-
 	bool ret = true;
 
-	bgTexture = App->textures->Load("Assets/Presentation.png");
-	App->audio->PlayMusic("Assets/01_Introduction.ogg", 1.0f);
+	bgTexture = App->textures->Load("Assets/Presentation_sprite.png");
+	//App->audio->PlayMusic("Assets/01_Introduction.ogg", 1.0f);
 
-	App->render->camera.x, App->render->camera.y = 0;
+	currentAnim = &Presentation_Anim;
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -60,6 +66,10 @@ update_status ScenePresentation::PostUpdate()
 
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, NULL);
+
+	currentAnim->Update();
+	App->render->Blit(bgTexture, 0, 0, &(currentAnim->GetCurrentFrame()));
+
 	return update_status::UPDATE_CONTINUE;
 }
 
