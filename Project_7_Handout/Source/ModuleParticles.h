@@ -109,6 +109,7 @@ public:
 	Animation hitMBoss1;
 
 	Particle pMoabBoss1;
+	Particle pMoabDownBoss1;
 	Animation aMoabBoss1;
 	Animation aMoabDownBoss1;
 
@@ -117,6 +118,7 @@ public:
 	Animation explosionBallBoss1;
 
 	int soundExplosion;
+
 	int distanceBall=0;
 	bool firstSecond =true ;
 

@@ -48,12 +48,23 @@ bool ModuleParticles::Start(){
 	for (int i = 0; i < 3; i++) 
 		pMoabBoss1.anim.PushBack({ 556+(45*i),313,45,20 });
 	for (int i = 0; i < 3; i++) {
-		pMoabBoss1.anim.PushBack({ 556 + (45 * i),342,45,38 });
-		pMoabBoss1.anim.PushBack({ 556 + (45 * i),342,45,38 });
+		aMoabBoss1.PushBack({ 556 + (45 * i),342,45,38 });
+		aMoabDownBoss1.PushBack({ 556 + (45 * i),342,45,38 });
+		pMoabDownBoss1.anim.PushBack({ 556 + (45 * i),342,45,38 });
 	}
-	pMoabBoss1.anim.speed = 0.2f;
-	pMoabBoss1.speed.y = 3.0f;
+	pMoabBoss1.path.PushBack({1.0f,1.0f},10,&aMoabBoss1);
+	pMoabBoss1.path.PushBack({1.0f,1.0f},10,&aMoabDownBoss1);
+
+
+	pMoabBoss1.anim.speed = 0.25f;
+	pMoabBoss1.speed.y = 2.0f;
+	pMoabBoss1.speed.x = SCREEN_SPEED;
 	pMoabBoss1.explodes = true;
+	pMoabBoss1.anim.loop = true;
+
+	pMoabDownBoss1.speed.y = 2.0f;
+	pMoabDownBoss1.speed.x = -1.0f;
+	pMoabDownBoss1.anim.loop = true;
 	
 
 	//Boss1 laser

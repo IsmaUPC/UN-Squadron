@@ -27,8 +27,7 @@ ModuleEnemies::ModuleEnemies(bool startEnabled) : Module(startEnabled)
 		enemies[i] = nullptr;
 }
 
-ModuleEnemies::~ModuleEnemies()
-{
+ModuleEnemies::~ModuleEnemies(){
 
 }
 
