@@ -121,6 +121,9 @@ public:
 	Animation explosionBallBoss1;
 	Animation openWings;
 
+	//Animation aBoss2Shot;
+	Particle pBoss2Shot;
+
 	int soundExplosion;
 
 	int distanceBall=0;

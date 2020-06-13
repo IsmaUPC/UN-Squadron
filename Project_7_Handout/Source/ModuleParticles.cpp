@@ -56,7 +56,7 @@ bool ModuleParticles::Start(){
 	aMoabDownBoss1.speed= 0.5f;
 	pMoabBoss1.path.PushBack({1.0f,0.50f},5, new Animation(aMoabBoss1));
 	pMoabBoss1.path.PushBack({1.0f,1.0f},5, new Animation(aMoabBoss1));
-	pMoabBoss1.path.PushBack({1.0f,3.0f},50, new Animation(aMoabDownBoss1));
+	pMoabBoss1.path.PushBack({1.0f,3.0f},155, new Animation(aMoabDownBoss1));
 	pMoabBoss1.path.loop = false;
 	pMoabBoss1.speed.x = SCREEN_SPEED;
 	pMoabBoss1.explodes = true;
@@ -64,6 +64,13 @@ bool ModuleParticles::Start(){
 	pMoabDownBoss1.speed.y = 2.0f;
 	pMoabDownBoss1.speed.x = -1.0f;
 	
+	//Boss2 Shot
+	for (int i = 0; i < 5; i++) 
+		pBoss2Shot.anim.PushBack({ 695 ,315,25,18 });
+	for (int i = 0; i < 7; i++)
+		pBoss2Shot.anim.PushBack({ 728 + (38 * i),307,38,37 });
+	pBoss2Shot.anim.speed= 0.15f;
+	pBoss2Shot.anim.loop = false;
 
 
 
@@ -345,8 +352,8 @@ update_status ModuleParticles::PostUpdate()
 			else if (colliderI->type == Collider::Type::PLAYER_SHOT|| colliderI->type == Collider::Type::BOSS_SHOT_LASER) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
-			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT) {
-				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
+			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT|| colliderI->type == Collider::Type::BOSS2_SHOT) {
+				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame())); 
 			}
 			else if (colliderI->type == Collider::Type::NONE && colliderI->type!=Collider::Type::BOSS_EXPLOSION_BALL) {
 				if (App->player->destroyed == true) {	

@@ -17,6 +17,7 @@ public:
 	void Anim2();
 	void move();
 	bool win = true;
+	void shotSmallBombs();
 private:
 	// A set of steps that define the position in the screen
 	// And an animation for each step
@@ -24,6 +25,13 @@ private:
 	Timer* timerState;
 	Timer* timerStateCollision;//Whith player
 	Timer* timerAnim;
+
+	Timer* timerShotBombs;
+	Timer* timerCadenceBombs;
+	int limitBombs =8;
+	int randPos=0;
+
+
 	int xRecorrido = 0;
 	float radio = 4;
 	float radianes;

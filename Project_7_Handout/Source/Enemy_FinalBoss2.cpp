@@ -15,6 +15,8 @@ Enemy_FinalBoss2::Enemy_FinalBoss2(int x, int y, int _pattern) :Enemy(x, y, _pat
 	timerState = new Timer(60);
 	timerStateCollision = new Timer(2000);
 	timerAnim = new Timer(100);
+	timerShotBombs = new Timer(5000);
+	timerCadenceBombs = new Timer(100);
 
 	FirsAnim.PushBack({ 2,34,85,32 });
 	currentAnim = &FirsAnim;
@@ -31,7 +33,12 @@ Enemy_FinalBoss2::Enemy_FinalBoss2(int x, int y, int _pattern) :Enemy(x, y, _pat
 }
 
 void Enemy_FinalBoss2::Update() {
-	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT)timerState->update();
+	timerState->update();
+	timerShotBombs->update();
+	timerCadenceBombs->update();
+
+	if (timerCadenceBombs->check())shotSmallBombs();
+
 	if (timerState->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
 
 	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT_COLLISION)timerStateCollision->update();
@@ -68,8 +75,7 @@ void Enemy_FinalBoss2::OnCollision(Collider* collider)
 
 bool Enemy_FinalBoss2::upDown(bool _Do)
 {
-	if (_Do == false)
-	{
+	if (_Do == false){
 		if (position.y < App->player->position.y) UpDown = false;
 		else UpDown = true;
 		Do = true;
@@ -137,6 +143,8 @@ void Enemy_FinalBoss2::move() {
 		case 4:
 			if (xRecorrido < 120)
 			{
+				if (timerShotBombs->check())limitBombs = 0;
+
 				if (timerAnim->check())currentAnim = &Inclined;
 				xRecorrido++;
 				position.x += 3;
@@ -217,6 +225,8 @@ void Enemy_FinalBoss2::move() {
 		case 1:
 			if (xRecorrido < 135)
 			{
+				if (timerShotBombs->check())limitBombs = 0;
+
 				xRecorrido++;
 				position.x += 3.1;
 				position.y -= 2;
@@ -447,3 +457,12 @@ void Enemy_FinalBoss2::move() {
 		break;
 	}
 }
+
+void Enemy_FinalBoss2::shotSmallBombs(){
+	randPos = (rand() % 50)-25;
+	if (limitBombs<8) {
+		App->particles->AddParticle(App->particles->pBoss2Shot, position.x , position.y + randPos, Collider::Type::BOSS2_SHOT);
+		++limitBombs;
+	}
+}
+
