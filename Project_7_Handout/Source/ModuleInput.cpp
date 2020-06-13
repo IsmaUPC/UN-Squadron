@@ -59,6 +59,9 @@ update_status ModuleInput::PreUpdate()
 	SDL_Event event;
 	while (SDL_PollEvent(&event) != 0)
 	{
+		if (keys[SDL_SCANCODE_ESCAPE]) {
+			event.type = SDL_QUIT;
+		}
 		switch (event.type)
 		{
 		case(SDL_CONTROLLERDEVICEADDED):
@@ -77,9 +80,7 @@ update_status ModuleInput::PreUpdate()
 			break;
 		}
 		}
-		if (keys[SDL_SCANCODE_ESCAPE]) {
-			return update_status::UPDATE_STOP;
-		}
+
 	}
 
 	UpdateGamepadsInput();

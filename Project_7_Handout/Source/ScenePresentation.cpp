@@ -10,11 +10,16 @@
 
 ScenePresentation::ScenePresentation(bool startEnabled) : Module(startEnabled)
 {
-	for (int i = 0; i < 25; i++) {
+	for (int i = 0; i < 21; i++) {
 		Presentation_Anim.PushBack({ 503 * i,0,503,443 });
+		if (i == 4 || i == 12 || i == 21){
+			for (int j = 0; j < 6; j++){
+				Presentation_Anim.PushBack({ 503 * i,0,503,443 });
+			}
+		}
 	}
 
-	Presentation_Anim.speed = 0.08f;
+	Presentation_Anim.speed = 0.15f;
 	Presentation_Anim.loop = false;
 	currentAnim = nullptr;
 
@@ -47,6 +52,7 @@ bool ScenePresentation::Start()
 
 update_status ScenePresentation::Update() {
 	GamePad& pad = App->input->pads[0];
+	currentAnim->Update();
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) {
 		Mix_HaltMusic();
@@ -67,7 +73,6 @@ update_status ScenePresentation::PostUpdate()
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, NULL);
 
-	currentAnim->Update();
 	App->render->Blit(bgTexture, 0, 0, &(currentAnim->GetCurrentFrame()));
 
 	return update_status::UPDATE_CONTINUE;

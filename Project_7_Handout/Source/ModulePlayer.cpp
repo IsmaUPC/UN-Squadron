@@ -17,6 +17,8 @@
 
 #include "SDL/include/SDL_scancode.h"
 
+#define GUNPOD_SHOTS 40
+#define CEILING_SHOTS 3
 
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
@@ -55,9 +57,9 @@ ModulePlayer::~ModulePlayer(){
 
 	if (collider != nullptr)
 		collider->pendingToDelete = true;
-	App->textures->Unload(texture);
+	//App->textures->Unload(texture);
 
-	CleanUp();
+	//CleanUp();
 }
 
 bool ModulePlayer::Start()
@@ -66,7 +68,6 @@ bool ModulePlayer::Start()
 
 	timer= new Timer(100);
 	timerHit = new Timer(2000);
-	CeilingCooldown = new Timer(1000);
 	countTimeToShield = 6000 / 30;
 	statusPlayer = status_player::STATE_HIT;
 
@@ -111,7 +112,14 @@ bool ModulePlayer::Start()
 	position.y = 230;
 	
 	int n_shots = 3;
-
+	//SW_Gunpod
+	n_shotsGunPod = GUNPOD_SHOTS;
+	shotGunpod = false;
+	GunPodTimer = new Timer(60);
+	//SW_Ceiling
+	n_shotsCeiling = CEILING_SHOTS;
+	shotCeiling = false;
+	CeilingTimer = new Timer(400);
 	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT }, Collider::Type::PLAYER, this);
 
 
@@ -125,13 +133,14 @@ update_status ModulePlayer::Update(){
 	//Save the position camera X
 	currentCameraX = App->render->camera.x;
 	timer->update();
+	GunPodTimer->update();
+	CeilingTimer->update();
 	timeRegeneration();
 	// Moving the player with the camera scroll
 	App->player->position.x += SCREEN_SPEED;
 
 	//Move player with AWSD
 	if (!destroyed) {
-		CeilingCooldown->update();
 		MovePlayer();
 		SpecialWeapons();
 		//Activate God mode
@@ -322,7 +331,7 @@ void ModulePlayer::MovePlayer() {
 
 void ModulePlayer::SpecialWeapons(){
 
-	if (indexWeapon != 12){
+	if (indexWeapon != 12 && !use_SW) {
 
 		//change weapon
 		if (App->input->keys[SDL_SCANCODE_J] == KEY_STATE::KEY_DOWN) {
@@ -346,7 +355,7 @@ void ModulePlayer::SpecialWeapons(){
 				ammo[indexWeapon]--;
 			}
 
-				switch (indexWeapon) {
+			switch (indexWeapon) {
 				case App->sceneShop->CLUSTER:
 
 					break;
@@ -369,22 +378,19 @@ void ModulePlayer::SpecialWeapons(){
 
 					break;
 				case App->sceneShop->BOMB:
-					if (CeilingCooldown->check()) {
 						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 25, position.y + 15, Collider::Type::SW_BOMB);
-					}
+					
 					break;
 				case App->sceneShop->NAPALM:
 
 					break;
 				case App->sceneShop->GUNPOD:
-
+					shotGunpod = true;
+					use_SW = true;
 					break;
 				case App->sceneShop->CEILING:
-					if (CeilingCooldown->check()) {
-						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 25, position.y-5 , Collider::Type::SW_CEILING, 0);
-						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 35, position.y-5 , Collider::Type::SW_CEILING, 10);
-						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 45, position.y-5 , Collider::Type::SW_CEILING, 20);
-					}
+					shotCeiling = true;
+					use_SW = true;
 					break;
 				case App->sceneShop->MEGACRUSH:
 
@@ -406,7 +412,27 @@ void ModulePlayer::SpecialWeapons(){
 	
 	}
 
+	if (shotGunpod && GunPodTimer->check()) {
+		n_shotsGunPod--;
+		App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 43, position.y - 2, Collider::Type::SW_GUNPOD);
+		if (n_shotsGunPod <= 0) {
+			use_SW = false;
+			shotGunpod = false;
+			n_shotsGunPod = GUNPOD_SHOTS;
+		}
+	}
 
+	if (shotCeiling && CeilingTimer->check()) {
+		n_shotsCeiling--;
+		x_posCeling = (n_shotsCeiling == 2) ? 10 : (n_shotsCeiling == 1) ? -10 : 0;
+		App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + (35 + x_posCeling), position.y - 5, Collider::Type::SW_CEILING);
+
+		if (n_shotsCeiling <= 0) {
+			use_SW = false;
+			shotCeiling = false;
+			n_shotsCeiling = CEILING_SHOTS;
+		}
+	}
 }
 
 void ModulePlayer::loadInfo() {

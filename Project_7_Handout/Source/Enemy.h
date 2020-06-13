@@ -53,7 +53,7 @@ public:
 	// Sets flag for deletion and for the collider aswell
 	virtual void SetToDelete();
 
-	void CleanUp();
+	 virtual void CleanUp();
 	// The current position in the world
 	fPoint position;
 
