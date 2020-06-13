@@ -228,13 +228,17 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 			if (enemies[i]->lives <= 0)	{
 				enemies[i]->SetToDelete();
 				SDL_Rect colliderI = enemies[i]->GetCollider()->rect;
+				//TODO: add particle power up
+				if (rand()%20 == 0)
+					App->particles->AddParticle(App->particles->PowerUp, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2, Collider::Type::POWERUP);
+				
 				App->particles->AddParticle(App->particles->explosionEnemies, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2);
 				//App->audio->PlayFx(enemies[i]->destroyedFx);
 			}
 			
 			break;
 
-
+			
 		}
 	}
 }

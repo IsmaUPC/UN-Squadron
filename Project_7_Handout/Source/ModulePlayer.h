@@ -54,6 +54,7 @@ public:
 
 	int* getAmmo(int i) {return &ammo[i]; };
 
+	void caughtPowerup(int sum);
 
 	void playerShot();
 

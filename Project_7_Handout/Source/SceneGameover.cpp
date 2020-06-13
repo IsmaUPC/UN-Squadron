@@ -45,7 +45,7 @@ bool SceneGameover::Start()
 
 	GameOvercurrentAnim = &GameOverbg;
 
-	fade = new Timer(1000);
+	fade = new Timer(3500);
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;

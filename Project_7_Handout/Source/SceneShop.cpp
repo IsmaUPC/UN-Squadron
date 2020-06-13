@@ -141,8 +141,8 @@ update_status SceneShop::Update(){
 	return update_status::UPDATE_CONTINUE;
 }
 
-bool SceneShop::CleanUp()
-{
+bool SceneShop::CleanUp(){
+
 	saveInfo();
 	Mix_HaltMusic();
 	//Enable (and properly disable) the player module
@@ -203,8 +203,7 @@ update_status SceneShop::PostUpdate(){
 
 void SceneShop::select(){
 
-	switch (weaponsition)
-	{
+	switch (weaponsition){
 	case CLUSTER:
 		App->audio->PlayFx(InsuficientMoney);
 
@@ -301,7 +300,7 @@ void SceneShop::loadInfo(){
 		money = 30000;
 		score = 0;
 		level = 1;
-		pow = 0;
+		pow = 3;
 		total = 0;
 		lives = 2;
 		damage = 1;

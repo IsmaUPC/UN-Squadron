@@ -62,7 +62,7 @@ public:
 	int money=30000;
 	int score=0;
 	int level=1;
-	int pow=0;
+	int pow=3;
 	int total=0;
 	int lives=2;
 	int damage = 1;
