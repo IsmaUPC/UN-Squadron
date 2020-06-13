@@ -8,7 +8,7 @@ Timer::Timer(int miliseconds){
 	acumulator = 0;
 	total = 0;
 	cur_time =SDL_GetTicks(); 
-	last_time = SDL_GetTicks()+ miliseconds*2;
+	last_time = SDL_GetTicks();
 }
 int Timer::ready() {
 	return acumulator > interval;
