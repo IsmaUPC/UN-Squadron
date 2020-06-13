@@ -139,8 +139,15 @@ public:
 	int n_shots = 0;
 	bool use_SW = false;
 	//Celing
-	Timer* CeilingCooldown;
+	bool shotCeiling;
+	Timer* CeilingTimer;
 	int x_posCeling;
+	int n_shotsCeiling = 0;
+
+	//GunPod
+	bool shotGunpod;
+	int n_shotsGunPod = 0;
+	Timer* GunPodTimer;
 };
 
 #endif //!__MODULE_PLAYER_H__

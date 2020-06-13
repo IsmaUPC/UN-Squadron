@@ -7,6 +7,7 @@
 #include "ModuleScene.h"
 #include "ModuleScene2.h"
 #include "ModuleAudio.h"
+#include "ModuleParticles.h"
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
 #include "Timer.h"
@@ -14,14 +15,13 @@
 
 #include <SDL_mixer\include\SDL_mixer.h>
 
-SceneWin::SceneWin(bool startEnabled) : Module(startEnabled)
-{
+SceneWin::SceneWin(bool startEnabled) : Module(startEnabled){
 
 }
 
-SceneWin::~SceneWin()
-{
+SceneWin::~SceneWin(){
 
+	CleanUp();
 }
 
 // Load assets
@@ -35,6 +35,7 @@ bool SceneWin::Start()
 	App->player->Disable();
 	App->level1->Disable();
 	App->level2->Disable();
+	//App->particles->Disable();
 	bgTexture = App->textures->Load("Assets/16_Stage_Clear.png");
 	App->audio->PlayMusic("Assets/16_Stage_Clear.ogg", 1.0f);
 	App->render->cameraSpeed=0;

@@ -46,19 +46,16 @@ Application::Application()
 	modules[13] = player = new ModulePlayer(false);		//Player starts disabled	
 
 	modules[14] = hud = new HUD(false);
-	modules[15] = collisions = new ModuleCollisions(true);
-	modules[16] = fade = new ModuleFadeToBlack(true);
-	modules[17] = fonts = new ModuleFonts(true);
+	modules[15] = fonts = new ModuleFonts(true);
+	modules[16] = collisions = new ModuleCollisions(true);
+	modules[17] = fade = new ModuleFadeToBlack(true);
 	modules[18] = render = new ModuleRender(true);
-
-
 
 }
 
-Application::~Application()
-{
-	for (int i = 0; i < NUM_MODULES; ++i)
-	{
+Application::~Application(){
+
+	for (int i = 0; i < NUM_MODULES; ++i){
 		//Important: when deleting a pointer, set it to nullptr afterwards
 		//It allows us for null check in other parts of the code
 		delete modules[i];
@@ -85,8 +82,8 @@ Module* Application::GetActualScene(){
 	return actual;
 }
 
-void Application::SetActualScene(Module* scene)
-{
+void Application::SetActualScene(Module* scene){
+
 	actual = scene;
 }
 
@@ -108,13 +105,12 @@ update_status Application::Update()
  
 
 
-bool Application::CleanUp()
-{
+bool Application::CleanUp(){
+
 	bool ret = true;
 
 	for (int i = NUM_MODULES - 1; i >= 0 && ret; --i)
 		ret = modules[i]->IsEnabled() ? modules[i]->CleanUp() : true;
-
 
 	return ret;
 }

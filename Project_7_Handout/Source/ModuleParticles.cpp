@@ -17,7 +17,7 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled)
 }
 
 ModuleParticles::~ModuleParticles(){
-
+	//CleanUp();
 }
 
 bool ModuleParticles::Start(){
@@ -158,7 +158,11 @@ bool ModuleParticles::Start(){
 	SpecialWeaponAnim[indexWeapon].loop = true;
 	SpecialWeapon[indexWeapon].lifetime = 50;
 
-	return true;
+	indexWeapon = App->sceneShop->GUNPOD;
+	SpecialWeaponAnim[indexWeapon].PushBack({ 138, 0, 15, 16 });
+	SpecialWeaponAnim[indexWeapon].speed = 0.1f;
+	SpecialWeaponAnim[indexWeapon].loop = true;
+	SpecialWeapon[indexWeapon].lifetime = 60;
 
 	return true;
 }
@@ -514,7 +518,10 @@ Particle* ModuleParticles::AddSWParticle(const Particle& particle, int _indexWea
 
 				break;
 			case App->sceneShop->GUNPOD:
+				p->spawnPos.create(x, y);
+				p->lives = 1;
 
+				p->path.PushBack({ SCREEN_SPEED + 11.5f ,-11.5f }, 60, new Animation(SpecialWeaponAnim[_indexWeapon]));
 				break;
 			case App->sceneShop->CEILING:
 				p->spawnPos.create(x, y);

@@ -11,9 +11,22 @@ ModuleFonts::ModuleFonts(bool isEnabled) : Module(isEnabled)
 
 }
 
-ModuleFonts::~ModuleFonts()
-{
+ModuleFonts::~ModuleFonts(){
+	CleanUp();
+}
 
+bool ModuleFonts::CleanUp(){
+
+	/*LOG("Freeing all fonts\n");
+
+	for (uint i = 0; i < MAX_FONTS; ++i){
+		if (fonts[i].texture != nullptr){
+			App->textures->Unload(fonts[i].texture);
+			fonts[i].texture = nullptr;
+		}
+	}
+	*/
+	return true;
 }
 
 // Load new texture from file path
