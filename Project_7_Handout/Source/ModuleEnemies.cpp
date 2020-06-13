@@ -34,7 +34,7 @@ ModuleEnemies::~ModuleEnemies()
 
 bool ModuleEnemies::Start()
 {
-	textureEnemies = App->textures->Load("Assets/UNSquadronSpritesEnemies.png");
+	textureEnemies = App->textures->Load("Assets/UNSquadronSpritesEnemies2.png");
 	finalBoss1= App->textures->Load("Assets/FinalBoss1.png");
 	finalBoss2 = App->textures->Load("Assets/FinalBoss2.png");
 	enemyDestroyedFx = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");

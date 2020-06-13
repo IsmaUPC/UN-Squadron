@@ -39,25 +39,26 @@ Enemy_GreenShip::Enemy_GreenShip(int x, int y, int _pattern) : Enemy(x, y,_patte
 	twistToLeft.loop = false;
 	twistToLeft.speed = 0.15f;
 
-	loopToRight.PushBack({ 557,213,53,16 });
-	loopToRight.PushBack({ 619,221,53, 20 });
-	loopToRight.PushBack({ 680,214,54, 31 });
-	loopToRight.PushBack({ 846,315,54, 21 });
-	loopToRight.PushBack({ 557,233,53, 16 });
-	loopToRight.PushBack({ 108,315,53, 20 });
-	loopToRight.PushBack({ 134,214,54, 31 });
-	loopToRight.PushBack({ 74,219,54, 20  });
+	loopToRight.PushBack({ 0,596,54,31 });
+	loopToRight.PushBack({ 54,596,54, 31 });
+	loopToRight.PushBack({ 108,596,54, 31 });
+	loopToRight.PushBack({ 162,596,54, 31 });
+	loopToRight.PushBack({ 216,596,54, 31 });
+	loopToRight.PushBack({ 270,596,54, 31 });
+	loopToRight.PushBack({ 324,596,54, 31 });
+	loopToRight.PushBack({ 378,596,54, 31  });
+	loopToRight.PushBack({ 432,596,54, 31 });
 	loopToRight.loop = true;
 	loopToRight.speed = 0.3f;
 
-	loopToLeft.PushBack({ 497,210,54,16 });
-	loopToLeft.PushBack({ 435,221,54, 20 });
-	loopToLeft.PushBack({ 373,214,54, 31 });
-	loopToLeft.PushBack({ 194,315,54, 20 });
-	loopToLeft.PushBack({ 497,230,54,16 });
-	loopToLeft.PushBack({ 923,315,54,20 });
-	loopToLeft.PushBack({ 920,214,53, 31 });
-	loopToLeft.PushBack({ 979,219,54, 20 });
+	loopToLeft.PushBack({ 1053,596,54,31 });
+	loopToLeft.PushBack({ 999,596,54,31 });
+	loopToLeft.PushBack({ 945,596,54,31 });
+	loopToLeft.PushBack({ 891,596,54,31 });
+	loopToLeft.PushBack({ 837,596,54,31 });
+	loopToLeft.PushBack({ 783,596,54,31 });
+	loopToLeft.PushBack({ 729,596,54,31 });
+	loopToLeft.PushBack({ 675,596,54,31 });
 	loopToLeft.loop = true;
 	loopToLeft.speed = 0.3f;
 
