@@ -119,8 +119,9 @@ public:
 
 	// Sound effects indices
 	uint laserFx = 0;
-	uint explosionFx = 0;
-
+	uint playerHit = 0;
+	uint playerInDanger = 0;
+	uint playerDead = 0;
 
 
 	// hud information

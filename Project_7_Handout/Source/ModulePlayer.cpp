@@ -67,7 +67,7 @@ bool ModulePlayer::Start()
 	timer= new Timer(100);
 	timerHit = new Timer(2000);
 	CeilingCooldown = new Timer(1000);
-	countTimeToShield = 5000 / 30;
+	countTimeToShield = 6000 / 30;
 	
 	bool ret = true;
 	destroyedCountdown = 120;
@@ -102,8 +102,9 @@ bool ModulePlayer::Start()
 	smokeDamageAnimation = &SmokeAnim;
 
 	laserFx = App->audio->LoadFx("Assets/PlayerShoot.wav");
-	
-	explosionFx = App->audio->LoadFx("Assets/10_Effect_Die.wav");
+	playerHit = App->audio->LoadFx("Assets/HitPlayer.wav");
+	playerInDanger = App->audio->LoadFx("Assets/PlayerInDanger.wav");
+	playerDead = App->audio->LoadFx("Assets/PlayerDead.wav");
 
 	position.x = 80;
 	position.y = 230;
@@ -210,26 +211,28 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
 		
 		if (oneHit == false){
 			oneHit = true;
+			App->audio->PlayFx(playerHit);
 			App->hud->hitOnPlayer();
 			statusPlayer = status_player::STATE_HIT;
+			App->audio->PlayFx(playerInDanger);
 		}else if(statusPlayer==status_player::STATE_IDLE){
 			if (App->hud->animFase == App->hud->DAMAGE){
+				App->audio->UnloadFx(playerInDanger);
+				App->audio->PlayFx(playerDead);
 				App->hud->hitOnPlayer();
 				destroyed = true;
 				collider->pendingToDelete = true;
 				App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE);
-				//App->audio->PlayFx(explosionFx);
 			}
 		}
 	}
-
 }
 void ModulePlayer::timeRegeneration(){
 	if (oneHit == true){
 		countTimeToShield--;
 		if (countTimeToShield <=0) {
 			oneHit = false;
-			countTimeToShield = 5900 / 30;
+			countTimeToShield = 6000 / 30;
 			App->hud->shield();
 		}
 	}
@@ -242,7 +245,9 @@ bool ModulePlayer::CleanUp(){
 	saveInfo();
 	App->textures->Unload(texture);
 	App->audio->UnloadFx(laserFx);
-	App->audio->UnloadFx(explosionFx);
+	App->audio->UnloadFx(playerHit);
+	App->audio->UnloadFx(playerInDanger);
+	App->audio->UnloadFx(playerDead);
 
 	return true;
 }
