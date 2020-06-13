@@ -68,7 +68,8 @@ bool ModulePlayer::Start()
 	timerHit = new Timer(2000);
 	CeilingCooldown = new Timer(1000);
 	countTimeToShield = 6000 / 30;
-	
+	statusPlayer = status_player::STATE_HIT;
+
 	bool ret = true;
 	destroyedCountdown = 120;
 	oneHit = false;
@@ -119,7 +120,7 @@ bool ModulePlayer::Start()
 
 update_status ModulePlayer::Update(){
 
-	if(statusPlayer == status_player::STATE_HIT)timerHit->update();
+	timerHit->update();
 	if (timerHit->check())statusPlayer = status_player::STATE_IDLE, n_shots=0;
 	//Save the position camera X
 	currentCameraX = App->render->camera.x;
@@ -209,11 +210,11 @@ update_status ModulePlayer::PostUpdate()
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
 	if (c1 == collider && destroyed == false && godMode==false)	{
 		
-		if (oneHit == false){
+		if (!oneHit){
 			oneHit = true;
 			App->audio->PlayFx(playerHit);
-			App->hud->hitOnPlayer();
 			statusPlayer = status_player::STATE_HIT;
+			App->hud->hitOnPlayer();
 			App->audio->PlayFx(playerInDanger);
 		}else if(statusPlayer==status_player::STATE_IDLE){
 			if (App->hud->animFase == App->hud->DAMAGE){

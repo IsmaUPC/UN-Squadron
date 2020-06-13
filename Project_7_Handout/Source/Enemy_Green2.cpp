@@ -88,7 +88,7 @@ void Enemy_Green2::move() {
 		{
 			if (timerAnim->check()) currentAnim = &FirsAnim;
 			xRecorrido++;
-			position.x += -1;
+			position.x += -2;
 		}
 		else
 		{

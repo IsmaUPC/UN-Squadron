@@ -74,7 +74,7 @@ private:
 	int currentCameraX;
 	Timer* timer;
 	
-	status_player statusPlayer;
+	status_player statusPlayer= status_player::STATE_IDLE;
 	int countTimeToShield;
 
 public:

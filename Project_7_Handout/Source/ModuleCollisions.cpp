@@ -93,6 +93,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::BOSS1][Collider::Type::BOSS1_SHOT_BALL] = false;
 	matrix[Collider::Type::BOSS1][Collider::Type::BOSS_SHOT_LASER] = false;
 	matrix[Collider::Type::BOSS1][Collider::Type::BOSS_BURSTSHOT] = false;
+	matrix[Collider::Type::BOSS1][Collider::Type::BOSS_MOAB] = false;
 
 	matrix[Collider::Type::NONE][Collider::Type::M_BOSS1_SHOT] = false;
 	matrix[Collider::Type::NONE][Collider::Type::PLAYER] = false;
@@ -107,6 +108,8 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::NONE][Collider::Type::M_BOSS1] = false;
 	matrix[Collider::Type::NONE][Collider::Type::BOSS1] = false;
 	matrix[Collider::Type::NONE][Collider::Type::BOSS2] = false;
+	matrix[Collider::Type::NONE][Collider::Type::BOSS_MOAB] = false;
+
 
 	matrix[Collider::Type::BOSS_EXPLOSION_BALL][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::BOSS_EXPLOSION_BALL][Collider::Type::ENEMY] = false;
@@ -246,6 +249,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::BOSS_SHOT_LASER][Collider::Type::BOSS1_SHOT_BALL] = false;
 	matrix[Collider::Type::BOSS_SHOT_LASER][Collider::Type::BOSS1] = false;
 	matrix[Collider::Type::BOSS_SHOT_LASER][Collider::Type::BOSS_EXPLOSION_BALL] = false;
+	matrix[Collider::Type::BOSS_SHOT_LASER][Collider::Type::BOSS_MOAB] = false;
 
 	matrix[Collider::Type::BOSS_BURSTSHOT][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::BOSS_BURSTSHOT][Collider::Type::ENEMY] = false;
@@ -260,6 +264,19 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::BOSS_BURSTSHOT][Collider::Type::BOSS1] = false;
 	matrix[Collider::Type::BOSS_BURSTSHOT][Collider::Type::BOSS_EXPLOSION_BALL] = false;
 	matrix[Collider::Type::BOSS_BURSTSHOT][Collider::Type::BOSS_BURSTSHOT] = false;
+
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::PLAYER_SHOT] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::SW_BOMB] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::SW_CEILING] = true;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::SW_GUNPOD] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::SW_S_SHELL] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::ENEMY_SHOT] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::BOSS_MOAB] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::NONE] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::BOSS1] = false;
+	matrix[Collider::Type::BOSS_MOAB][Collider::Type::BOSS_SHOT_LASER] = false;
 
 
 }
