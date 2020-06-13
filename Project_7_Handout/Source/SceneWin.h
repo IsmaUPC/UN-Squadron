@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include"Path.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 
@@ -32,6 +33,7 @@ public:
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
+	Timer* fade;
 
 };
 
