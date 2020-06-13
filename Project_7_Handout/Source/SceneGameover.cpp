@@ -10,6 +10,8 @@
 #include "HUD.h"
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
+#include "Timer.h"
+#include <SDL_mixer\include\SDL_mixer.h>
 
 SceneGameover::SceneGameover(bool startEnabled) : Module(startEnabled){
 
@@ -43,6 +45,7 @@ bool SceneGameover::Start()
 
 	GameOvercurrentAnim = &GameOverbg;
 
+	fade = new Timer(1000);
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -52,15 +55,18 @@ bool SceneGameover::Start()
 
 update_status SceneGameover::Update(){
 
-	GamePad& pad = App->input->pads[0];
 
+	fade->update();
 	if (GameOvercurrentAnim != nullptr) {
 		GameOvercurrentAnim->Update();
 	}
 
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) {
+	//if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) {
+	if (fade->check()){
+		Mix_HaltMusic();
 		App->fade->FadeToBlack(this, (Module*)App->sceneShop, 60);
 	}
+	
 	
 
 

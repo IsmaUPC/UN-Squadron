@@ -150,12 +150,13 @@ bool HUD::Start()
 
 update_status HUD::Update() {
 
+	/*
 	if (App->input->keys[SDL_SCANCODE_H] == KEY_STATE::KEY_DOWN){
 		hitOnPlayer();
 	}
 	if (App->input->keys[SDL_SCANCODE_J] == KEY_STATE::KEY_DOWN) {
 		shield();
-	}
+	}*/
 
 	switch (animFase){
 	case ENY:

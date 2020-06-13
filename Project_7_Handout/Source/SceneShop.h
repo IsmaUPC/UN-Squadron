@@ -65,6 +65,7 @@ public:
 	int pow=0;
 	int total=0;
 	int lives=2;
+	int damage = 1;
 
 	bool infiniteMoney = false;
 

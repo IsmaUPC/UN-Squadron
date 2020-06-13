@@ -9,8 +9,9 @@
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
-
+#include "Timer.h"
 #include "HUD.h"
+
 #include <SDL_mixer\include\SDL_mixer.h>
 
 SceneWin::SceneWin(bool startEnabled) : Module(startEnabled)
@@ -38,6 +39,8 @@ bool SceneWin::Start()
 	App->audio->PlayMusic("Assets/16_Stage_Clear.ogg", 1.0f);
 	App->render->cameraSpeed=0;
 
+	fade = new Timer(1000);
+
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
@@ -46,10 +49,9 @@ bool SceneWin::Start()
 
 update_status SceneWin::Update()
 {
-	GamePad& pad = App->input->pads[0];
+	fade->update();
 
-
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a){
+	if (fade->check()) {
 		Mix_HaltMusic();
 		App->fade->FadeToBlack(this, (Module*)App->sceneShop, 60);
 	}

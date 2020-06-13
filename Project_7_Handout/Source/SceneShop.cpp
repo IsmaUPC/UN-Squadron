@@ -304,6 +304,7 @@ void SceneShop::loadInfo(){
 		pow = 0;
 		total = 0;
 		lives = 2;
+		damage = 1;
 		newGame = false;
 		begin = true;
 		return;
@@ -318,6 +319,7 @@ void SceneShop::loadInfo(){
 		SDL_RWread(f, &pow, sizeof(int), 1);
 		SDL_RWread(f, &total, sizeof(int), 1);
 		SDL_RWread(f, &lives, sizeof(int), 1);
+		SDL_RWread(f, &damage, sizeof(int), 1);
 		for (int i = 0; i < 11; i++) {
 			SDL_RWread(f, &weapons[i].ammo, sizeof(int), 1);
 		}
@@ -335,10 +337,10 @@ void SceneShop::saveInfo(){
 	SDL_RWwrite(f, &pow, sizeof(int), 1);
 	SDL_RWwrite(f, &total, sizeof(int), 1);
 	SDL_RWwrite(f, &lives, sizeof(int), 1);
+	SDL_RWwrite(f, &damage, sizeof(int), 1);
 	for (int i = 0; i < 11; i++){
 		SDL_RWwrite(f, &weapons[i].ammo, sizeof(int), 1);
 	}
-	
 	SDL_RWclose(f);
 }
 
