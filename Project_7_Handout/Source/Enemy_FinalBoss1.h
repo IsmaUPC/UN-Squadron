@@ -12,6 +12,7 @@ public:
 	Enemy_FinalBoss1(int x, int y, int _pattern);
 	virtual void OnCollision(Collider* collider);
 	void Update() override;
+	void updateAllTimers();
 	void move();
 	bool win = true;
 
@@ -27,8 +28,12 @@ private:
 	float yRecorrido = 0;
 	int TOP = 90;
 	int i = 3;
+	int delay=0;
 	bool change = false;
+	bool pasXtoBoss = false;
 	int burst = 4;
+	int randMoab;
+
 	//bool isAlive;
 	// A set of steps that define the position in the screen
 	// And an animation for each step
@@ -37,6 +42,7 @@ private:
 	Timer* timerStateCollision;//Whith player
 	Timer* timerAnim;
 	Timer* timerBallShot;
+	Timer* timerMoabShot;
 	Timer* timerBurstShot;
 	// This enemy has one sprite and one frame
 	// We are keeping it an animation for consistency with other enemies

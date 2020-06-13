@@ -12,6 +12,7 @@ Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pat
 	timerAnim = new Timer(100);
 	timerBallShot = new Timer(5000);
 	timerBurstShot = new Timer(150);
+	timerMoabShot = new Timer(2000);
 
 	//Animation
 	FirsAnim.PushBack({ 7,10,261,160 });
@@ -45,9 +46,9 @@ Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pat
 
 
 void Enemy_FinalBoss1::Update() {
-	timerBallShot->update();
-	timerBurstShot->update();
-	
+	updateAllTimers();
+	if (App->player->position.x > position.x&& App->player->position.x > position.x)pasXtoBoss = true;
+	else if (App->player->position.x < position.x)pasXtoBoss=false;
 	
 
 	if(stateEnemy == status_Enemies::STATE_ENEMY_HIT)timerState->update();
@@ -56,12 +57,19 @@ void Enemy_FinalBoss1::Update() {
 	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT_COLLISION)timerStateCollision->update();
 	if (timerStateCollision->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
 
-	timerAnim->update();
 	if (timerAnim->check())currentAnim = &FirsAnim;
 	move();
 	// Call to the base class. It must be called at the end
 	// It will update the collider depending on the position
 	Draw();
+}
+
+void Enemy_FinalBoss1::updateAllTimers()
+{
+	timerBallShot->update();
+	timerBurstShot->update();
+	timerMoabShot->update();
+	timerAnim->update();
 }
 void Enemy_FinalBoss1::OnCollision(Collider* collider){
 	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
@@ -76,7 +84,14 @@ void Enemy_FinalBoss1::move() {
 	float vecX[4] = { 0.75 ,SCREEN_SPEED ,1.25 ,SCREEN_SPEED };
 	float vecY[4] = { 0.55, 0, -0.55, 0 };
 	if (collider->pendingToDelete != true)	collider->SetPos(position.x, position.y + ((*currentAnim).GetCurrentFrame().h / 3) - (collider->rect.h / 3));
-	if (pattern > 1 && timerBallShot->check())ballShot(), burst = 0;
+	if (pattern > 1) {
+		if (timerBallShot->check())	ballShot(), burst = 0;
+		if (timerMoabShot->check()) moab();
+		
+	}
+
+
+
 	switch (pattern) {
 	case 0:
 		if (xRecorrido < SCREEN_WIDTH + 90)
@@ -145,21 +160,21 @@ void Enemy_FinalBoss1::move() {
 
 
 void Enemy_FinalBoss1::ballShot() {
-
 	App->particles->AddParticle(App->particles->ballShotBoss1, position.x+105, position.y+70, Collider::Type::BOSS1_SHOT_BALL);
 	App->particles->AddParticle(App->particles->ballShotBoss1, position.x+105, position.y+10, Collider::Type::BOSS1_SHOT_BALL);
-
-
 }
 void Enemy_FinalBoss1::burstShot() {
 
 	if (timerBurstShot->check() && burst < 4) {
 		App->particles->AddParticle(App->particles->pBurstshotBallBoss1, position.x, position.y + 60, Collider::Type::BOSS_BURSTSHOT);
 		//Insert sound here
-		moab();
 		++burst;
 	}
 }void Enemy_FinalBoss1::moab() {
-		App->particles->AddParticle(App->particles->pMoabBoss1, position.x + 105, position.y + 120, Collider::Type::BOSS_MOAB);
-	
+	delay = 20;
+	randMoab = (rand() % 4)+1;
+	if (pasXtoBoss && App->player->position.y > position.y) {
+		if ((pattern % 2) != 0) for (int i = 0; i < randMoab; i++) App->particles->AddParticle(App->particles->pMoabBoss1, position.x + 105 + (i * delay), position.y + 120, Collider::Type::BOSS_MOAB, delay * i);
+		else for (int i = 0; i < randMoab; i++) App->particles->AddParticle(App->particles->pMoabDownBoss1,( position.x-10 )+ (i * delay), position.y + 90, Collider::Type::BOSS_MOAB, delay * i);
+	}
 }
