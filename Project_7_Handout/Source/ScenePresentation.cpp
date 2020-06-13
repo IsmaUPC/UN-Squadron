@@ -10,11 +10,11 @@
 
 ScenePresentation::ScenePresentation(bool startEnabled) : Module(startEnabled)
 {
-	for (int i = 0; i < 8; i++) {
-		Presentation_Anim.PushBack({ 510 * i,0,510,443 });
+	for (int i = 0; i < 25; i++) {
+		Presentation_Anim.PushBack({ 503 * i,0,503,443 });
 	}
 
-	Presentation_Anim.speed = 0.009f;
+	Presentation_Anim.speed = 0.08f;
 	Presentation_Anim.loop = false;
 	currentAnim = nullptr;
 
