@@ -39,6 +39,8 @@ bool ModuleScene2::Start(){
 
 	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 6);
 
+
+
 	// Enemies ---	
 	
 	App->enemies->spawningEnemies(1,ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
@@ -102,7 +104,6 @@ update_status ModuleScene2::Update() {
 	if (App->hud->animFase >= App->hud->IDLE) {
 		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
 			App->player->CleanUp();
-			CleanUp();
 			bosses = 0;
 			Win();
 		}
@@ -111,7 +112,6 @@ update_status ModuleScene2::Update() {
 			App->player->godMode = true;
 			App->player->DEAD();
 			App->player->CleanUp();
-			CleanUp();
 			Mix_HaltMusic();
 			App->fade->FadeToBlack((Module*)App->GetActualScene(), (Module*)App->sceneGameover, 60);
 		}

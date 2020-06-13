@@ -35,6 +35,9 @@ struct Collider
 		BOSS_BURSTSHOT,
 		BOSS_MOAB,
 
+		POWERUP,
+
+
 		MAX
 	};
 

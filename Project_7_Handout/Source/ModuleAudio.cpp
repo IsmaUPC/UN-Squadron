@@ -42,8 +42,7 @@ bool ModuleAudio::Init()
 	}
 
 	//Initialize SDL_mixer
-	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-	{
+	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
 		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		ret = false;
 	}
@@ -59,8 +58,7 @@ update_status ModuleAudio::Update() {
 
 		VOLUME_GAME = (VOLUME_GAME <= 0) ? 1 : VOLUME_GAME -4;
 		
-	}
-	else if (keyPlus == KEY_STATE::KEY_DOWN || keyPlus == KEY_STATE::KEY_REPEAT) {
+	}else if (keyPlus == KEY_STATE::KEY_DOWN || keyPlus == KEY_STATE::KEY_REPEAT) {
 		VOLUME_GAME = (VOLUME_GAME >= 180) ? 180 : VOLUME_GAME + 4;
 	}
 	Mix_VolumeMusic(VOLUME_GAME);
@@ -75,13 +73,11 @@ bool ModuleAudio::CleanUp()
 {
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
 
-	if(music != NULL)
-	{
+	if(music != NULL){
 		Mix_FreeMusic(music);
 	}
 
-	for (uint i = 0; i < MAX_FX; ++i)
-	{
+	for (uint i = 0; i < MAX_FX; ++i){
 		if(soundFx[i] != nullptr)
 			Mix_FreeChunk(soundFx[i]);
 	}
@@ -98,13 +94,10 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 	bool ret = true;
 
 	if(music != NULL){
-		if(fade_time > 0.0f)
-		{
+		if(fade_time > 0.0f){
 			// Warning: This call blocks the execution until fade out is done
 			Mix_FadeOutMusic((int) (fade_time * 1000.0f));
-		}
-		else
-		{
+		}else{
 			Mix_HaltMusic();
 		}
 
@@ -113,25 +106,18 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 
 	music = Mix_LoadMUS(path);
 	
-	if(music == NULL)
-	{
+	if(music == NULL){
 		LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
 		ret = false;
-	}
-	else
-	{
-		if(fade_time > 0.0f)
-		{
-			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
-			{
+	}else{
+		if(fade_time > 0.0f){
+
+			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0){
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
 			}
-		}
-		else
-		{
-			if(Mix_PlayMusic(music, -1) < 0)
-			{
+		}else{
+			if(Mix_PlayMusic(music, -1) < 0){
 				LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
 			}

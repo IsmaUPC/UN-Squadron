@@ -40,7 +40,7 @@ bool SceneWin::Start()
 	App->audio->PlayMusic("Assets/16_Stage_Clear.ogg", 1.0f);
 	App->render->cameraSpeed=0;
 
-	fade = new Timer(1000);
+	fade = new Timer(6000);
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
