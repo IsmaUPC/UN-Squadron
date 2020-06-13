@@ -84,7 +84,7 @@ void Enemy_FinalBoss1::move() {
 	float vecX[4] = { 0.75 ,SCREEN_SPEED ,1.25 ,SCREEN_SPEED };
 	float vecY[4] = { 0.55, 0, -0.55, 0 };
 	if (collider->pendingToDelete != true)	collider->SetPos(position.x, position.y + ((*currentAnim).GetCurrentFrame().h / 3) - (collider->rect.h / 3));
-	if (pattern > 1) {
+	if (pattern > 2) {
 		if (timerBallShot->check())	ballShot(), burst = 0;
 		if (timerMoabShot->check()) moab();
 		
@@ -174,7 +174,7 @@ void Enemy_FinalBoss1::burstShot() {
 	delay = 20;
 	randMoab = (rand() % 4)+1;
 	if (pasXtoBoss && App->player->position.y > position.y) {
-		if ((pattern % 2) != 0) for (int i = 0; i < randMoab; i++) App->particles->AddParticle(App->particles->pMoabBoss1, position.x + 105 + (i * delay), position.y + 120, Collider::Type::BOSS_MOAB, delay * i);
-		else for (int i = 0; i < randMoab; i++) App->particles->AddParticle(App->particles->pMoabDownBoss1,( position.x-10 )+ (i * delay), position.y + 90, Collider::Type::BOSS_MOAB, delay * i);
+		if ((pattern % 2) != 0) for (int i = 0; i < randMoab; i++) App->particles->AddParticle(App->particles->pMoabBoss1, position.x + 105 + (i * delay), position.y + 120-(delay*i), Collider::Type::BOSS_MOAB, delay * i);
+		else for (int i = 0; i < randMoab; i++) App->particles->AddParticle(App->particles->pMoabDownBoss1,( position.x-15 )+ (i * delay), position.y + 90, Collider::Type::BOSS_MOAB, delay * i);
 	}
 }

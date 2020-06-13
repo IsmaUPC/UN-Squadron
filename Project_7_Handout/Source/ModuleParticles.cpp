@@ -33,7 +33,7 @@ bool ModuleParticles::Start(){
 	
 	soundExplosion = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");
 
-	//Shot boss
+	//Shot Ball boss
 	animBallShotBoss1.speed = 0.3f;
 	hitBallShotBoss1.PushBack({ 546 ,139,20,25 });
 	for (int i = 0; i < 3; i++)
@@ -43,29 +43,29 @@ bool ModuleParticles::Start(){
 	pExplBallBoss1.anim.loop = false;
 	pExplBallBoss1.anim.speed = 0.3f;
 	ballShotBoss1.explodes = true;
+	//
+	openWings.PushBack({0,0,0,0});
 
 	//Moab
 	for (int i = 0; i < 3; i++) 
-		pMoabBoss1.anim.PushBack({ 556+(45*i),313,45,20 });
-	for (int i = 0; i < 3; i++) {
-		aMoabBoss1.PushBack({ 556 + (45 * i),342,45,38 });
+		aMoabBoss1.PushBack({ 556 + (45 * i),313,45,20 });
+
+	for (int i = 0; i < 3; i++)
 		aMoabDownBoss1.PushBack({ 556 + (45 * i),342,45,38 });
-		pMoabDownBoss1.anim.PushBack({ 556 + (45 * i),342,45,38 });
-	}
-	pMoabBoss1.path.PushBack({1.0f,1.0f},10,&aMoabBoss1);
-	pMoabBoss1.path.PushBack({1.0f,1.0f},10,&aMoabDownBoss1);
-
-
-	pMoabBoss1.anim.speed = 0.25f;
-	pMoabBoss1.speed.y = 2.0f;
+	aMoabBoss1.speed=0.5f;
+	aMoabDownBoss1.speed= 0.5f;
+	pMoabBoss1.path.PushBack({1.0f,0.50f},5, new Animation(aMoabBoss1));
+	pMoabBoss1.path.PushBack({1.0f,1.0f},5, new Animation(aMoabBoss1));
+	pMoabBoss1.path.PushBack({1.0f,3.0f},50, new Animation(aMoabDownBoss1));
+	pMoabBoss1.path.loop = false;
 	pMoabBoss1.speed.x = SCREEN_SPEED;
 	pMoabBoss1.explodes = true;
-	pMoabBoss1.anim.loop = true;
-
+	pMoabDownBoss1.path.PushBack({ -0.25f,2.0f }, 150, new Animation(aMoabDownBoss1));
 	pMoabDownBoss1.speed.y = 2.0f;
 	pMoabDownBoss1.speed.x = -1.0f;
-	pMoabDownBoss1.anim.loop = true;
 	
+
+
 
 	//Boss1 laser
 	for (int i = 0; i < 4; i++)
@@ -78,7 +78,8 @@ bool ModuleParticles::Start(){
 	pBurstshotBallBoss1.anim.PushBack({726+(i*30),356,30,24});
 	pBurstshotBallBoss1.anim.loop = true;
 	pBurstshotBallBoss1.anim.speed = 0.2f;
-	
+	//
+	aBurstshotBallBoss1.PushBack({0,0,0,0});
 
 
 	// Explosion player
@@ -105,7 +106,6 @@ bool ModuleParticles::Start(){
 	
 	
 	//Mini boss shot
-
 	mBoss1ShotClose.PushBack({ 22, 29, 45, 12 });
 	mBoss1ShotOpening.PushBack({ 113 , 9, 45, 52 });
 	for (int i = 0; i < 2; i++) 
@@ -221,12 +221,10 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 update_status ModuleParticles::PreUpdate()
 {
 	// Remove all particles scheduled for deletion
-	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
-	{
-
-		if (particles[i] != nullptr && particles[i]->pendingToDelete)
-		{
-			if (particles[i]->explodes) {
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)	{
+		
+		if (particles[i] != nullptr && particles[i]->pendingToDelete){
+			if (particles[i]->explodes){
 				//particle explosion 
 				SDL_Rect pCollider = particles[i]->collider->rect;
 				if (particles[i]->collider->type== Collider::Type::BOSS1_SHOT_BALL) {
@@ -284,11 +282,9 @@ update_status ModuleParticles::Update()
 
 		if(particle == nullptr)	continue;
 		
-		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_CHANGE_ANIMATION)
-		{
+		if (particle->GetStateParticle() == status_Particle::STATE_PARTICLE_CHANGE_ANIMATION){
 			if( particle->collider->type == Collider::Type::M_BOSS1_SHOT)particles[i]->path.SetCurrentAnimation(new Animation(mBoss1ShotOpen));
 			if( particle->collider->type == Collider::Type::BOSS1_SHOT_BALL)particles[i]->path.SetCurrentAnimation(new Animation(animBallShotBoss1));
-			
 			particles[i]->SetStateParticle(status_Particle::STATE_PARTICLE_IDLE);
 		}
 
@@ -322,7 +318,7 @@ update_status ModuleParticles::PostUpdate()
 		if (particle != nullptr && particle->collider != nullptr && particle->isAlive)
 		{
 			colliderI = particle->collider;
-			if (colliderI->type == Collider::Type::BOSS1_SHOT_BALL) {
+			if (colliderI->type == Collider::Type::BOSS1_SHOT_BALL || colliderI->type == Collider::Type::BOSS_MOAB) {
 				pathRefresh(particle);
 				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));
 				 if (particle->path.isFinish)particle->SetToDelete();
@@ -331,7 +327,7 @@ update_status ModuleParticles::PostUpdate()
 			else if (colliderI->type == Collider::Type::M_BOSS1_SHOT ) {
 				pathRefresh(particle);
 				App->render->Blit(miniBoss1ShotTx, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));		
-			}	
+			}
 			//SWs
 			else if (colliderI->type == Collider::Type::SW_BOMB || colliderI->type == Collider::Type::SW_CEILING || colliderI->type == Collider::Type::SW_S_SHELL || colliderI->type == Collider::Type::SW_GUNPOD) {
 				pathRefresh(particle);
@@ -345,24 +341,19 @@ update_status ModuleParticles::PostUpdate()
 			else if (colliderI->type == Collider::Type::PLAYER_SHOT|| colliderI->type == Collider::Type::BOSS_SHOT_LASER) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
-			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT|| colliderI->type == Collider::Type::BOSS_MOAB) {
+			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT) {
 				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
 			else if (colliderI->type == Collider::Type::NONE && colliderI->type!=Collider::Type::BOSS_EXPLOSION_BALL) {
-				if (App->player->destroyed == true) {
-					
+				if (App->player->destroyed == true) {	
 						App->render->Blit(playerExplosionTexture, (particle->position.x - (particle->anim.GetCurrentFrame().w - PLAYER_WIDTH)),
-							particle->position.y - (particle->anim.GetCurrentFrame().h / 2), &(particle->anim.GetCurrentFrame()));
-					
+						particle->position.y - (particle->anim.GetCurrentFrame().h / 2), &(particle->anim.GetCurrentFrame()));
 				}
 				//explosion enemiesif (particle->path.getTotalSteps()==NULL) {}
 				
 				else if (App->player->getStatusPlayer() != status_player::STATE_DEAD) {
-
 						App->render->Blit(boss1Tx, (particle->position.x + -(particle->anim.GetCurrentFrame().w / 2)),
-							particle->position.y - (particle->anim.GetCurrentFrame().h / 2), &(particle->anim.GetCurrentFrame()));
-					
-				
+						particle->position.y - (particle->anim.GetCurrentFrame().h / 2), &(particle->anim.GetCurrentFrame()));
 				}
 			}
 		}
@@ -435,11 +426,7 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 				if (p->collider->type == p->collider->ENEMY_SHOT) p = setShotDirection(p, x, y);
 				if (p->collider->type == p->collider->M_BOSS1_SHOT) p->spawnPos.create(x, y);
 				if (p->collider->type == p->collider->BOSS1_SHOT_BALL)	createBallBoss(p, x, y);
-				if (p->collider->type == p->collider->BOSS_MOAB) {
-				
-				
-				
-				}
+				if (p->collider->type == p->collider->BOSS_MOAB) p->spawnPos.create(x,y);
 			}
 			particles[i] = p;
 			break;

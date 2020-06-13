@@ -98,7 +98,10 @@ public:
 	Particle explosionEnemies;
 	Particle ballShotBoss1;
 	Particle pExplBallBoss1;
+
+
 	Particle pBurstshotBallBoss1;
+	Animation aBurstshotBallBoss1;
 
 
 	Particle bossBallLaser;
@@ -116,6 +119,7 @@ public:
 	Animation animBallShotBoss1;
 	Animation hitBallShotBoss1;
 	Animation explosionBallBoss1;
+	Animation openWings;
 
 	int soundExplosion;
 
