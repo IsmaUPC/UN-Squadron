@@ -57,7 +57,6 @@ Enemy_BrownShip::Enemy_BrownShip(int x, int y,int _pattern) : Enemy(x, y,_patter
 	loopToRight.PushBack({ 310,541,62, 49 });
 	loopToRight.PushBack({ 372,541,62, 49 });
 	loopToRight.PushBack({ 434,541,62, 49 });
-	loopToRight.PushBack({ 496,541,62, 49 });
 	loopToRight.loop = true;
 	loopToRight.speed = 0.25f;
 
