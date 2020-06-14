@@ -45,5 +45,6 @@ private:
 	int bosses = 3;
 
 	bool change;
+	bool changeScene = false;
 };
 #endif

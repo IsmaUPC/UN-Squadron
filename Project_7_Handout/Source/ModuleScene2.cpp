@@ -20,8 +20,6 @@ ModuleScene2::ModuleScene2(bool startEnabled) : Module(startEnabled)
 
 ModuleScene2::~ModuleScene2() {
 
-	CleanUp();
-	
 }
 // Load assets
 bool ModuleScene2::Start(){
@@ -33,7 +31,7 @@ bool ModuleScene2::Start(){
 	LOG("Loading background assets\n");
 
 	bool ret = true;
-	
+	changeScene = false;
 	//1538 * 585
 	bgTexture = App->textures->Load("Assets/BG2.png");
 
@@ -101,14 +99,16 @@ void ModuleScene2::Win() {
 }
 update_status ModuleScene2::Update() {
 
-	if (App->hud->animFase >= App->hud->IDLE) {
+	if (App->hud->animFase >= App->hud->IDLE && !changeScene) {
 		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
+			changeScene = true;
 			App->player->CleanUp();
 			bosses = 0;
 			Win();
 		}
 
 		if (App->input->keys[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
+			changeScene = true;
 			App->player->godMode = true;
 			App->player->DEAD();
 			App->player->CleanUp();

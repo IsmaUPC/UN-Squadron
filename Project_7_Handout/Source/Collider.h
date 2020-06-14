@@ -36,6 +36,7 @@ struct Collider
 		BOSS_MOAB,
 
 		POWERUP,
+		POWERUP_B,
 
 
 		MAX

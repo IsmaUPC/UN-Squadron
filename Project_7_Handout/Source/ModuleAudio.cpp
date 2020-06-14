@@ -13,9 +13,8 @@ ModuleAudio::ModuleAudio(bool startEnabled) : Module(startEnabled)
 		soundFx[i] = nullptr;
 }
 
-ModuleAudio::~ModuleAudio()
-{
-	CleanUp();
+ModuleAudio::~ModuleAudio(){
+
 }
 
 bool ModuleAudio::Init()

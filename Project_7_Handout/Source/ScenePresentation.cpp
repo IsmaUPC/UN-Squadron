@@ -85,5 +85,7 @@ bool ScenePresentation::CleanUp()
 	App->textures->Unload(bgTexture);
 	bgTexture = NULL;
 
+	currentAnim = NULL;
+
 	return true;
 }

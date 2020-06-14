@@ -30,7 +30,6 @@ SceneWin::SceneWin(bool startEnabled) : Module(startEnabled){
 
 SceneWin::~SceneWin(){
 
-	CleanUp();
 }
 
 // Load assets
@@ -91,6 +90,7 @@ bool SceneWin::CleanUp()
 	//Enable (and properly disable) the player module
 
 	App->textures->Unload(winTexture);
+	
 	//App->audio->Disable();
 
 	return true;

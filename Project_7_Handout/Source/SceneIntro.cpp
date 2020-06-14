@@ -6,6 +6,7 @@
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
+#include "Timer.h"
 #include <SDL_mixer\include\SDL_mixer.h>
 
 SceneIntro::SceneIntro(bool startEnabled) : Module(startEnabled){
@@ -20,9 +21,7 @@ SceneIntro::SceneIntro(bool startEnabled) : Module(startEnabled){
 
 }
 
-SceneIntro::~SceneIntro()
-		
-{
+SceneIntro::~SceneIntro(){
 	
 }
 
@@ -42,6 +41,9 @@ bool SceneIntro::Start()
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
+	fade = new Timer(2500);
+
+
 	return ret;
 }
 
@@ -49,11 +51,11 @@ update_status SceneIntro::Update(){
 
 	GamePad& pad = App->input->pads[0];
 
-	if (currentAnim != nullptr){
+	if (fade->check() == 1){
+		fade->update();
 	}
 
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a){
-		Mix_HaltMusic();
+	if ( fade->check() == 0 && (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a)){
 		//Mix_FreeMusic(App->audio->getMusic());
 
 		//Empezar Nivel
@@ -78,6 +80,7 @@ update_status SceneIntro::PostUpdate(){
 
 
 bool SceneIntro::CleanUp(){
+	Mix_HaltMusic();
 
 	//Enable (and properly disable) the player module
 	App->textures->Unload(bgTexture);

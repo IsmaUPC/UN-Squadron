@@ -87,8 +87,7 @@ bool ModuleEnemies::CleanUp()
 {
 	LOG("Freeing all enemies");
 
-	for(uint i = 0; i < MAX_ENEMIES; ++i)
-	{
+	for(uint i = 0; i < MAX_ENEMIES; ++i){
 		if(enemies[i] != nullptr)
 		{
 			delete enemies[i];
@@ -229,8 +228,15 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 				enemies[i]->SetToDelete();
 				SDL_Rect colliderI = enemies[i]->GetCollider()->rect;
 				//TODO: add particle power up
-				if (rand()%20 == 0)
-					App->particles->AddParticle(App->particles->PowerUp, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2, Collider::Type::POWERUP);
+				int PowrUp_Typw = rand() % 30;
+				switch (PowrUp_Typw){
+					case 13:
+						App->particles->AddParticle(App->particles->PowerUpBlue, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2, Collider::Type::POWERUP_B);
+						break;
+					case 27: case 2:
+						App->particles->AddParticle(App->particles->PowerUp, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2, Collider::Type::POWERUP);
+						break;
+				}
 				
 				App->particles->AddParticle(App->particles->explosionEnemies, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2);
 				//App->audio->PlayFx(enemies[i]->destroyedFx);

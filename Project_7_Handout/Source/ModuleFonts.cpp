@@ -12,12 +12,12 @@ ModuleFonts::ModuleFonts(bool isEnabled) : Module(isEnabled)
 }
 
 ModuleFonts::~ModuleFonts(){
-	CleanUp();
+	
 }
 
 bool ModuleFonts::CleanUp(){
 
-	/*LOG("Freeing all fonts\n");
+	LOG("Freeing all fonts\n");
 
 	for (uint i = 0; i < MAX_FONTS; ++i){
 		if (fonts[i].texture != nullptr){
@@ -25,7 +25,7 @@ bool ModuleFonts::CleanUp(){
 			fonts[i].texture = nullptr;
 		}
 	}
-	*/
+	
 	return true;
 }
 

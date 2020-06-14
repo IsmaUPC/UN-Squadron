@@ -101,7 +101,7 @@ HUD::HUD(bool startEnabled) : Module(startEnabled) {
 }
 
 HUD::~HUD(){
-	CleanUp();
+
 }
 
 bool HUD::Start()
