@@ -93,6 +93,7 @@ public:
 
 	//Template particle for a laser
 	Particle playerLaser;
+	Particle explosionPalyerLaser;
 	Particle enemyLaser;
 	Particle mBoss1Shot;
 	Particle explosionEnemies;
@@ -127,7 +128,11 @@ public:
 	Animation openWings;
 
 	//Animation aBoss2Shot;
-	Particle pBoss2Shot;
+	Particle pBoss2ShotBombs;
+
+	Particle pBoss2ShotMisile;
+	Animation aBoss2MisileExpl;
+	Animation aMisile;
 
 	int soundExplosion;
 

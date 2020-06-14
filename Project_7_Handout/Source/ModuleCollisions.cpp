@@ -32,9 +32,10 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::BOSS_BURSTSHOT] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::BOSS_SHOT_LASER] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::BOSS_MOAB] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::BOSS2_SHOT] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::BOSS2_BOMBS] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::POWERUP] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::POWERUP_B] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::BOSS2_MISILE] = true;
 
 	matrix[Collider::Type::POWERUP][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::POWERUP_B][Collider::Type::PLAYER] = true;
@@ -52,6 +53,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::BOSS1] = true;
 	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::BOSS2] = true;
 	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::BOSS_MOAB] = true;
+	matrix[Collider::Type::PLAYER_SHOT][Collider::Type::BOSS2_MISILE] = true;
 
 	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::PLAYER] = true;
 
@@ -108,12 +110,6 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::M_BOSS1][Collider::Type::SW_GUNPOD] = true;
 	matrix[Collider::Type::M_BOSS1][Collider::Type::SW_S_SHELL] = true;
 
-	matrix[Collider::Type::BOSS2][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::BOSS2][Collider::Type::PLAYER_SHOT] = true;
-	matrix[Collider::Type::BOSS2][Collider::Type::SW_BOMB] = true;
-	matrix[Collider::Type::BOSS2][Collider::Type::SW_CEILING] = true;
-	matrix[Collider::Type::BOSS2][Collider::Type::SW_GUNPOD] = true;
-	matrix[Collider::Type::BOSS2][Collider::Type::SW_S_SHELL] = true;
 
 	matrix[Collider::Type::BOSS1_SHOT_BALL][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::BOSS1_SHOT_BALL][Collider::Type::PLAYER_SHOT] = true;
@@ -133,8 +129,20 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::BOSS_MOAB][Collider::Type::SW_GUNPOD] = true;
 	matrix[Collider::Type::BOSS_MOAB][Collider::Type::SW_S_SHELL] = true;
 
-	matrix[Collider::Type::BOSS2_SHOT][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::BOSS2][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::BOSS2][Collider::Type::PLAYER_SHOT] = true;
+	matrix[Collider::Type::BOSS2][Collider::Type::SW_BOMB] = true;
+	matrix[Collider::Type::BOSS2][Collider::Type::SW_CEILING] = true;
+	matrix[Collider::Type::BOSS2][Collider::Type::SW_GUNPOD] = true;
+	matrix[Collider::Type::BOSS2][Collider::Type::SW_S_SHELL] = true;
+
+	matrix[Collider::Type::BOSS2_BOMBS][Collider::Type::PLAYER] = true;
+
+	matrix[Collider::Type::BOSS2_MISILE][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::BOSS2_MISILE][Collider::Type::PLAYER_SHOT] = true;
+	matrix[Collider::Type::BOSS2_MISILE_EXPLOSION][Collider::Type::PLAYER] = true;
 }
+
 
 // Destructor
 ModuleCollisions::~ModuleCollisions()

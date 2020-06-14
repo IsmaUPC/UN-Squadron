@@ -19,7 +19,7 @@ ScenePresentation::ScenePresentation(bool startEnabled) : Module(startEnabled)
 		}
 	}
 
-	Presentation_Anim.speed = 0.15f;
+	Presentation_Anim.speed = 0.10f;
 	Presentation_Anim.loop = false;
 	currentAnim = nullptr;
 
@@ -39,8 +39,9 @@ bool ScenePresentation::Start()
 
 	bool ret = true;
 
-	bgTexture = App->textures->Load("Assets/Presentation_sprite.png");
+	bgTexture = App->textures->Load("Assets/Presentation_sprite2.png");
 	//App->audio->PlayMusic("Assets/01_Introduction.ogg", 1.0f);
+
 
 	currentAnim = &Presentation_Anim;
 
@@ -52,7 +53,8 @@ bool ScenePresentation::Start()
 
 update_status ScenePresentation::Update() {
 	GamePad& pad = App->input->pads[0];
-	currentAnim->Update();
+	Presentation_Anim.Update();
+	//currentAnim->Update();
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) {
 		Mix_HaltMusic();
@@ -71,7 +73,7 @@ update_status ScenePresentation::PostUpdate()
 {
 
 	// Draw everything --------------------------------------
-	App->render->Blit(bgTexture, 0, 0, NULL);
+	//App->render->Blit(bgTexture, 0, 0, NULL);
 
 	App->render->Blit(bgTexture, 0, 0, &(currentAnim->GetCurrentFrame()));
 
