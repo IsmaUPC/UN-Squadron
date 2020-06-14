@@ -259,11 +259,6 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 				p->lives--;
 			}
 			if (p->lives <= 0 && !p->inmortal)p->SetToDelete();
-			
-			if (c1->type == Collider::PLAYER_SHOT && c2->type == Collider::ENEMY || c2->type == Collider::PLAYER_SHOT && c1->type == Collider::ENEMY) {
-				App->player->score += 100;
-				if (App->player->money < 9999990) {App->player->money += 300;}
-			}
 			break;
 		}
 	}

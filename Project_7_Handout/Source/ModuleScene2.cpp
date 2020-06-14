@@ -90,7 +90,7 @@ bool ModuleScene2::Start(){
 void ModuleScene2::Win() {
 	//CleanUp();
 	bosses--;
-	if (bosses <= 0)
+	if (bosses == 0)
 	{
 		bosses = 3;
 		Mix_HaltMusic();

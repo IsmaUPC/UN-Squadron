@@ -235,7 +235,8 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 						App->particles->AddParticle(App->particles->PowerUp, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2, Collider::Type::POWERUP);
 						break;
 				}
-				
+				App->player->score += 100;
+				if (App->player->money < 9999990) { App->player->money += 300; }
 				App->particles->AddParticle(App->particles->explosionEnemies, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2);
 				//App->audio->PlayFx(enemies[i]->destroyedFx);
 			}
