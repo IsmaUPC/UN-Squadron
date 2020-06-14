@@ -15,19 +15,17 @@ Enemy_FinalBoss2::Enemy_FinalBoss2(int x, int y, int _pattern) :Enemy(x, y, _pat
 	timerState = new Timer(60);
 	timerStateCollision = new Timer(2000);
 	timerAnim = new Timer(100);
-	timerShotBombs = new Timer(5000);
-	timerCadenceBombs = new Timer(100);
+	timerShotBombs = new Timer(3000);
+	timerCadenceBombs = new Timer(50);
 
-	FirsAnim.PushBack({ 0,0,85,32 });
+	FirsAnim.PushBack({ 2,34,85,32 });
 	currentAnim = &FirsAnim;
 
-	Inclined.PushBack({ 85,0,86,40 });
+	Inclined.PushBack({ 99,26,86,40 });
 
-	Down.PushBack({ 171,0,85,53 });
+	Down.PushBack({ 195,13,85,53 });
 
-	Hit.PushBack({0,56,85,32});
-	HitInclined.PushBack({85,56,86,41});
-	HitDown.PushBack({171,56,85,53});
+	Hit.PushBack({288,13,86,53});//poner animación
 
 	collider = App->collisions->AddCollider({ 0, 0, 85, 32 }, Collider::Type::BOSS2, (Module*)App->enemies);
 	App->audio->PlayMusic("Assets/Boss2.ogg", 0);
@@ -35,11 +33,13 @@ Enemy_FinalBoss2::Enemy_FinalBoss2(int x, int y, int _pattern) :Enemy(x, y, _pat
 }
 
 void Enemy_FinalBoss2::Update() {
+
 	timerState->update();
 	timerShotBombs->update();
 	timerCadenceBombs->update();
 
-	if (timerCadenceBombs->check())shotSmallBombs();
+	if (timerCadenceBombs->check()) shotSmallBombs();
+		
 
 	if (timerState->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
 
@@ -70,20 +70,14 @@ void Enemy_FinalBoss2::Anim2()
 		else  currentAnim = &Down;
 	}
 }
-void Enemy_FinalBoss2::AnimHit()
-{
-	if (currentAnim == &FirsAnim)currentAnim = &Hit;
-	if(currentAnim == &Inclined)currentAnim = &HitInclined;
-	if(currentAnim == &Down)currentAnim = &HitDown;
-}
 void Enemy_FinalBoss2::OnCollision(Collider* collider)
 {
-	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
-	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION, AnimHit();
-	if (collider->type == Collider::SW_BOMB && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
-	if (collider->type == Collider::SW_CEILING && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
-	if (collider->type == Collider::SW_GUNPOD && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
-	if (collider->type == Collider::SW_S_SHELL && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
+	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
+	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION, currentAnim = &Hit;
+	if (collider->type == Collider::SW_BOMB && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
+	if (collider->type == Collider::SW_CEILING && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
+	if (collider->type == Collider::SW_GUNPOD && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
+	if (collider->type == Collider::SW_S_SHELL && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
  	if (lives == 0 && App->player->destroyed == false) App->level2->Win();
 }
 
@@ -160,7 +154,7 @@ void Enemy_FinalBoss2::move() {
 		case 4:
 			if (xRecorrido < 120)
 			{
-				if (timerShotBombs->check())limitBombs = 0;
+				if (timerShotBombs->check())limitBombs = 0, shotMisile();
 
 				if (timerAnim->check())currentAnim = &Inclined;
 				xRecorrido++;
@@ -476,10 +470,16 @@ void Enemy_FinalBoss2::move() {
 }
 
 void Enemy_FinalBoss2::shotSmallBombs(){
+
 	randPos = (rand() % 50)-25;
 	if (limitBombs<8) {
-		App->particles->AddParticle(App->particles->pBoss2Shot, position.x , position.y + randPos, Collider::Type::BOSS2_SHOT);
+		App->particles->AddParticle(App->particles->pBoss2ShotBombs, position.x , position.y + randPos, Collider::Type::BOSS2_BOMBS);
 		++limitBombs;
 	}
+}
+void Enemy_FinalBoss2::shotMisile(){
+	if (App->player->position.x > position.x)
+		App->particles->AddParticle(App->particles->pBoss2ShotMisile, position.x-50 , position.y, Collider::Type::BOSS2_MISILE);
+	
 }
 

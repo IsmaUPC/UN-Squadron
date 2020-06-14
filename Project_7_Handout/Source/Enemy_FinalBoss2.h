@@ -18,6 +18,7 @@ public:
 	void move();
 	bool win = true;
 	void shotSmallBombs();
+	void shotMisile();
 	void AnimHit();
 private:
 	// A set of steps that define the position in the screen

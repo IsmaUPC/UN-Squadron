@@ -127,7 +127,11 @@ public:
 	Animation openWings;
 
 	//Animation aBoss2Shot;
-	Particle pBoss2Shot;
+	Particle pBoss2ShotBombs;
+
+	Particle pBoss2ShotMisile;
+	Animation aBoss2MisileExpl;
+	Animation aMisile;
 
 	int soundExplosion;
 

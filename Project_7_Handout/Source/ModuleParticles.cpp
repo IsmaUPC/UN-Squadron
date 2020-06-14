@@ -43,6 +43,8 @@ bool ModuleParticles::Start(){
 	pExplBallBoss1.anim.loop = false;
 	pExplBallBoss1.anim.speed = 0.3f;
 	ballShotBoss1.explodes = true;
+
+
 	//Openwings
 	openWings.PushBack({ 113,32,28,91 });
 	openWings.PushBack({ 390,32,28,91 });
@@ -68,13 +70,25 @@ bool ModuleParticles::Start(){
 	pMoabDownBoss1.speed.y = 2.0f;
 	pMoabDownBoss1.speed.x = -1.0f;
 	
-	//Boss2 Shot
+	//Boss2 Bombs
 	for (int i = 0; i < 5; i++)
-		pBoss2Shot.anim.PushBack({ 695 ,315,25,18 });
+		pBoss2ShotBombs.anim.PushBack({ 695 ,315,25,18 });
 	for (int i = 0; i < 7; i++)
-		pBoss2Shot.anim.PushBack({ 728 + (38 * i),307,38,37 });
-	pBoss2Shot.anim.speed= 0.15f;
-	pBoss2Shot.anim.loop = false;
+		pBoss2ShotBombs.anim.PushBack({ 728 + (38 * i),307,38,37 });
+	pBoss2ShotBombs.anim.speed= 0.15f;
+	pBoss2ShotBombs.anim.loop = false;
+
+	//Boss2 Misile 
+	for (int i = 0; i < 5; i++)
+		aBoss2MisileExpl.PushBack({ 568 + (80 * i),36,80,70 });
+	pBoss2ShotMisile.anim.speed = 0.20f;
+
+	aMisile.PushBack({ 640,144,24,16 });
+	aMisile.loop = true;
+	aBoss2MisileExpl.loop = true;
+	pBoss2ShotMisile.path.PushBack({ 5.0f,0.0f }, 55, new Animation(aMisile));
+	pBoss2ShotMisile.path.PushBack({ 1.0f,1.0f}, 20, new Animation(aBoss2MisileExpl));
+	pBoss2ShotMisile.explodes = true;
 
 
 
@@ -354,7 +368,7 @@ update_status ModuleParticles::PostUpdate()
 		if (particle != nullptr && particle->collider != nullptr && particle->isAlive)
 		{
 			colliderI = particle->collider;
-			if (colliderI->type == Collider::Type::BOSS1_SHOT_BALL || colliderI->type == Collider::Type::BOSS_MOAB) {
+			if (colliderI->type == Collider::Type::BOSS1_SHOT_BALL || colliderI->type == Collider::Type::BOSS_MOAB || colliderI->type == Collider::Type::BOSS2_MISILE) {
 				pathRefresh(particle);
 				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));
 				 if (particle->path.isFinish)particle->SetToDelete();
@@ -377,7 +391,7 @@ update_status ModuleParticles::PostUpdate()
 			else if (colliderI->type == Collider::Type::POWERUP_B ||colliderI->type == Collider::Type::POWERUP || colliderI->type == Collider::Type::PLAYER_SHOT || colliderI->type == Collider::Type::BOSS_SHOT_LASER) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
-			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT|| colliderI->type == Collider::Type::BOSS2_SHOT) {
+			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT|| colliderI->type == Collider::Type::BOSS2_BOMBS) {
 				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame())); 
 			}
 			else if (colliderI->type == Collider::Type::NONE && colliderI->type!=Collider::Type::BOSS_EXPLOSION_BALL) {
@@ -463,6 +477,7 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 					if (p->collider->type == p->collider->M_BOSS1_SHOT) p->spawnPos.create(x, y);
 					if (p->collider->type == p->collider->BOSS1_SHOT_BALL)	createBallBoss(p, x, y);
 					if (p->collider->type == p->collider->BOSS_MOAB) p->spawnPos.create(x,y);
+					if (p->collider->type == p->collider->BOSS2_MISILE) p->spawnPos.create(x,y);
 			}
 			particles[i] = p;
 			break;
