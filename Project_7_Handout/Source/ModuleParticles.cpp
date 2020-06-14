@@ -43,8 +43,12 @@ bool ModuleParticles::Start(){
 	pExplBallBoss1.anim.loop = false;
 	pExplBallBoss1.anim.speed = 0.3f;
 	ballShotBoss1.explodes = true;
-	//
-	openWings.PushBack({0,0,0,0});
+	//Openwings
+	openWings.PushBack({ 113,32,28,91 });
+	openWings.PushBack({ 390,32,28,91 });
+	openWings.PushBack({ 390,200,28,91 });
+	openWings.PushBack({ 390,368,28,91 });
+	openWings.PushBack({ 390,536,28,91 });
 
 	//Moab
 	for (int i = 0; i < 3; i++) 
@@ -65,7 +69,7 @@ bool ModuleParticles::Start(){
 	pMoabDownBoss1.speed.x = -1.0f;
 	
 	//Boss2 Shot
-	for (int i = 0; i < 5; i++) 
+	for (int i = 0; i < 5; i++)
 		pBoss2Shot.anim.PushBack({ 695 ,315,25,18 });
 	for (int i = 0; i < 7; i++)
 		pBoss2Shot.anim.PushBack({ 728 + (38 * i),307,38,37 });
@@ -85,8 +89,11 @@ bool ModuleParticles::Start(){
 		pBurstshotBallBoss1.anim.PushBack({726+(i*30),356,30,24});
 	pBurstshotBallBoss1.anim.loop = true;
 	pBurstshotBallBoss1.anim.speed = 0.2f;
-	//
-	aBurstshotBallBoss1.PushBack({0,0,0,0});
+	//Explosion derivada del burstshot
+	aBurstshotBallBoss1.PushBack({ 0,698,40,48 });
+	aBurstshotBallBoss1.PushBack({ 40,698,40,48 });
+	aBurstshotBallBoss1.PushBack({ 80,698,40,48 });
+	aBurstshotBallBoss1.PushBack({ 120,698,40,48 });
 
 
 	// Explosion player
@@ -515,7 +522,7 @@ Particle* ModuleParticles::AddSWParticle(const Particle& particle, int _indexWea
 			case App->sceneShop->BOMB:
 				p->spawnPos.create(x, y);
 				p->lives = 1;
-
+				p->explodes = true;
 				p->path.PushBack({ SCREEN_SPEED + 0.5f , 1.f }, 25, new Animation(SpecialWeaponAnim[_indexWeapon]));
 				p->path.PushBack({ SCREEN_SPEED + 0.5f , 1.5f }, 25, new Animation(SpecialWeaponAnim[_indexWeapon]));
 				p->path.PushBack({ SCREEN_SPEED + 0.5f , 2.f }, 25, new Animation(SpecialWeaponAnim[_indexWeapon]));
