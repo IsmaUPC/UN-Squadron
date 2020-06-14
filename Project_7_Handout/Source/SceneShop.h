@@ -51,6 +51,7 @@ public:
 	uint OptionSelection = 0;
 	uint SelectWeapon = 0;
 	uint InsuficientMoney = 0;
+	uint caching = 0;
 
 	bool keyDownPad = false;
 	int hudfont1 = 0;
@@ -68,6 +69,7 @@ public:
 	int damage = 1;
 
 	bool infiniteMoney = false;
+	bool maxMoney = false;
 
 	WeaponsPrice weapons[11];
 
