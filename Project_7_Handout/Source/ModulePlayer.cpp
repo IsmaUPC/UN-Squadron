@@ -101,6 +101,11 @@ bool ModulePlayer::Start()
 	playerHit = App->audio->LoadFx("Assets/HitPlayer.wav");
 	playerInDanger = App->audio->LoadFx("Assets/PlayerInDanger.wav");
 	playerDead = App->audio->LoadFx("Assets/PlayerDead.wav");
+	swBombFx= App->audio->LoadFx("Assets/SW_Bomb.wav");
+	swShellFx= App->audio->LoadFx("Assets/SW_SSHELL.wav");
+	swGunpodFx= App->audio->LoadFx("Assets/SW_GUNPOD.wav");
+	swChangeFx= App->audio->LoadFx("Assets/Change_SW.wav");
+
 
 	position.x = 80;
 	position.y = 230;
@@ -260,6 +265,10 @@ bool ModulePlayer::CleanUp(){
 	App->audio->UnloadFx(playerHit);
 	App->audio->UnloadFx(playerInDanger);
 	App->audio->UnloadFx(playerDead);
+	App->audio->UnloadFx(swBombFx);
+	App->audio->UnloadFx(swChangeFx);
+	App->audio->UnloadFx(swGunpodFx);
+	App->audio->UnloadFx(swShellFx);
 
 	return true;
 }
@@ -366,11 +375,12 @@ void ModulePlayer::SpecialWeapons(){
 		use_SW = false;
 	}
 
-	if (indexWeapon != 12 && !use_SW) {
+	if (indexWeapon != 12 && !use_SW && !shotGunpod && !shotCeiling) {
 
 		//change weapon
 		if (App->input->keys[SDL_SCANCODE_J] == KEY_STATE::KEY_DOWN || pad.b == KEY_STATE::KEY_DOWN) {
 			use_SW = true;
+			App->audio->PlayFx(swChangeFx);
 			int actualWeapon = indexWeapon;
 			for (int i = actualWeapon+1; i < 11; i++){
 				if (ammo[i] > 0){
@@ -405,7 +415,7 @@ void ModulePlayer::SpecialWeapons(){
 
 					break;
 				case App->sceneShop->S_SHELL:
-
+					App->audio->PlayFx(swShellFx);
 					//if (CeilingCooldown->check()) {
 						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 35, position.y + 10, Collider::Type::SW_S_SHELL);
 					
@@ -414,13 +424,15 @@ void ModulePlayer::SpecialWeapons(){
 
 					break;
 				case App->sceneShop->BOMB:
+					App->audio->PlayFx(swBombFx);
 						App->particles->AddSWParticle(App->particles->SpecialWeapon[indexWeapon], indexWeapon, position.x + 25, position.y + 15, Collider::Type::SW_BOMB);
-					
+	
 					break;
 				case App->sceneShop->NAPALM:
 
 					break;
 				case App->sceneShop->GUNPOD:
+					App->audio->PlayFx(swGunpodFx);
 					shotGunpod = true;
 					use_SW = true;
 					break;
