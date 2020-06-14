@@ -223,6 +223,14 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 			//switch type enemi for diferent score and money
 			//Need creat a variable type in enemymodules
 			if (enemies[i]->lives <= 0)	{
+				if (enemies[i]->GetCollider()->type == Collider::Type::BOSS1 || enemies[i]->GetCollider()->type == Collider::Type::BOSS2 || enemies[i]->GetCollider()->type == Collider::Type::M_BOSS1) {
+					App->particles->AddParticle(App->particles->explosionEnemies, enemies[i]->GetCollider()->rect.x + 20, enemies[i]->GetCollider()->rect.y - 20, Collider::Type::NONE, 10);
+					App->particles->AddParticle(App->particles->explosionEnemies, enemies[i]->GetCollider()->rect.x - 20, enemies[i]->GetCollider()->rect.y + 20, Collider::Type::NONE, 10);
+					App->particles->AddParticle(App->particles->explosionEnemies, enemies[i]->GetCollider()->rect.x + 25, enemies[i]->GetCollider()->rect.y - 25, Collider::Type::NONE, 15);
+					App->particles->AddParticle(App->particles->explosionEnemies, enemies[i]->GetCollider()->rect.x - 25, enemies[i]->GetCollider()->rect.y + 25, Collider::Type::NONE, 5);
+					App->particles->AddParticle(App->particles->explosionEnemies, enemies[i]->GetCollider()->rect.x + 50, enemies[i]->GetCollider()->rect.y + 10, Collider::Type::NONE, 20);
+					App->particles->AddParticle(App->particles->explosionEnemies, enemies[i]->GetCollider()->rect.x - 50, enemies[i]->GetCollider()->rect.y - 10, Collider::Type::NONE, 20);
+				}
 				enemies[i]->SetToDelete();
 				SDL_Rect colliderI = enemies[i]->GetCollider()->rect;
 				//TODO: add particle power up

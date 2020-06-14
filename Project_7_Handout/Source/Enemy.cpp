@@ -54,6 +54,7 @@ void Enemy::Draw()
 void Enemy::OnCollision(Collider* _collider)
 {
 	if (App->player->getStatusPlayer() != status_player::STATE_HIT )lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT;
+
 	if (lives == 0)SetToDelete();
 }
 
