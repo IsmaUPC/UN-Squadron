@@ -41,7 +41,7 @@ void Enemy_FinalBoss2::Update() {
 
 	if (timerState->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
 
-	if (stateEnemy == status_Enemies::STATE_ENEMY_HIT_COLLISION)timerStateCollision->update();
+	timerStateCollision->update();
 	if (timerStateCollision->check()) stateEnemy = status_Enemies::STATE_ENEMY_IDLE;
 	
 	timerAnim->update();
@@ -54,13 +54,19 @@ void Enemy_FinalBoss2::Update() {
 }
 void Enemy_FinalBoss2::Anim1()
 {
-	if (radio * cos(radianes) < 0)currentAnim = &FirsAnim;
-	else currentAnim = &Down;
+	if (timerAnim->check())
+	{
+		if (radio * cos(radianes) < 0)currentAnim = &FirsAnim;
+		else currentAnim = &Down;
+	}
 }
 void Enemy_FinalBoss2::Anim2()
 {
-	if (radio * cos(radianes) > 0 && timerAnim->check())currentAnim = &FirsAnim;
-	else if(timerAnim->check()) currentAnim = &Down;
+	if (timerAnim->check())
+	{
+		if (radio * cos(radianes) > 0)currentAnim = &FirsAnim;
+		else  currentAnim = &Down;
+	}
 }
 void Enemy_FinalBoss2::OnCollision(Collider* collider)
 {
@@ -70,7 +76,7 @@ void Enemy_FinalBoss2::OnCollision(Collider* collider)
 	if (collider->type == Collider::SW_CEILING && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
 	if (collider->type == Collider::SW_GUNPOD && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
 	if (collider->type == Collider::SW_S_SHELL && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
-	if (lives <= 0 && App->player->destroyed == false) App->level2->Win();
+ 	if (lives == 0 && App->player->destroyed == false) App->level2->Win();
 }
 
 bool Enemy_FinalBoss2::upDown(bool _Do)
@@ -94,8 +100,11 @@ void Enemy_FinalBoss2::move() {
 		case 0:
 			if (grados != angulo)
 			{
-				if (radio * cos(radianes && timerAnim->check()) < 0)currentAnim = &FirsAnim;
-				else if (timerAnim->check()) currentAnim = &Down;
+				if (timerAnim->check())
+				{
+					if (radio * cos(radianes) < 0)currentAnim = &FirsAnim;
+					else currentAnim = &Down;
+				}
 				radianes = grados * PI / 180;
 				position.x -= 2;
 				position.y += radio * cos(radianes);
