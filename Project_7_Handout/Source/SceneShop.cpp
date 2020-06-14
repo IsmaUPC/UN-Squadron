@@ -71,15 +71,24 @@ bool SceneShop::Start(){
 
 	changeScene = false;
 
+	block = 50;
+
+
 	loadInfo();
 	return ret;
 }
 
 update_status SceneShop::PreUpdate(){
-	GamePad& pad = App->input->pads[0];
 
+	if (block > 0){
+		block--;
+		return update_status::UPDATE_CONTINUE;
+	}
+	
+	GamePad& pad = App->input->pads[0];
 	//inputs
 	if (!changeScene){
+
 		if ((App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) && keyDownPad == false) {
 			keyDownPad = true;
 			select();
@@ -170,7 +179,10 @@ bool SceneShop::CleanUp(){
 update_status SceneShop::PostUpdate(){
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, NULL);
-	App->render->Blit(selectorTexture, 17+(79*tiendaX), 238+(96*tiendaY), NULL);
+	if (block <= 0)
+		App->render->Blit(selectorTexture, 17+(79*tiendaX), 238+(96*tiendaY), NULL);
+
+
 
 	sprintf_s(moneyText, 10, "%9d", money);
 	App->fonts->BlitText(24, 219, hudfont1, moneyText);
@@ -241,7 +253,7 @@ void SceneShop::select(){
 	case BOMB:
 		if (money >= 5000 || weapons[BOMB].selected == true) {
 			weapons[BOMB].priceWeapon = 5000;
-			weapons[BOMB].ammo = 30;
+			weapons[BOMB].ammo = 50;
 			activeSelected(BOMB);
 		}else{
 			App->audio->PlayFx(InsuficientMoney);
@@ -254,7 +266,7 @@ void SceneShop::select(){
 	case GUNPOD:
 		if (money >= 15000 || weapons[GUNPOD].selected == true) {
 			weapons[GUNPOD].priceWeapon = 15000;
-			weapons[GUNPOD].ammo = 15;
+			weapons[GUNPOD].ammo = 20;
 			activeSelected(GUNPOD);
 		}else {
 			App->audio->PlayFx(InsuficientMoney);
@@ -263,7 +275,7 @@ void SceneShop::select(){
 	case CEILING:
 		if (money >= 15000 || weapons[CEILING].selected == true) {
 			weapons[CEILING].priceWeapon = 15000;
-			weapons[CEILING].ammo = 10;
+			weapons[CEILING].ammo = 50;
 			activeSelected(CEILING);
 		}else {
 			App->audio->PlayFx(InsuficientMoney);

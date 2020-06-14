@@ -98,6 +98,7 @@ public:
 	Animation shopkeeperTalking;
 
 	bool changeScene = false;
+	int block = 0;
 
 };
 #endif // !_SCENESHOP_H_
