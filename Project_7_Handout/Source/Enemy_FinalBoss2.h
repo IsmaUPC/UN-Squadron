@@ -18,6 +18,7 @@ public:
 	void move();
 	bool win = true;
 	void shotSmallBombs();
+	void AnimHit();
 private:
 	// A set of steps that define the position in the screen
 	// And an animation for each step
@@ -46,6 +47,8 @@ private:
 	Animation Inclined;
 	Animation Down;
 	Animation Hit;
+	Animation HitInclined;
+	Animation HitDown;
 };
 
 #endif // !__ENEMY_TEMPLATE_H__

@@ -18,14 +18,16 @@ Enemy_FinalBoss2::Enemy_FinalBoss2(int x, int y, int _pattern) :Enemy(x, y, _pat
 	timerShotBombs = new Timer(5000);
 	timerCadenceBombs = new Timer(100);
 
-	FirsAnim.PushBack({ 2,34,85,32 });
+	FirsAnim.PushBack({ 0,0,85,32 });
 	currentAnim = &FirsAnim;
 
-	Inclined.PushBack({ 99,26,86,40 });
+	Inclined.PushBack({ 85,0,86,40 });
 
-	Down.PushBack({ 195,13,85,53 });
+	Down.PushBack({ 171,0,85,53 });
 
-	Hit.PushBack({288,13,86,53});//poner animación
+	Hit.PushBack({0,56,85,32});
+	HitInclined.PushBack({85,56,86,41});
+	HitDown.PushBack({171,56,85,53});
 
 	collider = App->collisions->AddCollider({ 0, 0, 85, 32 }, Collider::Type::BOSS2, (Module*)App->enemies);
 	App->audio->PlayMusic("Assets/Boss2.ogg", 0);
@@ -68,14 +70,20 @@ void Enemy_FinalBoss2::Anim2()
 		else  currentAnim = &Down;
 	}
 }
+void Enemy_FinalBoss2::AnimHit()
+{
+	if (currentAnim == &FirsAnim)currentAnim = &Hit;
+	if(currentAnim == &Inclined)currentAnim = &HitInclined;
+	if(currentAnim == &Down)currentAnim = &HitDown;
+}
 void Enemy_FinalBoss2::OnCollision(Collider* collider)
 {
-	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
-	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION, currentAnim = &Hit;
-	if (collider->type == Collider::SW_BOMB && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
-	if (collider->type == Collider::SW_CEILING && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
-	if (collider->type == Collider::SW_GUNPOD && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
-	if (collider->type == Collider::SW_S_SHELL && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, currentAnim = &Hit;
+	if (collider->type == Collider::PLAYER_SHOT && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
+	else if (collider->type == Collider::PLAYER && stateEnemy != status_Enemies::STATE_ENEMY_HIT_COLLISION)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT_COLLISION, AnimHit();
+	if (collider->type == Collider::SW_BOMB && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
+	if (collider->type == Collider::SW_CEILING && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
+	if (collider->type == Collider::SW_GUNPOD && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
+	if (collider->type == Collider::SW_S_SHELL && stateEnemy != status_Enemies::STATE_ENEMY_HIT)lives--, stateEnemy = status_Enemies::STATE_ENEMY_HIT, AnimHit();
  	if (lives == 0 && App->player->destroyed == false) App->level2->Win();
 }
 
