@@ -90,7 +90,7 @@ bool ModuleScene2::Start(){
 void ModuleScene2::Win() {
 	//CleanUp();
 	bosses--;
-	if (bosses == 0)
+	if (bosses <= 0)
 	{
 		bosses = 3;
 		Mix_HaltMusic();
@@ -103,7 +103,7 @@ update_status ModuleScene2::Update() {
 		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
 			changeScene = true;
 			App->player->CleanUp();
-			bosses = 1;
+			bosses = 0;
 			Win();
 		}
 
