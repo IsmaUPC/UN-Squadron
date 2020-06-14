@@ -30,7 +30,7 @@ Enemy_FinalBoss2::Enemy_FinalBoss2(int x, int y, int _pattern) :Enemy(x, y, _pat
 
 
 	collider = App->collisions->AddCollider({ 0, 0, 85, 32 }, Collider::Type::BOSS2, (Module*)App->enemies);
-	App->audio->PlayMusic("Assets/Boss2.ogg", 0);
+	App->audio->PlayMusic("Assets/sounds/Boss2.ogg", 0);
 	if(pattern==1)position.x -= SCREEN_WIDTH + 100;
 }
 

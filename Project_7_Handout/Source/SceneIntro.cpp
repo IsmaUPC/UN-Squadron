@@ -34,7 +34,7 @@ bool SceneIntro::Start()
 	bool ret = true;
 
 	bgTexture = App->textures->Load("Assets/Intro/Star_Menu_Sprite.png");	
-	App->audio->PlayMusic("Assets/01_Introduction.ogg", 1.0f);
+	App->audio->PlayMusic("Assets/sounds/01_Introduction.ogg", 1.0f);
 	
 	currentAnim = &Uni_Fire;
 

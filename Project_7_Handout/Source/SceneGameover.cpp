@@ -39,8 +39,8 @@ bool SceneGameover::Start()
 	App->level2->Disable();
 
 	//GObgTexture = App->textures->Load("Assets/17_Game_Over.png");
-	GObgTexture = App->textures->Load("Assets/GameOver.png");
-	App->audio->PlayMusic("Assets/17_Game_Over.ogg", 1.0f);
+	GObgTexture = App->textures->Load("Assets/Win_Lose/GameOver.png");
+	App->audio->PlayMusic("Assets/sounds/17_Game_Over.ogg", 1.0f);
 
 	GameOvercurrentAnim = &GameOverbg;
 

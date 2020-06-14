@@ -15,7 +15,7 @@ ModuleWindow::~ModuleWindow()
 
 bool ModuleWindow::Init(){
 	
-	icon = IMG_Load("Assets/logo_1.png");
+	icon = IMG_Load("Assets/logo.png");
 	LOG("Init SDL window & surface");
 	bool ret = true;
 

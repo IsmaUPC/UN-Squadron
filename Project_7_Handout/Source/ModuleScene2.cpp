@@ -33,9 +33,9 @@ bool ModuleScene2::Start(){
 	bool ret = true;
 	changeScene = false;
 	//1538 * 585
-	bgTexture = App->textures->Load("Assets/BG2.png");
+	bgTexture = App->textures->Load("Assets/BG2/BG2.png");
 
-	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 6);
+	App->audio->PlayMusic("Assets/sounds/EnemyAirforce.ogg", 6);
 
 
 
@@ -90,7 +90,7 @@ bool ModuleScene2::Start(){
 void ModuleScene2::Win() {
 	//CleanUp();
 	bosses--;
-	if (bosses == 0)
+	if (bosses <= 0)
 	{
 		bosses = 3;
 		Mix_HaltMusic();

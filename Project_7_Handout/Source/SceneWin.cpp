@@ -45,8 +45,8 @@ bool SceneWin::Start()
 	App->level2->Disable();
 	//App->particles->Disable();
 
-	winTexture = App->textures->Load("Assets/win_animation.png");
-	App->audio->PlayMusic("Assets/16_Stage_Clear.ogg", 1.0f);
+	winTexture = App->textures->Load("Assets/Win_Lose/win_animation.png");
+	App->audio->PlayMusic("Assets/sounds/16_Stage_Clear.ogg", 1.0f);
 	App->render->cameraSpeed=0;
 
 

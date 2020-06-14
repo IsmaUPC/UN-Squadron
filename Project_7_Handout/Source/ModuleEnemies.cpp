@@ -33,10 +33,10 @@ ModuleEnemies::~ModuleEnemies(){
 
 bool ModuleEnemies::Start()
 {
-	textureEnemies = App->textures->Load("Assets/UNSquadronSpritesEnemies2.png");
-	finalBoss1= App->textures->Load("Assets/FinalBoss1.png");
-	finalBoss2 = App->textures->Load("Assets/FinalBoss2.png");
-	enemyDestroyedFx = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");
+	textureEnemies = App->textures->Load("Assets/Enemies/UNSquadronSpritesEnemies.png");
+	finalBoss1= App->textures->Load("Assets/Enemies/FinalBoss1.png");
+	finalBoss2 = App->textures->Load("Assets/Enemies/FinalBoss2.png");
+	enemyDestroyedFx = App->audio->LoadFx("Assets/sounds/06_Effect_Explosion_Enemies.wav");
 
 	return true;
 }
@@ -219,7 +219,6 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 		if(enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
 			enemies[i]->OnCollision(c2); //Notify the enemy of a collision
-			//App->audio->PlayFx(enemyDestroyedFx);
 			//switch type enemi for diferent score and money
 			//Need creat a variable type in enemymodules
 			if (enemies[i]->lives <= 0)	{
@@ -246,7 +245,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 				App->player->score += 100;
 				if (App->player->money < 9999990) { App->player->money += 300; }
 				App->particles->AddParticle(App->particles->explosionEnemies, colliderI.x + colliderI.w / 2, colliderI.y + colliderI.h / 2);
-				//App->audio->PlayFx(enemies[i]->destroyedFx);
+				App->audio->PlayFx(enemies[i]->destroyedFx);
 			}
 			
 			break;

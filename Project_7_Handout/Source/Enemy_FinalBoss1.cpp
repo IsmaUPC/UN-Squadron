@@ -70,9 +70,9 @@ Enemy_FinalBoss1::Enemy_FinalBoss1(int x, int y, int _pattern) :Enemy(x, y, _pat
 	collider = App->collisions->AddCollider({ 0, 0, 261, 60 }, Collider::Type::BOSS1, (Module*)App->enemies);
 
 	position.x -= SCREEN_WIDTH + 280;
-	App->audio->PlayMusic("Assets/Boss 1.ogg", 0);
+	App->audio->PlayMusic("Assets/sounds/Boss 1.ogg", 0);
 
-	finalBoss1Texture = App->textures->Load("Assets/FinalBoss1.png");
+	finalBoss1Texture = App->textures->Load("Assets/Enemies/FinalBoss1.png");
 
 }
 

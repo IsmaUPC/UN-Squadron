@@ -117,8 +117,8 @@ bool SceneShop::Start(){
 	LOG("Loading background assets");
 
 	bool ret = true;
-	bgTexture = App->textures->Load("Assets/shop_bg3.png");
-	selectorTexture = App->textures->Load("Assets/selector_shop.png");
+	bgTexture = App->textures->Load("Assets/Shop/BG_shop.png");
+	selectorTexture = App->textures->Load("Assets/Shop/selector.png");
 
 	currentTextureText = nullptr;
 	Thankstexture = App->textures->Load("Assets/Shop_Text/Thanks.png");
@@ -131,18 +131,18 @@ bool SceneShop::Start(){
 	byeTtexture = App->textures->Load("Assets/Shop_Text/be_careful.png");
 	lowMoneyTtexture = App->textures->Load("Assets/Shop_Text/low_money_text.png");
 
-	App->audio->PlayMusic("Assets/Store.ogg", 1.0f);
+	App->audio->PlayMusic("Assets/sounds/Store.ogg", 1.0f);
 	
-	OptionSelection = App->audio->LoadFx("Assets/OptionSelection.wav");
-	SelectWeapon = App->audio->LoadFx("Assets/SelectionWeapon.wav");
-	InsuficientMoney = App->audio->LoadFx("Assets/InsuficientMoney.wav");
-	caching = App->audio->LoadFx("Assets/caching.wav");
+	OptionSelection = App->audio->LoadFx("Assets/sounds/OptionSelection.wav");
+	SelectWeapon = App->audio->LoadFx("Assets/sounds/SelectionWeapon.wav");
+	InsuficientMoney = App->audio->LoadFx("Assets/sounds/InsuficientMoney.wav");
+	caching = App->audio->LoadFx("Assets/sounds/caching.wav");
 
-	WeaponsSold = App->textures->Load("Assets/soldWeapons2.png");
+	WeaponsSold = App->textures->Load("Assets/Shop/soldWeapons.png");
 	//hudfont1 = App->fonts->Load("Assets/Fonts/rtypefont3.png", "!@, . / 0123456789$; < ? abcdefghijklmnopqrstuvwxyz", 2, 192, 16);
 	hudfont1 = App->fonts->Load("Assets/hud/hud_font2.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,0123456789им?!*$%&()+-/:;<=>@__     ", 5, 235, 75);
 
-	shopkeeperTexture = App->textures->Load("Assets/PortalRecurso_1.png");
+	shopkeeperTexture = App->textures->Load("Assets/Shop/shopkeeperAnim.png");
 
 
 	App->render->camera.x = 0;

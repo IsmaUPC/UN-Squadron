@@ -38,16 +38,16 @@ bool ModuleScene::Start(){
 	LOG("Loading background assets");
 	bool ret = true;
 	changeScene = false;
-	bgTextures[0] = App->textures->Load("Assets/centro_1_2.png");
-	bgTextures[1] = App->textures->Load("Assets/centro_2_2.png");
-	bgTextures[2] = App->textures->Load("Assets/centro_3_2.png");
-	bgTextures[3] = App->textures->Load("Assets/centro_4_2.png");
+	bgTextures[0] = App->textures->Load("Assets/BG1/BG1_1.png");
+	bgTextures[1] = App->textures->Load("Assets/BG1/BG1_2.png");
+	bgTextures[2] = App->textures->Load("Assets/BG1/BG1_3.png");
+	bgTextures[3] = App->textures->Load("Assets/BG1/BG1_4.png");
 
 	for (int i = 0; i < 4; i++) {
 		cont[i] = 0;
 	}
 
-	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 6);
+	App->audio->PlayMusic("Assets/sounds/EnemyAirforce.ogg", 6);
 	//Bottomside collider
 	//App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
 	
