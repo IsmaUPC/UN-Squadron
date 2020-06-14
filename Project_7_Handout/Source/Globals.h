@@ -37,9 +37,9 @@ typedef unsigned int uint;
 #define PLAYER_HEIGHT 22
 
 //poner 1 para pantalla completa, 0 para tamaño real
-#define PantallaCompleta 0
+#define FULL_SCREEN 1
 
-#define WIN_FULLSCREEN_DESKTOP PantallaCompleta
+#define WIN_FULLSCREEN_DESKTOP FULL_SCREEN
 #define WIN_BORDERLESS 0
 #define WIN_RESIZABLE 0
 #define VSYNC 1
