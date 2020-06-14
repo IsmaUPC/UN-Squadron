@@ -4,7 +4,6 @@
 #include "ModuleCollisions.h"
 #include <math.h>
 #include "ModulePlayer.h"
-#define PI 3.141592
 
 Enemy_White::Enemy_White(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 {

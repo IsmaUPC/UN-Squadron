@@ -226,7 +226,7 @@ update_status HUD::PostUpdate(){
 	}
 	
 	if (*godMode == true){
-		sprintf_s(levelText, 5, "GOD");
+		sprintf_s(levelText, 4, "GOD");
 		App->fonts->BlitText(327, 29, hudfont, levelText);
 	}else{
 		App->fonts->BlitText(322, 30, hudfont, levelText);

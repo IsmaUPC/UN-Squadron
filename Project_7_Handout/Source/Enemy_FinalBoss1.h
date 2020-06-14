@@ -6,6 +6,8 @@
 #include "ModuleScene.h"
 #include "Timer.h"
 
+struct SDL_Texture;
+
 class Enemy_FinalBoss1 : public Enemy
 {
 public:
@@ -15,6 +17,8 @@ public:
 	void updateAllTimers();
 	void move();
 	bool win = true;
+
+	void Draw() override;
 
 	void ballShot();
 	void burstShot();
@@ -50,6 +54,17 @@ private:
 	Animation ShootBack;
 	Animation ShootBombs;
 	Animation Hit;
+
+	SDL_Texture* finalBoss1Texture = nullptr;
+
+
+	int Burntimecount = 0;
+	int openWingscount = 0;
+
+	Animation Burstshot;
+	Animation openWings;
+
+
 };
 
 #endif // !__ENEMY_TEMPLATE_H__

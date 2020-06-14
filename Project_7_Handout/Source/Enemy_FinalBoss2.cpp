@@ -6,7 +6,6 @@
 #include "SDL_mixer/include/SDL_mixer.h" 
 #include "ModuleRender.h"
 
-#define PI 3.141592
 
 Enemy_FinalBoss2::Enemy_FinalBoss2(int x, int y, int _pattern) :Enemy(x, y, _pattern)
 {
