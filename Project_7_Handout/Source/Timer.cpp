@@ -31,6 +31,6 @@ void Timer::update() {
 	acumulator += delta;
 	last_time = cur_time;
 	if (acumulator > interval*2)
-		acumulator -= interval;
+		acumulator -= interval+(interval/2);
 	
 }

@@ -37,9 +37,9 @@ bool ModuleParticles::Start(){
 	animBallShotBoss1.speed = 0.3f;
 	hitBallShotBoss1.PushBack({ 546 ,139,20,25 });
 	for (int i = 0; i < 3; i++)
-	animBallShotBoss1.PushBack({566+(i*20),139,20,25});
+		animBallShotBoss1.PushBack({566+(i*20),139,20,25});
 	for (int i = 0; i < 4; i++)
-	pExplBallBoss1.anim.PushBack({546+(i*30),171,30,32});
+		pExplBallBoss1.anim.PushBack({546+(i*30),171,30,32});
 	pExplBallBoss1.anim.loop = false;
 	pExplBallBoss1.anim.speed = 0.3f;
 	ballShotBoss1.explodes = true;
