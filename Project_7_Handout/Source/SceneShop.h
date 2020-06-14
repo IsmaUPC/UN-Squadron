@@ -26,6 +26,8 @@ public:
 	// Loads the necessary textures for the map background
 	bool Start() override;
 
+	void resetAnim();
+
 	update_status PreUpdate()override;
 
 	// Called at the middle of the application loop
@@ -36,8 +38,12 @@ public:
 	// Called at the end of the application loop.
 	// Performs the render call of all the parts of the scene's background
 	update_status PostUpdate() override;
+	void printTextAnimation();
+
+	void lowMoney();
 	void select();
 	void activeSelected(int _weapon);
+
 
 	void loadInfo();
 	void saveInfo();
@@ -93,6 +99,29 @@ public:
 		EXIT,
 
 	};
+	//talk text
+	SDL_Texture* currentTextureText = nullptr;
+	SDL_Texture* Thankstexture		= nullptr;
+	SDL_Texture* BombTtexture		= nullptr;
+	SDL_Texture* sShellTtexture		= nullptr;
+	SDL_Texture* gunPodTtexture		= nullptr;
+	SDL_Texture* CeilingTtexture	= nullptr;
+	SDL_Texture* cantBuyTtexture	= nullptr;
+	SDL_Texture* exitTtexture		= nullptr;
+	SDL_Texture* byeTtexture		= nullptr;
+	SDL_Texture* lowMoneyTtexture	= nullptr;
+
+	Animation* currentextAnimation = nullptr;
+	Animation lowMoneyText;
+	Animation cantBuyText;
+	Animation exitText;
+	Animation byeText;
+	Animation thanksText;
+	Animation bombText;
+	Animation sShellText;
+	Animation gunPodText;
+	Animation ceilingText;
+
 
 	//shopkeeper 
 	SDL_Texture* shopkeeperTexture = nullptr;
@@ -101,6 +130,6 @@ public:
 
 	bool changeScene = false;
 	int block = 0;
-
+	int thaksShopKeeprCount;
 };
 #endif // !_SCENESHOP_H_

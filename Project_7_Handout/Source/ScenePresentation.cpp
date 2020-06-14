@@ -13,13 +13,13 @@ ScenePresentation::ScenePresentation(bool startEnabled) : Module(startEnabled)
 	for (int i = 0; i < 21; i++) {
 		Presentation_Anim.PushBack({ 503 * i,0,503,443 });
 		if (i == 4 || i == 12 || i == 21){
-			for (int j = 0; j < 6; j++){
+			for (int j = 0; j < 10; j++){
 				Presentation_Anim.PushBack({ 503 * i,0,503,443 });
 			}
 		}
 	}
 
-	Presentation_Anim.speed = 0.10f;
+	Presentation_Anim.speed = 0.2f;
 	Presentation_Anim.loop = false;
 	currentAnim = nullptr;
 
@@ -39,7 +39,7 @@ bool ScenePresentation::Start()
 
 	bool ret = true;
 
-	bgTexture = App->textures->Load("Assets/Presentation_sprite2.png");
+	bgTexture = App->textures->Load("Assets/Presentation_sprite.png");
 	//App->audio->PlayMusic("Assets/01_Introduction.ogg", 1.0f);
 
 

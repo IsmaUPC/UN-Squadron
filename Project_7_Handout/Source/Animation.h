@@ -26,8 +26,8 @@ public:
 		frames[totalFrames++] = rect;
 	}
 
-	void Reset()
-	{
+	void Reset(){
+
 		currentFrame = 0;
 	}
 	

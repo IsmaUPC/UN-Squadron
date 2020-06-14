@@ -24,6 +24,86 @@ SceneShop::SceneShop(bool startEnabled) : Module(startEnabled){
 
 	currentAnimationshopkeeper = nullptr;
 
+	//TEXT
+	//bomb
+	int frames = 0;
+	for (int i = 0; i < 2; i++) 
+		for (int j = 0; j < 9; j++){
+			frames++;
+			bombText.PushBack({ 165 * j, 166*i,165,166});
+			if (frames == 7){
+				bombText.PushBack({ 165 * j, 166 * i,165,166 });
+				bombText.PushBack({ 165 * j, 166 * i,165,166 });
+			}
+		}
+	//sShell
+	frames = 0;
+	for (int i = 0; i < 5; i++) 
+		for (int j = 0; j < 5; j++){
+			frames++;
+			sShellText.PushBack({ 165 * j, 166 * i,165,166 });
+			if (frames == 10) {
+				sShellText.PushBack({ 165 * j, 166 * i,165,166 });
+				sShellText.PushBack({ 165 * j, 166 * i,165,166 });
+			}
+		}
+		
+	//gunPod
+	frames = 0;
+	for (int i = 0; i < 6; i++) 
+		for (int j = 0; j < 6 && frames < 34; j++){
+			frames++;
+			gunPodText.PushBack({ 165 * j, 166 * i,165,166 });
+			if (frames == 8) {
+				gunPodText.PushBack({ 165 * j, 166 * i,165,166 });
+				gunPodText.PushBack({ 165 * j, 166 * i,165,166 });
+			}
+		}
+	//ceiling
+	frames = 0;
+	for (int i = 0; i < 5; i++) 
+		for (int j = 0; j < 6 && frames < 27; j++){
+			frames++;
+			ceilingText.PushBack({ 165 * j, 166 * i,165,166 });
+			if (frames == 12) {
+				ceilingText.PushBack({ 165 * j, 166 * i,165,166 });
+				ceilingText.PushBack({ 165 * j, 166 * i,165,166 });
+			}
+		}
+	//thanks
+	for (int j = 0; j < 5; j++) {
+		thanksText.PushBack({ 165 * j, 0,165,166 });
+	}
+	//CantBuy
+	for (int i = 0; i < 2; i++)
+		for (int j = 0; j < 7; j++) {
+			cantBuyText.PushBack({ 165 * j, 166 * i,165,166 });
+		}
+	//exit
+	for (int i = 0; i < 2; i++)
+		for (int j = 0; j < 5; j++) {
+			exitText.PushBack({ 165 * j, 166 * i,165,166 });
+		}
+	//bye
+	frames = 0;
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 6 && frames < 13; j++) {
+			frames++;
+			byeText.PushBack({ 165 * j, 166 * i,165,166 });
+			if (frames == 13) {
+				byeText.PushBack({ 165 * j, 166 * i,165,166 });
+				byeText.PushBack({ 165 * j, 166 * i,165,166 });
+			}
+		}
+
+	for (int j = 0; j < 7; j++) {
+		lowMoneyText.PushBack({ 165 * j, 0,165,166 });
+	}
+
+
+	thanksText.speed = 0.2f;
+	byeText.loop = exitText.loop = cantBuyText.loop = thanksText.loop = lowMoneyText.loop = bombText.loop = sShellText.loop = gunPodText.loop = ceilingText.loop = false;
+	byeText.speed=exitText.speed=cantBuyText.speed = lowMoneyText.speed = bombText.speed = sShellText.speed = gunPodText.speed = ceilingText.speed = 0.15f;
 }
 
 SceneShop::~SceneShop()
@@ -39,8 +119,20 @@ bool SceneShop::Start(){
 	bool ret = true;
 	bgTexture = App->textures->Load("Assets/shop_bg3.png");
 	selectorTexture = App->textures->Load("Assets/selector_shop.png");
-	App->audio->PlayMusic("Assets/Store.ogg", 1.0f);
 
+	currentTextureText = nullptr;
+	Thankstexture = App->textures->Load("Assets/Shop_Text/Thanks.png");
+	BombTtexture = App->textures->Load("Assets/Shop_Text/BombText.png");
+	sShellTtexture = App->textures->Load("Assets/Shop_Text/SShellText.png");
+	gunPodTtexture = App->textures->Load("Assets/Shop_Text/GunpodText.png");
+	CeilingTtexture = App->textures->Load("Assets/Shop_Text/CeilingText.png");
+	cantBuyTtexture = App->textures->Load("Assets/Shop_Text/cant_handle.png");
+	exitTtexture = App->textures->Load("Assets/Shop_Text/leaving.png");
+	byeTtexture = App->textures->Load("Assets/Shop_Text/be_careful.png");
+	lowMoneyTtexture = App->textures->Load("Assets/Shop_Text/low_money_text.png");
+
+	App->audio->PlayMusic("Assets/Store.ogg", 1.0f);
+	
 	OptionSelection = App->audio->LoadFx("Assets/OptionSelection.wav");
 	SelectWeapon = App->audio->LoadFx("Assets/SelectionWeapon.wav");
 	InsuficientMoney = App->audio->LoadFx("Assets/InsuficientMoney.wav");
@@ -64,6 +156,10 @@ bool SceneShop::Start(){
 		weapons[i].ammo = 0;
 	}
 
+	currentextAnimation = &byeText;
+	currentextAnimation->Reset();
+
+	currentextAnimation = nullptr;
 	currentAnimationshopkeeper = &shopkeeperTalking;
 
 	tiendaY = 0;
@@ -71,12 +167,16 @@ bool SceneShop::Start(){
 
 	changeScene = false;
 	block = 50;
-
+	thaksShopKeeprCount = 0;
 
 	loadInfo();
 	return ret;
 }
-
+void SceneShop::resetAnim() {
+	if (currentextAnimation != &thanksText){
+		currentextAnimation->Reset();
+	}
+}
 update_status SceneShop::PreUpdate(){
 
 	if (block > 0){
@@ -96,12 +196,15 @@ update_status SceneShop::PreUpdate(){
 			tiendaY -= 1;
 			if (tiendaY < 0)tiendaY = 1;
 			App->audio->PlayFx(OptionSelection);
+
+			resetAnim();
 			keyDownPad = true;
 		}
 		if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN || pad.l_y > 0.2f || pad.down) && keyDownPad == false) {
 			tiendaY += 1;
 			if (tiendaY > 1) tiendaY = 0;
 			App->audio->PlayFx(OptionSelection);
+			resetAnim();
 			keyDownPad = true;
 		}
 		if ((App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN || pad.l_x < -0.2f || pad.left) && keyDownPad == false) {
@@ -111,6 +214,7 @@ update_status SceneShop::PreUpdate(){
 				tiendaY += (tiendaY == 1) ? -1 : 1;
 			}
 			App->audio->PlayFx(OptionSelection);
+			resetAnim();
 			keyDownPad = true;
 		}
 		if ((App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN || pad.l_x > 0.2f || pad.right) && keyDownPad == false) {
@@ -120,9 +224,11 @@ update_status SceneShop::PreUpdate(){
 				tiendaY += (tiendaY == 1) ? -1 : 1;
 			}
 			App->audio->PlayFx(OptionSelection);
+			resetAnim();
 			keyDownPad = true;
 		}
-		if (App->input->keys[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) {
+		if (!infiniteMoney && App->input->keys[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) {
+			App->audio->PlayFx(caching);
 			infiniteMoney = true;
 		}
 
@@ -134,6 +240,8 @@ update_status SceneShop::PreUpdate(){
 	return update_status::UPDATE_CONTINUE;
 
 }
+
+
 
 update_status SceneShop::Update(){
 	
@@ -149,12 +257,16 @@ update_status SceneShop::Update(){
 			money = 9999990;
 			if (!maxMoney){
 				maxMoney = true;
-				App->audio->PlayFx(caching);
 			}
 		}
 	}
 
+	if (changeScene && thaksShopKeeprCount < 100) {
+		(newGame) ? App->fade->FadeToBlack(this, (Module*)App->fade->getLastLevel(), 90) : App->fade->FadeToBlack(this, (Module*)App->level1, 90);
+		if (!newGame) newGame = true;
+	}else if(changeScene){
 
+	}
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -167,13 +279,26 @@ bool SceneShop::CleanUp(){
 	App->textures->Unload(bgTexture);
 	App->textures->Unload(selectorTexture);
 	App->textures->Unload(WeaponsSold);
+	
+	//Text
+	App->textures->Unload(currentTextureText);
+	App->textures->Unload(Thankstexture);
+	App->textures->Unload(BombTtexture);
+	App->textures->Unload(sShellTtexture);
+	App->textures->Unload(gunPodTtexture);
+	App->textures->Unload(CeilingTtexture);
+	App->textures->Unload(cantBuyTtexture); 
+	App->textures->Unload(exitTtexture);
+	App->textures->Unload(byeTtexture); 
+	App->textures->Unload(lowMoneyTtexture); 
 
+	//FX
 	App->audio->UnloadFx(OptionSelection);
 	App->audio->UnloadFx(SelectWeapon);
 	App->audio->UnloadFx(InsuficientMoney);
 
+	//Font
 	App->fonts->UnLoad(hudfont1);
-
 
 	//App->audio->Disable();
 	bgTexture = NULL;
@@ -185,8 +310,6 @@ update_status SceneShop::PostUpdate(){
 	App->render->Blit(bgTexture, 0, 0, NULL);
 	if (block <= 0)
 		App->render->Blit(selectorTexture, 17+(79*tiendaX), 238+(96*tiendaY), NULL);
-
-
 
 	sprintf_s(moneyText, 10, "%9d", money);
 	App->fonts->BlitText(24, 219, hudfont1, moneyText);
@@ -217,29 +340,105 @@ update_status SceneShop::PostUpdate(){
 		App->render->Blit(WeaponsSold, 31, 345, &rect);
 	}
 
-
+	printTextAnimation();
 
 	return update_status::UPDATE_CONTINUE;
+}
+
+void SceneShop::printTextAnimation(){
+	
+	if (thaksShopKeeprCount <= 0){
+	switch (weaponsition) {
+	case CLUSTER:
+		//NULL
+		currentTextureText = cantBuyTtexture;
+		currentextAnimation = &cantBuyText;
+		break;
+	case PHOENIX:
+		//NULL
+		currentTextureText = cantBuyTtexture;
+		currentextAnimation = &cantBuyText;
+		break;
+	case FALCON:
+		//NULL
+		currentTextureText = cantBuyTtexture;
+		currentextAnimation = &cantBuyText;
+		break;
+	case BULLPUP:
+		//NULL
+		currentTextureText = cantBuyTtexture;
+		currentextAnimation = &cantBuyText;
+		break;
+	case S_SHELL:
+		currentTextureText = sShellTtexture;
+		currentextAnimation = &sShellText;
+		break;
+	case T_LASER:
+		//NULL
+		currentTextureText = cantBuyTtexture;
+		currentextAnimation = &cantBuyText;
+		break;
+	case BOMB:
+		currentTextureText = BombTtexture;
+		currentextAnimation = &bombText;
+		break;
+	case NAPALM:
+		//NULL
+		currentTextureText = cantBuyTtexture;
+		currentextAnimation = &cantBuyText;
+		break;
+	case GUNPOD:
+		currentTextureText = gunPodTtexture;
+		currentextAnimation = &gunPodText;
+		break;
+	case CEILING:
+		currentTextureText = CeilingTtexture;
+		currentextAnimation = &ceilingText;
+		break;
+	case MEGACRUSH:
+		//NULL
+		currentTextureText = cantBuyTtexture;
+		currentextAnimation = &cantBuyText;
+		break;
+	case EXIT:
+		//NULL
+		currentTextureText = exitTtexture;
+		currentextAnimation = &exitText;
+		break;
+	}
+	}else{
+		thaksShopKeeprCount--;
+	}
+	
+
+	if (currentextAnimation != nullptr) {
+		currentextAnimation->Update();
+		SDL_Rect rect;
+		rect = currentextAnimation->GetCurrentFrame();
+		App->render->Blit(currentTextureText, 312, 42, &rect);
+	}
+}
+
+void SceneShop::lowMoney(){
+
+	currentextAnimation->Reset();
+	App->audio->PlayFx(InsuficientMoney);
+	thaksShopKeeprCount = 80;
+	currentTextureText = lowMoneyTtexture;
+	currentextAnimation = &lowMoneyText;
+	currentextAnimation->Reset();
 }
 
 void SceneShop::select(){
 
 	switch (weaponsition){
 	case CLUSTER:
-		App->audio->PlayFx(InsuficientMoney);
-
 		break;
 	case PHOENIX:
-		App->audio->PlayFx(InsuficientMoney);
-
 		break;
 	case FALCON:
-		App->audio->PlayFx(InsuficientMoney);
-
 		break;
 	case BULLPUP:
-		App->audio->PlayFx(InsuficientMoney);
-				
 		break;
 	case S_SHELL:
 		if (money >= 10000 || weapons[S_SHELL].selected == true) {
@@ -247,12 +446,10 @@ void SceneShop::select(){
 			weapons[S_SHELL].ammo = 20;
 			activeSelected(S_SHELL);
 		}else {
-			App->audio->PlayFx(InsuficientMoney);
+			lowMoney();
 		}
 		break;
 	case T_LASER:
-		App->audio->PlayFx(InsuficientMoney);
-
 		break;
 	case BOMB:
 		if (money >= 5000 || weapons[BOMB].selected == true) {
@@ -260,12 +457,10 @@ void SceneShop::select(){
 			weapons[BOMB].ammo = 50;
 			activeSelected(BOMB);
 		}else{
-			App->audio->PlayFx(InsuficientMoney);
+			lowMoney();
 		}
 		break;
 	case NAPALM:
-		App->audio->PlayFx(InsuficientMoney);
-
 		break;
 	case GUNPOD:
 		if (money >= 15000 || weapons[GUNPOD].selected == true) {
@@ -273,7 +468,7 @@ void SceneShop::select(){
 			weapons[GUNPOD].ammo = 20;
 			activeSelected(GUNPOD);
 		}else {
-			App->audio->PlayFx(InsuficientMoney);
+			lowMoney();
 		}
 		break;
 	case CEILING:
@@ -282,34 +477,42 @@ void SceneShop::select(){
 			weapons[CEILING].ammo = 50;
 			activeSelected(CEILING);
 		}else {
-			App->audio->PlayFx(InsuficientMoney);
+			lowMoney();
 		}
 		break;
 	case MEGACRUSH:
-		App->audio->PlayFx(InsuficientMoney);
-
 		break;
 	case EXIT:
 		if (!newGame){
-			newGame = true;
-			App->fade->FadeToBlack(this, (Module*)App->level1, 90);
+			thaksShopKeeprCount = 150;
+			currentTextureText = byeTtexture;
+			currentextAnimation = &byeText;
 			changeScene = true;
 		}else{
-			App->fade->FadeToBlack(this, (Module*)App->fade->getLastLevel(), 90);
+			thaksShopKeeprCount = 150;
+			currentTextureText = byeTtexture;
+			currentextAnimation = &byeText;
 			changeScene = true;
 		}
 
 		break;
 	}
+
 }
 
 void SceneShop::activeSelected(int _weapon){
 	
 	weapons[_weapon].selected = !weapons[_weapon].selected;
+
 	if (weapons[_weapon].selected == true) {
 		App->audio->PlayFx(SelectWeapon);
 		money -= weapons[_weapon].priceWeapon;
-	}else {
+		thaksShopKeeprCount = 80;
+		currentTextureText = Thankstexture;
+		currentextAnimation = &thanksText;
+		currentextAnimation->Reset();
+	}else{
+		thaksShopKeeprCount = 0;
 		weapons[_weapon].ammo = 0;
 		money += weapons[_weapon].priceWeapon;
 	}
