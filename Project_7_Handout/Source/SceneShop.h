@@ -97,5 +97,7 @@ public:
 	Animation* currentAnimationshopkeeper = nullptr;
 	Animation shopkeeperTalking;
 
+	bool changeScene = false;
+
 };
 #endif // !_SCENESHOP_H_

@@ -145,8 +145,7 @@ update_status ModulePlayer::Update(){
 	GamePad& pad = App->input->pads[0];
 	//Shot Player
 	if (cooldown == 11 && !destroyed) {
-		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a == KEY_STATE::KEY_DOWN) {
-			App->input->ShakeController(0, 60, 0.5);
+		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a == KEY_STATE::KEY_DOWN || pad.r1 == KEY_STATE::KEY_DOWN) {
 			playerShot();
 		}
 		else if (timer->ready() && timer->check()) 
@@ -213,11 +212,12 @@ update_status ModulePlayer::PostUpdate()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
 
-	if (c1->type == Collider::PLAYER && c2->type == Collider::POWERUP || c2->type == Collider::PLAYER && c1->type == Collider::POWERUP) { return;};
+	if (c1->type == Collider::PLAYER && c2->type == Collider::POWERUP || c2->type == Collider::PLAYER && c1->type == Collider::POWERUP || 
+		c1->type == Collider::PLAYER && c2->type == Collider::POWERUP_B || c2->type == Collider::PLAYER && c1->type == Collider::POWERUP_B) { return;};
 
 	if (c1 == collider && destroyed == false && godMode==false)	{
 		if (!oneHit){
-			App->input->ShakeController(0, 120,1.5f);
+			App->input->ShakeController(0, 120,0.5f);
 			oneHit = true;
 			App->audio->PlayFx(playerHit);
 			statusPlayer = status_player::STATE_HIT;
@@ -225,7 +225,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
 			App->audio->PlayFx(playerInDanger);
 		}else if(statusPlayer==status_player::STATE_IDLE){
 			if (App->hud->animFase == App->hud->DAMAGE){
-				
+				App->input->ShakeController(0, 60, 0);
 				App->audio->UnloadFx(playerInDanger);
 				App->audio->PlayFx(playerDead);
 				App->hud->hitOnPlayer();
@@ -240,6 +240,7 @@ void ModulePlayer::timeRegeneration(){
 	if (oneHit == true){
 		countTimeToShield--;
 		if (countTimeToShield <=0) {
+			App->input->ShakeController(0, 60,0);
 			oneHit = false;
 			countTimeToShield = 6000 / 30;
 			App->hud->shield();
@@ -251,6 +252,8 @@ bool ModulePlayer::CleanUp(){
 	for (int i = 0; i < 11; i++) {
 		ammo[i] = 0;
 	}
+	App->input->ShakeController(0, 60, 0);
+
 	saveInfo();
 	App->textures->Unload(texture);
 	App->audio->UnloadFx(laserFx);
@@ -306,7 +309,7 @@ void ModulePlayer::playerShot() {
 void ModulePlayer::MovePlayer() {
 
 	GamePad& pad = App->input->pads[0];
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT || pad.l_x < 0){
+	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT || pad.l_x < -0.2f){
 		//Check that the position does not exceed the screen limit :D
 		if (position.x > currentCameraX) {
 			position.x -= speed;
@@ -314,7 +317,7 @@ void ModulePlayer::MovePlayer() {
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT || pad.l_x > 0){
+	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT || pad.l_x > 0.2f){
 		/*check that the player is not in a position larger than the screen size
 		  in reference to the current camera position*/
 		if (position.x < (currentCameraX + (SCREEN_WIDTH - PLAYER_WIDTH))) {
@@ -323,7 +326,7 @@ void ModulePlayer::MovePlayer() {
 		else position.x = currentCameraX + (SCREEN_WIDTH - PLAYER_WIDTH);
 	}
 
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || pad.l_y > 0){
+	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || pad.l_y > 0.2f){
 		/*controls the limit of the position "y" in which the player is,
 		taking into account the height of the player*/
 		if (position.y < (SCREEN_HEIGHT - (PLAYER_HEIGHT + 40))) {
@@ -336,7 +339,7 @@ void ModulePlayer::MovePlayer() {
 	
 	}
 
-	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || pad.l_y < 0){
+	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || pad.l_y < -0.2f){
 		/*Does not allow movements less than 0, in case it exceeds it
 		places the player to position 0*/
 		if (position.y > 82) {
@@ -348,8 +351,8 @@ void ModulePlayer::MovePlayer() {
 		} else position.y = 82;
 	}
 	// If no up/down movement detected, set the current animation back to idle
-	if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE && pad.l_y == 0)
-		&& (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE && pad.l_y == 0))
+	if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE && pad.l_y >= -0.2f && pad.l_y <= 0.2f)
+		&& (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE))
 			currentAnimation = (oneHit) ? &idleDamageAnim : &idleAnim;
 
 	

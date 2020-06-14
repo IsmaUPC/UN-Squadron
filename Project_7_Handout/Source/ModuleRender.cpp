@@ -14,13 +14,11 @@ ModuleRender::ModuleRender(bool startEnabled) : Module(startEnabled)
 
 }
 
-ModuleRender::~ModuleRender()
-{
+ModuleRender::~ModuleRender(){
 
 }
 
-bool ModuleRender::Init()
-{
+bool ModuleRender::Init(){
 	LOG("Creating Renderer context");
 	bool ret = true;	
 	Uint32 flags = 0;

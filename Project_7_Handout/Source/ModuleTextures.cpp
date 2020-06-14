@@ -14,7 +14,7 @@ ModuleTextures::ModuleTextures(bool startEnabled) : Module(startEnabled)
 }
 
 ModuleTextures::~ModuleTextures(){
-	CleanUp();
+
 }
 
 bool ModuleTextures::Init()

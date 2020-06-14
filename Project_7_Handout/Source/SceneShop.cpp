@@ -32,8 +32,8 @@ SceneShop::~SceneShop()
 }
 
 
-bool SceneShop::Start()
-{
+bool SceneShop::Start(){
+	
 	LOG("Loading background assets");
 
 	bool ret = true;
@@ -69,6 +69,8 @@ bool SceneShop::Start()
 	tiendaY = 0;
 	tiendaX = 0;
 
+	changeScene = false;
+
 	loadInfo();
 	return ret;
 }
@@ -76,47 +78,49 @@ bool SceneShop::Start()
 update_status SceneShop::PreUpdate(){
 	GamePad& pad = App->input->pads[0];
 
-	if ((App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) && keyDownPad == false) {
-		keyDownPad = true;
-		select();
-	}
-
-	if ((App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_DOWN || pad.l_y < 0 || pad.up) && keyDownPad == false) {
-		tiendaY -= 1;
-		if (tiendaY < 0)tiendaY = 1;
-		App->audio->PlayFx(OptionSelection);
-		keyDownPad = true;
-	}
-	if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN || pad.l_y > 0 || pad.down) && keyDownPad == false) {
-		tiendaY += 1;
-		if (tiendaY > 1) tiendaY = 0;
-		App->audio->PlayFx(OptionSelection);
-		keyDownPad = true;
-	}
-	if ((App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN || pad.l_x < 0 || pad.left) && keyDownPad == false) {
-		tiendaX -= 1;
-		if (tiendaX < 0) {
-			tiendaX = 5;
-			tiendaY += (tiendaY == 1) ? -1 : 1;
+	//inputs
+	if (!changeScene){
+		if ((App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) && keyDownPad == false) {
+			keyDownPad = true;
+			select();
 		}
-		App->audio->PlayFx(OptionSelection);
-		keyDownPad = true;
-	}
-	if ((App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN || pad.l_x > 0 || pad.right) && keyDownPad == false) {
-		tiendaX += 1;
-		if (tiendaX > 5) {
-			tiendaX = 0;
-			tiendaY += (tiendaY == 1) ? -1 : 1;
+		if ((App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_DOWN || pad.l_y < -0.2f || pad.up) && keyDownPad == false) {
+			tiendaY -= 1;
+			if (tiendaY < 0)tiendaY = 1;
+			App->audio->PlayFx(OptionSelection);
+			keyDownPad = true;
 		}
-		App->audio->PlayFx(OptionSelection);
-		keyDownPad = true;
-	}
-	if (App->input->keys[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) {
-		infiniteMoney = true;
-	}
+		if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN || pad.l_y > 0.2f || pad.down) && keyDownPad == false) {
+			tiendaY += 1;
+			if (tiendaY > 1) tiendaY = 0;
+			App->audio->PlayFx(OptionSelection);
+			keyDownPad = true;
+		}
+		if ((App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_DOWN || pad.l_x < -0.2f || pad.left) && keyDownPad == false) {
+			tiendaX -= 1;
+			if (tiendaX < 0) {
+				tiendaX = 5;
+				tiendaY += (tiendaY == 1) ? -1 : 1;
+			}
+			App->audio->PlayFx(OptionSelection);
+			keyDownPad = true;
+		}
+		if ((App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_DOWN || pad.l_x > 0.2f || pad.right) && keyDownPad == false) {
+			tiendaX += 1;
+			if (tiendaX > 5) {
+				tiendaX = 0;
+				tiendaY += (tiendaY == 1) ? -1 : 1;
+			}
+			App->audio->PlayFx(OptionSelection);
+			keyDownPad = true;
+		}
+		if (App->input->keys[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) {
+			infiniteMoney = true;
+		}
 
-	if (pad.l_y == 0 && pad.l_x == 0 && pad.up == false && pad.down == false && pad.left == false && pad.right == false && pad.a == false) {
-		keyDownPad = false;
+		if (pad.l_y >= -0.2f && pad.l_y <= 0.2f && pad.l_x >= -0.2f && pad.l_x <= 0.2f && pad.up == false && pad.down == false && pad.left == false && pad.right == false && pad.a == false) {
+			keyDownPad = false;
+		}
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -270,13 +274,13 @@ void SceneShop::select(){
 
 		break;
 	case EXIT:
-
 		if (!newGame){
 			newGame = true;
 			App->fade->FadeToBlack(this, (Module*)App->level1, 90);
-
+			changeScene = true;
 		}else{
 			App->fade->FadeToBlack(this, (Module*)App->fade->getLastLevel(), 90);
+			changeScene = true;
 		}
 
 		break;

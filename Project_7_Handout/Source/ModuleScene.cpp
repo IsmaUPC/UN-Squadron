@@ -21,11 +21,6 @@ ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 }
 
 ModuleScene::~ModuleScene(){
-	CleanUp();
-	for each (SDL_Texture* texture in bgTextures){
-		App->textures->Unload(texture);
-
-	}
 	
 }
 // Load assets
@@ -41,9 +36,8 @@ bool ModuleScene::Start(){
 	
 
 	LOG("Loading background assets");
-
 	bool ret = true;
-
+	changeScene = false;
 	bgTextures[0] = App->textures->Load("Assets/centro_1_2.png");
 	bgTextures[1] = App->textures->Load("Assets/centro_2_2.png");
 	bgTextures[2] = App->textures->Load("Assets/centro_3_2.png");
@@ -148,13 +142,15 @@ void ModuleScene::Win() {
 }
 update_status ModuleScene::Update(){
 
-	if (App->hud->animFase >= App->hud->IDLE){
+	if (App->hud->animFase >= App->hud->IDLE && !changeScene){
 		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
+			changeScene = true;
 			App->player->CleanUp();
 			Win();
 		}
 
 		if (App->input->keys[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
+			changeScene = true;
 			App->player->godMode = true;
 			App->player->DEAD();
 			App->player->CleanUp();
@@ -205,6 +201,10 @@ bool ModuleScene::CleanUp()
 	App->textures->Unload(bgTextures[1]);
 	App->textures->Unload(bgTextures[2]);
 	App->textures->Unload(bgTextures[3]);
+
+	for each (SDL_Texture * texture in bgTextures) {
+		App->textures->Unload(texture);
+	}
 
 	App->enemies->CleanUp();
 

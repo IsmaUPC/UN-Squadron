@@ -17,7 +17,7 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled)
 }
 
 ModuleParticles::~ModuleParticles(){
-	//CleanUp();
+
 }
 
 bool ModuleParticles::Start(){
@@ -148,11 +148,14 @@ bool ModuleParticles::Start(){
 
 	//PowerUp
 	for (int i = 0; i < 2; i++) {
-		PowerUp.anim.PushBack({ (46 + (24 * (i * 2))), 0, 24,20 });
-		PowerUpBlue.anim.PushBack({ (46 + (24 * (i * 3))), 0, 23,20 });
+		PowerUp.anim.PushBack({ (46 + (31 * (i * 2))), 0, 31,26 });
+		PowerUpBlue.anim.PushBack({ (46 + (31 * (1+i))), 0, 31,26 });
 	}
 	PowerUp.anim.speed = 0.1f;
 	PowerUp.explodes = false;
+
+	PowerUpBlue.anim.speed = 0.1f;
+	PowerUpBlue.explodes = false;
 
 	//SPECIAL WEAPONS
 	int indexWeapon;
@@ -227,6 +230,7 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 		if (p != nullptr && p->collider == c1){
 			//PowerUp
 			if (c1->type == Collider::PLAYER && c2->type == Collider::POWERUP || c2->type == Collider::PLAYER && c1->type == Collider::POWERUP) { App->player->caughtPowerup(1); };
+			if (c1->type == Collider::PLAYER && c2->type == Collider::POWERUP_B || c2->type == Collider::PLAYER && c1->type == Collider::POWERUP_B) { App->player->caughtPowerup(3); };
 
 			if (App->player->getStatusPlayer() != status_player::STATE_HIT && p->GetStateParticle()==status_Particle::STATE_PARTICLE_HIT)
 			{
@@ -315,7 +319,7 @@ update_status ModuleParticles::Update()
 			if( particle->collider->type == Collider::Type::BOSS1_SHOT_BALL)particles[i]->path.SetCurrentAnimation(new Animation(animBallShotBoss1));
 			particles[i]->SetStateParticle(status_Particle::STATE_PARTICLE_IDLE);
 		}
-		if (particle->collider->type == Collider::Type::POWERUP) {
+		if (particle->collider->type == Collider::Type::POWERUP || particle->collider->type == Collider::Type::POWERUP_B) {
 			angle[i] += angleIncrement;
 			particle->position.y += (Radio * sinf(angle[i]));
 			particle->position.x += SCREEN_SPEED + speed_X_PowerUP;
@@ -370,7 +374,7 @@ update_status ModuleParticles::PostUpdate()
 				App->render->Blit(enemyShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));		
 			}
 			//player shot
-			else if (colliderI->type == Collider::Type::POWERUP || colliderI->type == Collider::Type::PLAYER_SHOT || colliderI->type == Collider::Type::BOSS_SHOT_LASER) {
+			else if (colliderI->type == Collider::Type::POWERUP_B ||colliderI->type == Collider::Type::POWERUP || colliderI->type == Collider::Type::PLAYER_SHOT || colliderI->type == Collider::Type::BOSS_SHOT_LASER) {
 				App->render->Blit(playerShotTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 			}
 			else if (colliderI->type == Collider::Type::BOSS_EXPLOSION_BALL || colliderI->type == Collider::Type::BOSS_BURSTSHOT|| colliderI->type == Collider::Type::BOSS2_SHOT) {
@@ -449,9 +453,9 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 			p->collider = App->collisions->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);
 			
 			if (p->collider !=nullptr) {
-				if (p->collider->type == Collider::Type::BOSS_BURSTSHOT) { p->speed.x = -3; }
+				if (p->collider->type == Collider::Type::BOSS_BURSTSHOT) { p->speed.x = -3; };
 
-				if (p->collider->type == Collider::Type::POWERUP) {p->speed.x = -1;	}
+				if (p->collider->type == Collider::Type::POWERUP || p->collider->type == Collider::Type::POWERUP_B) { p->speed.x = -1; };
 
 				if(p->collider->type== Collider::Type::NONE)App->audio->PlayFx(*(new int(soundExplosion)));
 					//Set direction to shotEnemy

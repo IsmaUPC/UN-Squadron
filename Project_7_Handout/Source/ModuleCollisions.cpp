@@ -25,6 +25,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_SHOT] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::M_BOSS1] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::M_BOSS1_SHOT] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::BOSS1] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::BOSS2] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::BOSS1_SHOT_BALL] = true;
@@ -33,8 +34,10 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::BOSS_MOAB] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::BOSS2_SHOT] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::POWERUP] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::POWERUP_B] = true;
 
 	matrix[Collider::Type::POWERUP][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::POWERUP_B][Collider::Type::PLAYER] = true;
 
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER_SHOT] = true;
@@ -136,7 +139,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 // Destructor
 ModuleCollisions::~ModuleCollisions()
 {
-	CleanUp();
+
 }
 
 update_status ModuleCollisions::PreUpdate()
@@ -219,7 +222,7 @@ void ModuleCollisions::DebugDraw()
 			case Collider::Type::NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
-			case Collider::Type::WALL: case Collider::Type::POWERUP: // blue
+			case Collider::Type::WALL: case Collider::Type::POWERUP: case Collider::Type::POWERUP_B: // blue
 				App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 			case Collider::Type::PLAYER: // green

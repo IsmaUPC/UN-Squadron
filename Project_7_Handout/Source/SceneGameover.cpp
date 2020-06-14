@@ -23,8 +23,7 @@ SceneGameover::SceneGameover(bool startEnabled) : Module(startEnabled){
 	GameOverbg.loop = true;
 }
 
-SceneGameover::~SceneGameover()
-{
+SceneGameover::~SceneGameover(){
 
 }
 

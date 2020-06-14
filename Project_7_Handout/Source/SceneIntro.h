@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include"Path.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 
@@ -34,6 +35,8 @@ public:
 	SDL_Texture* bgTexture = nullptr;
 	Animation Uni_Fire;
 	Animation* currentAnim = nullptr;
+	Timer* fade;
+
 };
 
 #endif

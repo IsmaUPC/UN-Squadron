@@ -11,8 +11,7 @@ ModuleInput::ModuleInput(bool startEnabled) : Module(startEnabled)
 	memset(&pads[0], 0, sizeof(GamePad) * MAX_PADS);
 }
 
-ModuleInput::~ModuleInput()
-{
+ModuleInput::~ModuleInput(){
 
 }
 
