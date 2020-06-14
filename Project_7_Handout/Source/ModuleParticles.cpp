@@ -131,7 +131,12 @@ bool ModuleParticles::Start(){
 	//player shot
 	playerLaser.anim.PushBack({ 0, 0, 40, 7 });
 	
-	
+	explosionPalyerLaser.anim.PushBack({675,140,28,26});
+	explosionPalyerLaser.anim.PushBack({675,140,28,26});
+	explosionPalyerLaser.anim.PushBack({675,140,28,26});
+	explosionPalyerLaser.anim.loop = false;
+	explosionPalyerLaser.explodes = false;
+
 	//Mini boss shot
 	mBoss1ShotClose.PushBack({ 22, 29, 45, 12 });
 	mBoss1ShotOpening.PushBack({ 113 , 9, 45, 52 });
@@ -159,6 +164,7 @@ bool ModuleParticles::Start(){
 	playerLaser.speed.x = 25 + SCREEN_SPEED;
 	playerLaser.lifetime = 50;
 	playerLaser.anim.speed = 0.2f;
+	playerLaser.explodes=true;
 
 	//PowerUp
 	for (int i = 0; i < 2; i++) {
@@ -257,7 +263,6 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 			if (c1->type == Collider::PLAYER_SHOT && c2->type == Collider::ENEMY || c2->type == Collider::PLAYER_SHOT && c1->type == Collider::ENEMY) {
 				App->player->score += 100;
 				if (App->player->money < 9999990) {App->player->money += 300;}
-
 			}
 			break;
 		}
@@ -275,6 +280,10 @@ update_status ModuleParticles::PreUpdate()
 				SDL_Rect pCollider = particles[i]->collider->rect;
 				if (particles[i]->collider->type== Collider::Type::BOSS1_SHOT_BALL) {
 					AddParticle(pExplBallBoss1, pCollider.x, pCollider.y,Collider::Type::BOSS_EXPLOSION_BALL);
+				}
+				else if (particles[i]->collider->type == Collider::Type::PLAYER_SHOT)
+				{
+					AddParticle(explosionPalyerLaser, pCollider.x+ pCollider.w, pCollider.y+ (pCollider.h/2), Collider::Type::NONE);
 				}
 				else {
 				App->audio->PlayFx(*(new int(soundExplosion)));
@@ -471,13 +480,14 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 
 				if (p->collider->type == Collider::Type::POWERUP || p->collider->type == Collider::Type::POWERUP_B) { p->speed.x = -1; };
 
-				if(p->collider->type== Collider::Type::NONE)App->audio->PlayFx(*(new int(soundExplosion)));
+				//if(p->collider->type== Collider::Type::NONE)App->audio->PlayFx(*(new int(soundExplosion)));
 					//Set direction to shotEnemy
 					if (p->collider->type == p->collider->ENEMY_SHOT) p = setShotDirection(p, x, y);
 					if (p->collider->type == p->collider->M_BOSS1_SHOT) p->spawnPos.create(x, y);
 					if (p->collider->type == p->collider->BOSS1_SHOT_BALL)	createBallBoss(p, x, y);
 					if (p->collider->type == p->collider->BOSS_MOAB) p->spawnPos.create(x,y);
 					if (p->collider->type == p->collider->BOSS2_MISILE) p->spawnPos.create(x,y);
+
 			}
 			particles[i] = p;
 			break;
