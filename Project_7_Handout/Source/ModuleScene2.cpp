@@ -41,37 +41,37 @@ bool ModuleScene2::Start(){
 
 	// Enemies ---	
 	
-	App->enemies->spawningEnemies(1,ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1440, 340, 30, 1);	//WAVE 1
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1520, 340, 30, 1);	//WAVE 1
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1600, 340, 30, 1);	//WAVE 1
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1720, 340, 30, 1);	//WAVE 1
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2100, 340, 30, 1);	//WAVE 1
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2400, 340, 30, 1);	//WAVE 1
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2440, 340, 30, 1);	//WAVE 1
-	
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 690, 80, 30, 1);	//WAVE 2
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 950, 80, 30, 1);	//WAVE 2
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1200, 80, 30, 1);	//WAVE 2
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2000, 80, 30, 1);	//WAVE 2
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2150, 80, 30, 1);	//WAVE 2
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2250, 80, 30, 1);	//WAVE 2
-	
-	
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 920,-20, 30, 0);	//WAVE 3
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1130,-20, 30, 0);	//WAVE 3
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2050,-20, 30, 0);	//WAVE 3
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2300,-20, 30, 0);	//WAVE 3
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2600,-20, 30, 0);	//WAVE 3
+	//App->enemies->spawningEnemies(1,ENEMY_TYPE::GREEN, 600, 340, 30, 1);	//WAVE 1
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1440, 340, 30, 1);	//WAVE 1
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1520, 340, 30, 1);	//WAVE 1
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1600, 340, 30, 1);	//WAVE 1
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1720, 340, 30, 1);	//WAVE 1
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2100, 340, 30, 1);	//WAVE 1
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2400, 340, 30, 1);	//WAVE 1
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2440, 340, 30, 1);	//WAVE 1
+	//
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 690, 80, 30, 1);	//WAVE 2
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 950, 80, 30, 1);	//WAVE 2
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1200, 80, 30, 1);	//WAVE 2
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2000, 80, 30, 1);	//WAVE 2
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2150, 80, 30, 1);	//WAVE 2
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2250, 80, 30, 1);	//WAVE 2
+	//
+	//
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 920,-20, 30, 0);	//WAVE 3
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 1130,-20, 30, 0);	//WAVE 3
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2050,-20, 30, 0);	//WAVE 3
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2300,-20, 30, 0);	//WAVE 3
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::GREEN, 2600,-20, 30, 0);	//WAVE 3
 
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 940, 130, 30, 0);	//WAVE 4
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1000, 130, 30, 0);	//WAVE 4
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1550, 130, 30, 0);	//WAVE 4
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1750, 130, 30, 0);	//WAVE 4
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1850, 220, 30, 0);	//WAVE 4
-	App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 2000, 130, 30, 0);	//WAVE 4
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 940, 130, 30, 0);	//WAVE 4
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1000, 130, 30, 0);	//WAVE 4
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1550, 130, 30, 0);	//WAVE 4
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1750, 130, 30, 0);	//WAVE 4
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 1850, 220, 30, 0);	//WAVE 4
+	//App->enemies->spawningEnemies(1, ENEMY_TYPE::WHITE, 2000, 130, 30, 0);	//WAVE 4
 	
-	int testBoss2 =0;
+	int testBoss2 =2000;
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS2, 2800-testBoss2, 220, 30, 0);	//BOSS
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS2, 2800 - testBoss2, 300, 30, 1);	//BOSS
 	App->enemies->spawningEnemies(1, ENEMY_TYPE::BOSS2, 2850 - testBoss2, 300, 30, 2);	//BOSS

@@ -174,7 +174,11 @@ void Enemy_FinalBoss1::burstShot() {
 	if (timerBurstShot->check() && burst < 4) {
 		App->particles->AddParticle(App->particles->pBurstshotBallBoss1, position.x, position.y + 60, Collider::Type::BOSS_BURSTSHOT);
 		//Insert sound here
+		if (burst == 0) { 
+			App->particles->AddParticle(App->particles->pFlashBurstshotBoss1, position.x, position.y + 60, Collider::Type::NONE);
+		}
 		++burst;
+
 	}
 }void Enemy_FinalBoss1::moab() {
 	delay = 20;
