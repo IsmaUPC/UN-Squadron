@@ -145,7 +145,7 @@ update_status ModulePlayer::Update(){
 	GamePad& pad = App->input->pads[0];
 	//Shot Player
 	if (cooldown == 11 && !destroyed) {
-		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a == KEY_STATE::KEY_DOWN || pad.r1 == KEY_STATE::KEY_DOWN) {
+		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a == KEY_STATE::KEY_DOWN || pad.r1 == KEY_STATE::KEY_DOWN || pad.r2 > 0.5f) {
 			playerShot();
 		}
 		else if (timer->ready() && timer->check()) 

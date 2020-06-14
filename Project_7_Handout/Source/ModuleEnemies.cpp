@@ -168,10 +168,8 @@ void ModuleEnemies::HandleEnemiesDespawn()
 void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 {
 	// Find an empty slot in the enemies array
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (enemies[i] == nullptr)
-		{
+	for (uint i = 0; i < MAX_ENEMIES; ++i){
+		if (enemies[i] == nullptr){
 			switch (info.type)
 			{
 				case ENEMY_TYPE::GREENSHIP:
