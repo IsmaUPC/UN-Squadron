@@ -32,19 +32,11 @@ public:
 
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
-	SDL_Texture* bgTexture = nullptr;
+
 	SDL_Texture* winTexture = nullptr;
-	Animation win_screen1 ;
-	Animation win_screen2 ;
-	Animation win_screen3 ;
-	Animation win_screen4 ;
-	Path animWin;
+	Animation win_screen1;
 	Timer* fade;
-	Collider* collider;
 	int numFrames=0;
-	Animation* currentAnim = nullptr;
-
-
 };
 
 #endif

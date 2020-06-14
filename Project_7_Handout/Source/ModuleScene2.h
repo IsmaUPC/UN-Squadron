@@ -44,6 +44,7 @@ private:
 	int Y_BG = 0;
 	int bosses = 3;
 
+	bool change;
 	bool changeScene = false;
 };
 #endif

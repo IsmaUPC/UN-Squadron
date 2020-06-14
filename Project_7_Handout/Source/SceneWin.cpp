@@ -54,14 +54,12 @@ bool SceneWin::Start()
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
-	currentAnim = &win_screen1;
 	return ret;
 }
 
 update_status SceneWin::Update()
 {
 	//currentAnim->Update();
-	win_screen1.Update();
 	fade->update();
 
 	if (fade->check()) {

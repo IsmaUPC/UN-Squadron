@@ -31,7 +31,7 @@ bool ModuleRender::Init(){
 	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
 
 	//Pantalla completa: descomentar sino comenta
-	if (PantallaCompleta == 1){
+	if (FULL_SCREEN == 1){
 		SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 	}
 
