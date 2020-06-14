@@ -42,9 +42,9 @@ bool SceneShop::Start(){
 	App->audio->PlayMusic("Assets/Store.ogg", 1.0f);
 
 	OptionSelection = App->audio->LoadFx("Assets/OptionSelection.wav");
-	//
 	SelectWeapon = App->audio->LoadFx("Assets/SelectionWeapon.wav");
 	InsuficientMoney = App->audio->LoadFx("Assets/InsuficientMoney.wav");
+	caching = App->audio->LoadFx("Assets/caching.wav");
 
 	WeaponsSold = App->textures->Load("Assets/soldWeapons2.png");
 	//hudfont1 = App->fonts->Load("Assets/Fonts/rtypefont3.png", "!@, . / 0123456789$; < ? abcdefghijklmnopqrstuvwxyz", 2, 192, 16);
@@ -70,7 +70,6 @@ bool SceneShop::Start(){
 	tiendaX = 0;
 
 	changeScene = false;
-
 	block = 50;
 
 
@@ -146,8 +145,13 @@ update_status SceneShop::Update(){
 			money += 10000;
 		if (money >= 100000) 
 			money += 100000;
-		if (money >= 9999990)
+		if (money >= 9999990) {
 			money = 9999990;
+			if (!maxMoney){
+				maxMoney = true;
+				App->audio->PlayFx(caching);
+			}
+		}
 	}
 
 
@@ -321,6 +325,8 @@ void SceneShop::loadInfo(){
 		total = 0;
 		lives = 2;
 		damage = 1;
+		infiniteMoney = false;
+		maxMoney = false;
 		newGame = false;
 		begin = true;
 		return;

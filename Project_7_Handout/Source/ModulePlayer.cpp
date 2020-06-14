@@ -273,10 +273,10 @@ bool ModulePlayer::CleanUp(){
 	return true;
 }
 void ModulePlayer::godModeUpdate(){
-	ammo[App->sceneShop->S_SHELL] = 1;
-	ammo[App->sceneShop->BOMB] = 1;
-	ammo[App->sceneShop->CEILING] = 1;
-	ammo[App->sceneShop->GUNPOD] = 1;
+	ammo[App->sceneShop->S_SHELL] = 99;
+	ammo[App->sceneShop->BOMB] = 99;
+	ammo[App->sceneShop->CEILING] = 99;
+	ammo[App->sceneShop->GUNPOD] = 99;
 	indexWeapon = App->sceneShop->S_SHELL;
 	godMode = !godMode;
 	}

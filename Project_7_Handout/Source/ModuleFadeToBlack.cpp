@@ -90,6 +90,7 @@ bool ModuleFadeToBlack::FadeToBlack(Module* _moduleToDisable, Module* _moduleToE
 	if (_moduleToDisable == (Module*)App->sceneWin && lastLevel == (Module*)App->level2) {
 		lastLevel = (Module*)App->level1;
 		moduleToDisable = _moduleToDisable;
+		App->sceneShop->begin = false;
 		moduleToEnable = (Module*)App->sceneIntro;
 	}else{
 
