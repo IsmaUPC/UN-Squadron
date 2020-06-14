@@ -11,7 +11,7 @@ It is a side-scroll shooter where the player controls a militar airplane and def
 
 ## Gameplay
 
-<iframe width="740" height="590" src="https://" frameborder="0" allowfullscreen></iframe>
+<iframe width="740" height="590" src="https://youtu.be/IAedd1ZcyT4" frameborder="0" allowfullscreen></iframe>
 
 ## Controls
 ~~~~~~~~~~~~~~~
