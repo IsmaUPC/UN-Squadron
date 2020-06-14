@@ -16,8 +16,7 @@ It is a side-scroll shooter where the player controls a militar airplane and def
 ## Controls
 ~~~~~~~~~~~~~~~
 
-### Keyboard:
-
+Keyboard:
 Scene Shop controls:
 - MOVE SELECTOR UP: W key
 - MOVE SELECTOR LEFT: A key
@@ -36,9 +35,6 @@ Player controls:
 - CHANGE SPECIAL WEAPON: J Key
 - SPECIAL WEAPON: k Key
 
-Scene WIN/LOSE:
-- CONTINUE: SPACE key
-
 General/developer controls:
 - EXIT GAME: ESC key
 - SHOW COLLIDERS: F1
@@ -47,14 +43,13 @@ General/developer controls:
 - DIRECT LOSE: F4
 
 
-### Gamepad:
-
-- MOVE: JOYSTIC AND D-PAD
-- SHOOT AND SELECT CHARACTER: A / CROSS
+Gamepad:
+- MOVE in shop: JOYSTIC AND D-PAD
+- MOVE in game: JOYSTIC
+- SHOOT AND SELECT CHARACTER: A / CROSS / R1 / R2 / RB / RT
 - SKIP SCREEN: A / CROSS
 - SPECIAL WEAPON: X / SQUARE
-- START GAME: START
-- EXIT GAME: SELECT
+
 ~~~~~~~~~~~~~~~
 
 # 4Head Dragons - Our team
@@ -81,7 +76,7 @@ _Tejada Coca, Ismael's Github account_
 
 
 ### For more information see our wiki page [HERE](https://github.com/IsmaUPC/Proyecto1_4HD/wiki)
-### Download the last version of the game [HERE]()
+### Download the last version of the game [HERE](https://github.com/IsmaUPC/Proyecto1_4HD/releases/tag/1.0)
 ### Check our Github repository [HERE](https://github.com/IsmaUPC/Proyecto1_4HD)
 
 #### _Tribute by 4HD_
