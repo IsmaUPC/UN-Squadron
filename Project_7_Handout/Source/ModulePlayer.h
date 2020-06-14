@@ -123,6 +123,10 @@ public:
 	uint playerHit = 0;
 	uint playerInDanger = 0;
 	uint playerDead = 0;
+	uint swBombFx;
+	uint swShellFx;
+	uint swGunpodFx;
+	uint swChangeFx;
 
 	// hud information
 	int money = 0;
