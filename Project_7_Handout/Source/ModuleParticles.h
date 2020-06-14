@@ -93,6 +93,7 @@ public:
 
 	//Template particle for a laser
 	Particle playerLaser;
+	Particle explosionPalyerLaser;
 	Particle enemyLaser;
 	Particle mBoss1Shot;
 	Particle explosionEnemies;
