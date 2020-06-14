@@ -42,7 +42,7 @@ private:
 	int* lives = nullptr;
 	int* indexWeapon = nullptr;
 	int* ammo[11] = { nullptr };
-
+	bool* godMode = nullptr;
 
 	SDL_Texture* hudTexture = nullptr;
 

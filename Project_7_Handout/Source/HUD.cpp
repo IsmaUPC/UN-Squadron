@@ -125,6 +125,7 @@ bool HUD::Start()
 	total = App->player->getTotal();
 	lives = App->player->getLives();
 	indexWeapon = App->player->getindeWeapon();
+	godMode = App->player->getGodMode();
 
 	for (int i = 0; i < 11; i++){
 		ammo[i]= App->player->getAmmo(i);
@@ -214,21 +215,29 @@ update_status HUD::PostUpdate(){
 
 	sprintf_s(moneyText, 10, "%7d", *money);
 	sprintf_s(scoreText, 10, "%7d", *score);
-	sprintf_s(levelText, 5, "%3d",	*level);
 	sprintf_s(powText, 5, "%3d",	*pow);
 	sprintf_s(totalText, 5, "%3d",	*total);
-	sprintf_s(livesText, 5, "%3d", *lives);
-	
+	sprintf_s(livesText, 5, "%3d",	*lives);
+	sprintf_s(levelText, 5, "%3d",	*level);
+
 	if (*indexWeapon != 12){
 		sprintf_s(ammoText, 5, "%3d",	*ammo[*indexWeapon]);
 		App->fonts->BlitText(446, 414, hudfont, ammoText);
 	}
+	
+	if (*godMode == true){
+		sprintf_s(levelText, 5, "GOD");
+		App->fonts->BlitText(327, 29, hudfont, levelText);
+	}else{
+		App->fonts->BlitText(322, 30, hudfont, levelText);
+	}
+
 
 	App->fonts->BlitText(20, 61, hudfont, scoreText);
 	App->fonts->BlitText(262, 61, hudfont, moneyText);
-	App->fonts->BlitText(322, 30, hudfont, levelText);
 	App->fonts->BlitText(390, 61, hudfont, powText);
 	App->fonts->BlitText(447, 61, hudfont, totalText);
+
 	if (*lives < 0){
 		sprintf_s(livesText, 5, "%3d", 0);
 	}

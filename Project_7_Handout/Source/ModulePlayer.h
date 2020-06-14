@@ -45,6 +45,7 @@ public:
 	int* getPow()	{ return &pow; };
 	int* getTotal() { return &total; };
 	int* getLives() { return &lives; };
+	bool* getGodMode() { return &godMode; };
 
 	void DEAD() { lives--; };
 
