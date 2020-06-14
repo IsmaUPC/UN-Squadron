@@ -24,14 +24,14 @@ bool ModuleParticles::Start() {
 
 	LOG("Loading particles");
 	App->textures->Enable();
-	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
-	enemyShotTexture = App->textures->Load("Assets/EnemyShoot.png");
-	playerExplosionTexture = App->textures->Load("Assets/PlayerDead2.png");
-	miniBoss1ShotTx = App->textures->Load("Assets/shot_miniBoss1.png");
-	boss1Tx = App->textures->Load("Assets/FinalBoss1.png");
-	SpecialWeaponTexture = App->textures->Load("Assets/SW_Texture.png");
+	playerShotTexture = App->textures->Load("Assets/Player/PlayerShoot.png");
+	enemyShotTexture = App->textures->Load("Assets/Enemies/EnemyShoot.png");
+	playerExplosionTexture = App->textures->Load("Assets/Player/PlayerDead.png");
+	miniBoss1ShotTx = App->textures->Load("Assets/Enemies/shot_miniBoss1.png");
+	boss1Tx = App->textures->Load("Assets/Enemies/FinalBoss1.png");
+	SpecialWeaponTexture = App->textures->Load("Assets/Player/SW_Texture.png");
 
-	soundExplosion = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");
+	soundExplosion = App->audio->LoadFx("Assets/sounds/06_Effect_Explosion_Enemies.wav");
 
 	//Shot Ball boss
 	animBallShotBoss1.speed = 0.3f;

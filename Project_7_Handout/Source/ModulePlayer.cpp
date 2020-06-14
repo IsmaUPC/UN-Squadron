@@ -91,20 +91,20 @@ bool ModulePlayer::Start()
 		}
 	}
 
-	texture = App->textures->Load("Assets/PlayerSprites3.png");
+	texture = App->textures->Load("Assets/Player/PlayerSprites.png");
 	currentAnimation = &idleAnim;
 
-	smokeTexture = App->textures->Load("Assets/PlayerDead2.png");
+	smokeTexture = App->textures->Load("Assets/Player/PlayerDead.png");
 	smokeDamageAnimation = &SmokeAnim;
 
-	laserFx = App->audio->LoadFx("Assets/PlayerShoot.wav");
-	playerHit = App->audio->LoadFx("Assets/HitPlayer.wav");
-	playerInDanger = App->audio->LoadFx("Assets/PlayerInDanger.wav");
-	playerDead = App->audio->LoadFx("Assets/PlayerDead.wav");
-	swBombFx= App->audio->LoadFx("Assets/SW_Bomb.wav");
-	swShellFx= App->audio->LoadFx("Assets/SW_SSHELL.wav");
-	swGunpodFx= App->audio->LoadFx("Assets/SW_GUNPOD.wav");
-	swChangeFx= App->audio->LoadFx("Assets/Change_SW.wav");
+	laserFx = App->audio->LoadFx("Assets/sounds/PlayerShoot.wav");
+	playerHit = App->audio->LoadFx("Assets/sounds/HitPlayer.wav");
+	playerInDanger = App->audio->LoadFx("Assets/sounds/PlayerInDanger.wav");
+	playerDead = App->audio->LoadFx("Assets/sounds/PlayerDead.wav");
+	swBombFx= App->audio->LoadFx("Assets/sounds/SW_Bomb.wav");
+	swShellFx= App->audio->LoadFx("Assets/sounds/SW_SSHELL.wav");
+	swGunpodFx= App->audio->LoadFx("Assets/sounds/SW_GUNPOD.wav");
+	swChangeFx= App->audio->LoadFx("Assets/sounds/Change_SW.wav");
 
 
 	position.x = 80;

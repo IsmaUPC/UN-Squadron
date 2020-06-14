@@ -89,7 +89,6 @@
     <ClInclude Include="Enemy_GreenShip.h" />
     <ClInclude Include="Enemy_MiniBoss1.h" />
     <ClInclude Include="Enemy_RedShip.h" />
-    <ClInclude Include="Enemy_Template.h" />
     <ClInclude Include="Enemy_White.h" />
     <ClInclude Include="Enemy_YellowShip.h" />
     <ClInclude Include="HUD.h" />
@@ -131,7 +130,6 @@
     <ClCompile Include="Enemy_GreenShip.cpp" />
     <ClCompile Include="Enemy_MiniBoss1.cpp" />
     <ClCompile Include="Enemy_RedShip.cpp" />
-    <ClCompile Include="Enemy_Template.cpp" />
     <ClCompile Include="Enemy_White.cpp" />
     <ClCompile Include="Enemy_YellowShip.cpp" />
     <ClCompile Include="Globals.cpp" />

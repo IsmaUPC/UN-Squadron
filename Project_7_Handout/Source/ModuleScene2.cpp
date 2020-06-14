@@ -33,9 +33,9 @@ bool ModuleScene2::Start(){
 	bool ret = true;
 	changeScene = false;
 	//1538 * 585
-	bgTexture = App->textures->Load("Assets/BG2.png");
+	bgTexture = App->textures->Load("Assets/BG2/BG2.png");
 
-	App->audio->PlayMusic("Assets/EnemyAirforce.ogg", 6);
+	App->audio->PlayMusic("Assets/sounds/EnemyAirforce.ogg", 6);
 
 
 
@@ -103,7 +103,7 @@ update_status ModuleScene2::Update() {
 		if (App->input->keys[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
 			changeScene = true;
 			App->player->CleanUp();
-			bosses = 0;
+			bosses = 1;
 			Win();
 		}
 

@@ -39,9 +39,7 @@ bool ScenePresentation::Start()
 
 	bool ret = true;
 
-	bgTexture = App->textures->Load("Assets/Presentation_sprite.png");
-	//App->audio->PlayMusic("Assets/01_Introduction.ogg", 1.0f);
-
+	bgTexture = App->textures->Load("Assets/Intro/Presentation_sprite.png");
 
 	currentAnim = &Presentation_Anim;
 

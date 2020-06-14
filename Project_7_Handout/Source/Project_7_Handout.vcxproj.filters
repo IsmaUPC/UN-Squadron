@@ -26,9 +26,6 @@
     <Filter Include="Source Files\Entities\Enemies">
       <UniqueIdentifier>{c465321a-28ed-404a-aa97-e9d0c6f722ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Template">
-      <UniqueIdentifier>{a3e95abb-148a-4a28-8c57-7f3d1adbf92a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -105,9 +102,6 @@
     </ClInclude>
     <ClInclude Include="Enemy_BlueShip.h">
       <Filter>Source Files\Entities\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy_Template.h">
-      <Filter>Source Files\Entities\Template</Filter>
     </ClInclude>
     <ClInclude Include="ModuleFadeToBlack.h">
       <Filter>Source Files\Modules\Core</Filter>
@@ -224,9 +218,6 @@
     </ClCompile>
     <ClCompile Include="Enemy_BlueShip.cpp">
       <Filter>Source Files\Entities\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy_Template.cpp">
-      <Filter>Source Files\Entities\Template</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFadeToBlack.cpp">
       <Filter>Source Files\Modules\Core</Filter>

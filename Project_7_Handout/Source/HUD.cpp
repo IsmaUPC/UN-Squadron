@@ -114,7 +114,7 @@ bool HUD::Start()
 	*/																																				//232 x 75
 	hudfont = App->fonts->Load("Assets/hud/hud_font2.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,0123456789им?!*$%&()+-/:;<=>@__     ", 5,235,75);
 
-	hudTexture = App->textures->Load("Assets/hud/hud - copia.png");
+	hudTexture = App->textures->Load("Assets/hud/hud.png");
 	weaponsHUDTexture = App->textures->Load("Assets/hud/Guns.png");
 	
 	//information of the HUD
