@@ -17,8 +17,9 @@ lives(p.lives),explodes(p.explodes), inmortal(p.inmortal),path(p.path){
 }
 
 Particle::~Particle(){
-	if (collider != nullptr)
-		collider->pendingToDelete = true;
+	if (collider != NULL)
+		if (collider != nullptr)
+			collider->pendingToDelete = true;
 		//this->path.CleanUp();
 }
 

@@ -18,6 +18,7 @@ public:
 	void move();
 	bool win = true;
 	void shotSmallBombs();
+	void shots();
 	void shotMisile();
 	void AnimHit();
 private:
@@ -31,6 +32,7 @@ private:
 	Timer* timerShotBombs;
 	Timer* timerCadenceBombs;
 	int limitBombs =8;
+	bool misilShoted=false;
 	int randPos=0;
 
 

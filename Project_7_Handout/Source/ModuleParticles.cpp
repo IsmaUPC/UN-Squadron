@@ -20,26 +20,26 @@ ModuleParticles::~ModuleParticles(){
 
 }
 
-bool ModuleParticles::Start(){
+bool ModuleParticles::Start() {
 
 	LOG("Loading particles");
 	App->textures->Enable();
 	playerShotTexture = App->textures->Load("Assets/PlayerShoot.png");
-	enemyShotTexture= App->textures->Load("Assets/EnemyShoot.png");
+	enemyShotTexture = App->textures->Load("Assets/EnemyShoot.png");
 	playerExplosionTexture = App->textures->Load("Assets/PlayerDead2.png");
 	miniBoss1ShotTx = App->textures->Load("Assets/shot_miniBoss1.png");
 	boss1Tx = App->textures->Load("Assets/FinalBoss1.png");
 	SpecialWeaponTexture = App->textures->Load("Assets/SW_Texture.png");
-	
+
 	soundExplosion = App->audio->LoadFx("Assets/06_Effect_Explosion_Enemies.wav");
 
 	//Shot Ball boss
 	animBallShotBoss1.speed = 0.3f;
 	hitBallShotBoss1.PushBack({ 546 ,139,20,25 });
 	for (int i = 0; i < 3; i++)
-		animBallShotBoss1.PushBack({566+(i*20),139,20,25});
+		animBallShotBoss1.PushBack({ 566 + (i * 20),139,20,25 });
 	for (int i = 0; i < 4; i++)
-		pExplBallBoss1.anim.PushBack({546+(i*30),171,30,32});
+		pExplBallBoss1.anim.PushBack({ 546 + (i * 30),171,30,32 });
 	pExplBallBoss1.anim.loop = false;
 	pExplBallBoss1.anim.speed = 0.3f;
 	ballShotBoss1.explodes = true;
@@ -53,42 +53,57 @@ bool ModuleParticles::Start(){
 	openWings.PushBack({ 390,536,28,91 });
 
 	//Moab
-	for (int i = 0; i < 3; i++) 
+	for (int i = 0; i < 3; i++)
 		aMoabBoss1.PushBack({ 556 + (45 * i),313,45,20 });
 
 	for (int i = 0; i < 3; i++)
 		aMoabDownBoss1.PushBack({ 556 + (45 * i),342,45,38 });
-	aMoabBoss1.speed=0.5f;
-	aMoabDownBoss1.speed= 0.5f;
-	pMoabBoss1.path.PushBack({1.0f,0.50f},5, new Animation(aMoabBoss1));
-	pMoabBoss1.path.PushBack({1.0f,1.0f},5, new Animation(aMoabBoss1));
-	pMoabBoss1.path.PushBack({1.0f,3.0f},155, new Animation(aMoabDownBoss1));
+	aMoabBoss1.speed = 0.5f;
+	aMoabDownBoss1.speed = 0.5f;
+	pMoabBoss1.path.PushBack({ 1.0f,0.50f }, 5, new Animation(aMoabBoss1));
+	pMoabBoss1.path.PushBack({ 1.0f,1.0f }, 5, new Animation(aMoabBoss1));
+	pMoabBoss1.path.PushBack({ 1.0f,3.0f }, 155, new Animation(aMoabDownBoss1));
 	pMoabBoss1.path.loop = false;
 	pMoabBoss1.speed.x = SCREEN_SPEED;
 	pMoabBoss1.explodes = true;
 	pMoabDownBoss1.path.PushBack({ -0.25f,2.0f }, 150, new Animation(aMoabDownBoss1));
 	pMoabDownBoss1.speed.y = 2.0f;
 	pMoabDownBoss1.speed.x = -1.0f;
-	
+
 	//Boss2 Bombs
-	for (int i = 0; i < 5; i++)
-		pBoss2ShotBombs.anim.PushBack({ 695 ,315,25,18 });
+	pBoss2ShotBombs.anim.PushBack({ 695 ,315,25,18 });
 	for (int i = 0; i < 7; i++)
-		pBoss2ShotBombs.anim.PushBack({ 728 + (38 * i),307,38,37 });
-	pBoss2ShotBombs.anim.speed= 0.15f;
+		pBoss2ExplBombs.anim.PushBack({ 728 + (38 * i),307,38,37 });
+	//pBoss2ShotBombs.anim.speed= 0.15f;
+	pBoss2ShotBombs.lifetime = 40.0f;
+	pBoss2ShotBombs.explodes = true;
 	pBoss2ShotBombs.anim.loop = false;
+	pBoss2ExplBombs.anim.loop = false;
+	pBoss2ExplBombs.explodes = false;
 
 	//Boss2 Misile 
-	for (int i = 0; i < 5; i++)
-		aBoss2MisileExpl.PushBack({ 568 + (80 * i),36,80,70 });
-	pBoss2ShotMisile.anim.speed = 0.20f;
-
+	firstExplMisileB2.PushBack({ 568,36,80,70 });
+	for (int i = 1; i < 3; i++) {
+		loopExplMisileB2.PushBack({ 568 + (81 * i),36,80,70 });
+		endExplMisileB2.PushBack({ 568 + (81 * (i + 2)),36,80,70 });
+	}	
 	aMisile.PushBack({ 640,144,24,16 });
-	aMisile.loop = true;
-	aBoss2MisileExpl.loop = true;
-	pBoss2ShotMisile.path.PushBack({ 5.0f,0.0f }, 55, new Animation(aMisile));
-	pBoss2ShotMisile.path.PushBack({ 1.0f,1.0f}, 20, new Animation(aBoss2MisileExpl));
+	aMisile.loop = false;
+	loopExplMisileB2.speed = 0.2f;
+	loopExplMisileB2.loop = true;
+	endExplMisileB2.speed = 0.05f;
+	endExplMisileB2.loop = false;
+
+	pBoss2ShotMisile.path.loop = false;
+	pBoss2ShotMisile.path.PushBack({ 5.0f,0.0f }, 65, new Animation(aMisile));
 	pBoss2ShotMisile.explodes = true;
+
+	pBoss2ExplMisile.path.loop=false;
+	pBoss2ExplMisile.path.PushBack({SCREEN_SPEED,0.0f }, 5, new Animation(firstExplMisileB2));
+	pBoss2ExplMisile.path.PushBack({SCREEN_SPEED,0.0f }, 25, new Animation(loopExplMisileB2));
+	pBoss2ExplMisile.path.PushBack({SCREEN_SPEED,0.0f }, 10, new Animation(endExplMisileB2));
+	pBoss2ExplMisile.inmortal = true;
+
 
 
 
@@ -103,11 +118,14 @@ bool ModuleParticles::Start(){
 		pBurstshotBallBoss1.anim.PushBack({726+(i*30),356,30,24});
 	pBurstshotBallBoss1.anim.loop = true;
 	pBurstshotBallBoss1.anim.speed = 0.2f;
+
 	//Explosion derivada del burstshot
 	aBurstshotBallBoss1.PushBack({ 0,698,40,48 });
 	aBurstshotBallBoss1.PushBack({ 40,698,40,48 });
 	aBurstshotBallBoss1.PushBack({ 80,698,40,48 });
 	aBurstshotBallBoss1.PushBack({ 120,698,40,48 });
+	aBurstshotBallBoss1.speed = 0.1f;
+	pFlashBurstshotBoss1.anim = aBurstshotBallBoss1;
 
 
 	// Explosion player
@@ -123,14 +141,13 @@ bool ModuleParticles::Start(){
 	
 	//explosion enemies
 	for (int i = 0; i < 7; i++)
-		explosionEnemies.anim.PushBack({571+i*60,386,60,60});
+		explosionEnemies.anim.PushBack({570+i*60,386,60,60});
 	explosionEnemies.anim.loop = false;
 	explosionEnemies.explodes = false;
 	explosionEnemies.anim.speed = 0.2f;
 	
 	//player shot
 	playerLaser.anim.PushBack({ 0, 0, 40, 7 });
-	
 	explosionPalyerLaser.anim.PushBack({675,140,28,26});
 	explosionPalyerLaser.anim.PushBack({675,140,28,26});
 	explosionPalyerLaser.anim.PushBack({675,140,28,26});
@@ -283,7 +300,15 @@ update_status ModuleParticles::PreUpdate()
 				}
 				else if (particles[i]->collider->type == Collider::Type::PLAYER_SHOT)
 				{
-					AddParticle(explosionPalyerLaser, pCollider.x+ pCollider.w, pCollider.y+ (pCollider.h/2), Collider::Type::NONE);
+					AddParticle(explosionPalyerLaser, pCollider.x+ (pCollider.w/2), pCollider.y+ (pCollider.h/2), Collider::Type::NONE);
+				}
+				else if (particles[i]->collider->type == Collider::Type::BOSS2_MISILE)
+				{
+					AddParticle(pBoss2ExplMisile, pCollider.x- 40, pCollider.y- 35, Collider::Type::BOSS2_MISILE_EXPLOSION);
+				}
+				else if (particles[i]->collider->type == Collider::Type::BOSS2_BOMBS)
+				{
+					AddParticle(pBoss2ExplBombs, pCollider.x+ (pCollider.w/2), pCollider.y+ (pCollider.h/2), Collider::Type::NONE);
 				}
 				else {
 				App->audio->PlayFx(*(new int(soundExplosion)));
@@ -377,7 +402,7 @@ update_status ModuleParticles::PostUpdate()
 		if (particle != nullptr && particle->collider != nullptr && particle->isAlive)
 		{
 			colliderI = particle->collider;
-			if (colliderI->type == Collider::Type::BOSS1_SHOT_BALL || colliderI->type == Collider::Type::BOSS_MOAB || colliderI->type == Collider::Type::BOSS2_MISILE) {
+			if (colliderI->type == Collider::Type::BOSS1_SHOT_BALL || colliderI->type == Collider::Type::BOSS_MOAB || colliderI->type == Collider::Type::BOSS2_MISILE || colliderI->type == Collider::Type::BOSS2_MISILE_EXPLOSION) {
 				pathRefresh(particle);
 				App->render->Blit(boss1Tx, particle->position.x, particle->position.y, &(particle->path.GetCurrentAnimation()->GetCurrentFrame()));
 				 if (particle->path.isFinish)particle->SetToDelete();
@@ -487,6 +512,7 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 					if (p->collider->type == p->collider->BOSS1_SHOT_BALL)	createBallBoss(p, x, y);
 					if (p->collider->type == p->collider->BOSS_MOAB) p->spawnPos.create(x,y);
 					if (p->collider->type == p->collider->BOSS2_MISILE) p->spawnPos.create(x,y);
+					if (p->collider->type == p->collider->BOSS2_MISILE_EXPLOSION) p->spawnPos.create(x,y);
 
 			}
 			particles[i] = p;
@@ -511,6 +537,21 @@ void ModuleParticles::createBallBoss(Particle* p, int x, int y)
 	p->path.PushBack({ -0.5f,+1.0f }, distanceBall, new Animation(animBallShotBoss1));
 	p->path.PushBack({ SCREEN_SPEED,0.0f }, 0, new Animation(animBallShotBoss1));
 }
+void ModuleParticles::createMisile(Particle* p, int x, int y)
+{
+	
+
+	p->spawnPos.create(x, y);
+	p->lives = 1;
+	p->path.loop = false;
+	p->path.PushBack({ -0.5f,-1.0f }, 50, new Animation(animBallShotBoss1));
+	p->path.PushBack({ -0.5f,-0.5f }, 10, new Animation(animBallShotBoss1));
+	p->path.PushBack({ -0.5f,-0.0f }, 5, new Animation(animBallShotBoss1));
+	p->path.PushBack({ -0.5f,+0.5f }, 10, new Animation(animBallShotBoss1));
+	p->path.PushBack({ -0.5f,+1.0f }, distanceBall, new Animation(animBallShotBoss1));
+	p->path.PushBack({ SCREEN_SPEED,0.0f }, 0, new Animation(animBallShotBoss1));
+}
+
 
 Particle* ModuleParticles::AddSWParticle(const Particle& particle, int _indexWeapon, int x, int y, Collider::Type colliderType, uint delay) {
 

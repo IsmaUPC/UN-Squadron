@@ -66,6 +66,7 @@ public:
 	Particle* AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType = Collider::Type::NONE, uint delay = 0);
 
 	void createBallBoss(Particle* p, int x, int y);
+	void createMisile(Particle* p, int x, int y);
 
 	Particle* AddSWParticle(const Particle& particle, int _indexWeapon, int x, int y, Collider::Type colliderType = Collider::Type::NONE, uint delay = 0);
 private:
@@ -100,6 +101,9 @@ public:
 	Particle ballShotBoss1;
 	Particle pExplBallBoss1;
 	Particle pBurstshotBallBoss1;
+
+
+	Particle pFlashBurstshotBoss1;
 	Animation aBurstshotBallBoss1;
 
 	//PowerUp
@@ -129,10 +133,14 @@ public:
 
 	//Animation aBoss2Shot;
 	Particle pBoss2ShotBombs;
+	Particle pBoss2ExplBombs;
 
 	Particle pBoss2ShotMisile;
-	Animation aBoss2MisileExpl;
+	Particle pBoss2ExplMisile;
 	Animation aMisile;
+	Animation firstExplMisileB2;
+	Animation loopExplMisileB2;
+	Animation endExplMisileB2;
 
 	int soundExplosion;
 
