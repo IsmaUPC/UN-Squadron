@@ -81,7 +81,7 @@ private:
 	float magnitudPlayer = 0;
 	float magnitudEnemy = 0;
 	float angulo=0;
-	int speedShots = 0;
+	int speedShots = 7;
 	
 	uint explosionFx;
 	// An array to store and handle all the particles
@@ -98,11 +98,16 @@ public:
 	Particle explosionEnemies;
 	Particle ballShotBoss1;
 	Particle pExplBallBoss1;
-
-
 	Particle pBurstshotBallBoss1;
 	Animation aBurstshotBallBoss1;
 
+	//PowerUp
+	Particle PowerUp;
+	Particle PowerUpBlue;
+	float speed_X_PowerUP = 0.5f;
+	float Radio = 2.5f;
+	float angle[MAX_ACTIVE_PARTICLES]{ 0.f };
+	float angleIncrement = 0.07f;
 
 	Particle bossBallLaser;
 
@@ -127,7 +132,7 @@ public:
 	int soundExplosion;
 
 	int distanceBall=0;
-	bool firstSecond =true ;
+	bool firstSecond =true;
 
 	SDL_Texture* SpecialWeaponTexture = nullptr;
 	Particle SpecialWeapon[11];

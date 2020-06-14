@@ -24,6 +24,8 @@ SceneWin::SceneWin(bool startEnabled) : Module(startEnabled){
 			win_screen1.PushBack({ SCREEN_WIDTH * j,SCREEN_HEIGHT * i,SCREEN_WIDTH,SCREEN_HEIGHT });
 			numFrames += 1;
 		}
+	win_screen1.loop = false;
+	win_screen1.speed = 0.50f;
 }
 
 SceneWin::~SceneWin(){
@@ -43,18 +45,13 @@ bool SceneWin::Start()
 	App->level1->Disable();
 	App->level2->Disable();
 	//App->particles->Disable();
-	bgTexture = App->textures->Load("Assets/16_Stage_Clear.png");
+
 	winTexture = App->textures->Load("Assets/win_animation.png");
 	App->audio->PlayMusic("Assets/16_Stage_Clear.ogg", 1.0f);
 	App->render->cameraSpeed=0;
 
+
 	fade = new Timer(6500);
-
-	collider = App->collisions->AddCollider({ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT }, Collider::Type::NONE, this);
-	//animWin.PushBack({0,0},36,new Animation(win_screen1));
-
-	win_screen1.loop = false;
-	win_screen1.speed = 0.50f;
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -85,9 +82,6 @@ update_status SceneWin::PostUpdate()
 {
 	// Draw everything --------------------------------------
 
-	//animWin.Update();
-	//App->render->Blit(winTexture, 0, 0, &(animWin.GetCurrentAnimation()->GetCurrentFrame()));
-//	App->render->Blit(bgTexture, 0, 0, &(currentAnim->GetCurrentFrame()));
 	App->render->Blit(winTexture, 0, 0, &(win_screen1.GetCurrentFrame()));
 
 
@@ -97,7 +91,7 @@ update_status SceneWin::PostUpdate()
 bool SceneWin::CleanUp()
 {
 	//Enable (and properly disable) the player module
-	App->textures->Unload(bgTexture);
+
 	App->textures->Unload(winTexture);
 	//App->audio->Disable();
 

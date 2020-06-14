@@ -76,14 +76,8 @@ bool ModulePlayer::Start()
 	oneHit = false;
 	destroyed = false;
 	godMode = false;
-	/*
-	money = MONEY;
-	score = SCORE;
-	level = LEVEL;
-	pow = POW;
-	total = TOTAL;
-	lives = LIVES;
-	*/
+	use_SW = false;
+
 	loadInfo();
 
 	// select a Weapon for start, if exist ammo for someone
@@ -217,8 +211,10 @@ update_status ModulePlayer::PostUpdate()
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
+
+	if (c1->type == Collider::PLAYER && c2->type == Collider::POWERUP || c2->type == Collider::PLAYER && c1->type == Collider::POWERUP) { return;};
+
 	if (c1 == collider && destroyed == false && godMode==false)	{
-		
 		if (!oneHit){
 			oneHit = true;
 			App->audio->PlayFx(playerHit);
@@ -269,6 +265,34 @@ void ModulePlayer::godModeUpdate(){
 	indexWeapon = App->sceneShop->S_SHELL;
 	godMode = !godMode;
 	}
+
+void ModulePlayer::caughtPowerup(int sum){
+
+	pow -= sum;
+	total += sum;
+
+	if (pow <= 0){
+		level++;
+		switch (level){
+		case 2:
+			pow += 9;
+			break;
+		case 3:
+			pow += 10;
+			break;
+		case 4:
+			pow += 15;
+			break;
+		case 6:case 5:
+			pow += 25;
+			break;
+		case 7:
+			pow += 0;
+			break;
+		}
+	}
+
+}
 
 void ModulePlayer::playerShot() {
 	App->particles->AddParticle(App->particles->playerLaser, position.x + 35, position.y + 10, Collider::Type::PLAYER_SHOT);
