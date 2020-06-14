@@ -60,6 +60,7 @@ bool SceneWin::Start()
 update_status SceneWin::Update()
 {
 	//currentAnim->Update();
+	win_screen1.Update();
 	fade->update();
 
 	if (fade->check()) {
