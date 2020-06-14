@@ -55,7 +55,8 @@ public:
 		if (pingpongDirection == -1)
 			actualFrame = totalFrames - currentFrame;
 
-		return frames[actualFrame];
+		if (&frames[actualFrame] != nullptr)return frames[actualFrame];
+		else return frames[actualFrame - 1];
 	}
 };
 
