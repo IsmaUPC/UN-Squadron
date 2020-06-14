@@ -76,7 +76,8 @@ bool SceneShop::Start()
 update_status SceneShop::PreUpdate(){
 	GamePad& pad = App->input->pads[0];
 
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) {
+	if ((App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) && keyDownPad == false) {
+		keyDownPad = true;
 		select();
 	}
 
@@ -114,7 +115,7 @@ update_status SceneShop::PreUpdate(){
 		infiniteMoney = true;
 	}
 
-	if (pad.l_y == 0 && pad.l_x == 0 && pad.up == false && pad.down == false && pad.left == false && pad.right == false) {
+	if (pad.l_y == 0 && pad.l_x == 0 && pad.up == false && pad.down == false && pad.left == false && pad.right == false && pad.a == false) {
 		keyDownPad = false;
 	}
 

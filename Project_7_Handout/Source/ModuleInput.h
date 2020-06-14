@@ -70,7 +70,7 @@ public:
 	// Iterates through all active gamepads and update all input data
 	void UpdateGamepadsInput();
 
-	bool ShakeController(int id, int duration, float strength = 0.5f);
+	bool ShakeController(int id, float duration, float strength = 0.5f);
 	const char* GetControllerName(int id) const;
 
 public:

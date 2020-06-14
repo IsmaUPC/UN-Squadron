@@ -196,7 +196,7 @@ void ModuleInput::UpdateGamepadsInput()
 	}
 }
 
-bool ModuleInput::ShakeController(int id, int duration, float strength)
+bool ModuleInput::ShakeController(int id, float duration, float strength)
 {
 	bool ret = false;
 
@@ -205,6 +205,7 @@ bool ModuleInput::ShakeController(int id, int duration, float strength)
 
 	// Check if the gamepad is active and allows rumble
 	GamePad& pad = pads[id];
+
 	if (!pad.enabled || pad.haptic == nullptr || SDL_HapticRumbleSupported(pad.haptic) != SDL_TRUE) return ret;
 
 	// If the pad is already in rumble state and the new strength is below the current value, ignore this call
@@ -218,7 +219,7 @@ bool ModuleInput::ShakeController(int id, int duration, float strength)
 	else
 	{
 		SDL_HapticRumbleStop(pad.haptic);
-		SDL_HapticRumblePlay(pad.haptic, strength, duration / 60 * 1000); //Conversion from frames to ms at 60FPS
+		SDL_HapticRumblePlay(pad.haptic, strength, duration / 60.f * 1000.f); //Conversion from frames to ms at 60FPS
 
 		pad.rumble_countdown = duration;
 		pad.rumble_strength = strength;

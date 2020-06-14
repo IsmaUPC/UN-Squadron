@@ -124,7 +124,6 @@ public:
 	uint playerInDanger = 0;
 	uint playerDead = 0;
 
-
 	// hud information
 	int money = 0;
 	int score = 0;

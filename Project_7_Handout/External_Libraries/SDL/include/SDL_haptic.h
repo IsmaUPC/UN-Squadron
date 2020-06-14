@@ -1213,7 +1213,7 @@ extern DECLSPEC int SDLCALL SDL_HapticRumbleInit(SDL_Haptic * haptic);
  *  \sa SDL_HapticRumbleInit
  *  \sa SDL_HapticRumbleStop
  */
-extern DECLSPEC int SDLCALL SDL_HapticRumblePlay(SDL_Haptic * haptic, float strength, Uint32 length );
+extern DECLSPEC int SDLCALL SDL_HapticRumblePlay(SDL_Haptic * haptic, float strength, float length );
 
 /**
  *  \brief Stops the simple rumble on a haptic device.

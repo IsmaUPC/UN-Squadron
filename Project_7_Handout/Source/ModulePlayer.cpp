@@ -116,12 +116,10 @@ bool ModulePlayer::Start()
 	CeilingTimer = new Timer(400);
 	collider = App->collisions->AddCollider({ position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT }, Collider::Type::PLAYER, this);
 
-
 	return ret;
 }
 
 update_status ModulePlayer::Update(){
-
 	timerHit->update();
 	if (timerHit->check())statusPlayer = status_player::STATE_IDLE, n_shots=0;
 	//Save the position camera X
@@ -143,13 +141,16 @@ update_status ModulePlayer::Update(){
 	//Update the player collider 
 	collider->SetPos(position.x, position.y);
 
-	GamePad& pad = App->input->pads[0];
 
+	GamePad& pad = App->input->pads[0];
 	//Shot Player
 	if (cooldown == 11 && !destroyed) {
-		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a) playerShot();
+		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a == KEY_STATE::KEY_DOWN) {
+			App->input->ShakeController(0, 60, 0.5);
+			playerShot();
+		}
 		else if (timer->ready() && timer->check()) 
-		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_REPEAT || pad.a) playerShot();
+		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_REPEAT || pad.a == KEY_STATE::KEY_REPEAT) playerShot();
 	}
 
 	//Suicide Player
@@ -216,6 +217,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
 
 	if (c1 == collider && destroyed == false && godMode==false)	{
 		if (!oneHit){
+			App->input->ShakeController(0, 120,1.5f);
 			oneHit = true;
 			App->audio->PlayFx(playerHit);
 			statusPlayer = status_player::STATE_HIT;
@@ -223,6 +225,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2){
 			App->audio->PlayFx(playerInDanger);
 		}else if(statusPlayer==status_player::STATE_IDLE){
 			if (App->hud->animFase == App->hud->DAMAGE){
+				
 				App->audio->UnloadFx(playerInDanger);
 				App->audio->PlayFx(playerDead);
 				App->hud->hitOnPlayer();
@@ -303,7 +306,6 @@ void ModulePlayer::playerShot() {
 void ModulePlayer::MovePlayer() {
 
 	GamePad& pad = App->input->pads[0];
-
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT || pad.l_x < 0){
 		//Check that the position does not exceed the screen limit :D
 		if (position.x > currentCameraX) {
@@ -346,19 +348,26 @@ void ModulePlayer::MovePlayer() {
 		} else position.y = 82;
 	}
 	// If no up/down movement detected, set the current animation back to idle
-	if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE || pad.l_y > 0)
-		&& (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE || pad.l_y < 0))
+	if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE && pad.l_y == 0)
+		&& (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE && pad.l_y == 0))
 			currentAnimation = (oneHit) ? &idleDamageAnim : &idleAnim;
 
 	
 }
 
 void ModulePlayer::SpecialWeapons(){
+	
+	GamePad& pad = App->input->pads[0];
+
+	if (!pad.x && !pad.b) {
+		use_SW = false;
+	}
 
 	if (indexWeapon != 12 && !use_SW) {
 
 		//change weapon
-		if (App->input->keys[SDL_SCANCODE_J] == KEY_STATE::KEY_DOWN) {
+		if (App->input->keys[SDL_SCANCODE_J] == KEY_STATE::KEY_DOWN || pad.b == KEY_STATE::KEY_DOWN) {
+			use_SW = true;
 			int actualWeapon = indexWeapon;
 			for (int i = actualWeapon+1; i < 11; i++){
 				if (ammo[i] > 0){
@@ -373,12 +382,12 @@ void ModulePlayer::SpecialWeapons(){
 		}
 
 		//use weapon
-		if (App->input->keys[SDL_SCANCODE_K] == KEY_STATE::KEY_DOWN ) {
+		if (App->input->keys[SDL_SCANCODE_K] == KEY_STATE::KEY_DOWN || pad.x == KEY_STATE::KEY_DOWN) {
+			use_SW = true;
 			n_shots = 0;
 			if (!godMode) {
 				ammo[indexWeapon]--;
 			}
-
 			switch (indexWeapon) {
 				case App->sceneShop->CLUSTER:
 
@@ -421,20 +430,25 @@ void ModulePlayer::SpecialWeapons(){
 					break;
 				}
 			}
-			if (ammo[indexWeapon] <= 0) {
-				bool noAmmo = false;
-				for (int i = 0; i < 11 && noAmmo == false; i++) {
-					if (ammo[i] > 0) {
-						indexWeapon = i;
-						noAmmo = true;
-					}else {
-						indexWeapon = 12;
-					}
+			
+		if (ammo[indexWeapon] <= 0) {
+			bool noAmmo = false;
+			for (int i = 0; i < 11 && noAmmo == false; i++) {
+				if (ammo[i] > 0) {
+					indexWeapon = i;
+					noAmmo = true;
+				}else {
+					indexWeapon = 12;
 				}
 			}
+		}
 
 	
 	}
+
+	/*if (pad.l_y == 0 && pad.l_x == 0 && pad.up == false && pad.down == false && pad.left == false && pad.right == false && pad.a == false) {
+		keyDownPad = false;
+	}*/
 
 	if (shotGunpod && GunPodTimer->check()) {
 		n_shotsGunPod--;
