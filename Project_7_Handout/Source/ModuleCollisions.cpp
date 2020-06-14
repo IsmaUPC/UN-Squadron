@@ -240,7 +240,8 @@ void ModuleCollisions::DebugDraw()
 		
 		switch(colliders[i]->type)
 		{
-			case Collider::Type::NONE: // white
+		case Collider::Type::NONE:  case Collider::Type::BOSS2_MISILE_EXPLOSION:case Collider::Type::BOSS_EXPLOSION_BALL:case Collider::Type::BOSS2_BOMBS:
+				// white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 			case Collider::Type::WALL: case Collider::Type::POWERUP: case Collider::Type::POWERUP_B: // blue
@@ -255,7 +256,8 @@ void ModuleCollisions::DebugDraw()
 			case Collider::Type::PLAYER_SHOT: case Collider::Type::SW_BOMB: case Collider::Type::SW_CEILING: case Collider::Type::SW_GUNPOD: case Collider::Type::SW_S_SHELL:
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
-			case Collider::Type::ENEMY_SHOT: // magenta
+			case Collider::Type::ENEMY_SHOT: case Collider::Type::BOSS2_MISILE:case Collider::Type::BOSS_MOAB:case Collider::Type::BOSS_BURSTSHOT:
+				// magenta
 				App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
 			case Collider::Type::M_BOSS1_SHOT: // cian
