@@ -67,8 +67,10 @@ update_status ModuleFadeToBlack::PostUpdate()
 	float fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
 	// Render the black square with alpha on the screen
-	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
+	SDL_SetRenderDrawColor(App->render->renderer, 255, 0, 0, (Uint8)(fadeRatio * 255.0f));
 	SDL_RenderFillRect(App->render->renderer, &screenRect);
+	SDL_RenderDrawRect(App->render->renderer,&screenRect);
+	screenRect.h -= 0.5*frameCount;
 
 	return update_status::UPDATE_CONTINUE;
 }
